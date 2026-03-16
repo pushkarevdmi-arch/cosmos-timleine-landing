@@ -73,8 +73,8 @@ export default function HeroEvent({ event }: HeroEventProps) {
   const countdown = useCountdown(event.date);
 
   return (
-    <section className="relative overflow-hidden rounded-3xl border border-zinc-800/70 bg-zinc-950">
-      <div className="grid gap-0 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)]">
+    <section className="relative w-full overflow-hidden rounded-3xl border border-[rgba(38,38,41,0.68)] bg-zinc-950">
+      <div className="grid w-full gap-0 md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)]">
         {/* Left: visual */}
         <div className="relative min-h-[220px] overflow-hidden rounded-3xl md:rounded-r-none md:rounded-l-3xl">
           <Image
@@ -93,31 +93,30 @@ export default function HeroEvent({ event }: HeroEventProps) {
 
         {/* Right: information */}
         <div className="flex flex-col justify-between gap-4 rounded-3xl bg-zinc-950 px-6 py-6 md:rounded-l-none md:rounded-r-3xl md:px-8 md:py-7">
-          <div className="space-y-2">
+          <div className="flex flex-col space-y-2">
             <h1 className="text-lg font-semibold leading-snug text-zinc-50 md:text-xl">
               {event.title}
             </h1>
             <p className="max-w-xl text-sm leading-relaxed text-zinc-300">
               {event.description}
             </p>
+          </div>
 
-            {/* Date row */}
-            <div className="mt-4 inline-flex items-center gap-2 text-sm text-zinc-300">
+          {/* Date row + Countdown */}
+          <div className="flex h-full flex-col space-y-4">
+            <div className="inline-flex items-center gap-2 text-sm text-zinc-300">
               <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-zinc-900 text-[0.7rem]">
                 📅
               </span>
               <span>{formatDate(event.date)}</span>
             </div>
-          </div>
 
-          {/* Countdown */}
-          <div className="mt-4 space-y-4">
             {countdown.isPast ? (
               <p className="text-sm font-medium text-emerald-300">
                 This event has already occurred.
               </p>
             ) : (
-              <div className="flex flex-wrap items-stretch gap-2 font-mono text-zinc-100 md:gap-3">
+              <div className="flex flex-nowrap justify-between items-center gap-2 font-mono text-zinc-100">
                 {[
                   { label: "DAYS", value: countdown.days },
                   { label: "HRS", value: countdown.hours },
@@ -126,7 +125,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
                 ].map((segment) => (
                   <div
                     key={segment.label}
-                    className="flex min-w-[4.5rem] flex-1 flex-col items-center justify-center rounded-xl bg-black px-4 py-3 md:min-w-[5.25rem] md:px-6 md:py-4"
+                    className="flex w-full min-w-0 flex-1 flex-col items-center justify-center rounded-xl bg-black px-4 py-3 md:px-6 md:py-4"
                   >
                     <span className="text-2xl font-semibold leading-none tabular-nums md:text-3xl">
                       {segment.value.toString().padStart(2, "0")}
@@ -139,7 +138,6 @@ export default function HeroEvent({ event }: HeroEventProps) {
               </div>
             )}
 
-            {/* Explore link */}
             <button
               type="button"
               className="inline-flex items-center gap-2 text-xs font-medium text-indigo-300 hover:text-indigo-200"

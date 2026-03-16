@@ -84,7 +84,7 @@ export default function Home() {
 
         {/* Hero section */}
         <section className="mb-8 flex flex-col items-center justify-center gap-10 lg:mb-10">
-          <div className="max-w-3xl w-full flex flex-col items-center justify-center space-y-3">
+          <div className="max-w-[600px] w-full flex flex-col items-center justify-center space-y-3">
             <h1 className="text-balance text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl lg:text-5xl w-full text-center">
               Discover the cosmic events that await.
             </h1>

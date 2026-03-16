@@ -161,7 +161,7 @@ export default function EventCard({ event }: EventCardProps) {
 
         <button type="button" className="event-card__explore">
           <span className="event-card__explore-icon">
-            <RocketIcon className="h-2.5 w-2.5" />
+            <img src="/icons/rocket.svg" width="18" height="18" />
           </span>
           <span>Explore event</span>
         </button>

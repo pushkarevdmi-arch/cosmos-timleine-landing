@@ -88,10 +88,35 @@ body {
   }
 
   .event-card__explore {
-    @apply mt-4 inline-flex items-center justify-center gap-2 text-xs font-medium text-indigo-300 transition hover:text-indigo-200;
+    @apply mt-4 inline-flex items-center justify-center gap-1.5 text-xs font-medium text-indigo-300 transition hover:text-indigo-200;
   }
 
   .event-card__explore-icon {
-    @apply inline-flex h-4 w-4 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[0.6rem];
+    @apply inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[0.6rem];
   }
+}
+
+.event-card__explore-icon img {
+  width: 18px;
+  height: 18px;
+}
+
+@font-face {
+  font-family: "Dynamite";
+  src: url("/fonts/Dynamite.ttf") format("truetype");
+}
+
+.font-dynamite {
+  font-family: "Dynamite", sans-serif;
+  font-weight: 400;
+}
+
+.font-mono {
+  font-family: Georgia, serif;
+  font-weight: 100;
+}
+
+.hero-countdown {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  font-weight: 400;
 }

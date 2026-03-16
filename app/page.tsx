@@ -85,8 +85,10 @@ export default function Home() {
         {/* Hero section */}
         <section className="mb-8 flex flex-col items-center justify-center gap-10 lg:mb-10">
           <div className="max-w-[600px] w-full flex flex-col items-center justify-center space-y-3">
-            <h1 className="text-balance text-3xl font-semibold tracking-tight text-zinc-50 sm:text-4xl lg:text-5xl w-full text-center">
-              Discover the cosmic events that await.
+            <h1 className="text-balance text-3xl font-normal text-zinc-50 sm:text-4xl lg:text-5xl w-full text-center">
+            Journey <span className="font-dynamite">Into</span>
+              <br />
+              the Future of the Universe
             </h1>
             <p className="max-w-2xl w-full text-sm text-zinc-400 sm:text-base text-center">
               Move beyond the next launch window. Explore eclipses, stellar

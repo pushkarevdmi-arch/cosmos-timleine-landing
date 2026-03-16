@@ -97,7 +97,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
             <h1 className="text-lg font-semibold leading-snug text-zinc-50 md:text-xl">
               {event.title}
             </h1>
-            <p className="max-w-xl text-sm leading-relaxed text-zinc-300">
+            <p className="max-w-xl text-sm leading-relaxed text-zinc-400">
               {event.description}
             </p>
           </div>
@@ -116,7 +116,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
                 This event has already occurred.
               </p>
             ) : (
-              <div className="flex flex-nowrap justify-between items-center gap-2 font-mono text-zinc-100">
+              <div className="flex flex-nowrap justify-between items-center gap-2 hero-countdown text-zinc-100">
                 {[
                   { label: "DAYS", value: countdown.days },
                   { label: "HRS", value: countdown.hours },
@@ -127,7 +127,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
                     key={segment.label}
                     className="flex w-full min-w-0 flex-1 flex-col items-center justify-center rounded-xl bg-black px-4 py-3 md:px-6 md:py-4"
                   >
-                    <span className="text-2xl font-semibold leading-none tabular-nums md:text-3xl">
+                    <span className="text-2xl leading-none tabular-nums md:text-3xl">
                       {segment.value.toString().padStart(2, "0")}
                     </span>
                     <span className="mt-1 text-[0.6rem] tracking-[0.22em] text-zinc-400">
@@ -140,10 +140,10 @@ export default function HeroEvent({ event }: HeroEventProps) {
 
             <button
               type="button"
-              className="inline-flex items-center gap-2 text-xs font-medium text-indigo-300 hover:text-indigo-200"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-indigo-300 hover:text-indigo-200"
             >
-              <span className="inline-flex h-4 w-4 items-center justify-center rounded-full bg-zinc-900 text-[0.6rem]">
-                ⭑
+              <span className="event-card__explore-icon">
+                <img src="/icons/rocket.svg" width="18" height="18" />
               </span>
               <span>Explore event</span>
             </button>
@@ -153,4 +153,3 @@ export default function HeroEvent({ event }: HeroEventProps) {
     </section>
   );
 }
-

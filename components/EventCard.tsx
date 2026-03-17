@@ -122,7 +122,7 @@ export default function EventCard({ event }: EventCardProps) {
         <div className="event-card__category">Solar system</div>
       </div>
 
-      <div className="event-card__content">
+      <div className="event-card__content w-full">
         <div className="event-card__header">
           <h3 className="event-card__title">{event.title}</h3>
           <p className="event-card__description">{event.description}</p>

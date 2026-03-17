@@ -18,7 +18,7 @@ export default function EventGrid({ events }: EventGridProps) {
   }
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
+    <div className="grid items-stretch gap-4 sm:grid-cols-2">
       {events.map((event) => (
         <EventCard key={event.id} event={event} />
       ))}

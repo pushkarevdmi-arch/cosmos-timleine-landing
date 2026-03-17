@@ -5,10 +5,9 @@ import { useEffect, useState } from "react";
 import type { HeroEventData } from "./HeroEvent";
 
 type Countdown = {
+  years: number;
   days: number;
   hours: number;
-  minutes: number;
-  seconds: number;
   isPast: boolean;
 };
 
@@ -19,19 +18,20 @@ function useCountdown(targetDate: string): Countdown {
     const diff = target - now;
 
     if (Number.isNaN(target)) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0, isPast: false };
+      return { years: 0, days: 0, hours: 0, isPast: false };
     }
 
     if (diff <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0, isPast: true };
+      return { years: 0, days: 0, hours: 0, isPast: true };
     }
 
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const dayMs = 1000 * 60 * 60 * 24;
+    const totalDays = Math.floor(diff / dayMs);
+    const years = Math.floor(totalDays / 365);
+    const days = totalDays - years * 365;
     const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
 
-    return { days, hours, minutes, seconds, isPast: false };
+    return { years, days, hours, isPast: false };
   };
 
   const [countdown, setCountdown] = useState<Countdown>(getDiff);
@@ -106,13 +106,6 @@ export type EventCardProps = {
   event: HeroEventData;
 };
 
-const COUNTDOWN_SEGMENTS = [
-  { label: "DAYS", key: "days" as const },
-  { label: "HRS", key: "hours" as const },
-  { label: "MIN", key: "minutes" as const },
-  { label: "SEC", key: "seconds" as const },
-] as const;
-
 export default function EventCard({ event }: EventCardProps) {
   const countdown = useCountdown(event.date);
 
@@ -130,41 +123,57 @@ export default function EventCard({ event }: EventCardProps) {
       </div>
 
       <div className="event-card__content">
-        <h3 className="event-card__title">{event.title}</h3>
-        <p className="event-card__description">{event.description}</p>
-
-        <div className="event-card__date">
-          <span className="event-card__date-icon">
-            <CalendarIcon className="h-3.5 w-3.5" />
-          </span>
-          <span>{formatCardDate(event.date)}</span>
+        <div className="event-card__header">
+          <h3 className="event-card__title">{event.title}</h3>
+          <p className="event-card__description">{event.description}</p>
         </div>
 
-        <div className="event-card__countdown">
-          {countdown.isPast ? (
-            <p className="event-card__past-message">Event in the past</p>
-          ) : (
-            <div className="event-card__countdown-grid">
-              {COUNTDOWN_SEGMENTS.map(({ label, key }) => (
-                <div key={label} className="event-card__countdown-segment">
-                  <span className="event-card__countdown-value">
-                    {countdown[key]
-                      .toString()
-                      .padStart(label === "DAYS" ? 3 : 2, "0")}
-                  </span>
-                  <span className="event-card__countdown-label">{label}</span>
-                </div>
-              ))}
+        <div className="event-card__meta mt-6">
+          <div className="flex flex-col gap-1">
+            <div className="event-card__date">
+              <span className="event-card__date-icon">
+                <CalendarIcon className="h-3.5 w-3.5" />
+              </span>
+              <span>{formatCardDate(event.date)}</span>
             </div>
-          )}
-        </div>
 
-        <button type="button" className="event-card__explore">
-          <span className="event-card__explore-icon">
-            <img src="/icons/rocket.svg" width="18" height="18" />
-          </span>
-          <span>Explore event</span>
-        </button>
+            <div className="event-card__countdown">
+              {countdown.isPast ? (
+                <p className="event-card__past-message">Event in the past</p>
+              ) : (
+                <div className="event-card__countdown-grid">
+                  <div className="event-card__countdown-segment">
+                    <span className="event-card__countdown-value">
+                      {countdown.years.toString().padStart(2, "0")}
+                    </span>
+                    <span className="event-card__countdown-label">YEARS</span>
+                  </div>
+                  <div className="event-card__countdown-segment">
+                    <span className="event-card__countdown-value">
+                      {countdown.days.toString().padStart(3, "0")}
+                    </span>
+                    <span className="event-card__countdown-label">DAYS</span>
+                  </div>
+                  <div className="event-card__countdown-segment">
+                    <span className="event-card__countdown-value">
+                      {countdown.hours.toString().padStart(2, "0")}
+                    </span>
+                    <span className="event-card__countdown-label">HRS</span>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <button type="button" className="event-card__explore">
+            <span className="event-card__explore-icon">
+              <img src="/icons/rocket.svg" width="18" height="18" />
+            </span>
+            <span className="text-sm font-medium leading-[22px]">
+              Explore event
+            </span>
+          </button>
+        </div>
       </div>
     </article>
   );

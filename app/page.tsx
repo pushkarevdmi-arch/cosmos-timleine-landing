@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useMemo, useState } from "react";
 import HeroEvent, { HeroEventData } from "@/components/HeroEvent";
 import ViewToggle from "@/components/ViewToggle";
@@ -15,7 +16,7 @@ const eventsSeed: HeroEventData[] = [
     date: "2026-08-12T18:30:00.000Z",
     detailedExplanation:
       "During a total solar eclipse, the Moon's apparent size fully covers the Sun, revealing the delicate structure of the solar corona. Temperatures can drop noticeably, animals behave as if night has fallen, and the stars briefly return to the daytime sky. Astronomers use these moments to study coronal dynamics, magnetic fields, and the solar wind from a vantage point impossible at any other time.",
-    image: "/images/events/solar-eclipse.jpg",
+    image: "/images/events/main-image.jpg",
   },
   {
     id: "galactic-alignment",
@@ -74,42 +75,51 @@ export default function Home() {
         {/* Top nav / brand */}
         <header className="mb-10 flex flex-col items-center justify-center">
           <div className="flex items-center gap-3">
-            <div>
-              <p className="text-xs font-semibold tracking-[0.22em] text-zinc-400 uppercase">
-                Cosmic Timeline
-              </p>
-            </div>
+            <Image
+              src="/logo.svg"
+              alt="Cosmic Timeline logo"
+              width={148}
+              height={16}
+              priority
+            />
           </div>
         </header>
 
-        {/* Hero section */}
-        <section className="mb-8 flex flex-col items-center justify-center gap-10 lg:mb-10">
-          <div className="max-w-[600px] w-full flex flex-col items-center justify-center space-y-3">
+        {/* Hero heading */}
+        <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
+          <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
             <h1 className="text-balance text-3xl font-normal text-zinc-50 sm:text-4xl lg:text-5xl w-full text-center">
-            Journey <span className="font-dynamite">Into</span>
+              Journey <span className="font-dynamite">Into</span>
               <br />
               the Future of the Universe
             </h1>
             <p className="max-w-2xl w-full text-sm text-zinc-400 sm:text-base text-center">
-              Move beyond the next launch window. Explore eclipses, stellar
-              collisions, and galaxy-scale transformations, ordered from the
-              next moment in time to billions of years ahead.
+              From events that may happen within our lifetime
+              to cosmic transformations billions of years away.
             </p>
           </div>
+        </section>
 
-          {nextEvent && <HeroEvent event={nextEvent} />}
+        {/* Hero image under main heading */}
+        <section className="mb-32 w-full lg:mb-32">
+          <div className="relative h-[180px] w-full overflow-hidden rounded-3xl border border-[var(--color-zinc-800)] bg-zinc-950">
+            <Image
+              src="/images/hero-image.jpg"
+              alt="Cosmic landscape representing the journey into the future of the universe"
+              fill
+              className="object-cover"
+              sizes="(min-width: 1024px) 1120px, 100vw"
+              priority
+            />
+          </div>
         </section>
 
         {/* View toggle */}
         <section className="mb-5 flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-xs font-semibold tracking-[0.26em] text-zinc-500 uppercase">
-              Explore the timeline
+            <h2 className="text-[32px] leading-[44px] font-normal text-background">
+              Upcoming Events
             </h2>
-            <p className="mt-1 text-xs text-zinc-500">
-              Switch between a compact grid of events or a continuous timeline
-              stretching into the deep future.
-            </p>
           </div>
 
           <ViewToggle
@@ -118,10 +128,13 @@ export default function Home() {
           />
         </section>
 
-        {/* Events area */}
-        <section className="flex-1">
+        {/* Events area (hero event + list) */}
+        <section className="flex-1 space-y-6">
           {viewMode === "grid" ? (
-            <EventGrid events={remainingEvents} />
+            <>
+              {nextEvent && <HeroEvent event={nextEvent} />}
+              <EventGrid events={remainingEvents} />
+            </>
           ) : (
             <EventTimeline
               events={sortedEvents}

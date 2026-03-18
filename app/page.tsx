@@ -266,7 +266,7 @@ export default function Home() {
 
         {/* Hero image under main heading */}
         <section className="mb-32 w-full lg:mb-32">
-          <div className="relative h-[180px] w-full overflow-hidden rounded-3xl border border-[var(--color-zinc-800)] bg-zinc-950">
+          <div className="relative h-[180px] w-full overflow-hidden rounded-3xl bg-zinc-950">
             <Image
               src="/images/hero-image.jpg"
               alt="Cosmic landscape representing the journey into the future of the universe"

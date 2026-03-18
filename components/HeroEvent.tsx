@@ -108,7 +108,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
           />
 
           {/* Category badge placeholder (top-left) */}
-          <div className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-[0.68rem] font-medium text-zinc-200">
+          <div className="absolute rounded-full border border-[var(--color-zinc-800)] bg-[var(--color-zinc-800)] px-3 py-1 text-[0.68rem] font-medium text-zinc-200">
             Solar system
           </div>
         </div>
@@ -129,7 +129,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
 
           {/* Date row + Countdown */}
           <div className="mt-6 flex h-full flex-col gap-0">
-            <div className="inline-flex items-center gap-2 text-sm text-zinc-300">
+            <div className="inline-flex items-center gap-1 text-sm text-zinc-300">
               <span className="event-card__date-icon">
                 <CalendarIcon className="h-3.5 w-3.5" />
               </span>

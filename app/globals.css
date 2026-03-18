@@ -44,7 +44,11 @@ body {
   }
 
   .event-card__category {
-    @apply absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-[0.68rem] font-medium text-zinc-200;
+    @apply absolute left-4 top-4 rounded-full px-3 py-1 text-[0.68rem] font-medium text-zinc-200;
+    background-color: var(--color-zinc-800);
+    border-width: 1px;
+    border-style: solid;
+    border-color: var(--color-zinc-800);
   }
 
   .event-card__content {
@@ -54,16 +58,17 @@ body {
   }
 
   .event-card__header {
-    @apply flex w-full flex-col items-center justify-center gap-0;
-    min-height: 5.25rem; /* fixed block height for title + description */
+    @apply flex w-full flex-col items-center justify-start gap-1 py-1;
+    height: 84px;
+    overflow: hidden;
   }
 
   .event-card__title {
-    @apply text-center text-base font-semibold leading-snug text-zinc-50 sm:text-lg;
+    @apply m-0 text-center text-base font-semibold leading-snug text-zinc-50 sm:text-lg;
   }
 
   .event-card__description {
-    @apply mt-3 text-center text-sm leading-5 text-zinc-400;
+    @apply m-0 text-center text-sm leading-5 text-zinc-400;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* show at most two lines */
     -webkit-box-orient: vertical;
@@ -75,7 +80,7 @@ body {
   }
 
   .event-card__date {
-    @apply mt-0 mb-1 flex items-center justify-center gap-2 text-sm text-zinc-300;
+    @apply mt-0 mb-1 flex items-center justify-center gap-1 text-sm text-zinc-300;
   }
 
   .event-card__date-icon {

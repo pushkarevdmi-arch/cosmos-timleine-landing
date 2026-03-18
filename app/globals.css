@@ -117,6 +117,7 @@ body {
 
   .event-card__explore {
     @apply mt-3 inline-flex items-center justify-center gap-1.5 text-indigo-300 transition hover:text-indigo-200;
+    cursor: pointer;
   }
 
   .event-card__explore-icon {

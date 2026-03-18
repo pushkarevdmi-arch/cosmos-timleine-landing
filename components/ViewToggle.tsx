@@ -21,7 +21,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
             type="button"
             onClick={() => onChange(option.value)}
             className={[
-              "relative px-4 py-1.5 text-xs font-medium transition-colors rounded-full",
+              "relative px-4 py-1.5 text-xs font-medium transition-colors rounded-full cursor-pointer",
               isActive
                 ? "bg-zinc-100 text-black shadow-sm"
                 : "text-zinc-400 hover:text-zinc-100",

@@ -9,6 +9,9 @@ export type HeroEventData = {
   date: string;
   detailedExplanation: string;
   image: string;
+  whyItMatters?: string;
+  whatYoullSee?: string;
+  keyFacts?: string[];
 };
 
 type HeroEventProps = {
@@ -107,8 +110,8 @@ export default function HeroEvent({ event }: HeroEventProps) {
             className="object-cover"
           />
 
-          {/* Category badge placeholder (top-left) */}
-          <div className="absolute rounded-full border border-[var(--color-zinc-800)] bg-[var(--color-zinc-800)] px-3 py-1 text-[0.68rem] font-medium text-zinc-200">
+          {/* Category badge (match small cards) */}
+          <div className="event-card__category">
             Solar system
           </div>
         </div>
@@ -165,7 +168,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
 
             <button
               type="button"
-              className="mt-3 inline-flex items-center gap-1.5 text-indigo-300 hover:text-indigo-200"
+              className="mt-3 inline-flex items-center gap-1.5 text-indigo-300 hover:text-indigo-200 cursor-pointer"
             >
               <span className="event-card__explore-icon">
                 <img src="/icons/rocket.svg" width="18" height="18" />

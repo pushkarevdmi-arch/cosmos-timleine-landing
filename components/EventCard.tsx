@@ -11,6 +11,12 @@ type Countdown = {
   isPast: boolean;
 };
 
+const LONG_TERM_SECTIONS = new Set([
+  "Next 10,000 Years",
+  "Millions of Years",
+  "Billions of Years",
+]);
+
 function useCountdown(targetDate: string): Countdown {
   const getDiff = (): Countdown => {
     const now = new Date().getTime();
@@ -56,6 +62,27 @@ function formatCardDate(dateStr: string) {
     month: "long",
     day: "numeric",
   }).format(date);
+}
+
+function isLongTermEvent(event: HeroEventData) {
+  if (event.timeSection && LONG_TERM_SECTIONS.has(event.timeSection)) {
+    return true;
+  }
+
+  const eventYear = new Date(event.date).getUTCFullYear();
+  if (!Number.isFinite(eventYear)) return false;
+  const yearsAhead = Math.max(0, eventYear - new Date().getUTCFullYear());
+  return yearsAhead > 100;
+}
+
+function formatLongTermYears(years: number) {
+  if (years >= 1000000000) {
+    return `${Math.round(years / 1000000000).toLocaleString("en-US")} billion years`;
+  }
+  if (years >= 1000000) {
+    return `${Math.round(years / 1000000).toLocaleString("en-US")} million years`;
+  }
+  return `${years.toLocaleString("en-US")} years`;
 }
 
 function CalendarIcon({ className }: { className?: string }) {
@@ -108,6 +135,7 @@ export type EventCardProps = {
 
 export default function EventCard({ event }: EventCardProps) {
   const countdown = useCountdown(event.date);
+  const showLongTermYearsOnly = isLongTermEvent(event);
 
   return (
     <article className="event-card">
@@ -119,7 +147,7 @@ export default function EventCard({ event }: EventCardProps) {
           sizes="(min-width: 640px) 50vw, 100vw"
           className="event-card__image"
         />
-        <div className="event-card__category">Solar system</div>
+        <div className="event-card__category">{event.tag ?? "Solar system"}</div>
       </div>
 
       <div className="event-card__content w-full">
@@ -140,6 +168,12 @@ export default function EventCard({ event }: EventCardProps) {
             <div className="event-card__countdown">
               {countdown.isPast ? (
                 <p className="event-card__past-message">Event in the past</p>
+              ) : showLongTermYearsOnly ? (
+                <div className="flex w-full items-center justify-center rounded-xl border border-[var(--color-zinc-800)] bg-black px-4 py-3 sm:py-3.5">
+                  <span className="font-sans text-[20px] leading-[20px] font-semibold tabular-nums text-zinc-100 sm:text-[24px] sm:leading-[24px]">
+                    {formatLongTermYears(countdown.years)}
+                  </span>
+                </div>
               ) : (
                 <div className="event-card__countdown-grid">
                   <div className="event-card__countdown-segment">
@@ -169,7 +203,7 @@ export default function EventCard({ event }: EventCardProps) {
             <span className="event-card__explore-icon">
               <img src="/icons/rocket.svg" width="18" height="18" />
             </span>
-            <span className="text-sm font-medium leading-[22px]">
+            <span className="type-button-label">
               Explore event
             </span>
           </button>

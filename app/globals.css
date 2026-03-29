@@ -3,6 +3,83 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+
+  /* Typography tokens (px) */
+  /* Note: custom rem-based sizes in the codebase are converted to px and,
+     when fractional, rounded to the nearest multiple of 4. */
+  --text-size-xxs: 8px; /* from 0.55rem / 0.6rem */
+  --text-size-xs: 12px; /* from text-xs and 0.65rem / 0.68rem / 0.7rem / 0.78rem */
+  --text-size-sm: 14px; /* text-sm */
+  --text-size-base: 16px; /* text-base */
+  --text-size-lg: 18px; /* text-lg */
+  --text-size-xl: 20px; /* text-xl */
+  --text-size-2xl: 24px; /* text-2xl */
+  --text-size-3xl: 30px; /* text-3xl */
+  --text-size-4xl: 36px; /* text-4xl */
+  --text-size-5xl: 48px; /* text-5xl */
+  --text-size-32px: 32px; /* text-[32px] */
+
+  /* Explicit line-heights used in the codebase */
+  --leading-22px: 22px; /* leading-[22px] */
+  --leading-44px: 44px; /* leading-[44px] */
+
+  /* Line-height ratios from Tailwind presets (optional use) */
+  --leading-none: 1;
+  --leading-snug: 1.375;
+  --leading-relaxed: 1.625;
+
+  /* Letter-spacing tokens (used via tracking-[...]) */
+  --tracking-0-2em: 0.2em;
+  --tracking-0-22em: 0.22em;
+
+  /* Typography preset tokens (px) */
+  /* h1 */
+  --h1-400-size: 32px;
+  --h1-400-lh: 36px;
+  --h1-600-size: 32px;
+  --h1-600-lh: 36px;
+
+  /* h2 */
+  --h2-400-size: 32px;
+  --h2-400-lh: 44px;
+  --h2-600-size: 32px;
+  --h2-600-lh: 44px;
+
+  /* h3 */
+  --h3-400-size: 20px;
+  --h3-400-lh: 28px;
+  --h3-600-size: 20px;
+  --h3-600-lh: 28px;
+
+  /* h4 */
+  --h4-400-size: 16px;
+  --h4-400-lh: 20px;
+  --h4-600-size: 16px;
+  --h4-600-lh: 20px;
+
+  /* h5 */
+  --h5-400-size: 16px;
+  --h5-400-lh: 24px;
+  --h5-600-size: 16px;
+  --h5-600-lh: 24px;
+
+  /* body large */
+  --body-large-400-size: 16px;
+  --body-large-400-lh: 24px;
+  --body-large-600-size: 16px;
+  --body-large-600-lh: 24px;
+
+  /* body medium (adaptive line-height like type-lead) */
+  --body-medium-400-size: 16px;
+  --body-medium-400-lh: 20px;
+  --body-medium-600-size: 16px;
+  --body-medium-600-lh: 20px;
+
+  /* body small */
+  --body-small-400-size: 12px;
+  --body-small-400-lh: 16px;
+  --body-small-600-size: 12px;
+  --body-small-600-lh: 16px;
 }
 
 @theme inline {
@@ -10,6 +87,108 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Text preset tokens (so they can be selected like colors) */
+  /* h1 */
+  --text-h1-400: var(--h1-400-size);
+  --text-h1-400--line-height: var(--h1-400-lh);
+  --text-h1-400--font-weight: 400;
+  --text-h1-600: var(--h1-600-size);
+  --text-h1-600--line-height: var(--h1-600-lh);
+  --text-h1-600--font-weight: 600;
+
+  /* h2 */
+  --text-h2-400: var(--h2-400-size);
+  --text-h2-400--line-height: var(--h2-400-lh);
+  --text-h2-400--font-weight: 400;
+  --text-h2-600: var(--h2-600-size);
+  --text-h2-600--line-height: var(--h2-600-lh);
+  --text-h2-600--font-weight: 600;
+
+  /* h3 */
+  --text-h3-400: var(--h3-400-size);
+  --text-h3-400--line-height: var(--h3-400-lh);
+  --text-h3-400--font-weight: 400;
+  --text-h3-600: var(--h3-600-size);
+  --text-h3-600--line-height: var(--h3-600-lh);
+  --text-h3-600--font-weight: 600;
+
+  /* h4 */
+  --text-h4-400: var(--h4-400-size);
+  --text-h4-400--line-height: var(--h4-400-lh);
+  --text-h4-400--font-weight: 400;
+  --text-h4-600: var(--h4-600-size);
+  --text-h4-600--line-height: var(--h4-600-lh);
+  --text-h4-600--font-weight: 600;
+
+  /* h5 */
+  --text-h5-400: var(--h5-400-size);
+  --text-h5-400--line-height: var(--h5-400-lh);
+  --text-h5-400--font-weight: 400;
+  --text-h5-600: var(--h5-600-size);
+  --text-h5-600--line-height: var(--h5-600-lh);
+  --text-h5-600--font-weight: 600;
+
+  /* body large */
+  --text-body-large-400: var(--body-large-400-size);
+  --text-body-large-400--line-height: var(--body-large-400-lh);
+  --text-body-large-400--font-weight: 400;
+  --text-body-large-600: var(--body-large-600-size);
+  --text-body-large-600--line-height: var(--body-large-600-lh);
+  --text-body-large-600--font-weight: 600;
+
+  /* body medium (adaptive line-height like type-lead) */
+  --text-body-medium-400: var(--body-medium-400-size);
+  --text-body-medium-400--line-height: var(--body-medium-400-lh);
+  --text-body-medium-400--font-weight: 400;
+  --text-body-medium-600: var(--body-medium-600-size);
+  --text-body-medium-600--line-height: var(--body-medium-600-lh);
+  --text-body-medium-600--font-weight: 600;
+
+  /* body small */
+  --text-body-small-400: var(--body-small-400-size);
+  --text-body-small-400--line-height: var(--body-small-400-lh);
+  --text-body-small-400--font-weight: 400;
+  --text-body-small-600: var(--body-small-600-size);
+  --text-body-small-600--line-height: var(--body-small-600-lh);
+  --text-body-small-600--font-weight: 600;
+
+  /* tracking presets (keep em, as in the existing project) */
+  --tracking-caps: var(--tracking-0-22em);
+  --tracking-caps-tight: var(--tracking-0-2em);
+}
+
+/* Responsive overrides for adaptive tokens */
+@media (min-width: 40rem) {
+  :root {
+    --h1-400-size: 36px;
+    --h1-400-lh: 40px;
+    --h1-600-size: 36px;
+    --h1-600-lh: 40px;
+
+    /* h4 only changes line-height */
+    --h4-400-lh: 24px;
+    --h4-600-lh: 24px;
+
+    /* h5 changes font-size and line-height */
+    --h5-400-size: 20px;
+    --h5-400-lh: 28px;
+    --h5-600-size: 20px;
+    --h5-600-lh: 28px;
+
+    /* body medium only changes line-height */
+    --body-medium-400-lh: 24px;
+    --body-medium-600-lh: 24px;
+  }
+}
+
+@media (min-width: 64rem) {
+  :root {
+    --h1-400-size: 48px;
+    --h1-400-lh: 48px;
+    --h1-600-size: 48px;
+    --h1-600-lh: 48px;
+  }
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,6 +201,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+svg {
+  color: var(--background);
 }
 
 @layer components {
@@ -44,7 +227,7 @@ body {
   }
 
   .event-card__category {
-    @apply absolute left-4 top-4 rounded-full px-3 py-1 text-[0.68rem] font-medium text-zinc-200;
+    @apply absolute left-4 top-4 rounded-full px-3 py-1 font-medium text-zinc-200 text-[12px] leading-[16px];
     background-color: var(--color-zinc-800);
     border-width: 1px;
     border-style: solid;
@@ -64,11 +247,11 @@ body {
   }
 
   .event-card__title {
-    @apply m-0 text-center text-base font-semibold leading-snug text-zinc-50 sm:text-lg;
+    @apply m-0 text-center text-zinc-50 font-semibold text-[16px] leading-[24px] sm:text-[20px] sm:leading-[28px];
   }
 
   .event-card__description {
-    @apply m-0 text-center text-sm leading-5 text-zinc-400;
+    @apply m-0 text-center text-zinc-400 text-[16px] leading-[20px];
     display: -webkit-box;
     -webkit-line-clamp: 2; /* show at most two lines */
     -webkit-box-orient: vertical;
@@ -80,11 +263,11 @@ body {
   }
 
   .event-card__date {
-    @apply mt-0 mb-1 flex items-center justify-center gap-1 text-sm text-zinc-300;
+    @apply mt-0 mb-1 flex items-center justify-center gap-1 text-zinc-300 text-[16px] leading-[20px];
   }
 
   .event-card__date-icon {
-    @apply inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[0.7rem];
+    @apply inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[12px];
   }
 
   .event-card__countdown {
@@ -92,7 +275,7 @@ body {
   }
 
   .event-card__past-message {
-    @apply text-center text-sm font-medium text-emerald-300;
+    @apply text-center font-medium text-emerald-300 text-[16px] leading-[20px];
   }
 
   .event-card__countdown-grid {
@@ -108,11 +291,11 @@ body {
   }
 
   .event-card__countdown-value {
-    @apply text-lg font-semibold leading-none tabular-nums sm:text-xl;
+    @apply text-[20px] leading-[20px] font-semibold tabular-nums;
   }
 
   .event-card__countdown-label {
-    @apply mt-0.5 text-[0.55rem] uppercase tracking-[0.22em] text-zinc-400 sm:mt-1 sm:text-[0.6rem];
+    @apply mt-0.5 sm:mt-1 uppercase tracking-[0.22em] text-[8px] leading-[12px] text-zinc-400;
   }
 
   .event-card__explore {
@@ -121,7 +304,227 @@ body {
   }
 
   .event-card__explore-icon {
-    @apply inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[0.6rem];
+    @apply inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-zinc-900 text-[8px];
+  }
+}
+
+.typography-reset {
+  font-synthesis: none;
+}
+
+@layer utilities {
+  /* Display / headings */
+  .type-h1 {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 36px;
+    text-wrap: balance;
+  }
+  @media (min-width: 40rem) {
+    .type-h1 {
+      font-size: 36px;
+      line-height: 40px;
+    }
+  }
+  @media (min-width: 64rem) {
+    .type-h1 {
+      font-size: 48px;
+      line-height: 48px;
+    }
+  }
+
+  .type-h2-section {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 32px;
+    line-height: 44px;
+  }
+
+  .type-hero-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 28px;
+  }
+
+  .type-timeline-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  @media (min-width: 40rem) {
+    .type-timeline-title {
+      line-height: 24px;
+    }
+  }
+
+  .type-card-title {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+  }
+  @media (min-width: 40rem) {
+    .type-card-title {
+      font-size: 20px;
+      line-height: 28px;
+    }
+  }
+
+  /* Body */
+  .type-body-tight {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .type-lead {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  @media (min-width: 40rem) {
+    .type-lead {
+      line-height: 24px;
+    }
+  }
+
+  .type-body {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .type-body-relaxed {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+  }
+
+  .type-body-medium-tight {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .type-card-description {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  /* Captions / small text */
+  .type-caption {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .type-caption-medium {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .type-caption-semibold {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .type-era-label {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 16px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  /* Micro labels / countdown */
+  .type-micro-regular {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  .type-micro-medium {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 8px;
+    line-height: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+  }
+
+  .type-mono-index {
+    font-size: 8px;
+    line-height: 12px;
+  }
+
+  .type-countdown-value-regular {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 24px;
+  }
+  @media (min-width: 48rem) {
+    .type-countdown-value-regular {
+      font-size: 32px;
+      line-height: 32px;
+    }
+  }
+
+  .type-countdown-value-semibold {
+    font-family: var(--font-sans);
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 20px;
+  }
+
+  .type-countdown-label {
+    font-family: var(--font-sans);
+    font-weight: 400;
+    font-size: 8px;
+    line-height: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+  }
+
+  /* Controls */
+  .type-toggle-label {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+  }
+
+  .type-button-text {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+  }
+
+  .type-button-label {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 24px;
   }
 }
 

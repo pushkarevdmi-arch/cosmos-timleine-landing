@@ -8,26 +8,63 @@ type ViewToggleProps = {
 };
 
 export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
+  const options = [{ value: "grid" as ViewMode }, { value: "timeline" as ViewMode }];
+
   return (
-    <div className="inline-flex rounded-full bg-zinc-900/80 p-1 ring-1 ring-zinc-700/70 backdrop-blur">
-      {[
-        { value: "grid" as ViewMode, label: "Grid" },
-        { value: "timeline" as ViewMode, label: "Timeline" },
-      ].map((option) => {
+    <div className="inline-flex rounded-2xl bg-zinc-900 p-1.5">
+      {options.map((option) => {
         const isActive = option.value === mode;
         return (
           <button
             key={option.value}
             type="button"
-            onClick={() => onChange(option.value)}
+            onClick={() => {
+              if (!isActive) onChange(option.value);
+            }}
+            aria-pressed={isActive}
+            aria-label={option.value === "grid" ? "Grid view" : "Timeline view"}
             className={[
-              "relative px-4 py-1.5 text-xs font-medium transition-colors rounded-full cursor-pointer",
+              "relative flex h-12 w-12 appearance-none items-center justify-center rounded-xl border-0 transition-colors cursor-pointer",
               isActive
-                ? "bg-zinc-100 text-black shadow-sm"
-                : "text-zinc-400 hover:text-zinc-100",
+                ? "text-zinc-100"
+                : "text-zinc-500 hover:text-zinc-400",
             ].join(" ")}
+            style={{
+              backgroundColor: isActive ? "var(--color-zinc-700)" : "transparent",
+              color: isActive ? "var(--color-zinc-100)" : "var(--color-zinc-500)",
+            }}
           >
-            {option.label}
+            {option.value === "grid" ? (
+              <span
+                aria-hidden="true"
+                className="size-6 bg-current"
+                style={{
+                  WebkitMaskImage: "url('/icons/view-grid.svg')",
+                  maskImage: "url('/icons/view-grid.svg')",
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  maskPosition: "center",
+                  WebkitMaskSize: "24px 24px",
+                  maskSize: "24px 24px",
+                }}
+              />
+            ) : (
+              <span
+                aria-hidden="true"
+                className="size-6 bg-current"
+                style={{
+                  WebkitMaskImage: "url('/icons/view-timeline.svg')",
+                  maskImage: "url('/icons/view-timeline.svg')",
+                  WebkitMaskRepeat: "no-repeat",
+                  maskRepeat: "no-repeat",
+                  WebkitMaskPosition: "center",
+                  maskPosition: "center",
+                  WebkitMaskSize: "24px 24px",
+                  maskSize: "24px 24px",
+                }}
+              />
+            )}
           </button>
         );
       })}

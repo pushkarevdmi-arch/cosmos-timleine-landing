@@ -6,6 +6,8 @@ export type HeroEventData = {
   id: string;
   title: string;
   description: string;
+  tag?: string;
+  timeSection?: "Next 100 Years" | "Next 10,000 Years" | "Millions of Years" | "Billions of Years";
   date: string;
   detailedExplanation: string;
   image: string;
@@ -17,6 +19,12 @@ export type HeroEventData = {
 type HeroEventProps = {
   event: HeroEventData;
 };
+
+const LONG_TERM_SECTIONS = new Set([
+  "Next 10,000 Years",
+  "Millions of Years",
+  "Billions of Years",
+]);
 
 type Countdown = {
   days: number;
@@ -94,8 +102,39 @@ function formatDate(dateStr: string) {
   }).format(date);
 }
 
+function isLongTermEvent(event: HeroEventData) {
+  if (event.timeSection && LONG_TERM_SECTIONS.has(event.timeSection)) {
+    return true;
+  }
+
+  const eventYear = new Date(event.date).getUTCFullYear();
+  if (!Number.isFinite(eventYear)) return false;
+  const yearsAhead = Math.max(0, eventYear - new Date().getUTCFullYear());
+  return yearsAhead > 100;
+}
+
+function getYearsRemaining(dateStr: string) {
+  const now = Date.now();
+  const target = new Date(dateStr).getTime();
+  if (Number.isNaN(target) || target <= now) return 0;
+  const yearMs = 1000 * 60 * 60 * 24 * 365;
+  return Math.floor((target - now) / yearMs);
+}
+
+function formatLongTermYears(years: number) {
+  if (years >= 1000000000) {
+    return `${Math.round(years / 1000000000).toLocaleString("en-US")} billion years`;
+  }
+  if (years >= 1000000) {
+    return `${Math.round(years / 1000000).toLocaleString("en-US")} million years`;
+  }
+  return `${years.toLocaleString("en-US")} years`;
+}
+
 export default function HeroEvent({ event }: HeroEventProps) {
   const countdown = useCountdown(event.date);
+  const showLongTermYearsOnly = isLongTermEvent(event);
+  const yearsRemaining = getYearsRemaining(event.date);
 
   return (
     <section className="relative w-full overflow-hidden rounded-3xl border border-[var(--color-zinc-800)] bg-zinc-950">
@@ -112,7 +151,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
 
           {/* Category badge (match small cards) */}
           <div className="event-card__category">
-            Solar system
+            {event.tag ?? "Solar system"}
           </div>
         </div>
 
@@ -122,17 +161,17 @@ export default function HeroEvent({ event }: HeroEventProps) {
           style={{ background: "unset", backgroundColor: "var(--color-zinc-900)" }}
         >
           <div className="flex flex-col space-y-2">
-            <h1 className="text-lg font-semibold leading-snug text-zinc-50 md:text-xl">
+            <h1 className="font-sans text-h3-600 text-zinc-50">
               {event.title}
             </h1>
-            <p className="max-w-xl text-sm leading-relaxed text-zinc-400">
+            <p className="max-w-xl font-sans text-body-large-400 text-zinc-400">
               {event.description}
             </p>
           </div>
 
           {/* Date row + Countdown */}
           <div className="mt-6 flex h-full flex-col gap-0">
-            <div className="inline-flex items-center gap-1 text-sm text-zinc-300">
+            <div className="inline-flex items-center gap-1 type-body-tight text-zinc-300">
               <span className="event-card__date-icon">
                 <CalendarIcon className="h-3.5 w-3.5" />
               </span>
@@ -140,9 +179,15 @@ export default function HeroEvent({ event }: HeroEventProps) {
             </div>
 
             {countdown.isPast ? (
-              <p className="mt-1 text-sm font-medium text-emerald-300">
+              <p className="mt-1 type-body-medium-tight text-emerald-300">
                 This event has already occurred.
               </p>
+            ) : showLongTermYearsOnly ? (
+              <div className="mt-1 flex w-full items-center justify-center rounded-xl border border-[var(--color-zinc-800)] bg-black px-4 py-3 md:px-6 md:py-4">
+                <span className="type-countdown-value-regular tabular-nums">
+                  {formatLongTermYears(yearsRemaining)}
+                </span>
+              </div>
             ) : (
               <div className="mt-1 hero-countdown flex flex-nowrap items-center justify-between gap-2 text-zinc-100">
                 {[
@@ -155,10 +200,10 @@ export default function HeroEvent({ event }: HeroEventProps) {
                     key={segment.label}
                     className="flex w-full min-w-0 flex-1 flex-col items-center justify-center rounded-xl border border-[var(--color-zinc-800)] bg-black px-4 py-3 md:px-6 md:py-4"
                   >
-                    <span className="text-2xl leading-none tabular-nums md:text-3xl">
+                    <span className="type-countdown-value-regular tabular-nums">
                       {segment.value.toString().padStart(2, "0")}
                     </span>
-                    <span className="mt-1 text-[0.6rem] tracking-[0.22em] text-zinc-400">
+                    <span className="mt-1 type-micro-regular text-zinc-400">
                       {segment.label}
                     </span>
                   </div>
@@ -173,7 +218,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
               <span className="event-card__explore-icon">
                 <img src="/icons/rocket.svg" width="18" height="18" />
               </span>
-              <span className="text-sm font-medium leading-[22px]">
+              <span className="type-button-label">
                 Explore event
               </span>
             </button>

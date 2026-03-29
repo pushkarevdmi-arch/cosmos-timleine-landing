@@ -11,7 +11,10 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
   const options = [{ value: "grid" as ViewMode }, { value: "timeline" as ViewMode }];
 
   return (
-    <div className="inline-flex rounded-2xl bg-zinc-900 p-1.5">
+    <div
+      className="inline-flex rounded-2xl p-1.5"
+      style={{ backgroundColor: "var(--ds-neutral-800)" }}
+    >
       {options.map((option) => {
         const isActive = option.value === mode;
         return (
@@ -26,12 +29,11 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
             className={[
               "relative flex h-12 w-12 appearance-none items-center justify-center rounded-xl border-0 transition-colors cursor-pointer",
               isActive
-                ? "text-zinc-100"
-                : "text-zinc-500 hover:text-zinc-400",
+                ? "text-ds-neutral-100"
+                : "text-ds-neutral-500 hover:text-ds-neutral-400",
             ].join(" ")}
             style={{
-              backgroundColor: isActive ? "var(--color-zinc-700)" : "transparent",
-              color: isActive ? "var(--color-zinc-100)" : "var(--color-zinc-500)",
+              backgroundColor: isActive ? "var(--ds-neutral-600)" : "transparent",
             }}
           >
             {option.value === "grid" ? (
@@ -39,6 +41,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
                 aria-hidden="true"
                 className="size-6 bg-current"
                 style={{
+                  color: isActive ? "var(--ds-neutral-00)" : undefined,
                   WebkitMaskImage: "url('/icons/view-grid.svg')",
                   maskImage: "url('/icons/view-grid.svg')",
                   WebkitMaskRepeat: "no-repeat",
@@ -54,6 +57,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
                 aria-hidden="true"
                 className="size-6 bg-current"
                 style={{
+                  color: isActive ? "var(--ds-neutral-00)" : undefined,
                   WebkitMaskImage: "url('/icons/view-timeline.svg')",
                   maskImage: "url('/icons/view-timeline.svg')",
                   WebkitMaskRepeat: "no-repeat",

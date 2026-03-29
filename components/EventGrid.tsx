@@ -11,7 +11,7 @@ type EventGridProps = {
 export default function EventGrid({ events, onExplore }: EventGridProps) {
   if (!events.length) {
     return (
-      <p className="type-body-tight text-zinc-500">
+      <p className="type-body-tight text-ds-neutral-500">
         No other events are currently in view. Add more to extend your cosmic
         journey.
       </p>
@@ -31,10 +31,10 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
             {showSectionHeader ? (
               <div className="col-span-full mt-2 mb-1">
                 <div className="flex items-center gap-3">
-                  <span className="type-era-label text-zinc-400">
+                  <span className="type-era-label text-ds-neutral-400">
                     {currentSection}
                   </span>
-                  <span className="h-px flex-1 bg-zinc-800/80" />
+                  <span className="h-px flex-1 bg-ds-neutral-800/80" />
                 </div>
               </div>
             ) : null}

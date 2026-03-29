@@ -13,7 +13,7 @@ export default function ButtonSecondary({
     <button
       type={type}
       onClick={onClick}
-      className="rounded-full border border-zinc-700 px-4 py-2 type-button-text text-zinc-100 hover:border-zinc-500 hover:text-white cursor-pointer"
+      className="rounded-full border border-ds-neutral-700 px-4 py-2 type-button-text text-ds-neutral-100 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
     >
       {children}
     </button>

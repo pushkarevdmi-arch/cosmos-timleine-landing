@@ -1,0 +1,33 @@
+---
+description: Use design-system/tokens.json consistently in UI (CSS vars / Tailwind theme)
+globs:
+  - "**/*.tsx"
+  - "**/*.css"
+alwaysApply: false
+---
+
+# Design tokens (`tokens.json`)
+
+**Source of truth:** `design-system/tokens.json` (Figma export: primitives by breakpoint, semantic by Light/Dark). **Do not** hand-edit `app/design-tokens.css` or `app/ds-tailwind-theme.css` — they are generated. After changing tokens, run `npm run build:tokens`.
+
+**Structure:** See `design-system/design-tokens-structure.md`. Prefer **semantic** tokens for UI meaning (backgrounds, text, borders, states) when a matching token exists; use **primitives** when there is no semantic equivalent.
+
+## In components and CSS
+
+- **Tailwind:** Use theme colors that map to tokens, e.g. `bg-ds-bg-primary`, `text-ds-text-primary`, `border-ds-border-secondary` (pattern: `*-ds-*` from `@theme` in `ds-tailwind-theme.css`).
+- **Raw CSS:** Use `var(--ds-…)` variables from the generated palette (same names as in `design-tokens.css`).
+- **Consistency:** Reuse the same token for the same role across components (one primary surface color, one default text color, etc.). Avoid parallel “almost the same” hex values.
+
+## Avoid
+
+```tsx
+// ❌ Arbitrary values that bypass tokens
+className="bg-[#6366F1] text-[#111827]"
+```
+
+```tsx
+// ✅ Token-backed utilities
+className="bg-ds-bg-brand-primary text-ds-text-primary"
+```
+
+If the design needs a value that is **not** in `tokens.json`, add or extend the token in `design-system/tokens.json`, run `npm run build:tokens`, then use the new `--ds-*` / `*-ds-*` mapping — do not leave one-off literals in JSX or CSS.

@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { CalendarIcon } from "./CalendarIcon";
 import type { HeroEventData } from "./HeroEvent";
 
 type Countdown = {
@@ -85,28 +86,6 @@ function formatLongTermYears(years: number) {
   return `${years.toLocaleString("en-US")} years`;
 }
 
-function CalendarIcon({ className }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      width="20"
-      height="20"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden
-    >
-      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
-      <line x1="16" y1="2" x2="16" y2="6" />
-      <line x1="8" y1="2" x2="8" y2="6" />
-      <line x1="3" y1="10" x2="21" y2="10" />
-    </svg>
-  );
-}
-
 function RocketIcon({ className }: { className?: string }) {
   return (
     <svg
@@ -160,7 +139,7 @@ export default function EventCard({ event }: EventCardProps) {
           <div className="flex flex-col gap-1">
             <div className="event-card__date">
               <span className="event-card__date-icon">
-                <CalendarIcon className="h-3.5 w-3.5" />
+                <CalendarIcon className="h-5 w-5 text-ds-neutral-500" />
               </span>
               <span>{formatCardDate(event.date)}</span>
             </div>
@@ -169,8 +148,8 @@ export default function EventCard({ event }: EventCardProps) {
               {countdown.isPast ? (
                 <p className="event-card__past-message">Event in the past</p>
               ) : showLongTermYearsOnly ? (
-                <div className="flex w-full items-center justify-center rounded-xl border border-[var(--color-zinc-800)] bg-black px-4 py-3 sm:py-3.5">
-                  <span className="font-sans text-[20px] leading-[20px] font-semibold tabular-nums text-zinc-100 sm:text-[24px] sm:leading-[24px]">
+                <div className="flex w-full items-center justify-center rounded-xl border border-[var(--ds-neutral-800)] bg-ds-neutral-1000 px-4 py-3 sm:py-3.5">
+                  <span className="font-sans text-[20px] leading-[20px] font-semibold tabular-nums text-ds-neutral-100 sm:text-[24px] sm:leading-[24px]">
                     {formatLongTermYears(countdown.years)}
                   </span>
                 </div>

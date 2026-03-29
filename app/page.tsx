@@ -323,19 +323,19 @@ export default function Home() {
       : `${selectedTags.length} tags selected`;
 
   return (
-    <div className="min-h-screen bg-black text-zinc-100">
+    <div className="min-h-screen bg-ds-neutral-1000 text-ds-neutral-100">
       {/* Cosmic background */}
-      <div className="pointer-events-none fixed inset-0 -z-10 bg-gradient-to-b from-slate-950 via-black to-black" />
+      <div className="pointer-events-none fixed inset-0 -z-10 bg-ds-neutral-1000" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-60 [background-image:radial-gradient(circle_at_top,_rgba(59,130,246,0.32),_transparent_55%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.3),_transparent_55%),radial-gradient(circle_at_80%_30%,rgba(236,72,153,0.28),_transparent_60%)]" />
 
-      <main className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 pb-14 pt-10 sm:px-6 lg:px-8 lg:pt-14">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-10 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-10 flex flex-col items-center justify-center">
+        <header className="mb-16 flex flex-col items-center justify-center">
           <div className="flex items-center gap-3">
             <Image
               src="/logo.svg"
               alt="Cosmic Timeline logo"
-              width={148}
+              width={120}
               height={16}
               priority
             />
@@ -345,21 +345,20 @@ export default function Home() {
         {/* Hero heading */}
         <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
           <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
-            <h1 className="font-sans text-h1-400 text-zinc-50 w-full text-center">
+            <h1 className="font-sans text-h1-400 text-ds-neutral-50 w-full text-center">
               Journey <span className="font-dynamite">Into</span>
               <br />
               the Future of the Universe
             </h1>
-            <p className="max-w-2xl w-full font-sans text-body-medium-400 text-zinc-400 text-center">
-              From events that may happen within our lifetime
-              to cosmic transformations billions of years away.
+            <p className="max-w-2xl w-full font-sans text-body-medium-400 text-ds-neutral-400 text-center">
+              From events in our lifetime to cosmic changes billions of years ahead.
             </p>
           </div>
         </section>
 
         {/* Hero image under main heading */}
         <section className="mb-32 w-full lg:mb-32">
-          <div className="relative h-[180px] w-full overflow-hidden rounded-3xl bg-zinc-950">
+          <div className="relative h-[180px] w-full overflow-hidden rounded-3xl bg-ds-neutral-950">
             <Image
               src="/images/hero-image.jpg"
               alt="Cosmic landscape representing the journey into the future of the universe"
@@ -374,7 +373,7 @@ export default function Home() {
         {/* View toggle */}
         <section className="mb-5 flex items-center justify-between gap-4">
           <div>
-            <h2 className="font-sans text-h2-400 text-background">
+            <h2 className="font-sans text-h2-400 text-ds-neutral-00">
               Upcoming Events
             </h2>
           </div>
@@ -383,15 +382,32 @@ export default function Home() {
             <button
               type="button"
               onClick={() => setIsFilterOpen((open) => !open)}
-              className="rounded-full px-3 py-2 text-base font-bold text-zinc-200 hover:text-white cursor-pointer"
+              className="flex items-center gap-2 rounded-full px-3 py-2 text-base font-bold text-ds-neutral-200 hover:text-ds-neutral-00 cursor-pointer"
               aria-haspopup="dialog"
               aria-expanded={isFilterOpen}
             >
+              <svg
+                width={20}
+                height={20}
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
+                className="shrink-0"
+              >
+                <path
+                  d="M4.5 7H19.5M7 12H17M10 17H14"
+                  stroke="currentColor"
+                  strokeWidth={1.5}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
               Filters
             </button>
 
             {isFilterOpen ? (
-              <div className="absolute right-0 top-[calc(100%+0.5rem)] z-20 w-64 rounded-2xl bg-zinc-800 p-3 shadow-lg backdrop-blur">
+              <div className="absolute right-0 top-[calc(100%+0.5rem)] z-20 w-64 rounded-2xl bg-ds-neutral-800 p-3 shadow-lg backdrop-blur">
                 <div className="flex flex-col gap-2">
                   <div className="relative">
                     <button
@@ -407,13 +423,13 @@ export default function Home() {
                       onKeyDown={(event) =>
                         handleDropdownKeyboard(event, "time")
                       }
-                      className="flex w-full items-center justify-between rounded-xl border border-zinc-700 bg-zinc-900 pl-3 pr-3 py-2 type-caption-medium text-zinc-200 outline-none hover:border-zinc-500"
+                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-2 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
                     >
                       <span className="truncate">{selectedTimeRangeLabel}</span>
                       <svg
                         aria-hidden="true"
                         viewBox="0 0 20 20"
-                        className={`size-4 text-zinc-400 transition-transform ${
+                        className={`size-4 text-ds-neutral-400 transition-transform ${
                           openDropdown === "time" ? "rotate-180" : ""
                         }`}
                       >
@@ -431,7 +447,7 @@ export default function Home() {
                       <ul
                         role="listbox"
                         aria-label="Filter by time range options"
-                        className="absolute left-0 top-[calc(100%+0.35rem)] z-30 w-full overflow-hidden rounded-xl border border-zinc-700 bg-zinc-900 p-1 shadow-lg"
+                        className="absolute left-0 top-[calc(100%+0.35rem)] z-30 w-full overflow-hidden rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
                       >
                         <li>
                           <button
@@ -440,7 +456,7 @@ export default function Home() {
                               setSelectedTimeRange("all");
                               setOpenDropdown(null);
                             }}
-                            className="w-full rounded-lg px-2 py-2 text-left type-caption-medium text-zinc-200 hover:bg-zinc-800"
+                            className="w-full rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
                           >
                             All ranges
                           </button>
@@ -453,7 +469,7 @@ export default function Home() {
                                 setSelectedTimeRange(range);
                                 setOpenDropdown(null);
                               }}
-                              className="w-full rounded-lg px-2 py-2 text-left type-caption-medium text-zinc-200 hover:bg-zinc-800"
+                              className="w-full rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
                             >
                               {range}
                             </button>
@@ -475,13 +491,13 @@ export default function Home() {
                         )
                       }
                       onKeyDown={(event) => handleDropdownKeyboard(event, "tag")}
-                      className="flex w-full items-center justify-between rounded-xl border border-zinc-700 bg-zinc-900 pl-3 pr-3 py-2 type-caption-medium text-zinc-200 outline-none hover:border-zinc-500"
+                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-2 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
                     >
                       <span className="truncate">{selectedTagLabel}</span>
                       <svg
                         aria-hidden="true"
                         viewBox="0 0 20 20"
-                        className={`size-4 text-zinc-400 transition-transform ${
+                        className={`size-4 text-ds-neutral-400 transition-transform ${
                           openDropdown === "tag" ? "rotate-180" : ""
                         }`}
                       >
@@ -499,7 +515,7 @@ export default function Home() {
                       <ul
                         role="listbox"
                         aria-label="Filter by tag options"
-                        className="absolute left-0 top-[calc(100%+0.35rem)] z-30 max-h-56 w-full overflow-y-auto rounded-xl border border-zinc-700 bg-zinc-900 p-1 shadow-lg"
+                        className="absolute left-0 top-[calc(100%+0.35rem)] z-30 max-h-56 w-full overflow-y-auto rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
                       >
                         <li>
                           <button
@@ -507,11 +523,11 @@ export default function Home() {
                             onClick={() => {
                               setSelectedTags([]);
                             }}
-                            className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left type-caption-medium text-zinc-200 hover:bg-zinc-800"
+                            className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
                           >
                             All tags
                             {selectedTags.length === 0 ? (
-                              <span className="text-zinc-400">✓</span>
+                              <span className="text-ds-neutral-400">✓</span>
                             ) : null}
                           </button>
                         </li>
@@ -527,11 +543,11 @@ export default function Home() {
                                   return [...current, tag];
                                 });
                               }}
-                              className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left type-caption-medium text-zinc-200 hover:bg-zinc-800"
+                              className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
                             >
                               {tag}
                               {selectedTags.includes(tag) ? (
-                                <span className="text-zinc-400">✓</span>
+                                <span className="text-ds-neutral-400">✓</span>
                               ) : null}
                             </button>
                           </li>
@@ -547,7 +563,7 @@ export default function Home() {
                       setSelectedTags([]);
                       setOpenDropdown(null);
                     }}
-                    className="rounded-xl border border-zinc-700 px-3 py-2 type-caption-medium text-zinc-200 hover:border-zinc-500 hover:text-white cursor-pointer"
+                    className="rounded-xl border border-ds-neutral-700 px-3 py-2 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
                   >
                     Reset filters
                   </button>
@@ -587,7 +603,7 @@ export default function Home() {
             <div className="mt-6 flex justify-center">
               {isLoadingMore ? (
                 <div
-                  className="rounded-full border border-zinc-700 px-4 py-2 type-button-text text-zinc-300"
+                  className="rounded-full border border-ds-neutral-700 px-4 py-2 type-button-text text-ds-neutral-300"
                   role="status"
                   aria-live="polite"
                 >
@@ -599,10 +615,10 @@ export default function Home() {
         </section>
 
         {/* Footer */}
-        <footer className="mt-10 border-t border-zinc-800/80 pt-5 font-sans text-body-small-400 text-zinc-500">
+        <footer className="mt-10 border-t border-ds-neutral-800/80 pt-5 font-sans text-body-small-400 text-ds-neutral-500">
           <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
             <p>Inspired by real astronomy and long-range cosmology.</p>
-            <p className="font-sans text-body-small-400 text-zinc-600">
+            <p className="font-sans text-body-small-400 text-ds-neutral-600">
               Times and distances are approximate and simplified for an
               immersive experience.
             </p>

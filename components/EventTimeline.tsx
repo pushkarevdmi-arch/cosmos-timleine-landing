@@ -13,7 +13,7 @@ export default function EventTimeline({
 }: EventTimelineProps) {
   if (!events.length) {
     return (
-      <p className="type-body-tight text-zinc-500">
+      <p className="type-body-tight text-ds-neutral-500">
         No events yet. Add future cosmic milestones to see them unfold along a
         timeline.
       </p>
@@ -23,7 +23,7 @@ export default function EventTimeline({
   return (
     <div className="relative">
       {/* vertical spine */}
-      <div className="pointer-events-none absolute left-4 top-0 h-full w-px bg-zinc-700/70 sm:left-6" />
+      <div className="pointer-events-none absolute left-4 top-0 h-full w-px bg-ds-neutral-700/70 sm:left-6" />
 
       <ol className="space-y-4 pl-10 sm:pl-14">
         {events.map((event, index) => {
@@ -36,42 +36,42 @@ export default function EventTimeline({
             <li key={event.id}>
               {showSectionHeader ? (
                 <div className="mb-3 mt-2 flex items-center gap-3">
-                  <span className="type-era-label text-zinc-400">
+                  <span className="type-era-label text-ds-neutral-400">
                     {currentSection}
                   </span>
-                  <span className="h-px flex-1 bg-zinc-800/80" />
+                  <span className="h-px flex-1 bg-ds-neutral-800/80" />
                 </div>
               ) : null}
 
               <button
                 type="button"
                 onClick={() => onOpen(event)}
-                className="group flex w-full cursor-pointer items-start gap-3 rounded-2xl border border-zinc-800/80 bg-zinc-950/70 p-3 text-left transition hover:border-sky-400/70"
+                className="group flex w-full cursor-pointer items-start gap-3 rounded-2xl border border-ds-neutral-800/80 bg-ds-neutral-950/70 p-3 text-left transition hover:border-ds-primary-400/70"
               >
                 {/* Node */}
                 <div className="relative mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center">
-                  <div className="absolute h-3 w-3 rounded-full bg-zinc-900 ring-2 ring-zinc-700/80" />
-                  <div className="relative h-2 w-2 rounded-full bg-zinc-500 group-hover:bg-sky-300" />
+                  <div className="absolute h-3 w-3 rounded-full bg-ds-neutral-900 ring-2 ring-ds-neutral-700/80" />
+                  <div className="relative h-2 w-2 rounded-full bg-ds-neutral-500 group-hover:bg-ds-primary-300" />
                 </div>
 
                 {/* Content */}
                 <div className="min-w-0 flex-1 space-y-1">
-                  <p className="type-era-label text-zinc-500">
+                  <p className="type-era-label text-ds-neutral-500">
                     {formatEraLabel(event.date)}
                   </p>
-                  <h3 className="font-sans text-h4-600 text-zinc-50">
+                  <h3 className="font-sans text-h4-600 text-ds-neutral-50">
                     {event.title}
                   </h3>
-                  <p className="line-clamp-2 font-sans text-body-small-400 text-zinc-400">
+                  <p className="line-clamp-2 font-sans text-body-small-400 text-ds-neutral-400">
                     {event.description}
                   </p>
                 </div>
 
                 <div className="ml-2 flex flex-col items-end gap-1 text-right">
-                  <p className="type-era-label text-zinc-500">
+                  <p className="type-era-label text-ds-neutral-500">
                     Date
                   </p>
-                  <p className="font-sans text-body-small-600 text-zinc-100">
+                  <p className="font-sans text-body-small-600 text-ds-neutral-100">
                     {formatShortDate(event.date)}
                   </p>
                 </div>

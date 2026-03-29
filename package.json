@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "build:tokens": "node scripts/build-design-tokens.mjs",
     "dev": "next dev",
+    "dev:webpack": "next dev --webpack",
+    "prebuild": "npm run build:tokens",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"

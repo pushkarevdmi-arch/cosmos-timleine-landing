@@ -4,7 +4,6 @@ import Image from "next/image";
 import {
   useMemo,
   useState,
-  MouseEvent as ReactMouseEvent,
   KeyboardEvent as ReactKeyboardEvent,
   useCallback,
   useEffect,
@@ -176,6 +175,7 @@ export default function Home() {
   const [selectedEvent, setSelectedEvent] = useState<HeroEventData | null>(
     null
   );
+  const [heroActiveEventId, setHeroActiveEventId] = useState<string | null>(null);
   const isFetchingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
   const filterPopoverRef = useRef<HTMLDivElement | null>(null);
@@ -210,9 +210,13 @@ export default function Home() {
   const clampedVisibleCount = Math.min(visibleCount, filteredEvents.length);
   const visibleEvents = filteredEvents.slice(0, clampedVisibleCount);
   const hasMoreEvents = clampedVisibleCount < filteredEvents.length;
+  const heroEvents = filteredEvents;
 
-  const nextEvent = visibleEvents[0];
-  const remainingEvents = visibleEvents.slice(1);
+  const nextEvent = heroEvents[0];
+  const activeHeroEventId = heroActiveEventId ?? nextEvent?.id ?? null;
+  const remainingEvents = visibleEvents.filter(
+    (event) => event.id !== activeHeroEventId
+  );
 
   const loadMoreEvents = useCallback(() => {
     if (isFetchingRef.current || !hasMoreEvents) return;
@@ -231,6 +235,21 @@ export default function Home() {
   useEffect(() => {
     setVisibleCount(EVENTS_BATCH_SIZE);
   }, [selectedTags, selectedTimeRange]);
+
+  useEffect(() => {
+    if (!heroEvents.length) {
+      setHeroActiveEventId(null);
+      return;
+    }
+    if (!activeHeroEventId) {
+      setHeroActiveEventId(heroEvents[0].id);
+      return;
+    }
+    const stillVisible = heroEvents.some((event) => event.id === activeHeroEventId);
+    if (!stillVisible) {
+      setHeroActiveEventId(heroEvents[0].id);
+    }
+  }, [activeHeroEventId, heroEvents]);
 
   useEffect(() => {
     const handleOutsideClick = (event: globalThis.MouseEvent) => {
@@ -281,22 +300,6 @@ export default function Home() {
       }
     };
   }, [hasMoreEvents, loadMoreEvents]);
-
-  const handleExploreClick = (
-    e: ReactMouseEvent<HTMLDivElement>,
-    event: HeroEventData
-  ) => {
-    const target = e.target as HTMLElement | null;
-    if (!target || !target.closest) return;
-
-    const button = target.closest("button");
-    if (!button) return;
-
-    const hasExploreIcon = button.querySelector(".event-card__explore-icon");
-    if (hasExploreIcon) {
-      setSelectedEvent(event);
-    }
-  };
 
   const handleDropdownKeyboard = (
     event: ReactKeyboardEvent<HTMLButtonElement>,
@@ -374,7 +377,7 @@ export default function Home() {
         <section className="mb-5 flex items-center justify-between gap-4">
           <div>
             <h2 className="font-sans text-h2-400 text-ds-neutral-00">
-              Upcoming Events
+              Upcoming <span className="font-dynamite">Events</span>
             </h2>
           </div>
 
@@ -576,16 +579,15 @@ export default function Home() {
         </section>
 
         {/* Events area (hero event + list) */}
-        <section className="flex-1 space-y-6">
+        <section className="flex-1 space-y-16">
           {viewMode === "grid" ? (
             <>
               {nextEvent && (
-                <div
-                  onClick={(e) => handleExploreClick(e, nextEvent)}
-                  className="cursor-default"
-                >
-                  <HeroEvent event={nextEvent} />
-                </div>
+                <HeroEvent
+                  events={heroEvents}
+                  onActiveEventChange={(event) => setHeroActiveEventId(event.id)}
+                  onExplore={(event) => setSelectedEvent(event)}
+                />
               )}
               <EventGrid
                 events={remainingEvents}

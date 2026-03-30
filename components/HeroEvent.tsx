@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { CalendarIcon } from "./CalendarIcon";
 
 export type HeroEventData = {
@@ -18,7 +18,9 @@ export type HeroEventData = {
 };
 
 type HeroEventProps = {
-  event: HeroEventData;
+  events: HeroEventData[];
+  onActiveEventChange?: (event: HeroEventData) => void;
+  onExplore?: (event: HeroEventData) => void;
 };
 
 const LONG_TERM_SECTIONS = new Set([
@@ -119,7 +121,8 @@ function HeroFlipSegment({
 }) {
   return (
     <div
-      className="relative flex min-h-[92px] w-full min-w-0 flex-1 select-none flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-4 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[112px] md:rounded-2xl md:py-5"
+      className="relative flex h-[100px] min-h-[92px] w-full min-w-0 flex-1 select-none flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-4 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[100px] md:rounded-2xl md:py-3"
+      style={{ height: "100%" }}
       aria-label={`${label}: ${valueText}`}
     >
       <span className="text-center font-sans text-[26px] font-bold leading-none tabular-nums tracking-tight text-ds-neutral-50 sm:text-[30px] md:text-[34px] lg:text-[38px]">
@@ -132,19 +135,96 @@ function HeroFlipSegment({
   );
 }
 
-export default function HeroEvent({ event }: HeroEventProps) {
-  const countdown = useCountdown(event.date);
-  const showLongTermYearsOnly = isLongTermEvent(event);
-  const yearsRemaining = getYearsRemaining(event.date);
+function getNearestUpcomingEventIndex(events: HeroEventData[]) {
+  const now = Date.now();
+  const nearestUpcomingIndex = events.findIndex(
+    (event) => new Date(event.date).getTime() >= now
+  );
+  return nearestUpcomingIndex >= 0 ? nearestUpcomingIndex : Math.max(0, events.length - 1);
+}
+
+export default function HeroEvent({
+  events,
+  onActiveEventChange,
+  onExplore,
+}: HeroEventProps) {
+  const sortedEvents = useMemo(
+    () =>
+      [...events].sort(
+        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+      ),
+    [events]
+  );
+  const eventsKey = useMemo(
+    () => sortedEvents.map((event) => `${event.id}:${event.date}`).join("|"),
+    [sortedEvents]
+  );
+  const nearestUpcomingIndex = useMemo(
+    () => getNearestUpcomingEventIndex(sortedEvents),
+    [eventsKey]
+  );
+  const [activeIndex, setActiveIndex] = useState(() =>
+    getNearestUpcomingEventIndex(sortedEvents)
+  );
+  const [displayIndex, setDisplayIndex] = useState(() =>
+    getNearestUpcomingEventIndex(sortedEvents)
+  );
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    // Re-initialize only when source events list actually changes.
+    setActiveIndex(nearestUpcomingIndex);
+    setDisplayIndex(nearestUpcomingIndex);
+    setIsVisible(true);
+  }, [eventsKey, nearestUpcomingIndex]);
+
+  useEffect(() => {
+    if (activeIndex === displayIndex) return;
+
+    setIsVisible(false);
+    const timeoutId = setTimeout(() => {
+      setDisplayIndex(activeIndex);
+      requestAnimationFrame(() => setIsVisible(true));
+    }, 180);
+
+    return () => clearTimeout(timeoutId);
+  }, [activeIndex, displayIndex]);
+
+  const activeEvent = sortedEvents[displayIndex] ?? sortedEvents[0];
+  const countdown = useCountdown(activeEvent.date);
+  const showLongTermYearsOnly = isLongTermEvent(activeEvent);
+  const yearsRemaining = getYearsRemaining(activeEvent.date);
+  const normalizedYears = Math.floor(countdown.days / 365);
+  const normalizedDays = countdown.days % 365;
+  const currentYear = new Date().getUTCFullYear();
+  const maxEventYearValue = new Date(
+    sortedEvents[sortedEvents.length - 1]?.date ?? Date.now()
+  ).getUTCFullYear();
+  const maxEventYearLabel = Number.isFinite(maxEventYearValue)
+    ? maxEventYearValue.toLocaleString("en-US")
+    : "5B years ahead";
+
+  useEffect(() => {
+    if (!activeEvent) return;
+    onActiveEventChange?.(activeEvent);
+  }, [activeEvent, onActiveEventChange]);
+
+  if (!activeEvent) return null;
 
   return (
-    <section className="relative w-full overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
-      <div className="grid w-full gap-0 border-0 bg-[var(--ds-neutral-800)] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)]">
+    <section className="relative flex h-fit w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
+      <div
+        className={`grid w-full flex-1 gap-0 border-0 bg-[var(--ds-neutral-800)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
+          isVisible
+            ? "opacity-100 translate-y-0 blur-0"
+            : "opacity-0 -translate-y-0.5 blur-[1.5px]"
+        }`}
+      >
         {/* Left: visual */}
-        <div className="relative min-h-[220px] overflow-hidden rounded-3xl md:rounded-r-none md:rounded-l-3xl">
+        <div className="relative min-h-[220px] overflow-hidden rounded-3xl md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
           <Image
-            src={event.image}
-            alt={event.title}
+            src={activeEvent.image}
+            alt={activeEvent.title}
             fill
             priority
             sizes="(min-width: 768px) 40vw, 100vw"
@@ -153,18 +233,18 @@ export default function HeroEvent({ event }: HeroEventProps) {
 
           {/* Category badge (match small cards) */}
           <div className="event-card__category">
-            {event.tag ?? "Solar system"}
+            {activeEvent.tag ?? "Solar system"}
           </div>
         </div>
 
         {/* Right: information */}
-        <div className="flex flex-col justify-between gap-4 rounded-3xl bg-[var(--ds-neutral-900)] px-6 py-6 md:rounded-l-none md:rounded-r-3xl md:px-8 md:py-7">
+        <div className="flex h-full flex-col justify-between gap-2 rounded-3xl bg-[var(--ds-neutral-900)] px-6 py-6 md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-8 md:py-7">
           <div className="flex flex-col gap-2">
-            <h1 className="m-0 font-sans font-semibold text-ds-neutral-50 text-[16px] leading-[24px] sm:text-[20px] sm:leading-[28px]">
-              {event.title}
-            </h1>
-            <p className="m-0 max-w-xl font-sans text-[16px] leading-[20px] text-ds-neutral-400">
-              {event.description}
+            <h3 className="m-0 font-sans font-semibold text-ds-neutral-50 text-[16px] leading-[24px] sm:text-[24px] sm:leading-[32px]">
+              {activeEvent.title}
+            </h3>
+            <p className="m-0 min-h-[40px] max-w-xl font-sans text-[16px] leading-[20px] text-ds-neutral-400">
+              {activeEvent.description}
             </p>
           </div>
 
@@ -175,7 +255,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
                 <span className="event-card__date-icon">
                   <CalendarIcon className="h-5 w-5 text-ds-neutral-500" />
                 </span>
-                <span>{formatDate(event.date)}</span>
+                <span>{formatDate(activeEvent.date)}</span>
               </div>
 
               {countdown.isPast ? (
@@ -189,12 +269,12 @@ export default function HeroEvent({ event }: HeroEventProps) {
                   </span>
                 </div>
               ) : (
-                <div className="hero-countdown flex flex-nowrap items-stretch justify-between gap-2 sm:gap-2.5 md:gap-1.5">
+                <div className="hero-countdown flex flex-nowrap items-stretch justify-between gap-2 sm:gap-2.5 md:gap-1.5 h-fit">
                   {[
-                    { label: "DAYS", value: countdown.days },
+                    { label: "YEARS", value: normalizedYears },
+                    { label: "DAYS", value: normalizedDays },
                     { label: "HRS", value: countdown.hours },
                     { label: "MIN", value: countdown.minutes },
-                    { label: "SEC", value: countdown.seconds },
                   ].map((segment) => (
                     <HeroFlipSegment
                       key={segment.label}
@@ -208,6 +288,7 @@ export default function HeroEvent({ event }: HeroEventProps) {
 
             <button
               type="button"
+              onClick={() => onExplore?.(activeEvent)}
               className="group mt-3 inline-flex cursor-pointer items-center gap-1.5"
             >
               <span className="event-card__explore-icon">
@@ -220,6 +301,38 @@ export default function HeroEvent({ event }: HeroEventProps) {
           </div>
         </div>
       </div>
+
+      {sortedEvents.length > 1 ? (
+        <div className="flex h-fit flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-5 pt-6 md:px-8 md:pb-6">
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <label
+              htmlFor="hero-event-time-slider"
+              className="block font-sans text-[12px] uppercase tracking-[0.18em] text-ds-neutral-400"
+            >
+              Explore timeline
+            </label>
+            <span className="font-sans text-[18px] font-bold uppercase tracking-[0.14em] leading-[18px] text-ds-neutral-300">
+              {formatDate(activeEvent.date).split(",")[1]?.trim() ??
+                new Date(activeEvent.date).getUTCFullYear()}
+            </span>
+          </div>
+          <input
+            id="hero-event-time-slider"
+            className="hero-event-slider"
+            type="range"
+            min={0}
+            max={sortedEvents.length - 1}
+            step={1}
+            value={activeIndex}
+            onChange={(e) => setActiveIndex(Number(e.currentTarget.value))}
+            aria-label="Timeline slider"
+          />
+          <div className="mt-2 flex items-center justify-between font-sans text-[13px] text-ds-neutral-500">
+            <span>{currentYear}</span>
+            <span>{maxEventYearLabel}</span>
+          </div>
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import NumericPreloader from "@/components/NumericPreloader";
 
 const inter = Inter({
   variable: "--font-geist-sans",
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.className} ${inter.variable} antialiased`}>
+        <NumericPreloader />
         {children}
       </body>
     </html>

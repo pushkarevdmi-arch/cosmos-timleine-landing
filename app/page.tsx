@@ -349,7 +349,13 @@ export default function Home() {
         <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
           <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
             <h1 className="font-sans text-h1-400 text-ds-neutral-50 w-full text-center">
-              Journey <span className="font-dynamite">Into</span>
+              Journey{" "}
+              <span
+                className="font-dynamite"
+                style={{ fontFamily: "Dynamite" }}
+              >
+                Into
+              </span>
               <br />
               the Future of the Universe
             </h1>
@@ -377,7 +383,13 @@ export default function Home() {
         <section className="mb-5 flex items-center justify-between gap-4">
           <div>
             <h2 className="font-sans text-h2-400 text-ds-neutral-00">
-              Upcoming <span className="font-dynamite">Events</span>
+              Upcoming{" "}
+              <span
+                className="font-dynamite"
+                style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif' }}
+              >
+                Events
+              </span>
             </h2>
           </div>
 

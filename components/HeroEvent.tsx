@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useEffect, useMemo, useState } from "react";
+import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { CalendarIcon } from "./CalendarIcon";
 
 export type HeroEventData = {
@@ -203,6 +203,8 @@ export default function HeroEvent({
   const maxEventYearLabel = Number.isFinite(maxEventYearValue)
     ? maxEventYearValue.toLocaleString("en-US")
     : "5B years ahead";
+  const sliderProgress =
+    sortedEvents.length > 1 ? (activeIndex / (sortedEvents.length - 1)) * 100 : 0;
 
   useEffect(() => {
     if (!activeEvent) return;
@@ -221,14 +223,14 @@ export default function HeroEvent({
         }`}
       >
         {/* Left: visual */}
-        <div className="relative min-h-[220px] overflow-hidden rounded-3xl md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
+        <div className="hero-event__image-wrap relative min-h-[220px] overflow-hidden rounded-3xl md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
           <Image
             src={activeEvent.image}
             alt={activeEvent.title}
             fill
             priority
             sizes="(min-width: 768px) 40vw, 100vw"
-            className="object-cover"
+            className="hero-event__image object-cover"
           />
 
           {/* Category badge (match small cards) */}
@@ -303,33 +305,53 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-5 pt-6 md:px-8 md:pb-6">
-          <div className="mb-3 flex items-center justify-between gap-3">
-            <label
-              htmlFor="hero-event-time-slider"
-              className="block font-sans text-[12px] uppercase tracking-[0.18em] text-ds-neutral-400"
-            >
-              Explore timeline
-            </label>
-            <span className="font-sans text-[18px] font-bold uppercase tracking-[0.14em] leading-[18px] text-ds-neutral-300">
-              {formatDate(activeEvent.date).split(",")[1]?.trim() ??
-                new Date(activeEvent.date).getUTCFullYear()}
-            </span>
+        <div className="flex h-fit flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-10 pt-8 md:px-8 md:pb-6">
+          <div className="mb-3 flex !items-end justify-end gap-0">
+            <div className="flex w-full flex-col items-start gap-1">
+              <label
+                htmlFor="hero-event-time-slider"
+                className="block font-sans text-[14px] font-semibold uppercase tracking-[0.18em] text-ds-neutral-00"
+              >
+                Timeline
+              </label>
+              <span className="font-sans text-[14px] leading-[14px] text-ds-neutral-400">
+                Drag to explore
+              </span>
+            </div>
+            <div className="flex h-full flex-col items-end justify-end gap-1.5">
+              <span className="font-sans text-[14px] font-semibold tracking-[0.14em] leading-[14px] text-ds-neutral-500">
+                Year
+              </span>
+              <span className="align-bottom font-sans text-[24px] font-bold uppercase tracking-[0em] leading-[24px] text-ds-neutral-300">
+                {formatDate(activeEvent.date).split(",")[1]?.trim() ??
+                  new Date(activeEvent.date).getUTCFullYear()}
+              </span>
+            </div>
           </div>
-          <input
-            id="hero-event-time-slider"
-            className="hero-event-slider"
-            type="range"
-            min={0}
-            max={sortedEvents.length - 1}
-            step={1}
-            value={activeIndex}
-            onChange={(e) => setActiveIndex(Number(e.currentTarget.value))}
-            aria-label="Timeline slider"
-          />
+          <div className="hero-event-slider-wrap">
+            <input
+              id="hero-event-time-slider"
+              className={`hero-event-slider ${activeIndex === 0 ? "is-at-start" : ""}`}
+              data-at-start={activeIndex === 0 ? "true" : "false"}
+              type="range"
+              min={0}
+              max={sortedEvents.length - 1}
+              step={1}
+              value={activeIndex}
+              onChange={(e) => setActiveIndex(Number(e.currentTarget.value))}
+              aria-label="Timeline slider"
+              style={{ "--slider-progress": `${sliderProgress}%` } as CSSProperties}
+            />
+            {activeIndex === 0 ? (
+              <span
+                aria-hidden="true"
+                className="hero-event-slider-start-nudge"
+              />
+            ) : null}
+          </div>
           <div className="mt-2 flex items-center justify-between font-sans text-[13px] text-ds-neutral-500">
-            <span>{currentYear}</span>
-            <span>{maxEventYearLabel}</span>
+            <span style={{ color: "rgba(107, 114, 128, 1)" }}>Now</span>
+            <span style={{ color: "rgba(107, 114, 128, 1)" }}>{maxEventYearLabel}</span>
           </div>
         </div>
       ) : null}

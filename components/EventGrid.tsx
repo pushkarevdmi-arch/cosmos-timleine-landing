@@ -31,7 +31,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
             {showSectionHeader ? (
               <div className="col-span-full mt-2 mb-1">
                 <div className="flex items-center gap-3">
-                  <span className="type-era-label text-ds-neutral-400">
+                  <span className="type-era-label text-ds-neutral-00">
                     {currentSection}
                   </span>
                   <span className="h-px flex-1 bg-ds-neutral-800/80" />

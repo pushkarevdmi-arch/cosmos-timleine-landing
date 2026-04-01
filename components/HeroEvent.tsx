@@ -2,12 +2,14 @@
 import Image from "next/image";
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import { CalendarIcon } from "./CalendarIcon";
+import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
 
 export type HeroEventData = {
   id: string;
   title: string;
   description: string;
   tag?: string;
+  extraTags?: EventExtraTag[];
   timeSection?: "Next 100 Years" | "Next 10,000 Years" | "Millions of Years" | "Billions of Years";
   date: string;
   detailedExplanation: string;
@@ -119,13 +121,19 @@ function HeroFlipSegment({
   label: string;
   valueText: string;
 }) {
+  const valueClassName = [
+    "text-center text-[26px] font-bold leading-none tabular-nums text-ds-neutral-50 sm:text-[30px] md:text-[34px] lg:text-[38px]",
+    "font-sans",
+    label === "MIN" ? "tracking-[2px]" : "tracking-tight",
+  ].join(" ");
+
   return (
     <div
       className="relative flex h-[100px] min-h-[92px] w-full min-w-0 flex-1 select-none flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-4 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[100px] md:rounded-2xl md:py-3"
       style={{ height: "100%" }}
       aria-label={`${label}: ${valueText}`}
     >
-      <span className="text-center font-sans text-[26px] font-bold leading-none tabular-nums tracking-tight text-ds-neutral-50 sm:text-[30px] md:text-[34px] lg:text-[38px]">
+      <span className={valueClassName}>
         {valueText}
       </span>
       <span className="w-full text-center font-sans text-[10px] font-semibold uppercase leading-none tracking-[0.2em] text-ds-neutral-400 md:text-[12px]">
@@ -216,7 +224,7 @@ export default function HeroEvent({
   return (
     <section className="relative flex h-fit w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
       <div
-        className={`grid w-full flex-1 gap-0 border-0 bg-[var(--ds-neutral-800)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
+        className={`grid w-full flex-1 gap-0 border-0 bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
           isVisible
             ? "opacity-100 translate-y-0 blur-0"
             : "opacity-0 -translate-y-0.5 blur-[1.5px]"
@@ -233,29 +241,32 @@ export default function HeroEvent({
             className="hero-event__image object-cover"
           />
 
-          {/* Category badge (match small cards) */}
-          <div className="event-card__category">
-            {activeEvent.tag ?? "Solar system"}
-          </div>
+          <EventTagGroup
+            primaryTag={activeEvent.tag}
+            extraTags={activeEvent.extraTags}
+          />
         </div>
 
         {/* Right: information */}
-        <div className="flex h-full flex-col justify-between gap-2 rounded-3xl bg-[var(--ds-neutral-900)] px-6 py-6 md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-8 md:py-7">
-          <div className="flex flex-col gap-2">
+        <div
+          className="flex h-full flex-col justify-between gap-2 rounded-3xl px-6 pb-8 pt-10 md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-8 md:pb-8 md:pt-10"
+          style={{ backgroundColor: "var(--app-surface-elevated)" }}
+        >
+          <div className="flex flex-col gap-1.5">
             <h3 className="m-0 font-sans font-semibold text-ds-neutral-50 text-[16px] leading-[24px] sm:text-[24px] sm:leading-[32px]">
               {activeEvent.title}
             </h3>
-            <p className="m-0 min-h-[40px] max-w-xl font-sans text-[16px] leading-[20px] text-ds-neutral-400">
+            <p className="m-0 min-h-[40px] max-w-[640px] font-sans text-[16px] leading-[20px] text-ds-neutral-400">
               {activeEvent.description}
             </p>
           </div>
 
           {/* Date + countdown share one stack; adjust gap via .hero-event__date-countdown */}
-          <div className="mt-6 flex h-full flex-col gap-2">
+          <div className="mt-6 flex h-full flex-col gap-3">
             <div className="hero-event__date-countdown flex flex-col gap-1.5">
-              <div className="inline-flex items-center gap-1 type-body-tight text-ds-neutral-300">
+              <div className="inline-flex items-center gap-2 type-body-tight text-ds-neutral-300">
                 <span className="event-card__date-icon">
-                  <CalendarIcon className="h-5 w-5 text-ds-neutral-500" />
+                  <CalendarIcon className="h-6 w-6 text-ds-neutral-500" />
                 </span>
                 <span>{formatDate(activeEvent.date)}</span>
               </div>
@@ -322,7 +333,7 @@ export default function HeroEvent({
               <span className="font-sans text-[14px] font-semibold tracking-[0.14em] leading-[14px] text-ds-neutral-500">
                 Year
               </span>
-              <span className="align-bottom font-sans text-[24px] font-bold uppercase tracking-[0em] leading-[24px] text-ds-neutral-300">
+              <span className="align-bottom font-sans text-[24px] font-bold uppercase tracking-[0em] leading-[24px] text-ds-neutral-00">
                 {formatDate(activeEvent.date).split(",")[1]?.trim() ??
                   new Date(activeEvent.date).getUTCFullYear()}
               </span>

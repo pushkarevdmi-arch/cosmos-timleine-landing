@@ -27,6 +27,13 @@
       "Observers within the path of totality will see the Sun's bright disk vanish, revealing the ghostly corona and a sky suddenly filled with planets and bright stars.",
       "Weather permitting, this will be one of the most memorable astronomical events of the decade for millions of people across the continent."
     ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "Europe",
+        "icon": "EU"
+      }
+    ],
     "image": "/images/events/1-100-total-solar-eclipse-across-europe.jpg"
   },
   {
@@ -41,6 +48,12 @@
       "Because of the precise geometry of the Earth–Moon–Sun system on this date, the Moon's shadow will linger unusually long over parts of the planet.",
       "Observers near the centerline of the path will experience totality for more than six minutes, an extraordinarily long time to stand under a black Sun.",
       "Such extended eclipses provide a rare opportunity for detailed coronal studies and for simply absorbing the uncanny feeling of a transformed daytime world."
+    ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Rare"
+      }
     ],
     "image": "/images/events/1-100-the-eclipse-of-the-century.jpg"
   },
@@ -57,6 +70,13 @@
       "Along the path of totality, the Sun's corona will stretch into space like a pale crown, while the horizon glows in a strange 360-degree sunset.",
       "For many in the southern hemisphere, this will be the most accessible total solar eclipse of their lifetimes."
     ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "Australia",
+        "icon": "AU"
+      }
+    ],
     "image": "/images/events/1-100-total-solar-eclipse-over-australia.jpg"
   },
   {
@@ -72,6 +92,12 @@
       "Its trajectory will thread the region where geosynchronous satellites orbit, offering scientists an unprecedented chance to watch how Earth's gravity reshapes a small body's path and spin.",
       "For observers under the right skies, Apophis may even be visible as a moving point of light racing among the stars."
     ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Rare"
+      }
+    ],
     "image": "/images/events/1-100-asteroid-apophis-close-flyby.jpg"
   },
   {
@@ -86,6 +112,12 @@
       "If calculations of cometary dust streams are correct, Earth's orbit may slice through a particularly rich filament of material shed by Comet 55P/Tempel–Tuttle.",
       "Under dark skies, the familiar Leonid meteor shower could intensify into a true storm, with hundreds or even thousands of meteors per hour.",
       "For a few unforgettable hours, the sky might appear to rain with fast, bright streaks all seeming to burst from the constellation Leo."
+    ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Rare"
+      }
     ],
     "image": "/images/events/1-100-possible-leonid-meteor-storm.jpg"
   },
@@ -117,6 +149,13 @@
       "From western Canada into parts of the northern United States, observers along the narrow path will see daylight collapse into a deep twilight.",
       "The event will inspire a new generation of skywatchers and provide another opportunity to study how solar activity shapes the corona's ever-changing form."
     ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "North America",
+        "icon": "NA"
+      }
+    ],
     "image": "/images/events/1-100-total-solar-eclipse-across-north-america.jpg"
   },
   {
@@ -131,6 +170,17 @@
       "Stretching from the Pacific coast of California to the Atlantic shores of Florida, this eclipse path will cut directly across the heart of the United States.",
       "Near the middle of the track, totality will last for an exceptionally long duration, giving millions of people extended time under a darkened Sun.",
       "The combination of length, accessibility, and likely clear summer weather has earned it a place among the most anticipated eclipses of the century."
+    ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Once in a lifetime"
+      },
+      {
+        "kind": "location",
+        "label": "North America",
+        "icon": "NA"
+      }
     ],
     "image": "/images/events/1-100-great-north-american-solar-eclipse.jpg"
   },
@@ -147,6 +197,12 @@
       "The gas giant will shine brighter than at any other time in the century, with cloud bands, the Great Red Spot, and its four large Galilean moons easy targets in even small telescopes.",
       "For planetary observers, this will be a once-in-a-lifetime opportunity to study Jupiter at its most prominent."
     ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Once in a lifetime"
+      }
+    ],
     "image": "/images/events/1-100-jupiters-closest-opposition-of-the-century.jpg"
   },
   {
@@ -161,6 +217,12 @@
       "Roughly every 76 years, the most famous of all comets swings back through the inner solar system, its icy nucleus erupting into a glowing coma and tail.",
       "In 2061, Halley’s Comet will once again grace Earth’s skies, potentially developing a tail that stretches across a large swath of the night.",
       "The return will connect generations of observers who have watched the same wandering visitor over centuries."
+    ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Once in a lifetime"
+      }
     ],
     "image": "/images/events/1-100-halleys-comet-returns.jpg"
   },
@@ -177,6 +239,13 @@
       "Cities and rural landscapes alike will experience the surreal hush and dimming that accompanies the Moon's shadow.",
       "For future astronomers, it will be a benchmark opportunity to compare high-resolution observations with those from earlier eclipses decades before."
     ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "Europe",
+        "icon": "EU"
+      }
+    ],
     "image": "/images/events/1-100-total-solar-eclipse-across-europe.jpg"
   },
   {
@@ -191,6 +260,13 @@
       "The Moon's umbra will carve a path over sparsely populated regions, arching from northern Asia across the Arctic and into Alaska.",
       "Observers who travel into the path will witness the strange contrast of a darkened Sun over bright snow and ice.",
       "For climate scientists and eclipse chasers alike, this event will merge frontier travel with cutting-edge observations of the Sun and atmosphere."
+    ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "Asia",
+        "icon": "AS"
+      }
     ],
     "image": "/images/events/1-100-total-solar-eclipse-across-asia-and-alaska.jpg"
   },
@@ -207,6 +283,13 @@
       "The familiar dance of darkness and light will play out again for a new generation, linking this eclipse to those of 2017, 2024, and 2045.",
       "Each event adds another chapter to the long story of how people respond when the Sun briefly disappears."
     ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "North America",
+        "icon": "NA"
+      }
+    ],
     "image": "/images/events/1-100-total-solar-eclipse-over-north-america.jpg"
   },
   {
@@ -221,6 +304,12 @@
       "Transits of Venus occur in pairs separated by more than a century, making them some of the rarest predictable naked-eye phenomena.",
       "During the 2117 event, careful observers using proper solar filters will see a tiny, perfectly round silhouette glide slowly across the Sun's bright disk.",
       "Historically, such transits were used to measure the scale of the solar system; in the 22nd century, they will serve as a vivid reminder of orbital mechanics in action."
+    ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Rare"
+      }
     ],
     "image": "/images/events/1-100-transit-of-venus.jpg"
   },
@@ -237,6 +326,13 @@
       "For communities under the path, the event will be both a celebration and a moment of awe as stars and planets emerge around a blackened Sun.",
       "Future instruments may capture the corona in exquisite detail across many wavelengths, revealing fine-scale structures in the solar wind."
     ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "Asia",
+        "icon": "AS"
+      }
+    ],
     "image": "/images/events/1-100-total-solar-eclipse.jpg"
   },
   {
@@ -252,6 +348,13 @@
       "This time, the path will favor regions in Africa and the Indian Ocean, drawing travelers to islands and coastal vantage points.",
       "The back-to-back eclipses will offer scientists a rare chance to compare coronal structure and solar activity over a short interval."
     ],
+    "extraTags": [
+      {
+        "kind": "location",
+        "label": "Africa",
+        "icon": "AF"
+      }
+    ],
     "image": "/images/events/1-100-total-solar-eclipse.jpg"
   },
   {
@@ -266,6 +369,12 @@
       "As with previous centuries, the second transit in the Venus pair will follow just a few years after the first, then will not recur for more than a hundred years.",
       "Observers will again watch the tiny dark disk of Venus trace a slow path across the Sun, echoing the 2117 event.",
       "Together, the pair will bracket a short era in which humanity's understanding of exoplanets and planetary atmospheres may advance dramatically."
+    ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Rare"
+      }
     ],
     "image": "/images/events/1-100-second-transit-of-venus.jpg"
   },
@@ -296,6 +405,12 @@
       "Comet Swift–Tuttle is the parent body of the famous Perseid meteor shower, leaving behind a trail of dust and ice grains that Earth crosses each year.",
       "In 2126, the comet itself will swing back through the inner solar system, likely growing a bright coma and tail visible in dark skies.",
       "Its return will offer a rare opportunity to tie together direct observations of the nucleus with centuries of meteor records from its debris stream."
+    ],
+    "extraTags": [
+      {
+        "kind": "rarity",
+        "label": "Rare"
+      }
     ],
     "image": "/images/events/1-100-comet-swift-tuttle-returns.jpg"
   }

@@ -13,7 +13,12 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
   return (
     <div
       className="inline-flex rounded-2xl p-1.5"
-      style={{ backgroundColor: "var(--ds-neutral-800)" }}
+      style={{
+        backgroundColor: "var(--ds-neutral-900)",
+        borderWidth: "1px",
+        borderStyle: "solid",
+        borderColor: "var(--ds-neutral-800)",
+      }}
     >
       {options.map((option) => {
         const isActive = option.value === mode;
@@ -33,7 +38,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
                 : "text-ds-neutral-500 hover:text-ds-neutral-400",
             ].join(" ")}
             style={{
-              backgroundColor: isActive ? "var(--ds-neutral-600)" : "transparent",
+              backgroundColor: isActive ? "var(--ds-neutral-700)" : "transparent",
             }}
           >
             {option.value === "grid" ? (

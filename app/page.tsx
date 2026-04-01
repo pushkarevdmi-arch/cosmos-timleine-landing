@@ -324,6 +324,8 @@ export default function Home() {
       : selectedTags.length === 1
       ? selectedTags[0]
       : `${selectedTags.length} tags selected`;
+  const hasActiveFilters =
+    selectedTimeRange !== "all" || selectedTags.length > 0;
 
   return (
     <div className="min-h-screen bg-ds-neutral-1000 text-ds-neutral-100">
@@ -380,35 +382,42 @@ export default function Home() {
         </section>
 
         {/* View toggle */}
-        <section className="mb-5 flex items-center justify-between gap-4">
-          <div>
+        <section className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="w-full text-left">
             <h2 className="font-sans text-h2-400 text-ds-neutral-00">
               Upcoming{" "}
               <span
                 className="font-dynamite"
-                style={{ fontFamily: '"Inter", -apple-system, BlinkMacSystemFont, sans-serif' }}
+                style={{ fontFamily: "var(--font-sans)" }}
               >
                 Events
               </span>
             </h2>
           </div>
 
-          <div className="relative flex items-center gap-3" ref={filterPopoverRef}>
+          <div
+            className="relative flex w-full flex-row-reverse items-center justify-between gap-3 sm:w-auto sm:flex-row sm:justify-end"
+            ref={filterPopoverRef}
+          >
             <button
               type="button"
               onClick={() => setIsFilterOpen((open) => !open)}
-              className="flex items-center gap-2 rounded-full px-3 py-2 text-base font-bold text-ds-neutral-200 hover:text-ds-neutral-00 cursor-pointer"
+              className="flex items-center gap-2 rounded-full px-3 py-2 text-base font-bold cursor-pointer text-ds-neutral-200 hover:text-ds-neutral-00"
               aria-haspopup="dialog"
               aria-expanded={isFilterOpen}
             >
               <svg
-                width={20}
-                height={20}
+                width={24}
+                height={24}
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden
-                className="shrink-0"
+                className={`shrink-0 ${
+                  hasActiveFilters
+                    ? "text-ds-primary-400 hover:text-ds-primary-300"
+                    : "text-ds-neutral-200"
+                }`}
               >
                 <path
                   d="M4.5 7H19.5M7 12H17M10 17H14"
@@ -438,7 +447,7 @@ export default function Home() {
                       onKeyDown={(event) =>
                         handleDropdownKeyboard(event, "time")
                       }
-                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-2 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
+                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-3 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
                     >
                       <span className="truncate">{selectedTimeRangeLabel}</span>
                       <svg
@@ -471,7 +480,7 @@ export default function Home() {
                               setSelectedTimeRange("all");
                               setOpenDropdown(null);
                             }}
-                            className="w-full rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
+                            className="w-full rounded-lg px-2 py-3 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
                           >
                             All ranges
                           </button>
@@ -484,7 +493,7 @@ export default function Home() {
                                 setSelectedTimeRange(range);
                                 setOpenDropdown(null);
                               }}
-                              className="w-full rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
+                              className="w-full rounded-lg px-2 py-3 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
                             >
                               {range}
                             </button>
@@ -506,7 +515,7 @@ export default function Home() {
                         )
                       }
                       onKeyDown={(event) => handleDropdownKeyboard(event, "tag")}
-                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-2 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
+                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-3 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
                     >
                       <span className="truncate">{selectedTagLabel}</span>
                       <svg
@@ -542,7 +551,7 @@ export default function Home() {
                           >
                             All tags
                             {selectedTags.length === 0 ? (
-                              <span className="text-ds-neutral-400">✓</span>
+                              <span className="text-ds-success-400">✓</span>
                             ) : null}
                           </button>
                         </li>
@@ -562,7 +571,7 @@ export default function Home() {
                             >
                               {tag}
                               {selectedTags.includes(tag) ? (
-                                <span className="text-ds-neutral-400">✓</span>
+                                <span className="text-ds-success-400">✓</span>
                               ) : null}
                             </button>
                           </li>
@@ -578,7 +587,7 @@ export default function Home() {
                       setSelectedTags([]);
                       setOpenDropdown(null);
                     }}
-                    className="rounded-xl border border-ds-neutral-700 px-3 py-2 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
+                    className="rounded-xl border border-ds-neutral-700 px-3 py-3 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
                   >
                     Reset filters
                   </button>

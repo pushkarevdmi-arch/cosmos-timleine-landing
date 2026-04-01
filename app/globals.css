@@ -3,6 +3,8 @@
 @import "./ds-tailwind-theme.css";
 
 :root {
+  --app-surface-elevated: rgba(15, 20, 31, 1);
+
   /* Typography presets → primitives from design-system/tokens.json (via --ds-typography-*) */
   --h1-400-size: var(--ds-typography-size-h1);
   --h1-400-lh: var(--ds-typography-line-height-3xl);
@@ -64,7 +66,7 @@ body {
   color: var(--ds-text-primary);
 }
 
-svg {
+svg:not([class*="text-"]) {
   color: var(--ds-text-secondary);
 }
 
@@ -109,17 +111,58 @@ svg {
     transform: scale(1.07);
   }
 
+  .event-card__badge-row {
+    @apply absolute left-4 top-4 z-10 flex max-w-[calc(100%-2rem)] flex-wrap gap-2;
+  }
+
   .event-card__category {
-    @apply absolute left-4 top-4 rounded-full px-4 py-2 font-medium text-ds-neutral-200 text-[12px] leading-[16px];
+    @apply rounded-full px-4 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
+    height: 34px;
+    max-height: 34px;
     background-color: var(--ds-neutral-800);
-    border-width: 1px;
-    border-style: solid;
-    border-color: var(--ds-neutral-800);
+    border-width: 0;
+    border-style: none;
+    border-color: transparent;
+    border-image: none;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .event-card__extra-tag {
+    @apply inline-flex items-center gap-1.5 rounded-full border px-4 py-2 font-medium;
+    height: 34px;
+    max-height: 34px;
+    backdrop-filter: blur(8px);
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .event-card__extra-tag > span:not(.event-card__extra-tag-icon) {
+    @apply text-[14px] leading-[20px];
+  }
+
+  .event-card__extra-tag--rarity {
+    color: var(--ds-neutral-0);
+    background-color: var(--ds-primary-500);
+    border-color: var(--ds-primary-400);
+  }
+
+  .event-card__extra-tag--location {
+    color: var(--ds-neutral-100);
+    background-color: rgba(15, 20, 31, 0.82);
+    border-color: var(--ds-neutral-700);
+  }
+
+  .event-card__extra-tag-icon {
+    @apply inline-flex h-5 min-w-5 items-center justify-center rounded-full px-1 font-semibold text-[9px] leading-none;
+    background-color: rgba(255, 255, 255, 0.14);
+    color: var(--ds-neutral-0);
   }
 
   .event-card__content {
-    @apply flex flex-col gap-0 px-4 pb-4 pt-4 sm:px-5 sm:pb-5 sm:pt-5;
-    background-color: var(--ds-neutral-900);
+    @apply flex h-full flex-1 flex-col gap-0 px-8 pb-4 pt-4 sm:px-8 sm:pb-5 sm:pt-5;
+    background: unset;
+    background-color: rgba(15, 20, 31, 1);
     width: 100%;
   }
 
@@ -142,11 +185,11 @@ svg {
   }
 
   .event-card__meta {
-    @apply flex h-fit w-full flex-col items-center justify-center gap-3;
+    @apply mt-auto flex w-full flex-col items-center justify-center gap-3;
   }
 
   .event-card__date {
-    @apply mt-0 mb-1 flex items-center justify-center gap-1 text-ds-neutral-300 text-[16px] leading-[20px];
+    @apply mt-0 mb-1 flex items-center justify-center gap-2 text-ds-neutral-300 text-[16px] leading-[20px];
   }
 
   .event-card__date-icon {
@@ -162,12 +205,12 @@ svg {
   }
 
   .event-card__countdown-grid {
-    @apply flex justify-center gap-1.5 font-mono text-ds-neutral-100;
+    @apply flex justify-center gap-2 font-mono text-ds-neutral-100;
   }
 
   .event-card__countdown-segment {
     @apply relative flex min-w-[3.5rem] flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-3 py-4 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:px-4 sm:py-4;
-    width: 96px;
+    width: 102px;
   }
 
   .event-card__countdown-value {
@@ -189,7 +232,9 @@ svg {
   }
 
   .event-card__explore-icon {
-    @apply inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-ds-neutral-900 text-[8px];
+    @apply inline-flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full text-[8px];
+    background: unset;
+    background-color: unset;
   }
 }
 
@@ -362,7 +407,7 @@ svg {
   }
 
   .type-countdown-value-regular {
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: var(--font-sans);
     font-weight: 400;
     font-size: 24px;
     line-height: 24px;

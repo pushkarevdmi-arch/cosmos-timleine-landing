@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { CalendarIcon } from "./CalendarIcon";
+import EventTagGroup from "./EventTagGroup";
 import type { HeroEventData } from "./HeroEvent";
 
 type Countdown = {
@@ -126,7 +127,7 @@ export default function EventCard({ event }: EventCardProps) {
           sizes="(min-width: 640px) 50vw, 100vw"
           className="event-card__image"
         />
-        <div className="event-card__category">{event.tag ?? "Solar system"}</div>
+        <EventTagGroup primaryTag={event.tag} extraTags={event.extraTags} />
       </div>
 
       <div className="event-card__content w-full">
@@ -139,7 +140,7 @@ export default function EventCard({ event }: EventCardProps) {
           <div className="flex flex-col gap-1">
             <div className="event-card__date">
               <span className="event-card__date-icon">
-                <CalendarIcon className="h-5 w-5 text-ds-neutral-500" />
+                <CalendarIcon className="h-6 w-6 text-ds-neutral-500" />
               </span>
               <span>{formatCardDate(event.date)}</span>
             </div>

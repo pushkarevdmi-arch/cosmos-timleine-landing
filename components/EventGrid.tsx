@@ -19,7 +19,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
   }
 
   return (
-    <div className="grid items-stretch gap-4 sm:grid-cols-2">
+    <div className="grid items-stretch gap-6 sm:grid-cols-2">
       {events.map((event, index) => {
         const currentSection = getTimeRangeSection(event);
         const previousSection =

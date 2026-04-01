@@ -46,7 +46,7 @@ export default function EventTimeline({
               <button
                 type="button"
                 onClick={() => onOpen(event)}
-                className="group flex w-full cursor-pointer items-start gap-3 rounded-2xl border border-ds-neutral-800/80 bg-ds-neutral-950/70 p-3 text-left transition hover:border-ds-primary-400/70"
+                className="group flex w-full cursor-pointer items-start gap-3 rounded-2xl border border-ds-neutral-800/80 bg-ds-neutral-950/70 p-6 text-left transition hover:border-ds-primary-400/70"
               >
                 {/* Node */}
                 <div className="relative mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center">
@@ -55,14 +55,14 @@ export default function EventTimeline({
                 </div>
 
                 {/* Content */}
-                <div className="min-w-0 flex-1 space-y-1">
+                <div className="min-w-0 flex flex-1 flex-col gap-2">
                   <p className="type-era-label text-ds-neutral-500">
                     {formatEraLabel(event.date)}
                   </p>
                   <h3 className="font-sans text-h4-600 text-ds-neutral-50">
                     {event.title}
                   </h3>
-                  <p className="line-clamp-2 font-sans text-body-small-400 text-ds-neutral-400">
+                  <p className="line-clamp-2 font-sans text-body-medium-400 text-ds-neutral-400">
                     {event.description}
                   </p>
                 </div>
@@ -71,7 +71,7 @@ export default function EventTimeline({
                   <p className="type-era-label text-ds-neutral-500">
                     Date
                   </p>
-                  <p className="font-sans text-body-small-600 text-ds-neutral-100">
+                  <p className="font-sans text-[length:var(--ds-typography-size-body-s)] leading-[18px] font-semibold text-ds-neutral-100">
                     {formatShortDate(event.date)}
                   </p>
                 </div>

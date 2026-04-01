@@ -78,11 +78,35 @@ function formatDate(dateStr: string) {
   const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) return "Unknown date";
 
+  const hasSpecificTime =
+    date.getUTCHours() !== 0 ||
+    date.getUTCMinutes() !== 0 ||
+    date.getUTCSeconds() !== 0 ||
+    date.getUTCMilliseconds() !== 0;
+
+  if (hasSpecificTime) {
+    return new Intl.DateTimeFormat("en", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "UTC",
+      timeZoneName: "short",
+    }).format(date);
+  }
+
   return new Intl.DateTimeFormat("en", {
     year: "numeric",
     month: "long",
     day: "2-digit",
   }).format(date);
+}
+
+function formatEventYear(dateStr: string) {
+  const year = new Date(dateStr).getUTCFullYear();
+  if (!Number.isFinite(year)) return "Unknown";
+  return year.toLocaleString("en-US");
 }
 
 function isLongTermEvent(event: HeroEventData) {
@@ -106,12 +130,21 @@ function getYearsRemaining(dateStr: string) {
 
 function formatLongTermYears(years: number) {
   if (years >= 1000000000) {
-    return `${Math.round(years / 1000000000).toLocaleString("en-US")} billion years`;
+    return {
+      value: Math.round(years / 1000000000).toLocaleString("en-US"),
+      unit: "billion years",
+    };
   }
   if (years >= 1000000) {
-    return `${Math.round(years / 1000000).toLocaleString("en-US")} million years`;
+    return {
+      value: Math.round(years / 1000000).toLocaleString("en-US"),
+      unit: "million years",
+    };
   }
-  return `${years.toLocaleString("en-US")} years`;
+  return {
+    value: years.toLocaleString("en-US"),
+    unit: "years",
+  };
 }
 
 function HeroFlipSegment({
@@ -129,7 +162,7 @@ function HeroFlipSegment({
 
   return (
     <div
-      className="relative flex h-[100px] min-h-[92px] w-full min-w-0 flex-1 select-none flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-4 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[100px] md:rounded-2xl md:py-3"
+      className="relative flex h-[102px] min-h-[92px] w-full min-w-0 flex-1 select-none flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-2 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[102px] md:rounded-2xl md:py-2"
       style={{ height: "100%" }}
       aria-label={`${label}: ${valueText}`}
     >
@@ -202,6 +235,7 @@ export default function HeroEvent({
   const countdown = useCountdown(activeEvent.date);
   const showLongTermYearsOnly = isLongTermEvent(activeEvent);
   const yearsRemaining = getYearsRemaining(activeEvent.date);
+  const longTermCountdown = formatLongTermYears(yearsRemaining);
   const normalizedYears = Math.floor(countdown.days / 365);
   const normalizedDays = countdown.days % 365;
   const currentYear = new Date().getUTCFullYear();
@@ -249,7 +283,7 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className="flex h-full flex-col justify-between gap-2 rounded-3xl px-6 pb-8 pt-10 md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-8 md:pb-8 md:pt-10"
+          className="flex h-full flex-col justify-between gap-2 rounded-3xl px-10 pb-8 pt-10 md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="flex flex-col gap-1.5">
@@ -263,7 +297,7 @@ export default function HeroEvent({
 
           {/* Date + countdown share one stack; adjust gap via .hero-event__date-countdown */}
           <div className="mt-6 flex h-full flex-col gap-3">
-            <div className="hero-event__date-countdown flex flex-col gap-1.5">
+            <div className="hero-event__date-countdown flex flex-col gap-3">
               <div className="inline-flex items-center gap-2 type-body-tight text-ds-neutral-300">
                 <span className="event-card__date-icon">
                   <CalendarIcon className="h-6 w-6 text-ds-neutral-500" />
@@ -277,12 +311,17 @@ export default function HeroEvent({
                 </p>
               ) : showLongTermYearsOnly ? (
                 <div className="flex w-full items-center justify-center rounded-xl border border-[var(--ds-neutral-800)] bg-ds-neutral-1000 px-4 py-3 md:px-6 md:py-4">
-                  <span className="type-countdown-value-regular tabular-nums">
-                    {formatLongTermYears(yearsRemaining)}
-                  </span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="type-countdown-value-regular tabular-nums">
+                      {longTermCountdown.value}
+                    </span>
+                    <span className="font-sans text-[24px] leading-[32px] font-normal text-ds-neutral-500">
+                      {longTermCountdown.unit}
+                    </span>
+                  </div>
                 </div>
               ) : (
-                <div className="hero-countdown flex flex-nowrap items-stretch justify-between gap-2 sm:gap-2.5 md:gap-1.5 h-fit">
+                <div className="hero-countdown flex h-fit flex-nowrap items-stretch justify-between gap-2 sm:gap-2.5 md:gap-2">
                   {[
                     { label: "YEARS", value: normalizedYears },
                     { label: "DAYS", value: normalizedDays },
@@ -318,31 +357,40 @@ export default function HeroEvent({
       {sortedEvents.length > 1 ? (
         <div className="flex h-fit flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-10 pt-8 md:px-8 md:pb-6">
           <div className="mb-3 flex !items-end justify-end gap-0">
-            <div className="flex w-full flex-col items-start gap-1">
+            <div className="ml-3 flex w-full items-center">
               <label
                 htmlFor="hero-event-time-slider"
                 className="block font-sans text-[14px] font-semibold uppercase tracking-[0.18em] text-ds-neutral-00"
               >
-                Timeline
+                Timeline{" "}
+                <span className="font-normal normal-case tracking-normal text-ds-neutral-400">
+                  ( Drag to explore )
+                </span>
               </label>
-              <span className="font-sans text-[14px] leading-[14px] text-ds-neutral-400">
-                Drag to explore
-              </span>
             </div>
-            <div className="flex h-full flex-col items-end justify-end gap-1.5">
-              <span className="font-sans text-[14px] font-semibold tracking-[0.14em] leading-[14px] text-ds-neutral-500">
-                Year
-              </span>
-              <span className="align-bottom font-sans text-[24px] font-bold uppercase tracking-[0em] leading-[24px] text-ds-neutral-00">
-                {formatDate(activeEvent.date).split(",")[1]?.trim() ??
-                  new Date(activeEvent.date).getUTCFullYear()}
+            <div className="flex h-full items-end justify-end">
+              <span className="flex items-start justify-end gap-3 pr-3 font-sans text-[14px] leading-[18px] text-ds-neutral-500">
+                Selected:{" "}
+                <span className="font-bold text-[18px] text-ds-neutral-00">
+                  {formatEventYear(activeEvent.date)}
+                </span>
               </span>
             </div>
           </div>
-          <div className="hero-event-slider-wrap">
+          <div
+            className="hero-event-slider-wrap"
+            data-at-start={activeIndex === 0 ? "true" : "false"}
+            style={{ "--slider-progress": `${sliderProgress}%` } as CSSProperties}
+          >
+            <div aria-hidden="true" className="hero-event-slider-visual" />
+            <div aria-hidden="true" className="hero-event-slider-dots">
+              {Array.from({ length: 12 }).map((_, index) => (
+                <span key={index} className="hero-event-slider-dot" />
+              ))}
+            </div>
             <input
               id="hero-event-time-slider"
-              className={`hero-event-slider ${activeIndex === 0 ? "is-at-start" : ""}`}
+              className="hero-event-slider"
               data-at-start={activeIndex === 0 ? "true" : "false"}
               type="range"
               min={0}
@@ -351,16 +399,9 @@ export default function HeroEvent({
               value={activeIndex}
               onChange={(e) => setActiveIndex(Number(e.currentTarget.value))}
               aria-label="Timeline slider"
-              style={{ "--slider-progress": `${sliderProgress}%` } as CSSProperties}
             />
-            {activeIndex === 0 ? (
-              <span
-                aria-hidden="true"
-                className="hero-event-slider-start-nudge"
-              />
-            ) : null}
           </div>
-          <div className="mt-2 flex items-center justify-between font-sans text-[13px] text-ds-neutral-500">
+          <div className="mt-2 flex items-center justify-between px-3 font-sans text-[13px] text-ds-neutral-500">
             <span style={{ color: "rgba(107, 114, 128, 1)" }}>Now</span>
             <span style={{ color: "rgba(107, 114, 128, 1)" }}>{maxEventYearLabel}</span>
           </div>

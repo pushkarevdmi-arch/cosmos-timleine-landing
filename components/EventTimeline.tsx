@@ -1,5 +1,6 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import type { HeroEventData } from "./HeroEvent";
 
 type EventTimelineProps = {
@@ -11,6 +12,31 @@ export default function EventTimeline({
   events,
   onOpen,
 }: EventTimelineProps) {
+  const sections = useMemo(() => {
+    const groupedSections: Array<{
+      title: string;
+      events: HeroEventData[];
+    }> = [];
+
+    events.forEach((event) => {
+      const sectionTitle = getTimeRangeSection(event);
+      const lastSection = groupedSections[groupedSections.length - 1];
+
+      if (lastSection?.title === sectionTitle) {
+        lastSection.events.push(event);
+        return;
+      }
+
+      groupedSections.push({
+        title: sectionTitle,
+        events: [event],
+      });
+    });
+
+    return groupedSections;
+  }, [events]);
+  const [collapsedSections, setCollapsedSections] = useState<Record<string, boolean>>({});
+
   if (!events.length) {
     return (
       <p className="type-body-tight text-ds-neutral-500">
@@ -22,60 +48,66 @@ export default function EventTimeline({
 
   return (
     <div className="relative">
-      {/* vertical spine */}
-      <div className="pointer-events-none absolute left-4 top-0 h-full w-px bg-ds-neutral-700/70 sm:left-6" />
-
-      <ol className="space-y-4 pl-10 sm:pl-14">
-        {events.map((event, index) => {
-          const currentSection = getTimeRangeSection(event);
-          const previousSection =
-            index > 0 ? getTimeRangeSection(events[index - 1]) : null;
-          const showSectionHeader = currentSection !== previousSection;
-
+      <ol className="space-y-4 pl-0 sm:pl-0">
+        {sections.map((section) => {
+          const isCollapsed = collapsedSections[section.title] ?? false;
           return (
-            <li key={event.id}>
-              {showSectionHeader ? (
-                <div className="mb-3 mt-2 flex items-center gap-3">
-                  <span className="type-era-label text-ds-neutral-400">
-                    {currentSection}
-                  </span>
-                  <span className="h-px flex-1 bg-ds-neutral-800/80" />
-                </div>
-              ) : null}
-
+            <li key={section.title} className="space-y-3">
               <button
                 type="button"
-                onClick={() => onOpen(event)}
-                className="group flex w-full cursor-pointer items-start gap-3 rounded-2xl border border-ds-neutral-800/80 bg-ds-neutral-950/70 p-6 text-left transition hover:border-ds-primary-400/70"
+                onClick={() =>
+                  setCollapsedSections((current) => ({
+                    ...current,
+                    [section.title]: !isCollapsed,
+                  }))
+                }
+                className="mt-2 mr-4 flex w-full cursor-pointer items-center gap-4 py-2 text-left"
+                aria-expanded={!isCollapsed}
               >
-                {/* Node */}
-                <div className="relative mt-1 flex h-6 w-6 flex-shrink-0 items-center justify-center">
-                  <div className="absolute h-3 w-3 rounded-full bg-ds-neutral-900 ring-2 ring-ds-neutral-700/80" />
-                  <div className="relative h-2 w-2 rounded-full bg-ds-neutral-500 group-hover:bg-ds-primary-300" />
-                </div>
-
-                {/* Content */}
-                <div className="min-w-0 flex flex-1 flex-col gap-2">
-                  <p className="type-era-label text-ds-neutral-500">
-                    {formatEraLabel(event.date)}
-                  </p>
-                  <h3 className="font-sans text-h4-600 text-ds-neutral-50">
-                    {event.title}
-                  </h3>
-                  <p className="line-clamp-2 font-sans text-body-medium-400 text-ds-neutral-400">
-                    {event.description}
-                  </p>
-                </div>
-
-                <div className="ml-2 flex flex-col items-end gap-1 text-right">
-                  <p className="type-era-label text-ds-neutral-500">
-                    Date
-                  </p>
-                  <p className="font-sans text-[length:var(--ds-typography-size-body-s)] leading-[18px] font-semibold text-ds-neutral-100">
-                    {formatShortDate(event.date)}
-                  </p>
-                </div>
+                <span className="type-era-label text-ds-neutral-00">
+                  {section.title}
+                </span>
+                <span className="h-px flex-1 bg-ds-neutral-800/80" />
+                <img
+                  src={isCollapsed ? "/icons/arrow-down.svg" : "/icons/arrow-up.svg"}
+                  alt=""
+                  aria-hidden="true"
+                  className="ml-4 h-6 w-6 shrink-0"
+                />
               </button>
+
+              {isCollapsed ? null : (
+                <ol className="space-y-4">
+                  {section.events.map((event) => (
+                    <li key={event.id}>
+                      <button
+                        type="button"
+                        onClick={() => onOpen(event)}
+                        className="group flex w-full cursor-pointer items-start gap-3 rounded-2xl border border-ds-neutral-800/80 bg-[var(--app-surface-elevated)] px-8 py-8 text-left transition hover:border-ds-primary-400/70"
+                      >
+                        {/* Content */}
+                        <div className="min-w-0 flex flex-1 flex-col gap-1.5">
+                          <h3 className="font-sans text-[20px] leading-[24px] font-semibold text-ds-neutral-50">
+                            {event.title}
+                          </h3>
+                          <p className="line-clamp-2 font-sans text-body-medium-400 text-ds-neutral-400">
+                            {event.description}
+                          </p>
+                        </div>
+
+                        <div className="ml-2 flex flex-col items-end gap-1 text-right">
+                          <p className="type-era-label text-ds-neutral-500">
+                            Date
+                          </p>
+                          <p className="font-sans text-[18px] leading-[20px] font-semibold text-ds-neutral-100">
+                            {formatShortDate(event.date)}
+                          </p>
+                        </div>
+                      </button>
+                    </li>
+                  ))}
+                </ol>
+              )}
             </li>
           );
         })}
@@ -88,20 +120,29 @@ function formatShortDate(dateStr: string) {
   const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) return "Unknown";
 
+  const hasSpecificTime =
+    date.getUTCHours() !== 0 ||
+    date.getUTCMinutes() !== 0 ||
+    date.getUTCSeconds() !== 0 ||
+    date.getUTCMilliseconds() !== 0;
+
+  if (hasSpecificTime) {
+    return new Intl.DateTimeFormat("en", {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "UTC",
+      timeZoneName: "short",
+    }).format(date);
+  }
+
   return new Intl.DateTimeFormat("en", {
     year: "numeric",
     month: "short",
+    day: "numeric",
   }).format(date);
-}
-
-function formatEraLabel(dateStr: string) {
-  const year = new Date(dateStr).getUTCFullYear();
-  if (!Number.isFinite(year)) return "Far future";
-
-  if (year < 2100) return "Near future";
-  if (year < 1000000) return "Deep time";
-  if (year < 1000000000) return "Galactic era";
-  return "Cosmic era";
 }
 
 function getTimeRangeSection(event: HeroEventData) {

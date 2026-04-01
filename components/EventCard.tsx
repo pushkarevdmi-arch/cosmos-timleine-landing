@@ -79,12 +79,21 @@ function isLongTermEvent(event: HeroEventData) {
 
 function formatLongTermYears(years: number) {
   if (years >= 1000000000) {
-    return `${Math.round(years / 1000000000).toLocaleString("en-US")} billion years`;
+    return {
+      value: Math.round(years / 1000000000).toLocaleString("en-US"),
+      unit: "billion years",
+    };
   }
   if (years >= 1000000) {
-    return `${Math.round(years / 1000000).toLocaleString("en-US")} million years`;
+    return {
+      value: Math.round(years / 1000000).toLocaleString("en-US"),
+      unit: "million years",
+    };
   }
-  return `${years.toLocaleString("en-US")} years`;
+  return {
+    value: years.toLocaleString("en-US"),
+    unit: "years",
+  };
 }
 
 function RocketIcon({ className }: { className?: string }) {
@@ -116,6 +125,7 @@ export type EventCardProps = {
 export default function EventCard({ event }: EventCardProps) {
   const countdown = useCountdown(event.date);
   const showLongTermYearsOnly = isLongTermEvent(event);
+  const longTermCountdown = formatLongTermYears(countdown.years);
 
   return (
     <article className="event-card">
@@ -137,7 +147,7 @@ export default function EventCard({ event }: EventCardProps) {
         </div>
 
         <div className="event-card__meta mt-6">
-          <div className="flex flex-col gap-1">
+          <div className="flex w-full flex-col gap-1">
             <div className="event-card__date">
               <span className="event-card__date-icon">
                 <CalendarIcon className="h-6 w-6 text-ds-neutral-500" />
@@ -150,9 +160,14 @@ export default function EventCard({ event }: EventCardProps) {
                 <p className="event-card__past-message">Event in the past</p>
               ) : showLongTermYearsOnly ? (
                 <div className="flex w-full items-center justify-center rounded-xl border border-[var(--ds-neutral-800)] bg-ds-neutral-1000 px-4 py-3 sm:py-3.5">
-                  <span className="font-sans text-[20px] leading-[20px] font-semibold tabular-nums text-ds-neutral-100 sm:text-[24px] sm:leading-[24px]">
-                    {formatLongTermYears(countdown.years)}
-                  </span>
+                  <div className="flex items-baseline gap-2">
+                    <span className="font-sans text-[38px] leading-[38px] font-normal tabular-nums text-ds-neutral-100">
+                      {longTermCountdown.value}
+                    </span>
+                    <span className="font-sans text-[24px] leading-[38px] font-normal text-ds-neutral-500">
+                      {longTermCountdown.unit}
+                    </span>
+                  </div>
                 </div>
               ) : (
                 <div className="event-card__countdown-grid">

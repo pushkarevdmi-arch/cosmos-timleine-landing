@@ -12,6 +12,24 @@ function formatFullDate(dateStr: string) {
   const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) return "Unknown date";
 
+  const hasSpecificTime =
+    date.getUTCHours() !== 0 ||
+    date.getUTCMinutes() !== 0 ||
+    date.getUTCSeconds() !== 0 ||
+    date.getUTCMilliseconds() !== 0;
+
+  if (hasSpecificTime) {
+    return new Intl.DateTimeFormat("en", {
+      year: "numeric",
+      month: "long",
+      day: "2-digit",
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: "UTC",
+      timeZoneName: "short",
+    }).format(date);
+  }
+
   return new Intl.DateTimeFormat("en", {
     year: "numeric",
     month: "long",

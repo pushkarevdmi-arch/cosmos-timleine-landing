@@ -120,15 +120,32 @@ function RocketIcon({ className }: { className?: string }) {
 
 export type EventCardProps = {
   event: HeroEventData;
+  onExplore?: (event: HeroEventData) => void;
 };
 
-export default function EventCard({ event }: EventCardProps) {
+export default function EventCard({ event, onExplore }: EventCardProps) {
   const countdown = useCountdown(event.date);
   const showLongTermYearsOnly = isLongTermEvent(event);
   const longTermCountdown = formatLongTermYears(countdown.years);
+  const isInteractive = Boolean(onExplore);
 
   return (
-    <article className="event-card">
+    <article
+      className={`event-card${isInteractive ? " event-card--interactive" : ""}`}
+      role={isInteractive ? "button" : undefined}
+      tabIndex={isInteractive ? 0 : undefined}
+      onClick={isInteractive ? () => onExplore?.(event) : undefined}
+      onKeyDown={
+        isInteractive
+          ? (e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                onExplore?.(event);
+              }
+            }
+          : undefined
+      }
+    >
       <div className="event-card__image-wrap">
         <Image
           src={event.image}
@@ -194,7 +211,14 @@ export default function EventCard({ event }: EventCardProps) {
             </div>
           </div>
 
-          <button type="button" className="event-card__explore">
+          <button
+            type="button"
+            className="event-card__explore"
+            onClick={(e) => {
+              e.stopPropagation();
+              onExplore?.(event);
+            }}
+          >
             <span className="event-card__explore-icon">
               <img src="/icons/rocket.svg" width="20" height="20" />
             </span>

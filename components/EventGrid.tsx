@@ -41,23 +41,8 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
 
             <div
               className="h-full"
-              onClick={(e) => {
-                if (!onExplore) return;
-                const target = e.target as HTMLElement | null;
-                if (!target || !target.closest) return;
-
-                const button = target.closest("button");
-                if (!button) return;
-
-                const hasExploreIcon = button.querySelector(
-                  ".event-card__explore-icon"
-                );
-                if (hasExploreIcon) {
-                  onExplore(event);
-                }
-              }}
             >
-              <EventCard event={event} />
+              <EventCard event={event} onExplore={onExplore} />
             </div>
           </div>
         );

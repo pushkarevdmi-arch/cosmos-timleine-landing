@@ -78,6 +78,22 @@ svg:not([class*="text-"]) {
     border-color: var(--ds-neutral-800);
     background: unset;
     background-color: unset;
+    transition: border-color 180ms ease;
+  }
+
+  .event-card--interactive {
+    cursor: pointer;
+  }
+
+  .event-card--interactive:hover,
+  .event-card--interactive:focus-visible,
+  .event-card--interactive:focus-within {
+    border-color: var(--ds-neutral-600);
+    box-shadow: inset 0 0 0 1px var(--ds-neutral-600);
+  }
+
+  .event-card--interactive:focus-visible {
+    outline: none;
   }
 
   .event-card__image-wrap {
@@ -227,7 +243,7 @@ svg:not([class*="text-"]) {
 
   @media (min-width: 40rem) {
     .event-card__countdown-segment {
-      width: 96px;
+      width: 102px;
     }
   }
 

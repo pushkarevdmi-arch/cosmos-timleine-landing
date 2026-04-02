@@ -93,7 +93,7 @@ export default function EventTimeline({
                             {event.title}
                           </h3>
                           <p className="line-clamp-2 font-sans text-body-medium-400 text-ds-neutral-400">
-                            {event.description}
+                            {event.shortDescription}
                           </p>
                         </div>
 
@@ -148,7 +148,7 @@ function formatShortDate(dateStr: string) {
 }
 
 function getTimeRangeSection(event: HeroEventData) {
-  if (event.timeSection) return event.timeSection;
+  if (event.timeCategory) return event.timeCategory;
 
   const eventYear = new Date(event.date).getUTCFullYear();
   if (!Number.isFinite(eventYear)) return "Next 100 Years";

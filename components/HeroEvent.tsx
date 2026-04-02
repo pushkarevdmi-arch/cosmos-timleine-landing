@@ -7,16 +7,16 @@ import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
 export type HeroEventData = {
   id: string;
   title: string;
-  description: string;
-  tag?: string;
-  extraTags?: EventExtraTag[];
-  timeSection?: "Next 100 Years" | "Next 10,000 Years" | "Millions of Years" | "Billions of Years";
   date: string;
-  detailedExplanation: string;
-  image: string;
-  whyItMatters?: string;
+  timeCategory?: "Next 100 Years" | "Next 10,000 Years" | "Millions of Years" | "Billions of Years";
+  shortDescription: string;
+  mainDescription: string;
   whatYoullSee?: string;
+  whyItMatters?: string;
   keyFacts?: string[];
+  tags?: string[];
+  specialTags?: EventExtraTag[];
+  image: string;
 };
 
 type HeroEventProps = {
@@ -110,7 +110,7 @@ function formatEventYear(dateStr: string) {
 }
 
 function isLongTermEvent(event: HeroEventData) {
-  if (event.timeSection && LONG_TERM_SECTIONS.has(event.timeSection)) {
+  if (event.timeCategory && LONG_TERM_SECTIONS.has(event.timeCategory)) {
     return true;
   }
 
@@ -196,13 +196,9 @@ export default function HeroEvent({
       ),
     [events]
   );
-  const eventsKey = useMemo(
-    () => sortedEvents.map((event) => `${event.id}:${event.date}`).join("|"),
-    [sortedEvents]
-  );
   const nearestUpcomingIndex = useMemo(
     () => getNearestUpcomingEventIndex(sortedEvents),
-    [eventsKey]
+    [sortedEvents]
   );
   const [activeIndex, setActiveIndex] = useState(() =>
     getNearestUpcomingEventIndex(sortedEvents)
@@ -213,22 +209,29 @@ export default function HeroEvent({
   const [isVisible, setIsVisible] = useState(true);
 
   useEffect(() => {
-    // Re-initialize only when source events list actually changes.
-    setActiveIndex(nearestUpcomingIndex);
-    setDisplayIndex(nearestUpcomingIndex);
-    setIsVisible(true);
-  }, [eventsKey, nearestUpcomingIndex]);
+    // Defer to avoid synchronous setState-in-effect warnings.
+    const t = window.setTimeout(() => {
+      setActiveIndex(nearestUpcomingIndex);
+      setDisplayIndex(nearestUpcomingIndex);
+      setIsVisible(true);
+    }, 0);
+
+    return () => window.clearTimeout(t);
+  }, [nearestUpcomingIndex]);
 
   useEffect(() => {
     if (activeIndex === displayIndex) return;
 
-    setIsVisible(false);
+    const hideT = window.setTimeout(() => setIsVisible(false), 0);
     const timeoutId = setTimeout(() => {
       setDisplayIndex(activeIndex);
       requestAnimationFrame(() => setIsVisible(true));
     }, 180);
 
-    return () => clearTimeout(timeoutId);
+    return () => {
+      window.clearTimeout(hideT);
+      clearTimeout(timeoutId);
+    };
   }, [activeIndex, displayIndex]);
 
   const displayEvent = sortedEvents[displayIndex] ?? sortedEvents[0];
@@ -240,9 +243,10 @@ export default function HeroEvent({
   const normalizedYears = Math.floor(countdown.days / 365);
   const normalizedDays = countdown.days % 365;
   const currentYear = new Date().getUTCFullYear();
-  const maxEventYearValue = new Date(
-    sortedEvents[sortedEvents.length - 1]?.date ?? Date.now()
-  ).getUTCFullYear();
+  const lastEventDate = sortedEvents[sortedEvents.length - 1]?.date;
+  const maxEventYearValue = lastEventDate
+    ? new Date(lastEventDate).getUTCFullYear()
+    : currentYear;
   const maxEventYearLabel = Number.isFinite(maxEventYearValue)
     ? maxEventYearValue.toLocaleString("en-US")
     : "5B years ahead";
@@ -277,8 +281,8 @@ export default function HeroEvent({
           />
 
           <EventTagGroup
-            primaryTag={displayEvent.tag}
-            extraTags={displayEvent.extraTags}
+            primaryTag={displayEvent.tags?.[0]}
+            specialTags={displayEvent.specialTags}
           />
         </div>
 
@@ -292,7 +296,7 @@ export default function HeroEvent({
               {displayEvent.title}
             </h3>
             <p className="m-0 min-h-[40px] max-w-[640px] font-sans text-[16px] leading-[20px] text-ds-neutral-400">
-              {displayEvent.description}
+              {displayEvent.shortDescription}
             </p>
           </div>
 
@@ -345,7 +349,7 @@ export default function HeroEvent({
                 className="group mt-3 inline-flex cursor-pointer items-center justify-center gap-1.5 md:justify-start md:self-start"
             >
               <span className="event-card__explore-icon">
-                <img src="/icons/rocket.svg" width="18" height="18" />
+                <img src="/icons/rocket.svg" width="20" height="20" />
               </span>
               <span className="type-button-label group-hover:text-[var(--ds-primary-200)]">
                 Explore event
@@ -370,9 +374,9 @@ export default function HeroEvent({
               </label>
             </div>
             <div className="flex h-full items-end justify-end">
-              <span className="flex items-start justify-end gap-2 pr-3 font-sans text-[14px] leading-[18px] text-ds-neutral-500">
+              <span className="flex items-end justify-end gap-2 pr-3 font-sans font-semibold text-left align-middle text-[14px] leading-[18px] text-ds-neutral-500">
                 Year:{" "}
-                <span className="font-bold text-[18px] text-ds-neutral-00">
+                <span className="font-bold text-[28px] leading-[28px] text-ds-neutral-00">
                   {formatEventYear(liveEvent.date)}
                 </span>
               </span>

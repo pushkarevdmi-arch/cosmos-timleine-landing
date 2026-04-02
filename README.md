@@ -1,36 +1,44 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Description
+Cosmorrow is a Next.js site that presents “Upcoming Events” as a grid or timeline view. Event content is sourced from a local JSON dataset (`data/events.json`) and rendered by the client-side home page (`app/page.tsx`).
+
+## Tech Stack
+- Next.js (`package.json`)
+- React (`package.json`)
+- TypeScript (`package.json`)
+- Tailwind CSS v4 (`package.json`)
+
+## Architecture
+- Frontend location: `app/` (App Router; main page in `app/page.tsx`)
+- Backend: Not detected in the repo (no `app/api/` or `pages/api/`)
+- Data handling: Local file `data/events.json` imported into `app/page.tsx`
+
+## Project Structure
+- `app/`: App Router entry (`layout.tsx`, `page.tsx`) and global/generated styles (`globals.css`, `design-tokens.css`, `ds-tailwind-theme.css`)
+- `components/`: UI components for events/views (e.g. `HeroEvent`, `EventGrid`, `EventTimeline`, `EventDetailsModal`)
+- `data/`: Local content (`events.json`)
+- `design-system/`: Design-token source of truth (`tokens.json`) and structure docs
+- `scripts/`: Token build script (`build-design-tokens.mjs`)
+- `public/`: Static assets (icons, logo, fonts, etc.)
 
 ## Getting Started
+1. Install:
+   ```sh
+   npm install
+   ```
+2. Dev:
+   ```sh
+   npm run dev
+   ```
+3. Build:
+   ```sh
+   npm run build
+   ```
 
-First, run the development server:
+## Deployment
+- Deployment is not explicitly documented in the repo.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Summary
+- Next.js App Router frontend in `app/`, with the main UI in `app/page.tsx`
+- Events come from `data/events.json` (no API routes detected)
+- Views are composed from `components/` (grid/timeline + modal)
+- Design tokens live in `design-system/tokens.json` and are generated via `npm run build:tokens`

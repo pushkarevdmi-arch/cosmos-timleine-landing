@@ -14,8 +14,8 @@ type NumericPreloaderProps = {
 };
 
 export default function NumericPreloader({
-  rampUpMs = 4000,
-  maxWaitMs = 8000,
+  rampUpMs = 2000,
+  maxWaitMs = 2000,
 }: NumericPreloaderProps) {
   const [isExiting, setIsExiting] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
@@ -38,18 +38,25 @@ export default function NumericPreloader({
 
   useEffect(() => {
     if (!loadDone || !animationDone) return;
-    setIsExiting(true);
+    const t = window.setTimeout(() => setIsExiting(true), 0);
+    return () => window.clearTimeout(t);
   }, [animationDone, loadDone]);
 
   useEffect(() => {
     if (reducedMotion) {
       // При reduced motion просто быстро покажем 100% и скроем.
-      setProgress(100);
-      setAnimationDone(true);
+      let loadDoneTimeout: number | undefined;
       const t = window.setTimeout(() => {
-        setLoadDone(true);
-      }, 50);
-      return () => window.clearTimeout(t);
+        setProgress(100);
+        setAnimationDone(true);
+        loadDoneTimeout = window.setTimeout(() => {
+          setLoadDone(true);
+        }, 50);
+      }, 0);
+      return () => {
+        window.clearTimeout(t);
+        if (loadDoneTimeout) window.clearTimeout(loadDoneTimeout);
+      };
     }
 
     const startedAt = Date.now();

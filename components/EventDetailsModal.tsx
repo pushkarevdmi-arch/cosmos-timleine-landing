@@ -43,9 +43,8 @@ export default function EventDetailsModal({
 }: EventDetailsModalProps) {
   const {
     title,
-    description,
     date,
-    detailedExplanation,
+    mainDescription,
     whyItMatters,
     whatYoullSee,
     keyFacts,
@@ -53,7 +52,7 @@ export default function EventDetailsModal({
 
   const safeWhyItMatters =
     whyItMatters ??
-    detailedExplanation ??
+    mainDescription ??
     "This event marks a significant moment in the evolving story of our universe, giving a rare window into large-scale cosmic processes.";
 
   const safeWhatYoullSee =
@@ -118,7 +117,7 @@ export default function EventDetailsModal({
         <div className="flex-1 overflow-y-auto">
           <div className="flex flex-col gap-8 px-8 pt-8 pb-12 type-body-tight text-ds-neutral-200">
             <p className="text-[18px] leading-6 text-ds-neutral-300">
-              {description}
+              {mainDescription}
             </p>
 
             <section className="space-y-1.5">

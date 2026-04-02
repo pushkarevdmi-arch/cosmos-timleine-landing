@@ -67,7 +67,7 @@ function formatCardDate(dateStr: string) {
 }
 
 function isLongTermEvent(event: HeroEventData) {
-  if (event.timeSection && LONG_TERM_SECTIONS.has(event.timeSection)) {
+  if (event.timeCategory && LONG_TERM_SECTIONS.has(event.timeCategory)) {
     return true;
   }
 
@@ -137,13 +137,13 @@ export default function EventCard({ event }: EventCardProps) {
           sizes="(min-width: 640px) 50vw, 100vw"
           className="event-card__image"
         />
-        <EventTagGroup primaryTag={event.tag} extraTags={event.extraTags} />
+        <EventTagGroup primaryTag={event.tags?.[0]} specialTags={event.specialTags} />
       </div>
 
       <div className="event-card__content w-full">
         <div className="event-card__header">
           <h3 className="event-card__title">{event.title}</h3>
-          <p className="event-card__description">{event.description}</p>
+          <p className="event-card__description">{event.shortDescription}</p>
         </div>
 
         <div className="event-card__meta mt-6">
@@ -196,7 +196,7 @@ export default function EventCard({ event }: EventCardProps) {
 
           <button type="button" className="event-card__explore">
             <span className="event-card__explore-icon">
-              <img src="/icons/rocket.svg" width="18" height="18" />
+              <img src="/icons/rocket.svg" width="20" height="20" />
             </span>
             <span className="type-button-label">
               Explore event

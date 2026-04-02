@@ -1,14 +1,14 @@
 "use client";
 
 export type EventExtraTag = {
-  kind: "rarity" | "location";
+  type: "rarity" | "location";
   label: string;
   icon?: string;
 };
 
 type EventTagGroupProps = {
   primaryTag?: string;
-  extraTags?: EventExtraTag[];
+  specialTags?: EventExtraTag[];
 };
 
 function getLocationAbbreviation(label: string, icon?: string) {
@@ -28,19 +28,23 @@ function getLocationAbbreviation(label: string, icon?: string) {
 
 export default function EventTagGroup({
   primaryTag = "Solar system",
-  extraTags = [],
+  specialTags = [],
 }: EventTagGroupProps) {
-  const visibleExtraTags = extraTags.filter((tag) => tag.kind !== "location");
-
   return (
     <div className="event-card__badge-row">
       <div className="event-card__category">{primaryTag}</div>
-      {visibleExtraTags.map((tag) => (
+      {specialTags.map((tag) => (
         <div
-          key={`${tag.kind}-${tag.label}`}
-          className={`event-card__extra-tag event-card__extra-tag--${tag.kind}`}
+          key={`${tag.type}-${tag.label}`}
+          className={[
+            "event-card__extra-tag",
+            `event-card__extra-tag--${tag.type}`,
+            tag.type === "location"
+              ? "event-card__extra-tag--with-icon"
+              : "event-card__extra-tag--no-icon",
+          ].join(" ")}
         >
-          {tag.kind === "location" ? (
+          {tag.type === "location" ? (
             <span className="event-card__extra-tag-icon" aria-hidden="true">
               {getLocationAbbreviation(tag.label, tag.icon)}
             </span>

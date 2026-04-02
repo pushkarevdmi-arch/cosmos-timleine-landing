@@ -23,22 +23,22 @@ function splitSentences(text: string) {
     .filter(Boolean);
 }
 
-function deriveWhyItMatters(detailedExplanation: string) {
-  const sentences = splitSentences(detailedExplanation);
+function deriveWhyItMatters(mainDescription: string) {
+  const sentences = splitSentences(mainDescription);
   const why = sentences.slice(0, 2).join(" ");
-  return why || detailedExplanation;
+  return why || mainDescription;
 }
 
-function deriveWhatYoullSee(detailedExplanation: string) {
-  const sentences = splitSentences(detailedExplanation);
+function deriveWhatYoullSee(mainDescription: string) {
+  const sentences = splitSentences(mainDescription);
   const part = sentences.slice(2, 5).join(" ");
 
   // Fallback: if the explanation is short, use the last sentences.
-  return part || sentences.slice(-2).join(" ") || detailedExplanation;
+  return part || sentences.slice(-2).join(" ") || mainDescription;
 }
 
-function deriveKeyFacts(detailedExplanation: string) {
-  const sentences = splitSentences(detailedExplanation);
+function deriveKeyFacts(mainDescription: string) {
+  const sentences = splitSentences(mainDescription);
   const candidates = [
     ...sentences.slice(0, 2),
     ...(sentences.length ? [sentences[sentences.length - 1]] : []),
@@ -66,7 +66,7 @@ function deriveKeyFacts(detailedExplanation: string) {
 }
 
 function getTimeRangeSectionLabel(event: HeroEventData): TimeRangeOption {
-  if (event.timeSection) return event.timeSection;
+  if (event.timeCategory) return event.timeCategory;
 
   const eventYear = new Date(event.date).getUTCFullYear();
   if (!Number.isFinite(eventYear)) return "Next 100 Years";
@@ -80,7 +80,7 @@ function getTimeRangeSectionLabel(event: HeroEventData): TimeRangeOption {
   return "Billions of Years";
 }
 
-const eventsSeedBase: HeroEventData[] = (eventsData as HeroEventData[]);
+const eventsSeedBase = eventsData as unknown as HeroEventData[];
 const EVENTS_BATCH_SIZE = 11;
 const TIME_RANGE_OPTIONS = [
   "Next 100 Years",
@@ -94,35 +94,47 @@ const SECTION_PLACEHOLDER_EVENTS: HeroEventData[] = [
   {
     id: "placeholder-next-10000-years",
     title: "Interstellar Probe Milestone",
-    description: "A marker event to represent the next 10,000 years section.",
     date: "6000-01-01T00:00:00.000Z",
-    detailedExplanation:
-      "This placeholder event is shown to demonstrate visual grouping for long-range timeline periods.",
     image: "/images/hero-image.jpg",
-    tag: "Timeline Marker",
-    timeSection: "Next 10,000 Years",
+    timeCategory: "Next 10,000 Years",
+    shortDescription: "A marker event to represent the next 10,000 years section.",
+    mainDescription:
+      "This placeholder event is shown to demonstrate visual grouping for long-range timeline periods.",
+    tags: ["Timeline Marker"],
+    specialTags: [],
+    whyItMatters: "Used as a visual marker for long-range time ranges.",
+    whatYoullSee: "A section marker used for grouping.",
+    keyFacts: ["Section marker", "Used for grouping"],
   },
   {
     id: "placeholder-millions-of-years",
     title: "Galactic Drift Checkpoint",
-    description: "A marker event to represent the millions of years section.",
     date: "12000-01-01T00:00:00.000Z",
-    detailedExplanation:
-      "This placeholder event is shown to demonstrate visual grouping for million-year timeline periods.",
     image: "/images/hero-image.jpg",
-    tag: "Timeline Marker",
-    timeSection: "Millions of Years",
+    timeCategory: "Millions of Years",
+    shortDescription: "A marker event to represent the millions of years section.",
+    mainDescription:
+      "This placeholder event is shown to demonstrate visual grouping for million-year timeline periods.",
+    tags: ["Timeline Marker"],
+    specialTags: [],
+    whyItMatters: "Used as a visual marker for long-range time ranges.",
+    whatYoullSee: "A section marker used for grouping.",
+    keyFacts: ["Section marker", "Used for grouping"],
   },
   {
     id: "placeholder-billions-of-years",
     title: "Far Future Cosmic Marker",
-    description: "A marker event to represent the billions of years section.",
     date: "22000-01-01T00:00:00.000Z",
-    detailedExplanation:
-      "This placeholder event is shown to demonstrate visual grouping for billion-year timeline periods.",
     image: "/images/hero-image.jpg",
-    tag: "Timeline Marker",
-    timeSection: "Billions of Years",
+    timeCategory: "Billions of Years",
+    shortDescription: "A marker event to represent the billions of years section.",
+    mainDescription:
+      "This placeholder event is shown to demonstrate visual grouping for billion-year timeline periods.",
+    tags: ["Timeline Marker"],
+    specialTags: [],
+    whyItMatters: "Used as a visual marker for long-range time ranges.",
+    whatYoullSee: "A section marker used for grouping.",
+    keyFacts: ["Section marker", "Used for grouping"],
   },
 ];
 const EVENT_TAGS: Record<string, string> = {
@@ -151,14 +163,15 @@ const EVENT_TAGS: Record<string, string> = {
 const eventsSeed: HeroEventData[] = [...eventsSeedBase, ...SECTION_PLACEHOLDER_EVENTS].map(
   (event) => ({
     ...event,
-    tag: event.tag ?? EVENT_TAGS[event.id] ?? "Solar system",
+    timeCategory: event.timeCategory ?? getTimeRangeSectionLabel(event),
+    tags: event.tags?.length ? event.tags : [EVENT_TAGS[event.id] ?? "Solar system"],
     // Allow content in `data/events.json` to override auto-generated fields.
     // If a field is missing (`undefined`), we fall back to derived content.
     whyItMatters:
-      event.whyItMatters ?? deriveWhyItMatters(event.detailedExplanation),
+      event.whyItMatters ?? deriveWhyItMatters(event.mainDescription),
     whatYoullSee:
-      event.whatYoullSee ?? deriveWhatYoullSee(event.detailedExplanation),
-    keyFacts: event.keyFacts ?? deriveKeyFacts(event.detailedExplanation),
+      event.whatYoullSee ?? deriveWhatYoullSee(event.mainDescription),
+    keyFacts: event.keyFacts ?? deriveKeyFacts(event.mainDescription),
   })
 );
 
@@ -190,7 +203,7 @@ export default function Home() {
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
     for (const event of sortedEvents) {
-      if (event.tag) tags.add(event.tag);
+      for (const tag of event.tags ?? []) tags.add(tag);
     }
     return Array.from(tags).sort((a, b) => a.localeCompare(b));
   }, [sortedEvents]);
@@ -202,7 +215,7 @@ export default function Home() {
         getTimeRangeSectionLabel(event) === selectedTimeRange;
       const matchesTag =
         selectedTags.length === 0 ||
-        (event.tag ? selectedTags.includes(event.tag) : false);
+        (event.tags ? event.tags.some((tag) => selectedTags.includes(tag)) : false);
       return matchesTimeRange && matchesTag;
     });
   }, [selectedTags, selectedTimeRange, sortedEvents]);
@@ -213,7 +226,10 @@ export default function Home() {
   const heroEvents = filteredEvents;
 
   const nextEvent = heroEvents[0];
-  const activeHeroEventId = heroActiveEventId ?? nextEvent?.id ?? null;
+  const activeHeroEventId =
+    heroActiveEventId && heroEvents.some((event) => event.id === heroActiveEventId)
+      ? heroActiveEventId
+      : nextEvent?.id ?? null;
   const remainingEvents = visibleEvents.filter(
     (event) => event.id !== activeHeroEventId
   );
@@ -233,30 +249,12 @@ export default function Home() {
   }, [filteredEvents.length, hasMoreEvents]);
 
   useEffect(() => {
-    setVisibleCount(EVENTS_BATCH_SIZE);
-  }, [selectedTags, selectedTimeRange]);
-
-  useEffect(() => {
-    if (!heroEvents.length) {
-      setHeroActiveEventId(null);
-      return;
-    }
-    if (!activeHeroEventId) {
-      setHeroActiveEventId(heroEvents[0].id);
-      return;
-    }
-    const stillVisible = heroEvents.some((event) => event.id === activeHeroEventId);
-    if (!stillVisible) {
-      setHeroActiveEventId(heroEvents[0].id);
-    }
-  }, [activeHeroEventId, heroEvents]);
-
-  useEffect(() => {
     const handleOutsideClick = (event: globalThis.MouseEvent) => {
       if (!filterPopoverRef.current) return;
       const target = event.target as Node | null;
       if (target && !filterPopoverRef.current.contains(target)) {
         setIsFilterOpen(false);
+        setOpenDropdown(null);
       }
     };
 
@@ -266,10 +264,6 @@ export default function Home() {
     return () => {
       document.removeEventListener("mousedown", handleOutsideClick);
     };
-  }, [isFilterOpen]);
-
-  useEffect(() => {
-    if (!isFilterOpen) setOpenDropdown(null);
   }, [isFilterOpen]);
 
   useEffect(() => {
@@ -403,7 +397,13 @@ export default function Home() {
           >
             <button
               type="button"
-              onClick={() => setIsFilterOpen((open) => !open)}
+              onClick={() =>
+                setIsFilterOpen((open) => {
+                  const next = !open;
+                  if (!next) setOpenDropdown(null);
+                  return next;
+                })
+              }
               className="flex items-center gap-2 rounded-full px-3 py-2 text-base font-bold cursor-pointer text-ds-neutral-200 hover:text-ds-neutral-00"
               aria-haspopup="dialog"
               aria-expanded={isFilterOpen}
@@ -479,6 +479,9 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => {
+                              setVisibleCount(EVENTS_BATCH_SIZE);
+                              setIsLoadingMore(false);
+                              isFetchingRef.current = false;
                               setSelectedTimeRange("all");
                               setOpenDropdown(null);
                             }}
@@ -492,6 +495,9 @@ export default function Home() {
                             <button
                               type="button"
                               onClick={() => {
+                                setVisibleCount(EVENTS_BATCH_SIZE);
+                                setIsLoadingMore(false);
+                                isFetchingRef.current = false;
                                 setSelectedTimeRange(range);
                                 setOpenDropdown(null);
                               }}
@@ -547,6 +553,9 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => {
+                              setVisibleCount(EVENTS_BATCH_SIZE);
+                              setIsLoadingMore(false);
+                              isFetchingRef.current = false;
                               setSelectedTags([]);
                             }}
                             className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
@@ -562,6 +571,9 @@ export default function Home() {
                             <button
                               type="button"
                               onClick={() => {
+                                setVisibleCount(EVENTS_BATCH_SIZE);
+                                setIsLoadingMore(false);
+                                isFetchingRef.current = false;
                                 setSelectedTags((current) => {
                                   if (current.includes(tag)) {
                                     return current.filter((item) => item !== tag);
@@ -585,6 +597,9 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => {
+                      setVisibleCount(EVENTS_BATCH_SIZE);
+                      setIsLoadingMore(false);
+                      isFetchingRef.current = false;
                       setSelectedTimeRange("all");
                       setSelectedTags([]);
                       setOpenDropdown(null);

@@ -67,7 +67,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
 }
 
 function getTimeRangeSection(event: HeroEventData) {
-  if (event.timeSection) return event.timeSection;
+  if (event.timeCategory) return event.timeCategory;
 
   const eventYear = new Date(event.date).getUTCFullYear();
   if (!Number.isFinite(eventYear)) return "Next 100 Years";

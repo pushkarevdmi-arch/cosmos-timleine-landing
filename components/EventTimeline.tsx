@@ -61,19 +61,21 @@ export default function EventTimeline({
                     [section.title]: !isCollapsed,
                   }))
                 }
-                className="mt-2 mr-4 flex w-full cursor-pointer items-center gap-4 py-2 text-left"
+                className="group mt-2 mr-4 flex w-full cursor-pointer items-center gap-4 py-2 text-left"
                 aria-expanded={!isCollapsed}
               >
                 <span className="type-era-label text-ds-neutral-00">
                   {section.title}
                 </span>
                 <span className="h-px flex-1 bg-ds-neutral-800/80" />
-                <img
-                  src={isCollapsed ? "/icons/arrow-down.svg" : "/icons/arrow-up.svg"}
-                  alt=""
-                  aria-hidden="true"
-                  className="ml-4 h-6 w-6 shrink-0"
-                />
+                <span className="ml-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ds-neutral-900 transition-colors duration-200">
+                  <img
+                    src={isCollapsed ? "/icons/arrow-down.svg" : "/icons/arrow-up.svg"}
+                    alt=""
+                    aria-hidden="true"
+                    className="h-6 w-6 shrink-0 transition-transform duration-200 group-hover:scale-110"
+                  />
+                </span>
               </button>
 
               {isCollapsed ? null : (

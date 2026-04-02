@@ -106,7 +106,7 @@ function formatDate(dateStr: string) {
 function formatEventYear(dateStr: string) {
   const year = new Date(dateStr).getUTCFullYear();
   if (!Number.isFinite(year)) return "Unknown";
-  return year.toLocaleString("en-US");
+  return String(year);
 }
 
 function isLongTermEvent(event: HeroEventData) {
@@ -162,14 +162,14 @@ function HeroFlipSegment({
 
   return (
     <div
-      className="relative flex h-[102px] min-h-[92px] w-full min-w-0 flex-1 select-none flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-2 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[102px] md:rounded-2xl md:py-2"
+      className="relative flex h-[102px] min-h-[92px] min-w-0 basis-0 flex-1 select-none flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-2 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[102px] md:rounded-2xl md:py-2"
       style={{ height: "100%" }}
       aria-label={`${label}: ${valueText}`}
     >
       <span className={valueClassName}>
         {valueText}
       </span>
-      <span className="w-full text-center font-sans text-[10px] font-semibold uppercase leading-none tracking-[0.2em] text-ds-neutral-400 md:text-[12px]">
+      <span className="w-full text-center font-sans text-[10px] font-semibold uppercase leading-none tracking-[0.2em] text-ds-neutral-500 md:text-[12px]">
         {label}
       </span>
     </div>
@@ -231,10 +231,11 @@ export default function HeroEvent({
     return () => clearTimeout(timeoutId);
   }, [activeIndex, displayIndex]);
 
-  const activeEvent = sortedEvents[displayIndex] ?? sortedEvents[0];
-  const countdown = useCountdown(activeEvent.date);
-  const showLongTermYearsOnly = isLongTermEvent(activeEvent);
-  const yearsRemaining = getYearsRemaining(activeEvent.date);
+  const displayEvent = sortedEvents[displayIndex] ?? sortedEvents[0];
+  const liveEvent = sortedEvents[activeIndex] ?? sortedEvents[0];
+  const countdown = useCountdown(liveEvent.date);
+  const showLongTermYearsOnly = isLongTermEvent(liveEvent);
+  const yearsRemaining = getYearsRemaining(liveEvent.date);
   const longTermCountdown = formatLongTermYears(yearsRemaining);
   const normalizedYears = Math.floor(countdown.days / 365);
   const normalizedDays = countdown.days % 365;
@@ -249,11 +250,11 @@ export default function HeroEvent({
     sortedEvents.length > 1 ? (activeIndex / (sortedEvents.length - 1)) * 100 : 0;
 
   useEffect(() => {
-    if (!activeEvent) return;
-    onActiveEventChange?.(activeEvent);
-  }, [activeEvent, onActiveEventChange]);
+    if (!displayEvent) return;
+    onActiveEventChange?.(displayEvent);
+  }, [displayEvent, onActiveEventChange]);
 
-  if (!activeEvent) return null;
+  if (!displayEvent || !liveEvent) return null;
 
   return (
     <section className="relative flex h-fit w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
@@ -267,8 +268,8 @@ export default function HeroEvent({
         {/* Left: visual */}
         <div className="hero-event__image-wrap relative min-h-[220px] overflow-hidden rounded-3xl md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
           <Image
-            src={activeEvent.image}
-            alt={activeEvent.title}
+            src={displayEvent.image}
+            alt={displayEvent.title}
             fill
             priority
             sizes="(min-width: 768px) 40vw, 100vw"
@@ -276,33 +277,33 @@ export default function HeroEvent({
           />
 
           <EventTagGroup
-            primaryTag={activeEvent.tag}
-            extraTags={activeEvent.extraTags}
+            primaryTag={displayEvent.tag}
+            extraTags={displayEvent.extraTags}
           />
         </div>
 
         {/* Right: information */}
         <div
-          className="flex h-full flex-col justify-between gap-2 rounded-3xl px-10 pb-8 pt-10 md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10"
+          className="flex h-full flex-col justify-between gap-2 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
-          <div className="flex flex-col gap-1.5">
+          <div className="flex flex-col items-center gap-1.5 md:items-start">
             <h3 className="m-0 font-sans font-semibold text-ds-neutral-50 text-[16px] leading-[24px] sm:text-[24px] sm:leading-[32px]">
-              {activeEvent.title}
+              {displayEvent.title}
             </h3>
             <p className="m-0 min-h-[40px] max-w-[640px] font-sans text-[16px] leading-[20px] text-ds-neutral-400">
-              {activeEvent.description}
+              {displayEvent.description}
             </p>
           </div>
 
           {/* Date + countdown share one stack; adjust gap via .hero-event__date-countdown */}
-          <div className="mt-6 flex h-full flex-col gap-3">
-            <div className="hero-event__date-countdown flex flex-col gap-3">
-              <div className="inline-flex items-center gap-2 type-body-tight text-ds-neutral-300">
+          <div className="mt-5 flex h-full w-full flex-col items-center gap-3 md:mt-6 md:items-stretch">
+            <div className="hero-event__date-countdown flex w-full flex-col gap-3">
+              <div className="inline-flex items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
                 <span className="event-card__date-icon">
                   <CalendarIcon className="h-6 w-6 text-ds-neutral-500" />
                 </span>
-                <span>{formatDate(activeEvent.date)}</span>
+                <span>{formatDate(displayEvent.date)}</span>
               </div>
 
               {countdown.isPast ? (
@@ -321,7 +322,7 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown flex h-fit flex-nowrap items-stretch justify-between gap-2 sm:gap-2.5 md:gap-2">
+                <div className="hero-countdown -mx-2 flex h-fit w-[calc(100%+1rem)] flex-nowrap items-stretch justify-between gap-2 sm:mx-0 sm:w-full sm:gap-2.5 md:gap-2">
                   {[
                     { label: "YEARS", value: normalizedYears },
                     { label: "DAYS", value: normalizedDays },
@@ -340,8 +341,8 @@ export default function HeroEvent({
 
             <button
               type="button"
-              onClick={() => onExplore?.(activeEvent)}
-              className="group mt-3 inline-flex cursor-pointer items-center gap-1.5"
+                onClick={() => onExplore?.(displayEvent)}
+                className="group mt-3 inline-flex cursor-pointer items-center justify-center gap-1.5 md:justify-start md:self-start"
             >
               <span className="event-card__explore-icon">
                 <img src="/icons/rocket.svg" width="18" height="18" />
@@ -369,10 +370,10 @@ export default function HeroEvent({
               </label>
             </div>
             <div className="flex h-full items-end justify-end">
-              <span className="flex items-start justify-end gap-3 pr-3 font-sans text-[14px] leading-[18px] text-ds-neutral-500">
-                Selected:{" "}
+              <span className="flex items-start justify-end gap-2 pr-3 font-sans text-[14px] leading-[18px] text-ds-neutral-500">
+                Year:{" "}
                 <span className="font-bold text-[18px] text-ds-neutral-00">
-                  {formatEventYear(activeEvent.date)}
+                  {formatEventYear(liveEvent.date)}
                 </span>
               </span>
             </div>
@@ -401,9 +402,13 @@ export default function HeroEvent({
               aria-label="Timeline slider"
             />
           </div>
-          <div className="mt-2 flex items-center justify-between px-3 font-sans text-[13px] text-ds-neutral-500">
-            <span style={{ color: "rgba(107, 114, 128, 1)" }}>Now</span>
-            <span style={{ color: "rgba(107, 114, 128, 1)" }}>{maxEventYearLabel}</span>
+          <div className="mt-2 flex items-center justify-between px-3 font-sans text-[14px] leading-[20px] text-ds-neutral-500">
+            <span className="font-semibold" style={{ color: "rgba(107, 114, 128, 1)" }}>
+              Now
+            </span>
+            <span className="font-semibold" style={{ color: "rgba(107, 114, 128, 1)" }}>
+              {maxEventYearLabel}
+            </span>
           </div>
         </div>
       ) : null}

@@ -367,17 +367,19 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Hero image under main heading */}
-        <section className="mb-32 w-full lg:mb-32">
-          <div className="relative h-[180px] w-full overflow-hidden rounded-3xl bg-ds-neutral-950">
-            <Image
-              src="/images/hero-image.jpg"
-              alt="Cosmic landscape representing the journey into the future of the universe"
-              fill
-              className="object-cover"
-              sizes="(min-width: 1024px) 1120px, 100vw"
-              priority
-            />
+        <section className="mb-32 w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] lg:mb-32">
+          <div className="relative w-full overflow-hidden rounded-3xl border-2 border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
+            <video
+              className="block h-[220px] w-full object-cover sm:h-[280px] lg:h-[160px]"
+              src="/videos/hero-video0.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+            >
+              Your browser does not support the video tag.
+            </video>
           </div>
         </section>
 

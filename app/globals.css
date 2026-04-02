@@ -163,7 +163,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex h-full flex-1 flex-col gap-0 px-8 pb-4 pt-4 sm:px-8 sm:pb-5 sm:pt-5;
+    @apply flex h-full flex-1 flex-col gap-0 px-6 pb-4 pt-4 sm:px-8 sm:pb-5 sm:pt-5;
     background: unset;
     background-color: rgba(15, 20, 31, 1);
     width: 100%;
@@ -208,12 +208,18 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid {
-    @apply flex justify-center gap-2 font-mono text-ds-neutral-100;
+    @apply -mx-2 flex w-[calc(100%+1rem)] justify-between gap-2 font-mono text-ds-neutral-100 sm:mx-0 sm:w-auto sm:justify-center;
   }
 
   .event-card__countdown-segment {
-    @apply relative flex min-w-[3.5rem] flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-3 py-4 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:px-4 sm:py-4;
-    width: 102px;
+    @apply relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:flex-none sm:px-4 sm:py-4;
+    width: auto;
+  }
+
+  @media (min-width: 40rem) {
+    .event-card__countdown-segment {
+      width: 96px;
+    }
   }
 
   .event-card__countdown-value {
@@ -538,7 +544,7 @@ svg:not([class*="text-"]) {
   left: 8px;
   top: 8px;
   bottom: 8px;
-  width: clamp(48px, calc(var(--slider-progress) - 24px), calc(100% - 40px));
+  width: clamp(48px, calc(var(--slider-progress) + 8px), calc(100% - 40px));
   min-width: 48px;
   max-width: calc(100% - 16px);
   border-radius: 9999px 0 0 9999px;

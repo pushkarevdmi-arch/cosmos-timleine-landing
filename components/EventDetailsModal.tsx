@@ -142,7 +142,7 @@ export default function EventDetailsModal({
               <h3 className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500">
                 Key facts
               </h3>
-              <ul className="list-disc space-y-3 pl-5 font-sans text-body-large-400 leading-6 text-ds-neutral-300">
+              <ul className="list-disc flex flex-col gap-0 pl-5 font-sans text-body-large-400 leading-6 text-ds-neutral-300">
                 {safeKeyFacts.map((fact) => (
                   <li key={fact}>
                     <div>{fact}</div>

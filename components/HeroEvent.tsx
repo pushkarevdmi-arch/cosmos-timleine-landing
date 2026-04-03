@@ -1,19 +1,28 @@
 "use client";
 import Image from "next/image";
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
-import { CalendarIcon } from "./CalendarIcon";
+import {
+  eventHasSpecificUtcTime,
+  formatCountdownDaysDisplay,
+  formatEventDateOnlyLong,
+  formatEventTimeUtcLabel,
+} from "@/utils/eventDate";
 import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
+
+export type CountdownPrecision = "full" | "day" | "year";
 
 export type HeroEventData = {
   id: string;
   title: string;
   date: string;
+  countdownPrecision?: CountdownPrecision;
   timeCategory?: "Next 100 Years" | "Next 10,000 Years" | "Millions of Years" | "Billions of Years";
   shortDescription: string;
   mainDescription: string;
   whatYoullSee?: string;
   whyItMatters?: string;
   keyFacts?: string[];
+  nextOccurrences?: string[];
   tags?: string[];
   specialTags?: EventExtraTag[];
   image: string;
@@ -74,35 +83,6 @@ function useCountdown(targetDate: string): Countdown {
   return countdown;
 }
 
-function formatDate(dateStr: string) {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) return "Unknown date";
-
-  const hasSpecificTime =
-    date.getUTCHours() !== 0 ||
-    date.getUTCMinutes() !== 0 ||
-    date.getUTCSeconds() !== 0 ||
-    date.getUTCMilliseconds() !== 0;
-
-  if (hasSpecificTime) {
-    return new Intl.DateTimeFormat("en", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "UTC",
-      timeZoneName: "short",
-    }).format(date);
-  }
-
-  return new Intl.DateTimeFormat("en", {
-    year: "numeric",
-    month: "long",
-    day: "2-digit",
-  }).format(date);
-}
-
 function formatEventYear(dateStr: string) {
   const year = new Date(dateStr).getUTCFullYear();
   if (!Number.isFinite(year)) return "Unknown";
@@ -155,9 +135,8 @@ function HeroFlipSegment({
   valueText: string;
 }) {
   const valueClassName = [
-    "text-center text-[26px] font-bold leading-none tabular-nums text-ds-neutral-50 sm:text-[30px] md:text-[34px] lg:text-[38px]",
+    "text-center text-[26px] font-bold leading-none lg:leading-[36px] tabular-nums tracking-tight text-ds-neutral-50 sm:text-[30px] md:text-[34px] lg:text-[32px]",
     "font-sans",
-    label === "MIN" ? "tracking-[2px]" : "tracking-tight",
   ].join(" ");
 
   return (
@@ -242,6 +221,20 @@ export default function HeroEvent({
   const longTermCountdown = formatLongTermYears(yearsRemaining);
   const normalizedYears = Math.floor(countdown.days / 365);
   const normalizedDays = countdown.days % 365;
+  const precision = liveEvent.countdownPrecision ?? "full";
+  const heroCountdownSegments =
+    precision === "year"
+      ? [{ label: "YEARS" as const, value: normalizedYears }]
+      : precision === "day"
+        ? [
+            { label: "YEARS" as const, value: normalizedYears },
+            { label: "DAYS" as const, value: normalizedDays },
+          ]
+        : [
+            { label: "YEARS" as const, value: normalizedYears },
+            { label: "DAYS" as const, value: normalizedDays },
+            { label: "HRS" as const, value: countdown.hours },
+          ];
   const currentYear = new Date().getUTCFullYear();
   const lastEventDate = sortedEvents[sortedEvents.length - 1]?.date;
   const maxEventYearValue = lastEventDate
@@ -295,19 +288,26 @@ export default function HeroEvent({
             <h3 className="m-0 font-sans font-semibold text-ds-neutral-50 text-[16px] leading-[24px] sm:text-[24px] sm:leading-[32px]">
               {displayEvent.title}
             </h3>
-            <p className="m-0 min-h-[40px] max-w-[640px] font-sans text-[16px] leading-[20px] text-ds-neutral-400">
+            <p className="m-0 min-h-[40px] max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400">
               {displayEvent.shortDescription}
             </p>
           </div>
 
-          {/* Date + countdown share one stack; adjust gap via .hero-event__date-countdown */}
-          <div className="mt-5 flex h-full w-full flex-col items-center gap-3 md:mt-6 md:items-stretch">
+          {/* Date + countdown share one stack; adjust vertical gap between sections */}
+          <div className="mt-5 flex h-full w-full flex-col items-center gap-4 md:mt-6 md:items-stretch">
             <div className="hero-event__date-countdown flex w-full flex-col gap-3">
               <div className="inline-flex items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
                 <span className="event-card__date-icon">
-                  <CalendarIcon className="h-6 w-6 text-ds-neutral-500" />
+                  <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
                 </span>
-                <span>{formatDate(displayEvent.date)}</span>
+                <div className="flex min-w-0 flex-row items-start justify-end gap-3 text-left">
+                  <span>{formatEventDateOnlyLong(displayEvent.date)}</span>
+                  {eventHasSpecificUtcTime(displayEvent.date) ? (
+                    <span className="text-[16px] leading-[20px] text-ds-neutral-500">
+                      {formatEventTimeUtcLabel(displayEvent.date)}
+                    </span>
+                  ) : null}
+                </div>
               </div>
 
               {countdown.isPast ? (
@@ -326,17 +326,16 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown -mx-2 flex h-fit w-[calc(100%+1rem)] flex-nowrap items-stretch justify-between gap-2 sm:mx-0 sm:w-full sm:gap-2.5 md:gap-2">
-                  {[
-                    { label: "YEARS", value: normalizedYears },
-                    { label: "DAYS", value: normalizedDays },
-                    { label: "HRS", value: countdown.hours },
-                    { label: "MIN", value: countdown.minutes },
-                  ].map((segment) => (
+                <div className="hero-countdown -mx-2 flex h-[96px] w-[calc(100%+1rem)] flex-nowrap items-stretch justify-between gap-2 sm:mx-0 sm:w-full sm:gap-2.5 md:gap-2">
+                  {heroCountdownSegments.map((segment) => (
                     <HeroFlipSegment
                       key={segment.label}
                       label={segment.label}
-                      valueText={segment.value.toString().padStart(2, "0")}
+                      valueText={
+                        segment.label === "DAYS"
+                          ? formatCountdownDaysDisplay(segment.value)
+                          : segment.value.toString().padStart(2, "0")
+                      }
                     />
                   ))}
                 </div>
@@ -376,7 +375,7 @@ export default function HeroEvent({
             <div className="flex h-full items-end justify-end">
               <span className="flex items-end justify-end gap-2 pr-3 font-sans font-semibold text-left align-middle text-[14px] leading-[18px] text-ds-neutral-500">
                 Year:{" "}
-                <span className="font-bold text-[28px] leading-[28px] text-ds-neutral-00">
+                <span className="font-bold text-[24px] leading-[24px] text-ds-neutral-00">
                   {formatEventYear(liveEvent.date)}
                 </span>
               </span>

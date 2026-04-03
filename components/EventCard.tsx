@@ -2,7 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
-import { CalendarIcon } from "./CalendarIcon";
+import {
+  eventHasSpecificUtcTime,
+  formatCountdownDaysDisplay,
+  formatEventDateOnlyLong,
+  formatEventTimeUtcLabel,
+} from "@/utils/eventDate";
 import EventTagGroup from "./EventTagGroup";
 import type { HeroEventData } from "./HeroEvent";
 
@@ -53,17 +58,6 @@ function useCountdown(targetDate: string): Countdown {
   }, [targetDate]);
 
   return countdown;
-}
-
-function formatCardDate(dateStr: string) {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) return "Unknown date";
-
-  return new Intl.DateTimeFormat("en", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  }).format(date);
 }
 
 function isLongTermEvent(event: HeroEventData) {
@@ -128,6 +122,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
   const showLongTermYearsOnly = isLongTermEvent(event);
   const longTermCountdown = formatLongTermYears(countdown.years);
   const isInteractive = Boolean(onExplore);
+  const precision = event.countdownPrecision ?? "full";
 
   return (
     <article
@@ -164,12 +159,19 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
         </div>
 
         <div className="event-card__meta mt-6">
-          <div className="flex w-full flex-col gap-1">
+          <div className="flex w-full flex-col gap-1 px-12">
             <div className="event-card__date">
               <span className="event-card__date-icon">
-                <CalendarIcon className="h-6 w-6 text-ds-neutral-500" />
+                <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
               </span>
-              <span>{formatCardDate(event.date)}</span>
+              <div className="flex min-w-0 flex-row gap-3 text-center md:text-left">
+                <span>{formatEventDateOnlyLong(event.date)}</span>
+                {eventHasSpecificUtcTime(event.date) ? (
+                  <span className="text-[16px] leading-[20px] text-ds-neutral-500">
+                    {formatEventTimeUtcLabel(event.date)}
+                  </span>
+                ) : null}
+              </div>
             </div>
 
             <div className="event-card__countdown">
@@ -194,18 +196,22 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                     </span>
                     <span className="event-card__countdown-label">YEARS</span>
                   </div>
-                  <div className="event-card__countdown-segment">
-                    <span className="event-card__countdown-value">
-                      {countdown.days.toString().padStart(3, "0")}
-                    </span>
-                    <span className="event-card__countdown-label">DAYS</span>
-                  </div>
-                  <div className="event-card__countdown-segment">
-                    <span className="event-card__countdown-value">
-                      {countdown.hours.toString().padStart(2, "0")}
-                    </span>
-                    <span className="event-card__countdown-label">HRS</span>
-                  </div>
+                  {precision !== "year" ? (
+                    <div className="event-card__countdown-segment">
+                      <span className="event-card__countdown-value">
+                        {formatCountdownDaysDisplay(countdown.days)}
+                      </span>
+                      <span className="event-card__countdown-label">DAYS</span>
+                    </div>
+                  ) : null}
+                  {precision === "full" ? (
+                    <div className="event-card__countdown-segment">
+                      <span className="event-card__countdown-value">
+                        {countdown.hours.toString().padStart(2, "0")}
+                      </span>
+                      <span className="event-card__countdown-label">HRS</span>
+                    </div>
+                  ) : null}
                 </div>
               )}
             </div>

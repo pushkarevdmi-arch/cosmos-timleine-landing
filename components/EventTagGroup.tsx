@@ -12,8 +12,6 @@ type EventTagGroupProps = {
 };
 
 function getLocationAbbreviation(label: string, icon?: string) {
-  if (icon) return icon.toUpperCase();
-
   const normalized = label.trim().toLowerCase();
   if (normalized === "europe") return "EU";
   if (normalized === "asia") return "AS";
@@ -33,25 +31,49 @@ export default function EventTagGroup({
   return (
     <div className="event-card__badge-row">
       <div className="event-card__category">{primaryTag}</div>
-      {specialTags.map((tag) => (
-        <div
-          key={`${tag.type}-${tag.label}`}
-          className={[
-            "event-card__extra-tag",
-            `event-card__extra-tag--${tag.type}`,
-            tag.type === "location"
-              ? "event-card__extra-tag--with-icon"
-              : "event-card__extra-tag--no-icon",
-          ].join(" ")}
-        >
-          {tag.type === "location" ? (
-            <span className="event-card__extra-tag-icon" aria-hidden="true">
-              {getLocationAbbreviation(tag.label, tag.icon)}
-            </span>
-          ) : null}
-          <span>{tag.label}</span>
-        </div>
-      ))}
+      {specialTags.map((tag) => {
+        // Skip location tags that describe multiple broad regions (e.g. "Europe, Africa, W. Asia"),
+        // but keep specific curated ones like "Pacific & North America" on the card.
+        if (tag.type === "location") {
+          const normalizedLabel = tag.label.trim().toLowerCase();
+          const isCuratedMultiRegion =
+            normalizedLabel === "pacific & north america" ||
+            normalizedLabel === "pacific, north america";
+
+          if (!isCuratedMultiRegion && (tag.label.includes(",") || tag.label.includes("&"))) {
+            return null;
+          }
+        }
+
+        return (
+          <div
+            key={`${tag.type}-${tag.label}`}
+            className={[
+              "event-card__extra-tag",
+              `event-card__extra-tag--${tag.type}`,
+              tag.type === "location"
+                ? "event-card__extra-tag--with-icon"
+                : "event-card__extra-tag--no-icon",
+            ].join(" ")}
+          >
+            {tag.type === "location" ? (
+              <span className="event-card__extra-tag-icon" aria-hidden="true">
+                {tag.icon ? (
+                  <img
+                    src={`/icons/flags/${tag.icon}.svg`}
+                    width={20}
+                    height={20}
+                    alt={tag.label}
+                  />
+                ) : (
+                  getLocationAbbreviation(tag.label)
+                )}
+              </span>
+            ) : null}
+            <span>{tag.label}</span>
+          </div>
+        );
+      })}
     </div>
   );
 }

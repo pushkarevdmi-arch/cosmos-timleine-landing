@@ -1,432 +1,580 @@
 [
   {
     "id": "venus-jupiter-great-conjunction-2026",
-    "title": "Venus – Jupiter Great Conjunction",
-    "date": "2026-06-09T00:00:00.000Z",
+    "title": "Venus – Jupiter “Cosmic Kiss” Conjunction",
+    "date": "2026-06-09T12:35:00.000Z",
     "timeCategory": "Next 100 Years",
-    "shortDescription": "Venus and Jupiter will appear extremely close together, forming a brilliant pair in the evening sky.",
-    "mainDescription": "On this night, the two brightest planets in Earth's sky will appear almost merged into a single point of light. Their alignment is caused by the precise geometry of their orbits as seen from Earth. Although they remain millions of kilometers apart, they will look strikingly close to the naked eye. Such conjunctions are rare and visually impressive, turning an ordinary evening into a memorable astronomical moment.",
-    "whatYoullSee": "A bright double “star” low in the evening sky, shining brighter than almost anything else.",
-    "whyItMatters": "This is one of the most visually striking planetary alignments visible without a telescope.",
+    "shortDescription": "Venus and Jupiter will appear extremely close together in the evening sky, creating a brilliant pair brighter than any star.",
+    "mainDescription": "On June 9, 2026, Venus and Jupiter will come within about 1.6 degrees of each other — roughly the width of a little finger held at arm’s length. Although they are separated by hundreds of millions of kilometers in space, they will look almost like a single dazzling object. This striking alignment features the two brightest planets in the night sky. The pair will be visible low in the western sky shortly after sunset. Venus will shine much brighter than Jupiter, making the scene particularly dramatic. Such close and bright conjunctions of these two planets are rare and memorable.",
+    "whatYoullSee": "A bright double “star” low in the evening sky, shining far brighter than anything else around it.",
+    "whyItMatters": "This is one of the most visually impressive and easily observable planetary alignments visible to the naked eye.",
     "keyFacts": [
       "Two brightest planets in the sky",
-      "Visible to naked eye",
-      "Rare orbital alignment"
+      "Visible to the naked eye even from cities",
+      "Minimum separation about 1.6 degrees",
+      "Best viewed 30–90 minutes after sunset"
     ],
-    "tags": ["Conjunction"],
-    "specialTags": [],
-    "image": "/images/events/1-100-venus-jupiter-great-conjunction.jpg"
-  },
-
-  {
-    "id": "total-solar-eclipse-europe-2026",
-    "title": "Total Solar Eclipse Across Europe",
-    "date": "2026-08-12T00:00:00.000Z",
-    "timeCategory": "Next 100 Years",
-    "shortDescription": "A total solar eclipse will darken parts of Europe as the Moon completely covers the Sun.",
-    "mainDescription": "The Moon will pass directly between Earth and the Sun, casting a moving shadow across Europe. For a few minutes, daylight will turn into deep twilight as the Sun disappears. Stars and planets may become visible in the daytime sky. The Sun’s corona will glow around the dark silhouette of the Moon, creating one of the most dramatic sights in astronomy.",
-    "whatYoullSee": "The Sun completely covered, a glowing corona, and a sudden drop in daylight.",
-    "whyItMatters": "Total solar eclipses are rare and among the most powerful visual experiences in nature.",
-    "keyFacts": [
-      "Path of totality across Europe",
-      "Lasts a few minutes",
-      "Requires eye protection"
+    "tags": [
+      "Conjunction"
     ],
-    "tags": ["Eclipse"],
     "specialTags": [
-      { "type": "location", "label": "Europe", "icon": "EU" }
+      {
+        "type": "rarity",
+        "label": "Rare"
+      },
+      {
+        "type": "location",
+        "label": "Europe",
+        "icon": "Europe"
+      }
     ],
-    "image": "/images/events/1-100-total-solar-eclipse-across-europe.jpg"
+    "image": "/images/events/1-100-venus-jupiter-great-conjunction.jpg",
+    "nextOccurrences": [
+      "Next bright Venus-Jupiter conjunctions are expected in the early 2030s. Similar spectacular pairings occur roughly every 10–13 years."
+    ],
+    "countdownPrecision": "full"
   },
-
   {
-    "id": "eclipse-of-the-century-2027",
-    "title": "The “Eclipse of the Century”",
-    "date": "2027-08-02T00:00:00.000Z",
+    "id": "greatest-solar-eclipse-europe-2026",
+    "title": "Greatest Solar Eclipse (Europe)",
+    "date": "2026-08-12T17:47:00.000Z",
     "timeCategory": "Next 100 Years",
-    "shortDescription": "One of the longest solar eclipses of the century, lasting more than six minutes.",
-    "mainDescription": "This eclipse will be exceptionally long due to a precise alignment of the Earth, Moon, and Sun. In some locations, totality will last over six minutes. That extended duration gives observers more time to experience the phenomenon and scientists more time to study the Sun’s corona. Events like this are extremely rare within a single lifetime.",
-    "whatYoullSee": "A long-lasting total eclipse with an extended dark sky and bright solar corona.",
-    "whyItMatters": "Its unusually long duration makes it one of the most significant eclipses of the century.",
+    "shortDescription": "A total solar eclipse will cross parts of Europe, bringing up to 2 minutes and 18 seconds of totality.",
+    "mainDescription": "On August 12, 2026, a total solar eclipse will pass over Iceland, northern Spain, and parts of Portugal — the first total solar eclipse visible from mainland Europe since 1999. The path of totality will also cross Greenland and the Arctic region. In the best locations, the Moon will completely cover the Sun for up to 2 minutes and 18 seconds. Observers will experience sudden daytime darkness, a bright solar corona, and stars becoming visible. This event is one of the most accessible and impressive eclipses of the decade for European skywatchers.",
+    "whatYoullSee": "The Sun fully covered by the Moon, a glowing white corona, sudden twilight in the middle of the day, and bright stars or planets in the darkened sky.",
+    "whyItMatters": "It is one of the best total solar eclipses visible from Europe in many years and offers an excellent opportunity for both public viewing and scientific study.",
     "keyFacts": [
-      "Over 6 minutes of totality",
-      "Extremely rare duration",
-      "Ideal for observation"
+      "Maximum totality: 2 minutes 18 seconds",
+      "Path crosses Iceland, northern Spain, and Portugal",
+      "First total solar eclipse in mainland Europe since 1999",
+      "Requires proper solar eclipse glasses"
     ],
-    "tags": ["Eclipse"],
+    "tags": [
+      "Eclipse"
+    ],
     "specialTags": [
-      { "type": "rarity", "label": "Rare" }
+      {
+        "type": "rarity",
+        "label": "Once in a Lifetime"
+      },
+      {
+        "type": "location",
+        "label": "Europe, Africa, W. Asia",
+        "icon": "Europe"
+      }
     ],
-    "image": "/images/events/1-100-the-eclipse-of-the-century.jpg"
+    "image": "/images/events/1-100-greatest-solar-eclipse-europe.jpg",
+    "nextOccurrences": [
+      "Next major total solar eclipse with good European visibility: September 3, 2081",
+      "Other total solar eclipses will occur in different parts of the world in the coming decades."
+    ],
+    "countdownPrecision": "full"
   },
-
-  {
-    "id": "total-solar-eclipse-australia-2028",
-    "title": "Total Solar Eclipse Over Australia",
-    "date": "2028-07-22T00:00:00.000Z",
-    "timeCategory": "Next 100 Years",
-    "shortDescription": "A rare total solar eclipse will bring several minutes of darkness to parts of Australia.",
-    "mainDescription": "The Moon’s shadow will cross Australia, creating a path of totality across the continent. Observers will experience a sudden transition from day to night. The solar corona will become visible, stretching outward like a glowing halo. This event will be one of the most accessible eclipses for the southern hemisphere in decades.",
-    "whatYoullSee": "Midday darkness, glowing corona, and a surreal horizon light.",
-    "whyItMatters": "A rare chance for millions in the southern hemisphere to witness a total eclipse.",
-    "keyFacts": [
-      "Visible across Australia",
-      "Few minutes of darkness",
-      "Naked eye (with protection)"
-    ],
-    "tags": ["Eclipse"],
-    "specialTags": [
-      { "type": "location", "label": "Australia", "icon": "AU" }
-    ],
-    "image": "/images/events/1-100-total-solar-eclipse-over-australia.jpg"
-  },
-
   {
     "id": "apophis-close-flyby-2029",
-    "title": "Asteroid Apophis Close Flyby",
+    "title": "99942 Apophis Close Flyby",
     "date": "2029-04-13T21:46:00.000Z",
     "timeCategory": "Next 100 Years",
-    "shortDescription": "The asteroid Apophis will pass closer to Earth than many satellites.",
-    "mainDescription": "Asteroid Apophis will make an extremely close approach to Earth, passing within the orbit of geostationary satellites. Once considered a potential impact threat, it is now known to be safe. Scientists will closely observe how Earth’s gravity affects its path and rotation. Events like this are extremely rare for objects of this size.",
-    "whatYoullSee": "A fast-moving point of light crossing the night sky under the right conditions.",
-    "whyItMatters": "One of the closest known asteroid flybys of this size in modern history.",
+    "shortDescription": "Asteroid Apophis will pass extremely close to Earth — closer than many satellites — and may be visible to the naked eye as a moving star.",
+    "mainDescription": "On April 13, 2029, the asteroid 99942 Apophis will make one of the closest known flybys of a large asteroid in modern history. It will pass approximately 31,600 km (19,600 miles) from Earth’s surface — closer than geostationary satellites. Once considered a potential impact threat, it is now known to be completely safe. At its closest, Apophis will reach magnitude 3.1 and move noticeably across the sky. This rare event offers scientists a unique opportunity to study how Earth’s gravity affects an asteroid’s rotation and orbit.",
+    "whatYoullSee": "A fast-moving point of light crossing the night sky, visible to the naked eye under dark skies as a star-like object that shifts position over minutes.",
+    "whyItMatters": "It is one of the closest approaches of a sizable asteroid in recorded history and a major event for both astronomy and planetary defense studies.",
     "keyFacts": [
-      "Closer than many satellites",
-      "Safe flyby",
-      "Visible with binoculars"
+      "Closest approach: ~31,600 km from Earth’s surface",
+      "Size: approximately 370 meters across",
+      "Visible to the naked eye in dark skies",
+      "Best viewed from Europe, Africa, and western Asia"
     ],
-    "tags": ["Asteroid"],
+    "tags": [
+      "Asteroid"
+    ],
     "specialTags": [
-      { "type": "rarity", "label": "Rare" }
+      {
+        "type": "rarity",
+        "label": "Uncommon"
+      }
     ],
-    "image": "/images/events/1-100-asteroid-apophis-close-flyby.jpg"
+    "image": "/images/events/1-100-asteroid-apophis-close-flyby.jpg",
+    "nextOccurrences": [
+      "Apophis will not make another close approach like this for over 100 years. The next significant close pass is expected in 2060, but much farther away."
+    ],
+    "countdownPrecision": "full"
   },
-
   {
-    "id": "possible-leonid-meteor-storm-2031",
-    "title": "Possible Leonid Meteor Storm",
-    "date": "2031-11-17T00:00:00.000Z",
+    "id": "taurid-meteor-swarm-2032",
+    "title": "Taurid Meteor Swarm (Fireball Years)",
+    "date": "2032-10-01T00:00:00.000Z",
     "timeCategory": "Next 100 Years",
-    "shortDescription": "Earth may encounter dense comet debris producing an intense meteor storm.",
-    "mainDescription": "Earth could pass through a dense stream of debris left by Comet Tempel–Tuttle. If predictions are correct, the Leonid meteor shower could intensify dramatically. Instead of a typical annual shower, the sky may produce hundreds or even thousands of meteors per hour. These storms are rare and depend on precise orbital conditions, making them difficult to predict but incredibly exciting when they occur.",
-    "whatYoullSee": "A sky filled with fast, bright meteors streaking outward from a single point.",
-    "whyItMatters": "Meteor storms of this intensity are extremely rare and can last only a few hours.",
+    "shortDescription": "Earth will pass through a dense part of the Taurid meteor stream, producing many bright fireballs.",
+    "mainDescription": "In October 2032, Earth will encounter a particularly rich portion of the Taurid meteor complex. Astronomers expect a significant increase in bright fireballs and slow-moving meteors. Unlike typical meteor showers, the Taurids are known for producing exceptionally bright and long-lasting fireballs. The enhanced activity may last for several weeks. This event is sometimes called the “Fireball Years” due to the higher chance of seeing spectacular meteors. Dark skies away from city lights will offer the best viewing.",
+    "whatYoullSee": "Slow, bright fireballs streaking across the sky, some lasting several seconds and leaving glowing trains.",
+    "whyItMatters": "This is one of the best opportunities in the 2030s to see numerous bright fireballs from a single meteor complex.",
     "keyFacts": [
-      "Up to thousands of meteors per hour",
-      "Origin: Comet Tempel–Tuttle",
-      "Best in dark skies",
-      "Short-lived peak activity"
+      "Parent comet: 2P/Encke",
+      "Peak activity expected in October 2032",
+      "Meteors are slow but often very bright",
+      "Best observed after midnight in dark skies"
     ],
-    "tags": ["Meteor Shower"],
+    "tags": [
+      "Meteor Shower"
+    ],
     "specialTags": [
-      { "type": "rarity", "label": "Rare" }
+      {
+        "type": "rarity",
+        "label": "Extremely Rare"
+      }
     ],
-    "image": "/images/events/1-100-possible-leonid-meteor-storm.jpg"
+    "image": "/images/events/1-100-taurid-meteor-swarm.jpg",
+    "nextOccurrences": [
+      "The next strong Taurid fireball years are expected around 2040 and then again in the 2050s.",
+      "Normal Taurid activity occurs every year in October and November, but 2032 is predicted to be significantly stronger."
+    ],
+    "countdownPrecision": "day"
   },
-  
-    {
-      "id": "saturn-ring-plane-crossing-2038",
-      "title": "Saturn Ring Plane Crossing",
-      "date": "2038-10-15T00:00:00.000Z",
-      "timeCategory": "Next 100 Years",
-      "shortDescription": "Saturn’s rings will appear almost invisible as they align edge-on with Earth.",
-      "mainDescription": "As Saturn continues its orbit, there are moments when its rings align edge-on from Earth’s perspective. During this time, the wide and bright rings seem to disappear almost completely. This alignment happens roughly every 15 years and provides a unique opportunity to study Saturn’s structure. It also allows clearer views of moons that are usually hidden by the rings.",
-      "whatYoullSee": "Saturn appearing as a simple disk with a very thin line instead of its usual wide rings.",
-      "whyItMatters": "This rare viewing angle helps astronomers study ring structure and nearby moons.",
-      "keyFacts": [
-        "Occurs every ~15 years",
-        "Rings nearly invisible",
-        "Best viewed with telescope",
-        "Improved moon visibility"
-      ],
-      "tags": ["Planetary Event"],
-      "specialTags": [],
-      "image": "/images/events/1-100-saturn-ring-plane-crossing.jpg"
-    },
-  
-    {
-      "id": "total-solar-eclipse-north-america-2044",
-      "title": "Total Solar Eclipse Across North America",
-      "date": "2044-08-23T00:00:00.000Z",
-      "timeCategory": "Next 100 Years",
-      "shortDescription": "A total solar eclipse will sweep across Canada and parts of the United States.",
-      "mainDescription": "The Moon’s shadow will once again cross North America, bringing a dramatic total solar eclipse to regions along its path. Daylight will briefly turn into darkness, revealing stars and planets in the sky. This event will be visible to millions and will attract observers from around the world. It continues the series of major eclipses seen across the continent.",
-      "whatYoullSee": "The Sun fully covered, sudden darkness, and a glowing solar corona.",
-      "whyItMatters": "A widely visible eclipse that will inspire a new generation of skywatchers.",
-      "keyFacts": [
-        "Visible in Canada and USA",
-        "Short period of totality",
-        "Naked eye with protection",
-        "High accessibility"
-      ],
-      "tags": ["Eclipse"],
-      "specialTags": [
-        { "type": "location", "label": "North America", "icon": "NA" }
-      ],
-      "image": "/images/events/1-100-total-solar-eclipse-across-north-america.jpg"
-    },
-  
-    {
-      "id": "great-north-american-eclipse-2045",
-      "title": "Great North American Solar Eclipse",
-      "date": "2045-08-12T00:00:00.000Z",
-      "timeCategory": "Next 100 Years",
-      "shortDescription": "One of the longest total eclipses visible across the United States this century.",
-      "mainDescription": "This eclipse will travel across the entire United States, offering exceptional viewing conditions. Its long duration will give observers more time to experience the phenomenon. Millions of people will be able to see it without traveling far. The combination of duration and accessibility makes it one of the most anticipated eclipses of the century.",
-      "whatYoullSee": "A long-lasting total eclipse with extended darkness and a bright corona.",
-      "whyItMatters": "Combines accessibility and duration, making it one of the most important eclipses of the century.",
-      "keyFacts": [
-        "Crosses entire USA",
-        "Long duration",
-        "High visibility",
-        "Major public event"
-      ],
-      "tags": ["Eclipse"],
-      "specialTags": [
-        { "type": "rarity", "label": "Once in a lifetime" },
-        { "type": "location", "label": "North America", "icon": "NA" }
-      ],
-      "image": "/images/events/1-100-great-north-american-solar-eclipse.jpg"
-    },
-  
-    {
-      "id": "jupiter-closest-opposition-2056",
-      "title": "Jupiter’s Closest Opposition of the Century",
-      "date": "2056-09-21T00:00:00.000Z",
-      "timeCategory": "Next 100 Years",
-      "shortDescription": "Jupiter will appear unusually large and bright in Earth’s sky.",
-      "mainDescription": "During this rare opposition, Earth and Jupiter will be closer than usual. The planet will appear brighter and larger than at any other time in the century. Its cloud bands and major moons will be visible even with small telescopes. This alignment provides an excellent opportunity for both amateur and professional observations.",
-      "whatYoullSee": "A very bright Jupiter with visible bands and moons through small telescopes.",
-      "whyItMatters": "The best viewing conditions for Jupiter in the entire century.",
-      "keyFacts": [
-        "Closest approach of the century",
-        "Extremely bright",
-        "Visible with telescope",
-        "Great for observation"
-      ],
-      "tags": ["Planetary Event"],
-      "specialTags": [
-        { "type": "rarity", "label": "Once in a lifetime" }
-      ],
-      "image": "/images/events/1-100-jupiters-closest-opposition-of-the-century.jpg"
-    },
-
-    {
-      "id": "halleys-comet-returns-2061",
-      "title": "Halley’s Comet Returns",
-      "date": "2061-07-28T00:00:00.000Z",
-      "timeCategory": "Next 100 Years",
-      "shortDescription": "Halley’s Comet will return and may become visible to the naked eye.",
-      "mainDescription": "Halley’s Comet, one of the most famous objects in the solar system, returns roughly every 76 years. As it approaches the Sun, it will develop a bright glowing coma and a long tail stretching across the sky. This will be the first return since 1986 and a rare opportunity for a new generation to observe it. Its appearance connects centuries of human observation and astronomical history.",
-      "whatYoullSee": "A bright comet with a long glowing tail stretching across the night sky.",
-      "whyItMatters": "One of the most famous comets, visible only once in a lifetime for most people.",
-      "keyFacts": [
-        "Returns every ~76 years",
-        "Visible to naked eye",
-        "Historic comet",
-        "Long visible tail"
-      ],
-      "tags": ["Comet"],
-      "specialTags": [
-        { "type": "rarity", "label": "Once in a lifetime" }
-      ],
-      "image": "/images/events/1-100-halleys-comet-returns.jpg"
-    },
-    
+  {
+    "id": "blood-moon-tetrad-2032-2033",
+    "title": "Blood Moon Tetrad",
+    "date": "2032-04-25T15:14:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "Four total lunar eclipses (Blood Moons) will occur in a row over 18 months — a rare lunar tetrad.",
+    "mainDescription": "Between April 2032 and October 2033, four consecutive total lunar eclipses will take place. Each eclipse will turn the Moon a deep reddish color as it passes completely through Earth’s shadow. This sequence is known as a lunar tetrad. Tetrads are relatively rare, happening only a few times per century. All four eclipses will be visible from large parts of the world, making them accessible to millions of people. Lunar eclipses are safe to observe with the naked eye and create stunning photographic opportunities.",
+    "whatYoullSee": "The Moon gradually darkening and turning copper-red during totality, lasting up to nearly two hours per eclipse.",
+    "whyItMatters": "A Blood Moon Tetrad is a striking and memorable series that captures public attention and provides excellent opportunities for skywatchers.",
+    "keyFacts": [
+      "Four total lunar eclipses in 18 months",
+      "First eclipse: April 25, 2032",
+      "Last eclipse: October 8, 2033",
+      "Visible from large portions of Earth",
+      "Safe to watch with the naked eye"
+    ],
+    "tags": [
+      "Eclipse"
+    ],
+    "specialTags": [
       {
-        "id": "total-solar-eclipse-europe-2081",
-        "title": "Total Solar Eclipse Across Europe",
-        "date": "2081-09-03T00:00:00.000Z",
-        "timeCategory": "Next 100 Years",
-        "shortDescription": "A long total solar eclipse will cross much of Europe.",
-        "mainDescription": "A major eclipse path will sweep across Europe, bringing totality to many regions. Observers along the path will experience a dramatic darkening of the sky. The event will offer extended viewing time compared to typical eclipses. It will be a key astronomical event for that generation of observers.",
-        "whatYoullSee": "The Sun fully covered, a glowing corona, and a darkened daytime sky.",
-        "whyItMatters": "A widely visible eclipse across Europe with extended viewing duration.",
-        "keyFacts": [
-          "Visible across Europe",
-          "Long duration",
-          "Millions of observers",
-          "Naked eye with protection"
-        ],
-        "tags": ["Eclipse"],
-        "specialTags": [
-          { "type": "location", "label": "Europe", "icon": "EU" }
-        ],
-        "image": "/images/events/1-100-total-solar-eclipse-across-europe.jpg"
-      },
-    
+        "type": "rarity",
+        "label": "Uncommon"
+      }
+    ],
+    "image": "/images/events/1-100-blood-moon-tetrad.jpg",
+    "nextOccurrences": [
+      "The next lunar tetrad after 2032–2033 will occur in 2043–2044.",
+      "Lunar tetrads happen only a few times every century."
+    ],
+    "countdownPrecision": "full"
+  },
+  {
+    "id": "great-planetary-alignment-2034",
+    "title": "Great Planetary Alignment",
+    "date": "2034-09-01T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "Several bright planets will line up across the sky in a spectacular planetary parade.",
+    "mainDescription": "In September 2034, a striking alignment of multiple bright planets will be visible in the evening or morning sky. Mercury, Venus, Mars, Jupiter, and Saturn may all appear together along the ecliptic. Such planetary alignments, often called “parades of planets,” create a beautiful and memorable sight. The planets will stretch across a large portion of the sky, making it easy to observe with the naked eye. This event will attract attention from both casual skywatchers and astronomy enthusiasts.",
+    "whatYoullSee": "Five or more bright planets visible at once, lined up like beads on a string across the sky.",
+    "whyItMatters": "Great planetary alignments are visually impressive and generate widespread public interest in astronomy.",
+    "keyFacts": [
+      "Multiple bright planets visible simultaneously",
+      "Visible to the naked eye",
+      "Best observed from dark or semi-dark locations",
+      "Occurs roughly every 10–20 years for strong alignments"
+    ],
+    "tags": [
+      "Planetary Event"
+    ],
+    "specialTags": [
       {
-        "id": "total-solar-eclipse-asia-alaska-2095",
-        "title": "Total Solar Eclipse Across Asia and Alaska",
-        "date": "2095-05-25T00:00:00.000Z",
-        "timeCategory": "Next 100 Years",
-        "shortDescription": "A spectacular eclipse will sweep across northern Asia and Alaska.",
-        "mainDescription": "The Moon’s shadow will move across northern Asia and into Alaska, creating a striking total solar eclipse. The event will take place over remote and dramatic landscapes, including snowy and arctic regions. Observers traveling into the path will witness a rare combination of extreme environments and celestial alignment. It will be both a scientific and exploratory experience.",
-        "whatYoullSee": "A darkened Sun over bright icy landscapes with a glowing corona.",
-        "whyItMatters": "A rare eclipse in extreme northern regions with unique viewing conditions.",
-        "keyFacts": [
-          "Visible in Asia and Alaska",
-          "Remote viewing locations",
-          "Rare geographic path",
-          "Short totality duration"
-        ],
-        "tags": ["Eclipse"],
-        "specialTags": [
-          { "type": "location", "label": "Asia", "icon": "AS" }
-        ],
-        "image": "/images/events/1-100-total-solar-eclipse-across-asia-and-alaska.jpg"
-      },
-    
+        "type": "rarity",
+        "label": "Uncommon"
+      }
+    ],
+    "image": "/images/events/1-100-great-planetary-alignment.jpg",
+    "nextOccurrences": [
+      "The next strong planetary alignment is expected around 2040.",
+      "Smaller alignments of 3–4 planets occur more frequently, every few years."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "great-mars-opposition-2035",
+    "title": "Great Mars Opposition",
+    "date": "2035-09-01T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "Mars will reach its closest approach to Earth, appearing exceptionally bright and large in the night sky.",
+    "mainDescription": "In September 2035, Mars will come to one of its best oppositions of the coming decades. At its closest, the planet will be only about 56 million kilometers from Earth. This makes Mars significantly brighter and larger than usual, reaching a magnitude of -2.8. Observers will be able to see its orange-red color clearly with the naked eye and details on its surface through small telescopes. This is one of the most favorable oppositions for amateur astronomers in the next 20 years.",
+    "whatYoullSee": "A very bright orange-red “star” that outshines most other planets, with visible surface details in a telescope.",
+    "whyItMatters": "Close Mars oppositions like this offer excellent opportunities for both casual viewing and serious astronomical observation.",
+    "keyFacts": [
+      "Closest approach: approximately 56 million km",
+      "Magnitude: -2.8 (brighter than Jupiter)",
+      "Best viewing in September 2035",
+      "Excellent for telescopes and photography"
+    ],
+    "tags": [
+      "Planetary Event"
+    ],
+    "specialTags": [
       {
-        "id": "total-solar-eclipse-north-america-2099",
-        "title": "Total Solar Eclipse Over North America",
-        "date": "2099-09-16T00:00:00.000Z",
-        "timeCategory": "Next 100 Years",
-        "shortDescription": "A major solar eclipse will cross North America near the end of the century.",
-        "mainDescription": "As the 21st century comes to an end, another total solar eclipse will cross North America. This event will be part of a long series of eclipses observed over generations. It will connect past and future observers through a shared experience of the sky. The familiar transition from light to darkness will once again unfold across the continent.",
-        "whatYoullSee": "A total eclipse with sudden darkness and a glowing solar corona.",
-        "whyItMatters": "Marks the final major eclipse of the century in North America.",
-        "keyFacts": [
-          "Visible across North America",
-          "End-of-century event",
-          "Short totality",
-          "High accessibility"
-        ],
-        "tags": ["Eclipse"],
-        "specialTags": [
-          { "type": "location", "label": "North America", "icon": "NA" }
-        ],
-        "image": "/images/events/1-100-total-solar-eclipse-over-north-america.jpg"
+        "type": "rarity",
+        "label": "Extremely Rare"
       },
-    
       {
-        "id": "transit-of-venus-2117",
-        "title": "Transit of Venus",
-        "date": "2117-12-10T00:00:00.000Z",
-        "timeCategory": "Next 100 Years",
-        "shortDescription": "Venus will pass across the face of the Sun as a small black disk.",
-        "mainDescription": "A transit of Venus occurs when the planet passes directly between Earth and the Sun. These events happen in pairs separated by more than a century, making them extremely rare. During the transit, Venus appears as a small black dot moving slowly across the Sun’s surface. Historically, such events helped astronomers measure the scale of the solar system.",
-        "whatYoullSee": "A tiny black dot slowly crossing the bright surface of the Sun.",
-        "whyItMatters": "One of the rarest predictable astronomical events visible from Earth.",
-        "keyFacts": [
-          "Occurs in pairs over centuries",
-          "Extremely rare event",
-          "Requires solar filter",
-          "Scientific importance"
-        ],
-        "tags": ["Transit"],
-        "specialTags": [
-          { "type": "rarity", "label": "Rare" }
-        ],
-      "image": "/images/events/1-100-transit-of-venus.jpg"
+        "type": "location",
+        "label": "North America",
+        "icon": "North-America"
+      }
+    ],
+    "image": "/images/events/1-100-great-mars-opposition.jpg",
+    "nextOccurrences": [
+      "The next similarly close Mars opposition will occur in 2041.",
+      "Mars reaches opposition roughly every 26 months, but truly great ones happen less frequently."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "extreme-supermoon-2037",
+    "title": "Extreme Supermoon",
+    "date": "2037-11-01T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "One of the closest and brightest full Moons of the decade, appearing significantly larger and brighter than average.",
+    "mainDescription": "In November 2037, the Moon will reach its closest point to Earth (perigee) at nearly the same time as the full Moon phase. This combination creates an Extreme Supermoon. The Moon will appear up to 14% larger and 30% brighter than a typical full Moon. The difference is especially noticeable when the Moon is low on the horizon. While supermoons occur several times per year, this particular one stands out due to its exceptional proximity.",
+    "whatYoullSee": "A noticeably larger and brighter full Moon, especially impressive when rising or setting near the horizon.",
+    "whyItMatters": "Extreme supermoons create beautiful photo opportunities and help remind people to look up at the night sky.",
+    "keyFacts": [
+      "One of the closest full Moons of the decade",
+      "Up to 14% larger and 30% brighter than average",
+      "Best viewed near the horizon",
+      "Occurs when perigee and full Moon coincide closely"
+    ],
+    "tags": [
+      "Lunar Event"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Rare"
+      }
+    ],
+    "image": "/images/events/1-100-extreme-supermoon.jpg",
+    "nextOccurrences": [
+      "Extreme supermoons occur every few years when the Moon’s perigee is particularly close.",
+      "Regular supermoons happen several times each year."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "saturn-ring-plane-crossing-2038",
+    "title": "Saturn Ring Plane Crossing",
+    "date": "2038-10-15T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "Saturn’s famous rings will appear almost invisible as they align edge-on with Earth.",
+    "mainDescription": "On October 15, 2038, Saturn’s rings will be oriented exactly edge-on from our perspective on Earth. During this brief period, the wide and spectacular rings will seem to disappear almost completely, leaving Saturn looking like a simple golden disk with a thin line. This phenomenon occurs roughly every 15 years. It provides a unique opportunity to observe Saturn’s moons more clearly and study the ring system itself. After the crossing, the rings will gradually open up again and become brighter over the following years.",
+    "whatYoullSee": "Saturn appearing as a plain oval disk with almost no visible rings — a rare and striking change from its usual appearance.",
+    "whyItMatters": "This is one of the most interesting viewing angles of Saturn and helps astronomers study its ring dynamics.",
+    "keyFacts": [
+      "Rings appear nearly invisible for several weeks",
+      "Occurs approximately every 15 years",
+      "Best observed with a telescope",
+      "Improved visibility of Saturn’s moons"
+    ],
+    "tags": [
+      "Planetary Event"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Lifetime"
+      }
+    ],
+    "image": "/images/events/1-100-saturn-ring-plane-crossing.jpg",
+    "nextOccurrences": [
+      "The next ring plane crossing after 2038 will occur around 2053.",
+      "This event repeats roughly every 15 years due to Saturn’s orbital tilt."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "greatest-solar-eclipse-north-america-2045",
+    "title": "Greatest Solar Eclipse (North America)",
+    "date": "2045-08-12T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "One of the greatest total solar eclipses of the 21st century will cross the United States and Canada.",
+    "mainDescription": "On August 12, 2045, a major total solar eclipse will sweep across North America. This eclipse stands out due to its long duration of totality and excellent path across densely populated regions. In the best locations, the Moon will completely cover the Sun for up to 6 minutes and 6 seconds. The path of totality will pass through California, Nevada, Utah, Colorado, Kansas, Missouri, Illinois, Indiana, Ohio, Pennsylvania, New York, and parts of Canada. Millions of people will be able to witness this spectacular event without traveling far.",
+    "whatYoullSee": "Complete darkness during the day, a brilliant solar corona, bright planets and stars visible in the sky, and a dramatic twilight on the horizon.",
+    "whyItMatters": "This is one of the longest and most accessible total solar eclipses in North America for decades.",
+    "keyFacts": [
+      "Maximum totality: 6 minutes 6 seconds",
+      "Path crosses the entire United States from west to east",
+      "Visible to tens of millions of people",
+      "Requires proper solar eclipse glasses"
+    ],
+    "tags": [
+      "Eclipse"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Extremely Rare"
       },
-
-        {
-          "id": "total-solar-eclipse-2123",
-          "title": "Total Solar Eclipse",
-          "date": "2123-06-14T00:00:00.000Z",
-          "timeCategory": "Next 100 Years",
-          "shortDescription": "A total solar eclipse will cross parts of Asia and the Pacific.",
-          "mainDescription": "The Moon’s shadow will sweep across parts of Asia and the Pacific, bringing a total solar eclipse to both densely populated regions and remote areas. Observers along the path will experience a sudden transition from daylight to darkness. The event will offer opportunities for both public viewing and scientific observation. It will also allow future astronomers to compare solar activity with earlier eclipses.",
-          "whatYoullSee": "A darkened Sun surrounded by a glowing corona and stars visible during the day.",
-          "whyItMatters": "A major eclipse event that will contribute to long-term solar observations.",
-          "keyFacts": [
-            "Visible in Asia and Pacific",
-            "Short period of totality",
-            "Naked eye with protection",
-            "Scientific observations"
-          ],
-          "tags": ["Eclipse"],
-          "specialTags": [
-            { "type": "location", "label": "Asia", "icon": "AS" }
-          ],
-          "image": "/images/events/1-100-total-solar-eclipse.jpg"
-        },
-      
-        {
-          "id": "total-solar-eclipse-2124",
-          "title": "Total Solar Eclipse",
-          "date": "2124-12-04T00:00:00.000Z",
-          "timeCategory": "Next 100 Years",
-          "shortDescription": "Another total solar eclipse will be visible from parts of Africa and the Indian Ocean.",
-          "mainDescription": "Just one year after the previous eclipse, another total solar eclipse will occur along a different path. This time, the Moon’s shadow will cross regions in Africa and the Indian Ocean. The close timing between these eclipses makes this pair especially valuable for comparing solar conditions. It also offers another chance for observers to witness this rare phenomenon.",
-          "whatYoullSee": "A fully eclipsed Sun with a bright corona and a dimmed sky.",
-          "whyItMatters": "A rare back-to-back eclipse sequence that allows comparison of solar activity.",
-          "keyFacts": [
-            "Occurs one year after previous eclipse",
-            "Visible in Africa",
-            "Rare sequence",
-            "Scientific comparison"
-          ],
-          "tags": ["Eclipse"],
-          "specialTags": [
-            { "type": "location", "label": "Africa", "icon": "AF" }
-          ],
-          "image": "/images/events/1-100-total-solar-eclipse.jpg"
-        },
-      
-        {
-          "id": "second-transit-of-venus-2125",
-          "title": "Second Transit of Venus",
-          "date": "2125-12-08T00:00:00.000Z",
-          "timeCategory": "Next 100 Years",
-          "shortDescription": "The second event in the rare Venus transit pair.",
-          "mainDescription": "This event follows the 2117 transit of Venus, completing a rare pair that occurs only once every century or more. Venus will again pass across the Sun as a small black disk. After this, no similar event will occur for over 100 years. These paired transits highlight the predictable yet rare nature of orbital alignments.",
-          "whatYoullSee": "A small black dot slowly moving across the bright surface of the Sun.",
-          "whyItMatters": "Marks the end of a rare transit pair that will not repeat for over a century.",
-          "keyFacts": [
-            "Second in transit pair",
-            "Over 100 years until next",
-            "Requires solar filter",
-            "Rare orbital event"
-          ],
-          "tags": ["Transit"],
-          "specialTags": [
-            { "type": "rarity", "label": "Rare" }
-          ],
-          "image": "/images/events/1-100-second-transit-of-venus.jpg"
-        },
-      
-        {
-          "id": "annular-solar-eclipse-2126",
-          "title": "Annular Solar Eclipse",
-          "date": "2126-02-06T00:00:00.000Z",
-          "timeCategory": "Next 100 Years",
-          "shortDescription": "The Moon will pass in front of the Sun leaving a bright “ring of fire”.",
-          "mainDescription": "During this annular eclipse, the Moon will not completely cover the Sun due to its distance from Earth. Instead, a bright ring of sunlight will remain visible around its edges. This creates the striking “ring of fire” effect. Although the sky does not darken completely, the visual appearance is unique and dramatic.",
-          "whatYoullSee": "A glowing ring of sunlight surrounding the dark disk of the Moon.",
-          "whyItMatters": "A visually unique type of eclipse caused by orbital distance differences.",
-          "keyFacts": [
-            "Ring of fire effect",
-            "Moon appears smaller",
-            "No full darkness",
-            "Requires eye protection"
-          ],
-          "tags": ["Eclipse"],
-          "specialTags": [],
-          "image": "/images/events/1-100-annular-solar-eclipse.jpg"
-        },
-      
-        {
-          "id": "comet-swift-tuttle-returns-2126",
-          "title": "Comet Swift–Tuttle Returns",
-          "date": "2126-08-05T00:00:00.000Z",
-          "timeCategory": "Next 100 Years",
-          "shortDescription": "The massive comet that creates the Perseid meteor shower returns.",
-          "mainDescription": "Comet Swift–Tuttle, the parent body of the Perseid meteor shower, will return to the inner solar system. As it approaches the Sun, it will develop a bright coma and tail. This event provides a rare chance to observe the source of one of the most famous meteor showers. It connects direct comet observation with yearly meteor activity on Earth.",
-          "whatYoullSee": "A bright comet with a visible tail in dark skies.",
-          "whyItMatters": "Links a visible comet to one of the most well-known meteor showers.",
-          "keyFacts": [
-            "Parent of Perseid meteors",
-            "Bright visible comet",
-            "Rare return",
-            "Long orbital period"
-          ],
-          "tags": ["Comet"],
-          "specialTags": [
-            { "type": "rarity", "label": "Rare" }
-          ],
-          "image": "/images/events/1-100-comet-swift-tuttle-returns.jpg"
-        }
-      
+      {
+        "type": "location",
+        "label": "Europe",
+        "icon": "Europe"
+      }
+    ],
+    "image": "/images/events/1-100-greatest-solar-eclipse-north-america.jpg",
+    "nextOccurrences": [
+      "The next total solar eclipse with similar long duration across North America is not expected until the 2070s.",
+      "Other total solar eclipses will occur in different parts of the world in the coming decades."
+    ],
+    "countdownPrecision": "full"
+  },
+  {
+    "id": "brightest-jupiter-2056",
+    "title": "Brightest Jupiter of the Century",
+    "date": "2056-09-21T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "Jupiter will reach its closest opposition of the century, appearing exceptionally bright and large.",
+    "mainDescription": "On September 21, 2056, Jupiter will come to its closest approach to Earth in the entire 21st century. The planet will shine at magnitude -2.9, making it brighter than any star in the night sky. At this distance, Jupiter’s disk will appear significantly larger, allowing excellent views of its cloud bands, the Great Red Spot, and its four largest moons through even small telescopes. This will be the best opportunity to observe Jupiter for many decades.",
+    "whatYoullSee": "An incredibly bright planet with visible cloud bands and moons when viewed through a telescope.",
+    "whyItMatters": "This is the best viewing conditions for Jupiter in the entire century.",
+    "keyFacts": [
+      "Closest Jupiter opposition of the 21st century",
+      "Magnitude: -2.9 (brighter than any star)",
+      "Excellent for both naked-eye and telescopic observation",
+      "Peak visibility in September 2056"
+    ],
+    "tags": [
+      "Planetary Event"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Lifetime"
+      }
+    ],
+    "image": "/images/events/1-100-brightest-jupiter-of-the-century.jpg",
+    "nextOccurrences": [
+      "Jupiter reaches opposition every 13 months, but this is the closest and brightest one of the century.",
+      "The next very close opposition will occur much later in the 22nd century."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "halleys-comet-2061",
+    "title": "Halley’s Comet Return",
+    "date": "2061-07-28T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "The most famous comet in history will return to the inner Solar System after 76 years.",
+    "mainDescription": "In July 2061, Halley’s Comet will make its next return to the inner Solar System. This iconic comet, visible since ancient times, will develop a bright coma and a long tail as it approaches the Sun. Although its brightness is difficult to predict precisely, many astronomers expect it to become visible to the naked eye for several weeks. This will be the first return of Halley’s Comet since 1986, giving a new generation the chance to see one of the most historic objects in the night sky.",
+    "whatYoullSee": "A bright comet with a glowing head and a long tail stretching across the night sky under dark conditions.",
+    "whyItMatters": "Halley’s Comet is the most famous periodic comet and connects modern observers with centuries of astronomical history.",
+    "keyFacts": [
+      "Orbital period: approximately 76 years",
+      "Last seen in 1986",
+      "May become visible to the naked eye",
+      "Best viewing expected in July–August 2061"
+    ],
+    "tags": [
+      "Comet"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Lifetime"
+      }
+    ],
+    "image": "/images/events/1-100-halleys-comet-returns.jpg",
+    "nextOccurrences": [
+      "Halley’s Comet will return again in 2134.",
+      "After 2134, the next return is expected in 2209."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "greatest-solar-eclipse-europe-2081",
+    "title": "Greatest Solar Eclipse (Europe)",
+    "date": "2081-09-03T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "A major total solar eclipse will cross much of Europe with long duration of totality.",
+    "mainDescription": "On September 3, 2081, a significant total solar eclipse will sweep across Europe. This event is expected to be one of the best total solar eclipses visible from the continent in the second half of the 21st century. The path of totality will pass through several densely populated countries, offering millions of people the chance to witness the phenomenon. In the best locations, the Moon will completely cover the Sun for more than 5 minutes. Observers will experience sudden daytime darkness and a spectacular view of the solar corona.",
+    "whatYoullSee": "The Sun fully hidden by the Moon, a bright glowing corona, stars visible during the day, and dramatic twilight on the horizon.",
+    "whyItMatters": "This will be one of the most accessible and longest total solar eclipses in Europe for many decades.",
+    "keyFacts": [
+      "Long duration of totality (over 5 minutes in best locations)",
+      "Path crosses multiple European countries",
+      "Visible to millions of people",
+      "Requires proper solar eclipse glasses"
+    ],
+    "tags": [
+      "Eclipse"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Uncommon"
+      },
+      {
+        "type": "location",
+        "label": "Pacific & North America",
+        "icon": "North-America"
+      }
+    ],
+    "image": "/images/events/1-100-greatest-solar-eclipse-europe.jpg",
+    "nextOccurrences": [
+      "The next total solar eclipse with good visibility across Europe is not expected until the 22nd century.",
+      "Other total solar eclipses will continue to occur in different parts of the world."
+    ],
+    "countdownPrecision": "full"
+  },
+  {
+    "id": "uranus-neptune-conjunction-2093",
+    "title": "Uranus–Neptune Conjunction",
+    "date": "2093-07-01T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "Uranus and Neptune will appear very close together in the sky — a rare conjunction of the two ice giants.",
+    "mainDescription": "In July 2093, Uranus and Neptune will reach a rare conjunction, appearing only about 1 degree apart in the night sky. This is an exceptionally rare event because these two distant planets move very slowly and meet only once every 172 years. Although both planets are too faint to see with the naked eye, they will be easily visible together through binoculars or a small telescope. This alignment provides a unique opportunity for astronomers to observe both ice giants in the same field of view.",
+    "whatYoullSee": "Two faint blue-green planets very close to each other when viewed through binoculars or a telescope.",
+    "whyItMatters": "Such conjunctions between Uranus and Neptune occur only once every 172 years, making it a truly once-in-a-lifetime event for most people.",
+    "keyFacts": [
+      "Occurs once every 172 years",
+      "Minimum separation about 1 degree",
+      "Visible with binoculars or small telescope",
+      "Both planets will be in the constellation Virgo"
+    ],
+    "tags": [
+      "Planetary Event"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Extremely Rare"
+      }
+    ],
+    "image": "/images/events/1-100-uranus-neptune-conjunction.jpg",
+    "nextOccurrences": [
+      "The next Uranus–Neptune conjunction will occur in 2265 (172 years later)."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "transit-of-venus-2117",
+    "title": "Transit of Venus",
+    "date": "2117-12-10T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "Venus will pass directly across the face of the Sun, appearing as a small black dot.",
+    "mainDescription": "On December 10, 2117, Venus will transit across the Sun — one of the rarest predictable astronomical events. During the transit, Venus will appear as a small black disk slowly moving across the bright surface of the Sun. Transits of Venus occur in pairs separated by more than a century, making them extremely uncommon. The last pair occurred in 2004 and 2012. This event will be visible from parts of the world and will require proper solar filters for safe observation. Historically, Venus transits helped scientists measure the distance between the Earth and the Sun.",
+    "whatYoullSee": "A tiny black dot (Venus) slowly crossing the disk of the Sun over several hours.",
+    "whyItMatters": "This is one of the rarest celestial events that can be predicted far in advance.",
+    "keyFacts": [
+      "Occurs in pairs separated by over 100 years",
+      "Last transit pair was in 2004 and 2012",
+      "Requires solar filter or safe projection method",
+      "Visible from parts of Earth"
+    ],
+    "tags": [
+      "Transit"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Rare"
+      }
+    ],
+    "image": "/images/events/1-100-transit-of-venus.jpg",
+    "nextOccurrences": [
+      "The second transit of the pair will occur on December 8, 2125.",
+      "After 2125, the next transit of Venus will not occur until 2247."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "second-transit-of-venus-2125",
+    "title": "Second Transit of Venus",
+    "date": "2125-12-08T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "The second and final transit of Venus in the current pair, occurring just 8 years after the first.",
+    "mainDescription": "On December 8, 2125, Venus will once again pass directly across the face of the Sun, completing the rare pair of transits that began in 2117. Venus will appear as a small black dot slowly crossing the Sun’s disk over several hours. These paired transits are extremely rare — they occur only once every 105 to 121 years. After this event, no one alive will see another transit of Venus for more than a century. This will be the last opportunity for many generations to witness this historic astronomical phenomenon.",
+    "whatYoullSee": "A tiny black dot (Venus) slowly moving across the bright surface of the Sun.",
+    "whyItMatters": "This completes one of the rarest predictable celestial events, closing a pair that will not repeat for over 100 years.",
+    "keyFacts": [
+      "Second transit in the 2117–2125 pair",
+      "Occurs 8 years after the first transit",
+      "Requires solar filter for safe viewing",
+      "No more transits until 2247"
+    ],
+    "tags": [
+      "Transit"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Rare"
+      }
+    ],
+    "image": "/images/events/1-100-second-transit-of-venus.jpg",
+    "nextOccurrences": [
+      "After 2125, the next transit of Venus will not occur until December 2247."
+    ],
+    "countdownPrecision": "day"
+  },
+  {
+    "id": "annular-solar-eclipse-2126",
+    "title": "Annular Solar Eclipse (Ring of Fire)",
+    "date": "2126-02-06T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "The Moon will pass in front of the Sun, creating a spectacular “ring of fire” effect.",
+    "mainDescription": "On February 6, 2126, an annular solar eclipse will occur as the Moon passes between Earth and the Sun. Because the Moon will be slightly farther away, it will not completely cover the Sun, leaving a bright ring of sunlight around its edges. This creates the famous “Ring of Fire” appearance. The eclipse will be visible across parts of the Pacific, North America, and the Atlantic. While the sky will not go completely dark, the visual effect is dramatic and beautiful.",
+    "whatYoullSee": "A bright ring of sunlight surrounding the dark silhouette of the Moon.",
+    "whyItMatters": "Annular eclipses produce one of the most visually unique and photogenic effects in astronomy.",
+    "keyFacts": [
+      "Creates the classic “Ring of Fire”",
+      "Moon appears smaller than the Sun",
+      "Path crosses the Pacific and parts of North America",
+      "Requires proper solar eclipse glasses"
+    ],
+    "tags": [
+      "Eclipse"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Rare"
+      }
+    ],
+    "image": "/images/events/1-100-annular-solar-eclipse.jpg",
+    "nextOccurrences": [
+      "Annular solar eclipses occur more frequently than total ones, usually every few years somewhere on Earth."
+    ],
+    "countdownPrecision": "full"
+  },
+  {
+    "id": "comet-swift-tuttle-2126",
+    "title": "Comet Swift–Tuttle Return",
+    "date": "2126-08-05T00:00:00.000Z",
+    "timeCategory": "Next 100 Years",
+    "shortDescription": "The parent comet of the Perseid meteor shower will return to the inner Solar System.",
+    "mainDescription": "In August 2126, Comet Swift–Tuttle will make its return to the inner Solar System after 132 years. This large comet is responsible for the annual Perseid meteor shower every August. As it approaches the Sun, it may develop a bright coma and a noticeable tail. While its brightness is difficult to predict decades in advance, many comets of this size become visible to the naked eye under dark skies. This event will give future observers a rare chance to see the actual source of one of the most popular meteor showers.",
+    "whatYoullSee": "A comet with a glowing head and possibly a long tail, visible in dark skies.",
+    "whyItMatters": "It connects the famous Perseid meteor shower with its parent comet, offering a direct link between annual meteors and their origin.",
+    "keyFacts": [
+      "Orbital period: approximately 133 years",
+      "Parent body of the Perseid meteor shower",
+      "May become visible to the naked eye",
+      "Best viewing expected in mid-2126"
+    ],
+    "tags": [
+      "Comet"
+    ],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Rare"
+      }
+    ],
+    "image": "/images/events/1-100-comet-swift-tuttle-returns.jpg",
+    "nextOccurrences": [
+      "Comet Swift–Tuttle will return again around 2259."
+    ],
+    "countdownPrecision": "day"
+  }
 ]

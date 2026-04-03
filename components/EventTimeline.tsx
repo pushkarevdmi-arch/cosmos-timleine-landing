@@ -1,6 +1,11 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import {
+  eventHasSpecificUtcTime,
+  formatEventDateOnlyShort,
+  formatEventTimeUtcLabel,
+} from "@/utils/eventDate";
 import type { HeroEventData } from "./HeroEvent";
 
 type EventTimelineProps = {
@@ -101,9 +106,16 @@ export default function EventTimeline({
                           <p className="type-era-label text-ds-neutral-500">
                             Date
                           </p>
-                          <p className="font-sans text-[18px] leading-[20px] font-semibold text-ds-neutral-100">
-                            {formatShortDate(event.date)}
-                          </p>
+                          <div className="flex flex-col items-end gap-1.5">
+                            <p className="font-sans text-[18px] leading-[20px] font-semibold text-ds-neutral-100">
+                              {formatEventDateOnlyShort(event.date)}
+                            </p>
+                            {eventHasSpecificUtcTime(event.date) ? (
+                              <p className="font-sans text-[14px] leading-[18px] font-medium text-ds-neutral-400">
+                                {formatEventTimeUtcLabel(event.date)}
+                              </p>
+                            ) : null}
+                          </div>
                         </div>
                       </button>
                     </li>
@@ -116,35 +128,6 @@ export default function EventTimeline({
       </ol>
     </div>
   );
-}
-
-function formatShortDate(dateStr: string) {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) return "Unknown";
-
-  const hasSpecificTime =
-    date.getUTCHours() !== 0 ||
-    date.getUTCMinutes() !== 0 ||
-    date.getUTCSeconds() !== 0 ||
-    date.getUTCMilliseconds() !== 0;
-
-  if (hasSpecificTime) {
-    return new Intl.DateTimeFormat("en", {
-      year: "numeric",
-      month: "short",
-      day: "numeric",
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "UTC",
-      timeZoneName: "short",
-    }).format(date);
-  }
-
-  return new Intl.DateTimeFormat("en", {
-    year: "numeric",
-    month: "short",
-    day: "numeric",
-  }).format(date);
 }
 
 function getTimeRangeSection(event: HeroEventData) {

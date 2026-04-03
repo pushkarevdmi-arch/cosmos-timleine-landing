@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  eventHasSpecificUtcTime,
+  formatEventDateOnlyLong,
+  formatEventTimeUtcLabel,
+} from "@/utils/eventDate";
 import type { HeroEventData } from "./HeroEvent";
 import { useEffect } from "react";
 
@@ -7,35 +12,6 @@ type EventDetailsModalProps = {
   event: HeroEventData;
   onClose: () => void;
 };
-
-function formatFullDate(dateStr: string) {
-  const date = new Date(dateStr);
-  if (Number.isNaN(date.getTime())) return "Unknown date";
-
-  const hasSpecificTime =
-    date.getUTCHours() !== 0 ||
-    date.getUTCMinutes() !== 0 ||
-    date.getUTCSeconds() !== 0 ||
-    date.getUTCMilliseconds() !== 0;
-
-  if (hasSpecificTime) {
-    return new Intl.DateTimeFormat("en", {
-      year: "numeric",
-      month: "long",
-      day: "2-digit",
-      hour: "numeric",
-      minute: "2-digit",
-      timeZone: "UTC",
-      timeZoneName: "short",
-    }).format(date);
-  }
-
-  return new Intl.DateTimeFormat("en", {
-    year: "numeric",
-    month: "long",
-    day: "2-digit",
-  }).format(date);
-}
 
 export default function EventDetailsModal({
   event,
@@ -48,6 +24,7 @@ export default function EventDetailsModal({
     whyItMatters,
     whatYoullSee,
     keyFacts,
+    nextOccurrences,
   } = event;
 
   const safeWhyItMatters =
@@ -63,7 +40,11 @@ export default function EventDetailsModal({
     keyFacts && keyFacts.length
       ? keyFacts
       : [
-          `Approximate date: ${formatFullDate(date)}`,
+          `Approximate date: ${formatEventDateOnlyLong(date)}${
+            eventHasSpecificUtcTime(date)
+              ? ` · ${formatEventTimeUtcLabel(date)}`
+              : ""
+          }`,
           "Timing, visibility, and exact appearance can vary based on your location and observing conditions.",
         ];
 
@@ -86,13 +67,13 @@ export default function EventDetailsModal({
       />
 
       <div className="relative z-10 flex w-[calc(100vw-32px)] max-h-[calc(100dvh-48px)] max-w-[680px] flex-col overflow-hidden rounded-3xl border border-ds-neutral-800 bg-ds-neutral-950/95 shadow-xl backdrop-blur sm:w-full sm:max-h-[calc(100dvh-96px)]">
-        <div className="flex items-start justify-between border-b border-ds-neutral-800/80 px-8 py-8">
-          <div>
+        <div className="flex items-start justify-between gap-2 bg-ds-neutral-900 px-8 py-8">
+          <div className="flex flex-col gap-2 px-[3px] max-w-[560px]">
             <h2 className="font-sans text-h4-600 text-ds-neutral-50">
               {title}
             </h2>
-            <p
-              className="mt-1 type-era-label text-ds-neutral-400"
+            <div
+              className="mt-1 flex flex-row gap-6 type-era-label text-ds-neutral-400"
               style={{
                 fontFamily: "var(--font-sans)",
                 fontWeight: 400,
@@ -100,8 +81,19 @@ export default function EventDetailsModal({
                 lineHeight: "18px",
               }}
             >
-              {formatFullDate(date)}
-            </p>
+              <span>{formatEventDateOnlyLong(date)}</span>
+              {eventHasSpecificUtcTime(date) ? (
+                <>
+                  <span
+                    aria-hidden="true"
+                    className="h-[14px] w-px self-center bg-ds-neutral-700"
+                  />
+                  <span className="text-ds-neutral-500">
+                    {formatEventTimeUtcLabel(date)}
+                  </span>
+                </>
+              ) : null}
+            </div>
           </div>
 
           <button
@@ -114,14 +106,17 @@ export default function EventDetailsModal({
           </button>
         </div>
 
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto modal-scroll">
           <div className="flex flex-col gap-8 px-8 pt-8 pb-12 type-body-tight text-ds-neutral-200">
-            <p className="text-[18px] leading-6 text-ds-neutral-300">
+            <p className="text-[18px] leading-[26px] text-ds-neutral-300">
               {mainDescription}
             </p>
 
-            <section className="space-y-1.5">
-              <h3 className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500">
+            <section className="flex flex-col gap-2">
+              <h3
+                className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500"
+                style={{ fontSize: "14px", lineHeight: "18px" }}
+              >
                 Why it matters
               </h3>
               <p className="font-sans text-body-large-400 leading-6 text-ds-neutral-300">
@@ -129,8 +124,11 @@ export default function EventDetailsModal({
               </p>
             </section>
 
-            <section className="space-y-1.5">
-              <h3 className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500">
+            <section className="flex flex-col gap-2">
+              <h3
+                className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500"
+                style={{ fontSize: "14px", lineHeight: "18px" }}
+              >
                 What you&apos;ll see
               </h3>
               <p className="font-sans text-body-large-400 leading-6 text-ds-neutral-300">
@@ -138,11 +136,11 @@ export default function EventDetailsModal({
               </p>
             </section>
 
-            <section className="space-y-1.5">
+            <section className="flex flex-col gap-2">
               <h3 className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500">
                 Key facts
               </h3>
-              <ul className="list-disc flex flex-col gap-0 pl-5 font-sans text-body-large-400 leading-6 text-ds-neutral-300">
+              <ul className="list-disc flex flex-col gap-2 pl-5 font-sans text-body-large-400 leading-6 text-ds-neutral-300">
                 {safeKeyFacts.map((fact) => (
                   <li key={fact}>
                     <div>{fact}</div>
@@ -150,6 +148,21 @@ export default function EventDetailsModal({
                 ))}
               </ul>
             </section>
+
+            {nextOccurrences && nextOccurrences.length > 0 ? (
+              <section className="flex flex-col gap-2">
+                <h3 className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500">
+                  Next time
+                </h3>
+                <ul className="list-disc flex flex-col gap-2 pl-5 font-sans text-body-large-400 leading-6 text-ds-neutral-300">
+                  {nextOccurrences.map((line) => (
+                    <li key={line}>
+                      <div>{line}</div>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
           </div>
         </div>
       </div>

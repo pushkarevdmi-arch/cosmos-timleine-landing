@@ -112,7 +112,7 @@ svg:not([class*="text-"]) {
   .event-card:hover .event-card__image,
   .event-card__image-wrap:hover .event-card__image,
   .event-card__image-wrap:focus-within .event-card__image {
-    transform: scale(1.07);
+    transform: scale(1.1565);
   }
 
   .hero-event__image {
@@ -124,7 +124,7 @@ svg:not([class*="text-"]) {
 
   .hero-event__image-wrap:hover .hero-event__image,
   .hero-event__image-wrap:focus-within .hero-event__image {
-    transform: scale(1.07);
+    transform: scale(1.1565);
   }
 
   .event-card__badge-row {
@@ -187,8 +187,21 @@ svg:not([class*="text-"]) {
     color: var(--ds-neutral-0);
   }
 
+  /* Location tags: show bare 20px icon without pill background */
+  .event-card__extra-tag--location .event-card__extra-tag-icon {
+    @apply h-6 w-6 min-w-0 rounded-none p-0;
+    background: unset;
+    background-color: unset;
+    color: inherit;
+  }
+
+  .event-card__extra-tag--location .event-card__extra-tag-icon img {
+    width: 20px;
+    height: 20px;
+  }
+
   .event-card__content {
-    @apply flex h-full flex-1 flex-col gap-0 px-6 pb-4 pt-4 sm:px-8 sm:pb-5 sm:pt-5;
+    @apply flex h-full flex-1 flex-col gap-4 px-6 pb-4 pt-4 sm:px-8 sm:pb-7 sm:pt-5;
     background: unset;
     background-color: rgba(15, 20, 31, 1);
     width: 100%;
@@ -205,7 +218,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__description {
-    @apply m-0 text-center text-ds-neutral-400 text-[16px] leading-[20px];
+    @apply m-0 text-center text-ds-neutral-400 text-[16px] leading-[24px];
     display: -webkit-box;
     -webkit-line-clamp: 2; /* show at most two lines */
     -webkit-box-orient: vertical;
@@ -233,18 +246,12 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid {
-    @apply -mx-2 flex w-[calc(100%+1rem)] justify-between gap-2 font-mono text-ds-neutral-100 sm:mx-0 sm:w-auto sm:justify-center;
+    /* Keep countdown inside card padding (no negative margins / width calc). */
+    @apply flex w-full justify-between gap-2 font-mono text-ds-neutral-100 sm:justify-center;
   }
 
   .event-card__countdown-segment {
-    @apply relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:flex-none sm:px-4 sm:py-4;
-    width: auto;
-  }
-
-  @media (min-width: 40rem) {
-    .event-card__countdown-segment {
-      width: 102px;
-    }
+    @apply relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:px-4 sm:py-4;
   }
 
   .event-card__countdown-value {
@@ -270,6 +277,29 @@ svg:not([class*="text-"]) {
     background: unset;
     background-color: unset;
   }
+}
+
+.modal-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--ds-neutral-700) rgba(15, 20, 31, 1);
+}
+
+.modal-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.modal-scroll::-webkit-scrollbar-track {
+  background: rgba(15, 20, 31, 1);
+}
+
+.modal-scroll::-webkit-scrollbar-thumb {
+  background: var(--ds-neutral-800);
+  border-radius: 9999px;
+  border: 1px solid rgba(15, 20, 31, 1);
+}
+
+.modal-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--ds-neutral-700);
 }
 
 .typography-reset {

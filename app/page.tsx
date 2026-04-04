@@ -320,7 +320,7 @@ export default function Home() {
         <section className="mb-32 w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] lg:mb-32">
           <div className="relative w-full overflow-hidden rounded-3xl border-2 border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
             <video
-              className="block h-[120px] w-full object-cover sm:h-[280px] lg:h-[180px]"
+              className="block h-[100px] w-full object-cover sm:h-[280px] lg:h-[180px]"
               src="/videos/hero-video0.mp4"
               autoPlay
               loop
@@ -334,8 +334,8 @@ export default function Home() {
         </section>
 
         {/* View toggle */}
-        <section className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <div className="w-full text-left">
+        <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
+          <div className="w-full text-center sm:text-left">
             <h2 className="font-sans text-h2-400 text-ds-neutral-00">
               Upcoming{" "}
               <span
@@ -348,7 +348,7 @@ export default function Home() {
           </div>
 
           <div
-            className="relative flex w-full flex-row-reverse items-center justify-between gap-3 sm:w-auto sm:flex-row sm:justify-end"
+            className="relative flex w-full flex-row-reverse items-center justify-between gap-4 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end"
             ref={filterPopoverRef}
           >
             <button
@@ -360,7 +360,24 @@ export default function Home() {
                   return next;
                 })
               }
-              className="flex items-center gap-2 rounded-full px-3 py-2 text-base font-bold cursor-pointer text-ds-neutral-200 hover:text-ds-neutral-00"
+              className={[
+                "flex shrink-0 cursor-pointer items-center justify-center transition-colors",
+                /* Mobile: match ViewToggle outer box — p-1 + h-12 inner → 56px (3.5rem) square */
+                "max-sm:size-14 rounded-xl border border-ds-neutral-800 bg-ds-neutral-900",
+                "sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:border-0 sm:bg-transparent sm:px-3 sm:py-2",
+                "text-base font-bold",
+                isFilterOpen
+                  ? [
+                      "max-sm:border-transparent max-sm:bg-ds-neutral-700 max-sm:text-ds-neutral-100 max-sm:hover:text-ds-neutral-00",
+                      hasActiveFilters
+                        ? "sm:text-ds-primary-400 sm:hover:text-ds-primary-300"
+                        : "sm:text-ds-neutral-200 sm:hover:text-ds-neutral-00",
+                    ].join(" ")
+                  : hasActiveFilters
+                    ? "text-ds-primary-400 hover:text-ds-primary-300 sm:text-ds-primary-400"
+                    : "text-ds-neutral-500 hover:text-ds-neutral-400 sm:text-ds-neutral-200 sm:hover:text-ds-neutral-00",
+              ].join(" ")}
+              aria-label="Filters"
               aria-haspopup="dialog"
               aria-expanded={isFilterOpen}
             >
@@ -371,11 +388,7 @@ export default function Home() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden
-                className={`shrink-0 ${
-                  hasActiveFilters
-                    ? "text-ds-primary-400 hover:text-ds-primary-300"
-                    : "text-ds-neutral-200"
-                }`}
+                className="shrink-0"
               >
                 <path
                   d="M4.5 7H19.5M7 12H17M10 17H14"
@@ -385,7 +398,7 @@ export default function Home() {
                   strokeLinejoin="round"
                 />
               </svg>
-              Filters
+              <span className="hidden sm:inline">Filters</span>
             </button>
 
             {isFilterOpen ? (
@@ -568,7 +581,9 @@ export default function Home() {
               </div>
             ) : null}
 
-            <ViewToggle mode={viewMode} onChange={(mode) => setViewMode(mode)} />
+            <div className="min-w-0 flex-1 sm:flex-initial">
+              <ViewToggle mode={viewMode} onChange={(mode) => setViewMode(mode)} />
+            </div>
           </div>
         </section>
 

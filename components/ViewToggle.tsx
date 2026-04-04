@@ -12,7 +12,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
 
   return (
     <div
-      className="inline-flex rounded-2xl p-1.5"
+      className="flex w-full gap-1.5 rounded-2xl p-1 sm:inline-flex sm:w-auto sm:p-1.5"
       style={{
         backgroundColor: "var(--ds-neutral-900)",
         borderWidth: "1px",
@@ -32,7 +32,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
             aria-pressed={isActive}
             aria-label={option.value === "grid" ? "Grid view" : "Timeline view"}
             className={[
-              "relative flex h-12 w-12 appearance-none items-center justify-center rounded-xl border-0 transition-colors cursor-pointer",
+              "relative flex h-12 min-w-0 flex-1 appearance-none items-center justify-center rounded-xl border-0 transition-colors cursor-pointer sm:flex-none sm:w-12",
               isActive
                 ? "text-ds-neutral-100"
                 : "text-ds-neutral-500 hover:text-ds-neutral-400",

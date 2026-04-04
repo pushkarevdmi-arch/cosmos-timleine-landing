@@ -14,7 +14,8 @@ import ViewToggle from "@/components/ViewToggle";
 import EventGrid from "@/components/EventGrid";
 import EventTimeline from "@/components/EventTimeline";
 import EventDetailsModal from "@/components/EventDetailsModal";
-import eventsData from "@/data/events.json";
+import eventsData from "@/data/events";
+import { compareEventDateStrings, getEventCalendarYear } from "@/utils/eventDate";
 
 function splitSentences(text: string) {
   return text
@@ -68,7 +69,7 @@ function deriveKeyFacts(mainDescription: string) {
 function getTimeRangeSectionLabel(event: HeroEventData): TimeRangeOption {
   if (event.timeCategory) return event.timeCategory;
 
-  const eventYear = new Date(event.date).getUTCFullYear();
+  const eventYear = getEventCalendarYear(event.date);
   if (!Number.isFinite(eventYear)) return "Next 100 Years";
 
   const currentYear = new Date().getUTCFullYear();
@@ -81,7 +82,10 @@ function getTimeRangeSectionLabel(event: HeroEventData): TimeRangeOption {
 }
 
 const eventsSeedBase = eventsData as unknown as HeroEventData[];
+/** Cards appended per “load more” / infinite scroll. */
 const EVENTS_BATCH_SIZE = 11;
+/** Initial slice: covers all current eras in one view when filters are “all” (see sorted `eventsSeed`). */
+const INITIAL_VISIBLE_COUNT = 60;
 const TIME_RANGE_OPTIONS = [
   "Next 100 Years",
   "Next 10,000 Years",
@@ -90,56 +94,6 @@ const TIME_RANGE_OPTIONS = [
 ] as const;
 type TimeRangeOption = (typeof TIME_RANGE_OPTIONS)[number];
 type FilterDropdown = "time" | "tag" | null;
-const SECTION_PLACEHOLDER_EVENTS: HeroEventData[] = [
-  {
-    id: "placeholder-next-10000-years",
-    title: "Interstellar Probe Milestone",
-    date: "6000-01-01T00:00:00.000Z",
-    countdownPrecision: "year",
-    image: "/images/hero-image.jpg",
-    timeCategory: "Next 10,000 Years",
-    shortDescription: "A marker event to represent the next 10,000 years section.",
-    mainDescription:
-      "This placeholder event is shown to demonstrate visual grouping for long-range timeline periods.",
-    tags: ["Timeline Marker"],
-    specialTags: [],
-    whyItMatters: "Used as a visual marker for long-range time ranges.",
-    whatYoullSee: "A section marker used for grouping.",
-    keyFacts: ["Section marker", "Used for grouping"],
-  },
-  {
-    id: "placeholder-millions-of-years",
-    title: "Galactic Drift Checkpoint",
-    date: "12000-01-01T00:00:00.000Z",
-    countdownPrecision: "year",
-    image: "/images/hero-image.jpg",
-    timeCategory: "Millions of Years",
-    shortDescription: "A marker event to represent the millions of years section.",
-    mainDescription:
-      "This placeholder event is shown to demonstrate visual grouping for million-year timeline periods.",
-    tags: ["Timeline Marker"],
-    specialTags: [],
-    whyItMatters: "Used as a visual marker for long-range time ranges.",
-    whatYoullSee: "A section marker used for grouping.",
-    keyFacts: ["Section marker", "Used for grouping"],
-  },
-  {
-    id: "placeholder-billions-of-years",
-    title: "Far Future Cosmic Marker",
-    date: "22000-01-01T00:00:00.000Z",
-    countdownPrecision: "year",
-    image: "/images/hero-image.jpg",
-    timeCategory: "Billions of Years",
-    shortDescription: "A marker event to represent the billions of years section.",
-    mainDescription:
-      "This placeholder event is shown to demonstrate visual grouping for billion-year timeline periods.",
-    tags: ["Timeline Marker"],
-    specialTags: [],
-    whyItMatters: "Used as a visual marker for long-range time ranges.",
-    whatYoullSee: "A section marker used for grouping.",
-    keyFacts: ["Section marker", "Used for grouping"],
-  },
-];
 const EVENT_TAGS: Record<string, string> = {
   "venus-jupiter-great-conjunction-2026": "Conjunction",
   "greatest-solar-eclipse-europe-2026": "Eclipse",
@@ -161,12 +115,12 @@ const EVENT_TAGS: Record<string, string> = {
   "comet-swift-tuttle-2126": "Comet",
 };
 
-const eventsSeed: HeroEventData[] = [...eventsSeedBase, ...SECTION_PLACEHOLDER_EVENTS].map(
+const eventsSeed: HeroEventData[] = [...eventsSeedBase].map(
   (event) => ({
     ...event,
     timeCategory: event.timeCategory ?? getTimeRangeSectionLabel(event),
     tags: event.tags?.length ? event.tags : [EVENT_TAGS[event.id] ?? "Solar system"],
-    // Allow content in `data/events.json` to override auto-generated fields.
+    // Allow content in `data/events/*.json` (merged via `data/events/index.ts`) to override auto-generated fields.
     // If a field is missing (`undefined`), we fall back to derived content.
     whyItMatters:
       event.whyItMatters ?? deriveWhyItMatters(event.mainDescription),
@@ -184,7 +138,7 @@ export default function Home() {
   >("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [openDropdown, setOpenDropdown] = useState<FilterDropdown>(null);
-  const [visibleCount, setVisibleCount] = useState(EVENTS_BATCH_SIZE);
+  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<HeroEventData | null>(
     null
@@ -196,9 +150,7 @@ export default function Home() {
 
   const sortedEvents = useMemo(
     () =>
-      [...eventsSeed].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      ),
+      [...eventsSeed].sort((a, b) => compareEventDateStrings(a.date, b.date)),
     []
   );
   const availableTags = useMemo(() => {
@@ -480,7 +432,7 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => {
-                              setVisibleCount(EVENTS_BATCH_SIZE);
+                              setVisibleCount(INITIAL_VISIBLE_COUNT);
                               setIsLoadingMore(false);
                               isFetchingRef.current = false;
                               setSelectedTimeRange("all");
@@ -496,7 +448,7 @@ export default function Home() {
                             <button
                               type="button"
                               onClick={() => {
-                                setVisibleCount(EVENTS_BATCH_SIZE);
+                                setVisibleCount(INITIAL_VISIBLE_COUNT);
                                 setIsLoadingMore(false);
                                 isFetchingRef.current = false;
                                 setSelectedTimeRange(range);
@@ -554,7 +506,7 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => {
-                              setVisibleCount(EVENTS_BATCH_SIZE);
+                              setVisibleCount(INITIAL_VISIBLE_COUNT);
                               setIsLoadingMore(false);
                               isFetchingRef.current = false;
                               setSelectedTags([]);
@@ -572,7 +524,7 @@ export default function Home() {
                             <button
                               type="button"
                               onClick={() => {
-                                setVisibleCount(EVENTS_BATCH_SIZE);
+                                setVisibleCount(INITIAL_VISIBLE_COUNT);
                                 setIsLoadingMore(false);
                                 isFetchingRef.current = false;
                                 setSelectedTags((current) => {
@@ -598,7 +550,7 @@ export default function Home() {
                   <button
                     type="button"
                     onClick={() => {
-                      setVisibleCount(EVENTS_BATCH_SIZE);
+                      setVisibleCount(INITIAL_VISIBLE_COUNT);
                       setIsLoadingMore(false);
                       isFetchingRef.current = false;
                       setSelectedTimeRange("all");

@@ -1,0 +1,218 @@
+[
+  {
+    "id": "gliese-710-close-encounter",
+    "title": "Gliese 710 Close Stellar Encounter",
+    "date": "1290000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "A star will pass extremely close to the Solar System, triggering a massive comet storm — in about 1.29 million years.",
+    "mainDescription": "In approximately 1.29 million years, the star Gliese 710 will pass through the outer Oort cloud at only 0.166 light years from the Sun. This close encounter will gravitationally disturb billions of comets, sending many of them toward the inner Solar System.",
+    "whatYoullSee": "A bright new star moving noticeably across the sky over decades, accompanied by a dramatic increase in bright comets and fireballs for thousands of years.",
+    "whyItMatters": "One of the closest stellar flybys in millions of years and a major gravitational event for the entire Solar System.",
+    "keyFacts": [
+      "Closest approach: ~0.166 light years",
+      "Strong disturbance of the Oort cloud",
+      "In about 1.29 million years"
+    ],
+    "tags": ["Stellar Encounter"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-gliese-710.jpg",
+    "nextOccurrences": [
+      "No closer stellar encounters expected for many millions of years."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "eta-carinae-hypernova",
+    "title": "Eta Carinae Hypernova Explosion",
+    "date": "2000000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "The unstable massive star Eta Carinae explodes as a hypernova — within the next 2 million years.",
+    "mainDescription": "Eta Carinae, one of the most massive and unstable stars in the Milky Way, is predicted to end its life in a spectacular hypernova or luminous supernova explosion sometime in the next few million years.",
+    "whatYoullSee": "An extremely bright new star in the southern sky, potentially visible even during the day for weeks or months.",
+    "whyItMatters": "One of the most powerful stellar explosions observable from Earth in millions of years.",
+    "keyFacts": [
+      "Extremely luminous and unstable star",
+      "Possible hypernova",
+      "In the next 100,000 – 2 million years"
+    ],
+    "tags": ["Supernova"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-eta-carinae-hypernova.jpg",
+    "nextOccurrences": [
+      "Events of this scale are extremely rare on million-year timescales."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "constellations-complete-dissolution",
+    "title": "Complete Dissolution of Familiar Constellations",
+    "date": "5000000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "All current constellations will become completely unrecognizable due to stellar motion — in about 5 million years.",
+    "mainDescription": "Over the next several million years, the proper motions of stars will scatter and reshape all familiar constellations. Orion, Ursa Major, Cassiopeia and others will disappear forever, replaced by entirely new star patterns.",
+    "whatYoullSee": "A night sky that looks completely alien to modern observers.",
+    "whyItMatters": "The total transformation of the human celestial heritage.",
+    "keyFacts": [
+      "Caused by stars’ individual velocities",
+      "All known constellations dissolve",
+      "In about 5 million years"
+    ],
+    "tags": ["Stellar Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-constellations-dissolve.jpg",
+    "nextOccurrences": [
+      "New constellations will form over tens of millions of years."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "sirius-close-approach",
+    "title": "Sirius Extremely Close Approach",
+    "date": "6000000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "Sirius will pass very close to the Solar System, becoming the brightest star in the sky — in about 6 million years.",
+    "mainDescription": "Around 6 million years from now, Sirius (the brightest star in our current sky) will reach its closest approach to the Solar System at only 1.6 light years, making it dramatically brighter than it is today.",
+    "whatYoullSee": "Sirius shining with exceptional brilliance, far outshining all other stars in the night sky.",
+    "whyItMatters": "One of the closest approaches of a bright star in millions of years.",
+    "keyFacts": [
+      "Closest distance: ~1.6 light years",
+      "Will become much brighter",
+      "In about 6 million years"
+    ],
+    "tags": ["Stellar Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-sirius-close.jpg",
+    "nextOccurrences": [
+      "Sirius will gradually move away afterward."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "major-comet-bombardment",
+    "title": "Major Comet Bombardment Period",
+    "date": "15000000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "A prolonged period of intense comet impacts on the inner planets — in about 15 million years.",
+    "mainDescription": "Around 15 million years from now, the Solar System is expected to enter a phase of significantly increased comet activity, potentially leading to multiple large impacts on Earth, Mars and other bodies.",
+    "whatYoullSee": "Frequent bright comets in the sky and possible visible impact events on the Moon and planets.",
+    "whyItMatters": "A rare period of heightened cosmic danger and spectacular celestial displays.",
+    "keyFacts": [
+      "Triggered by stellar perturbations",
+      "Increased impact risk",
+      "In about 15 million years"
+    ],
+    "tags": ["Planetary Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-comet-bombardment.jpg",
+    "nextOccurrences": [
+      "Such intense bombardment periods are rare over long timescales."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "saturn-rings-permanent-disappearance",
+    "title": "Permanent Disappearance of Saturn’s Rings",
+    "date": "200000000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "Saturn’s magnificent rings will vanish forever — in about 200 million years.",
+    "mainDescription": "In approximately 200 million years, Saturn’s ring system will be completely lost due to ring rain and dynamical processes. The planet will appear as a plain gas giant without its iconic rings.",
+    "whatYoullSee": "Saturn transformed into a featureless yellowish orb, losing one of the most beautiful features in the Solar System.",
+    "whyItMatters": "The permanent end of Saturn’s rings as we know them.",
+    "keyFacts": [
+      "Rings are relatively young",
+      "Lost through ring rain",
+      "In about 200 million years"
+    ],
+    "tags": ["Planetary Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-saturn-rings-disappear.jpg",
+    "nextOccurrences": [
+      "Saturn will remain ringless for billions of years."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "solar-system-chaos",
+    "title": "Chaotic Evolution of the Solar System",
+    "date": "500000000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "The orbits of the planets become chaotic and unstable — in about 500 million years.",
+    "mainDescription": "In the next 500 million to 1 billion years, the long-term gravitational interactions among the planets may lead to chaotic changes in their orbits, potentially resulting in collisions or ejections.",
+    "whatYoullSee": "Gradual but dramatic shifts in the positions and brightness of planets over geological time.",
+    "whyItMatters": "The beginning of the end of the stable Solar System we know today.",
+    "keyFacts": [
+      "Long-term orbital instability",
+      "Possible planetary collisions",
+      "In about 500 million years"
+    ],
+    "tags": ["Planetary Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-solar-system-chaos.jpg",
+    "nextOccurrences": [
+      "The Solar System will never return to its current stable configuration."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "last-total-solar-eclipse",
+    "title": "The Last Total Solar Eclipse on Earth",
+    "date": "600000000",
+    "timeCategory": "Millions of Years",
+    "shortDescription": "Total solar eclipses will cease forever as the Moon moves too far away — in about 600 million years.",
+    "mainDescription": "In roughly 600 million years, the Moon will have receded far enough that it can no longer fully cover the Sun. This will be the last total solar eclipse visible from Earth.",
+    "whatYoullSee": "The final perfect alignment where the Moon completely hides the Sun one last time.",
+    "whyItMatters": "The end of one of the most spectacular natural phenomena in the Solar System.",
+    "keyFacts": [
+      "Caused by tidal recession of the Moon",
+      "Only annular eclipses afterward",
+      "In about 600 million years"
+    ],
+    "tags": ["Eclipse"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Million Years"
+      }
+    ],
+    "image": "/images/events/millions-last-total-eclipse.jpg",
+    "nextOccurrences": [
+      "Total solar eclipses will never occur again."
+    ],
+    "countdownPrecision": "year"
+  }
+]

@@ -7,6 +7,9 @@ import {
   formatCountdownDaysDisplay,
   formatEventDateOnlyLong,
   formatEventTimeUtcLabel,
+  formatMegaYearScaleParts,
+  getCountdownBreakdown,
+  getEventCalendarYear,
 } from "@/utils/eventDate";
 import EventTagGroup from "./EventTagGroup";
 import type { HeroEventData } from "./HeroEvent";
@@ -24,27 +27,20 @@ const LONG_TERM_SECTIONS = new Set([
   "Billions of Years",
 ]);
 
+const HIDE_CARD_DATE_SECTIONS = new Set([
+  "Millions of Years",
+  "Billions of Years",
+]);
+
 function useCountdown(targetDate: string): Countdown {
   const getDiff = (): Countdown => {
-    const now = new Date().getTime();
-    const target = new Date(targetDate).getTime();
-    const diff = target - now;
-
-    if (Number.isNaN(target)) {
-      return { years: 0, days: 0, hours: 0, isPast: false };
-    }
-
-    if (diff <= 0) {
-      return { years: 0, days: 0, hours: 0, isPast: true };
-    }
-
-    const dayMs = 1000 * 60 * 60 * 24;
-    const totalDays = Math.floor(diff / dayMs);
-    const years = Math.floor(totalDays / 365);
-    const days = totalDays - years * 365;
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-
-    return { years, days, hours, isPast: false };
+    const b = getCountdownBreakdown(targetDate);
+    return {
+      years: b.years,
+      days: b.days,
+      hours: b.hours,
+      isPast: b.isPast,
+    };
   };
 
   const [countdown, setCountdown] = useState<Countdown>(getDiff);
@@ -65,23 +61,30 @@ function isLongTermEvent(event: HeroEventData) {
     return true;
   }
 
-  const eventYear = new Date(event.date).getUTCFullYear();
+  const eventYear = getEventCalendarYear(event.date);
+  if (eventYear === Number.POSITIVE_INFINITY) return true;
   if (!Number.isFinite(eventYear)) return false;
   const yearsAhead = Math.max(0, eventYear - new Date().getUTCFullYear());
   return yearsAhead > 100;
 }
 
 function formatLongTermYears(years: number) {
-  if (years >= 1000000000) {
+  if (years >= 1_000_000_000_000) {
     return {
-      value: Math.round(years / 1000000000).toLocaleString("en-US"),
-      unit: "billion years",
+      value: Math.round(years / 1_000_000_000_000).toLocaleString("en-US"),
+      unit: "tril years",
     };
   }
-  if (years >= 1000000) {
+  if (years >= 1_000_000_000) {
     return {
-      value: Math.round(years / 1000000).toLocaleString("en-US"),
-      unit: "million years",
+      value: Math.round(years / 1_000_000_000).toLocaleString("en-US"),
+      unit: "bil years",
+    };
+  }
+  if (years >= 1_000_000) {
+    return {
+      value: Math.round(years / 1_000_000).toLocaleString("en-US"),
+      unit: "mil years",
     };
   }
   return {
@@ -123,6 +126,22 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
   const longTermCountdown = formatLongTermYears(countdown.years);
   const isInteractive = Boolean(onExplore);
   const precision = event.countdownPrecision ?? "full";
+  const isMillionsOrBillionsCard =
+    event.timeCategory === "Millions of Years" ||
+    event.timeCategory === "Billions of Years";
+
+  /** Year-only countdown: one YEARS segment (no big long-range pill). */
+  const useBigLongTermCountdown =
+    showLongTermYearsOnly &&
+    !isMillionsOrBillionsCard &&
+    !(
+      event.timeCategory === "Next 10,000 Years" && precision === "year"
+    );
+
+  const megaScale = formatMegaYearScaleParts(countdown.years);
+
+  const showCardDateRow =
+    !event.timeCategory || !HIDE_CARD_DATE_SECTIONS.has(event.timeCategory);
 
   return (
     <article
@@ -160,24 +179,44 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
 
         <div className="event-card__meta mt-6">
           <div className="flex w-full flex-col gap-1 px-12">
-            <div className="event-card__date">
-              <span className="event-card__date-icon">
-                <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
-              </span>
-              <div className="flex min-w-0 flex-row gap-3 text-center md:text-left">
-                <span>{formatEventDateOnlyLong(event.date)}</span>
-                {eventHasSpecificUtcTime(event.date) ? (
-                  <span className="text-[16px] leading-[20px] text-ds-neutral-500">
-                    {formatEventTimeUtcLabel(event.date)}
-                  </span>
-                ) : null}
+            {showCardDateRow ? (
+              <div className="event-card__date">
+                <span className="event-card__date-icon">
+                  <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
+                </span>
+                <div className="flex min-w-0 flex-row gap-3 text-center md:text-left">
+                  <span>{formatEventDateOnlyLong(event.date)}</span>
+                  {eventHasSpecificUtcTime(event.date) ? (
+                    <span className="text-[16px] leading-[20px] text-ds-neutral-500">
+                      {formatEventTimeUtcLabel(event.date)}
+                    </span>
+                  ) : null}
+                </div>
               </div>
-            </div>
+            ) : null}
 
             <div className="event-card__countdown">
               {countdown.isPast ? (
                 <p className="event-card__past-message">Event in the past</p>
-              ) : showLongTermYearsOnly ? (
+              ) : isMillionsOrBillionsCard ? (
+                <div className="event-card__countdown-grid">
+                  <div className="event-card__countdown-segment">
+                    <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
+                      <span className="event-card__countdown-value event-card__countdown-value--mega">
+                        {megaScale.numberPart}
+                      </span>
+                      {megaScale.scaleWord ? (
+                        <span className="font-sans text-[17px] font-semibold leading-tight text-ds-neutral-00 sm:text-[28px] sm:leading-[28px]">
+                          {megaScale.scaleWord}
+                        </span>
+                      ) : null}
+                    </div>
+                    <span className="event-card__countdown-label event-card__countdown-label--from-now">
+                      years from now
+                    </span>
+                  </div>
+                </div>
+              ) : useBigLongTermCountdown ? (
                 <div className="flex w-full items-center justify-center rounded-xl border border-[var(--ds-neutral-800)] bg-ds-neutral-1000 px-4 py-3 sm:py-3.5">
                   <div className="flex items-baseline gap-2">
                     <span className="font-sans text-[38px] leading-[38px] font-normal tabular-nums text-ds-neutral-100">

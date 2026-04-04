@@ -5,6 +5,7 @@ import {
   eventHasSpecificUtcTime,
   formatEventDateOnlyShort,
   formatEventTimeUtcLabel,
+  getEventCalendarYear,
 } from "@/utils/eventDate";
 import type { HeroEventData } from "./HeroEvent";
 
@@ -54,16 +55,17 @@ export default function EventTimeline({
   return (
     <div className="relative">
       <ol className="space-y-4 pl-0 sm:pl-0">
-        {sections.map((section) => {
-          const isCollapsed = collapsedSections[section.title] ?? false;
+        {sections.map((section, sectionIndex) => {
+          const sectionKey = `${section.title}-${sectionIndex}`;
+          const isCollapsed = collapsedSections[sectionKey] ?? false;
           return (
-            <li key={section.title} className="space-y-3">
+            <li key={sectionKey} className="space-y-3">
               <button
                 type="button"
                 onClick={() =>
                   setCollapsedSections((current) => ({
                     ...current,
-                    [section.title]: !isCollapsed,
+                    [sectionKey]: !isCollapsed,
                   }))
                 }
                 className="group mt-2 mr-4 flex w-full cursor-pointer items-center gap-4 py-2 text-left"
@@ -133,7 +135,7 @@ export default function EventTimeline({
 function getTimeRangeSection(event: HeroEventData) {
   if (event.timeCategory) return event.timeCategory;
 
-  const eventYear = new Date(event.date).getUTCFullYear();
+  const eventYear = getEventCalendarYear(event.date);
   if (!Number.isFinite(eventYear)) return "Next 100 Years";
 
   const currentYear = new Date().getUTCFullYear();

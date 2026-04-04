@@ -1,0 +1,301 @@
+[
+  {
+    "id": "earth-oxygen-depletion",
+    "title": "Earth’s Atmosphere Loses Free Oxygen",
+    "date": "1000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "Earth’s atmosphere will lose almost all free oxygen, making complex life impossible — in about 1 billion years.",
+    "mainDescription": "Around 1 billion years from now, increasing solar luminosity will cause the oceans to evaporate and photochemical processes will break down atmospheric oxygen. The air will become oxygen-poor, ending aerobic life.",
+    "whatYoullSee": "A planet with a thin, oxygen-depleted atmosphere and dying biosphere.",
+    "whyItMatters": "The final decline of complex multicellular life on Earth.",
+    "keyFacts": [
+      "Increasing solar heat",
+      "Oxygen removed by geological processes",
+      "In about 1 billion years"
+    ],
+    "tags": ["Planetary Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/millions-earth-oxygen-loss.jpg",
+    "nextOccurrences": [
+      "Complex life will not recover after this point."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "earth-runaway-greenhouse",
+    "title": "The Death of Earth – Runaway Greenhouse",
+    "date": "2000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "Earth becomes a lifeless Venus-like planet as oceans boil away — in about 2 billion years.",
+    "mainDescription": "In approximately 2 billion years, the Sun’s increasing brightness will trigger a runaway greenhouse effect. The oceans will evaporate completely, turning Earth into a scorching, lifeless world with a thick toxic atmosphere.",
+    "whatYoullSee": "A barren, red-hot planet with no liquid water and a dense, oppressive atmosphere.",
+    "whyItMatters": "This is the final end of Earth as a habitable planet — the death of our home world.",
+    "keyFacts": [
+      "Sun’s luminosity increases by ~10%",
+      "Oceans completely boil away",
+      "All life becomes extinct",
+      "In about 2 billion years"
+    ],
+    "tags": ["Planetary Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-earth-death.jpg",
+    "nextOccurrences": ["Earth will never recover habitability after this event."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "milky-way-andromeda-early-interaction",
+    "title": "First Signs of Milky Way and Andromeda Interaction",
+    "date": "3000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "The first gravitational distortions between the Milky Way and Andromeda become noticeable — in about 3 billion years.",
+    "mainDescription": "Around 3 billion years from now, the approaching Andromeda galaxy will begin to noticeably distort the outer regions of the Milky Way, marking the start of their eventual merger.",
+    "whatYoullSee": "Subtle but growing changes in the structure and star density of our galaxy’s outskirts.",
+    "whyItMatters": "The beginning of the greatest galactic event in our cosmic neighborhood.",
+    "keyFacts": [
+      "Early stage of galactic collision",
+      "Leads to the formation of Milkomeda",
+      "In about 3 billion years"
+    ],
+    "tags": ["Galactic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/millions-milky-way-andromeda.jpg",
+    "nextOccurrences": [
+      "The full merger will occur around 4.5 billion years from now."
+    ],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "milky-way-andromeda-collision",
+    "title": "Milky Way Collides with Andromeda",
+    "date": "4500000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "Our galaxy merges with Andromeda forming a giant elliptical galaxy — in about 4.5 billion years.",
+    "mainDescription": "Around 4.5 billion years from now, the Milky Way and Andromeda will collide and merge into one enormous galaxy called Milkomeda. Billions of new stars will form during this cosmic collision.",
+    "whatYoullSee": "The night sky filled with millions of bright new stars and completely reshaped galactic structure.",
+    "whyItMatters": "The greatest galactic event in our local universe for billions of years.",
+    "keyFacts": [
+      "Two largest galaxies in the Local Group",
+      "Massive star formation burst",
+      "In about 4.5 billion years"
+    ],
+    "tags": ["Galactic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-milkomeda.jpg",
+    "nextOccurrences": ["The merged galaxy will stabilize over billions of years."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "sun-red-giant-earth-destruction",
+    "title": "The Sun Engulfs Earth – Red Giant Phase",
+    "date": "7600000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "The Sun expands into a red giant and destroys Earth — in about 7.6 billion years.",
+    "mainDescription": "In roughly 7.6 billion years, the Sun will swell into a red giant, likely engulfing and vaporizing Earth, Mercury and Venus.",
+    "whatYoullSee": "The Sun growing monstrously large until it fills the sky and consumes our planet.",
+    "whyItMatters": "The physical destruction of Earth by its own star.",
+    "keyFacts": [
+      "Sun expands over 200 times its current size",
+      "Earth is vaporized or ejected",
+      "In about 7.6 billion years"
+    ],
+    "tags": ["Stellar Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-sun-red-giant.jpg",
+    "nextOccurrences": ["The Sun will then evolve into a white dwarf."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "sun-becomes-white-dwarf",
+    "title": "The Sun Becomes a White Dwarf",
+    "date": "10000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "The Sun dies and shrinks into a cold white dwarf — in about 10 billion years.",
+    "mainDescription": "After its red giant phase, the Sun will shed its outer layers and collapse into a dense white dwarf, slowly cooling over trillions of years. The Solar System will be left in eternal darkness.",
+    "whatYoullSee": "A faint, dying ember where our once brilliant Sun used to shine.",
+    "whyItMatters": "The final death of our star.",
+    "keyFacts": [
+      "Sun becomes Earth-sized white dwarf",
+      "Solar System plunges into darkness",
+      "In about 10 billion years"
+    ],
+    "tags": ["Stellar Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-sun-white-dwarf.jpg",
+    "nextOccurrences": ["The white dwarf will continue cooling for trillions of years."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "end-of-star-formation",
+    "title": "End of All Star Formation",
+    "date": "1000000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "No new stars will ever form again — in about 1 trillion years.",
+    "mainDescription": "In roughly 1 trillion years, all star-forming material in the universe will be exhausted. The Stelliferous Era (age of stars) will end forever.",
+    "whatYoullSee": "The universe growing darker as the last generations of stars begin to die.",
+    "whyItMatters": "The end of the luminous, star-filled chapter of cosmic history.",
+    "keyFacts": [
+      "All hydrogen for star formation depleted",
+      "In about 1 trillion years (10¹² years)"
+    ],
+    "tags": ["Cosmic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-end-star-formation.jpg",
+    "nextOccurrences": ["The universe enters the Degenerate Era."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "last-star-dies",
+    "title": "The Last Star in the Universe Dies",
+    "date": "100000000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "The final star burns out, plunging the universe into eternal darkness — in about 100 trillion years.",
+    "mainDescription": "Around 100 trillion years from now, the last low-mass red dwarf star will exhaust its fuel and go dark forever.",
+    "whatYoullSee": "Complete cosmic darkness. No stars, only faint remnants of dead stellar objects.",
+    "whyItMatters": "The definitive end of light in the observable universe.",
+    "keyFacts": [
+      "Last red dwarfs fade away",
+      "In about 100 trillion years (10¹⁴ years)"
+    ],
+    "tags": ["Cosmic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-last-star.jpg",
+    "nextOccurrences": ["The universe enters the Black Hole Era."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "proton-decay",
+    "title": "Proton Decay – The Dissolution of Matter",
+    "date": "10000000000000000000000000000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "All ordinary matter begins to decay — in ~10³⁴ years.",
+    "mainDescription": "If protons are unstable, they will start decaying after an immense time. All remaining atoms, planets, white dwarfs and neutron stars will slowly dissolve into radiation.",
+    "whatYoullSee": "Even the densest remnants of stars gradually fade into light and elementary particles.",
+    "whyItMatters": "The end of ordinary matter itself.",
+    "keyFacts": [
+      "Proton half-life ~10³⁴ years",
+      "All baryonic matter disintegrates",
+      "In approximately 10³⁴ years"
+    ],
+    "tags": ["Cosmic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-proton-decay.jpg",
+    "nextOccurrences": ["Only black holes and elementary particles remain."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "black-hole-era",
+    "title": "The Black Hole Era",
+    "date": "1000000000000000000000000000000000000000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "Black holes become the only significant objects left in the universe.",
+    "mainDescription": "After proton decay, black holes will dominate the cosmos for an incomprehensible duration, slowly evaporating through Hawking radiation.",
+    "whatYoullSee": "A nearly empty universe containing only isolated supermassive black holes.",
+    "whyItMatters": "The longest single era in the future history of the universe.",
+    "keyFacts": [
+      "Spans from ~10⁴⁰ to 10¹⁰⁰ years",
+      "Black holes slowly evaporate"
+    ],
+    "tags": ["Cosmic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-black-hole-era.jpg",
+    "nextOccurrences": ["All black holes will eventually evaporate."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "black-holes-evaporate",
+    "title": "All Black Holes Evaporate",
+    "date": "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "Even the last black holes disappear — in ~10¹⁰⁰ years.",
+    "mainDescription": "Over an unimaginable timescale, all black holes will completely evaporate via Hawking radiation, releasing their energy as particles and photons.",
+    "whatYoullSee": "The final sources of structure and energy in the universe flickering out.",
+    "whyItMatters": "The end of the last macroscopic objects in the cosmos.",
+    "keyFacts": ["Hawking radiation process", "In approximately 10¹⁰⁰ years"],
+    "tags": ["Cosmic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "Once in a Universe"
+      }
+    ],
+    "image": "/images/events/billions-black-holes-evaporate.jpg",
+    "nextOccurrences": ["Only a dilute sea of particles remains."],
+    "countdownPrecision": "year"
+  },
+  {
+    "id": "heat-death-of-the-universe",
+    "title": "Heat Death of the Universe – The Final End",
+    "date": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+    "timeCategory": "Billions of Years",
+    "shortDescription": "The universe reaches maximum entropy and dies in eternal cold and darkness.",
+    "mainDescription": "In the infinitely distant future, the universe will achieve perfect thermodynamic equilibrium. No energy gradients, no events, no structure — only cold, dark, expanding nothingness.",
+    "whatYoullSee": "Absolute void. No light, no heat, no motion — the complete end of everything.",
+    "whyItMatters": "The ultimate fate of the universe: the final, irreversible end of all existence.",
+    "keyFacts": [
+      "Maximum entropy state",
+      "No usable energy remains",
+      "Eternal expansion and cooling",
+      "In ~10¹⁰⁰ years and beyond"
+    ],
+    "tags": ["Cosmic Event"],
+    "specialTags": [
+      {
+        "type": "rarity",
+        "label": "The Final End"
+      }
+    ],
+    "image": "/images/events/billions-heat-death.jpg",
+    "nextOccurrences": ["There is no “after” this event."],
+    "countdownPrecision": "year"
+  }
+]

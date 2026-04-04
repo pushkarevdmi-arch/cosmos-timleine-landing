@@ -2,6 +2,7 @@
 
 import type { HeroEventData } from "./HeroEvent";
 import EventCard from "./EventCard";
+import { getEventCalendarYear } from "@/utils/eventDate";
 
 type EventGridProps = {
   events: HeroEventData[];
@@ -54,7 +55,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
 function getTimeRangeSection(event: HeroEventData) {
   if (event.timeCategory) return event.timeCategory;
 
-  const eventYear = new Date(event.date).getUTCFullYear();
+  const eventYear = getEventCalendarYear(event.date);
   if (!Number.isFinite(eventYear)) return "Next 100 Years";
 
   const currentYear = new Date().getUTCFullYear();

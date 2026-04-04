@@ -2,10 +2,17 @@
 import Image from "next/image";
 import { type CSSProperties, useEffect, useMemo, useState } from "react";
 import {
+  compareEventDateStrings,
   eventHasSpecificUtcTime,
   formatCountdownDaysDisplay,
   formatEventDateOnlyLong,
   formatEventTimeUtcLabel,
+  formatHeroTimelineYearLabel,
+  formatMegaYearScaleParts,
+  getApproxYearsRemaining,
+  getCountdownBreakdown,
+  getEventCalendarYear,
+  isEventOnOrAfterNow,
 } from "@/utils/eventDate";
 import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
 
@@ -40,7 +47,13 @@ const LONG_TERM_SECTIONS = new Set([
   "Billions of Years",
 ]);
 
+const HIDE_HERO_DATE_SECTIONS = new Set([
+  "Millions of Years",
+  "Billions of Years",
+]);
+
 type Countdown = {
+  years: number;
   days: number;
   hours: number;
   minutes: number;
@@ -50,24 +63,15 @@ type Countdown = {
 
 function useCountdown(targetDate: string): Countdown {
   const getDiff = (): Countdown => {
-    const now = new Date().getTime();
-    const target = new Date(targetDate).getTime();
-    const diff = target - now;
-
-    if (Number.isNaN(target)) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0, isPast: false };
-    }
-
-    if (diff <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0, isPast: true };
-    }
-
-    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    const minutes = Math.floor((diff / (1000 * 60)) % 60);
-    const seconds = Math.floor((diff / 1000) % 60);
-
-    return { days, hours, minutes, seconds, isPast: false };
+    const b = getCountdownBreakdown(targetDate);
+    return {
+      years: b.years,
+      days: b.days,
+      hours: b.hours,
+      minutes: b.minutes,
+      seconds: b.seconds,
+      isPast: b.isPast,
+    };
   };
 
   const [countdown, setCountdown] = useState<Countdown>(getDiff);
@@ -84,9 +88,7 @@ function useCountdown(targetDate: string): Countdown {
 }
 
 function formatEventYear(dateStr: string) {
-  const year = new Date(dateStr).getUTCFullYear();
-  if (!Number.isFinite(year)) return "Unknown";
-  return String(year);
+  return formatHeroTimelineYearLabel(dateStr);
 }
 
 function isLongTermEvent(event: HeroEventData) {
@@ -94,31 +96,30 @@ function isLongTermEvent(event: HeroEventData) {
     return true;
   }
 
-  const eventYear = new Date(event.date).getUTCFullYear();
+  const eventYear = getEventCalendarYear(event.date);
+  if (eventYear === Number.POSITIVE_INFINITY) return true;
   if (!Number.isFinite(eventYear)) return false;
   const yearsAhead = Math.max(0, eventYear - new Date().getUTCFullYear());
   return yearsAhead > 100;
 }
 
-function getYearsRemaining(dateStr: string) {
-  const now = Date.now();
-  const target = new Date(dateStr).getTime();
-  if (Number.isNaN(target) || target <= now) return 0;
-  const yearMs = 1000 * 60 * 60 * 24 * 365;
-  return Math.floor((target - now) / yearMs);
-}
-
 function formatLongTermYears(years: number) {
-  if (years >= 1000000000) {
+  if (years >= 1_000_000_000_000) {
     return {
-      value: Math.round(years / 1000000000).toLocaleString("en-US"),
-      unit: "billion years",
+      value: Math.round(years / 1_000_000_000_000).toLocaleString("en-US"),
+      unit: "tril years",
     };
   }
-  if (years >= 1000000) {
+  if (years >= 1_000_000_000) {
     return {
-      value: Math.round(years / 1000000).toLocaleString("en-US"),
-      unit: "million years",
+      value: Math.round(years / 1_000_000_000).toLocaleString("en-US"),
+      unit: "bil years",
+    };
+  }
+  if (years >= 1_000_000) {
+    return {
+      value: Math.round(years / 1_000_000).toLocaleString("en-US"),
+      unit: "mil years",
     };
   }
   return {
@@ -157,8 +158,8 @@ function HeroFlipSegment({
 
 function getNearestUpcomingEventIndex(events: HeroEventData[]) {
   const now = Date.now();
-  const nearestUpcomingIndex = events.findIndex(
-    (event) => new Date(event.date).getTime() >= now
+  const nearestUpcomingIndex = events.findIndex((event) =>
+    isEventOnOrAfterNow(event.date, now)
   );
   return nearestUpcomingIndex >= 0 ? nearestUpcomingIndex : Math.max(0, events.length - 1);
 }
@@ -169,10 +170,7 @@ export default function HeroEvent({
   onExplore,
 }: HeroEventProps) {
   const sortedEvents = useMemo(
-    () =>
-      [...events].sort(
-        (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
-      ),
+    () => [...events].sort((a, b) => compareEventDateStrings(a.date, b.date)),
     [events]
   );
   const nearestUpcomingIndex = useMemo(
@@ -217,11 +215,24 @@ export default function HeroEvent({
   const liveEvent = sortedEvents[activeIndex] ?? sortedEvents[0];
   const countdown = useCountdown(liveEvent.date);
   const showLongTermYearsOnly = isLongTermEvent(liveEvent);
-  const yearsRemaining = getYearsRemaining(liveEvent.date);
+  const yearsRemaining = getApproxYearsRemaining(liveEvent.date);
   const longTermCountdown = formatLongTermYears(yearsRemaining);
-  const normalizedYears = Math.floor(countdown.days / 365);
-  const normalizedDays = countdown.days % 365;
+  const normalizedYears = countdown.years;
+  const normalizedDays = countdown.days;
   const precision = liveEvent.countdownPrecision ?? "full";
+  const isMillionsOrBillionsLive =
+    liveEvent.timeCategory === "Millions of Years" ||
+    liveEvent.timeCategory === "Billions of Years";
+  const showHeroDateRow =
+    !displayEvent.timeCategory ||
+    !HIDE_HERO_DATE_SECTIONS.has(displayEvent.timeCategory);
+  const useBigLongTermCountdown =
+    showLongTermYearsOnly &&
+    !isMillionsOrBillionsLive &&
+    !(
+      liveEvent.timeCategory === "Next 10,000 Years" && precision === "year"
+    );
+  const megaScale = formatMegaYearScaleParts(countdown.years);
   const heroCountdownSegments =
     precision === "year"
       ? [{ label: "YEARS" as const, value: normalizedYears }]
@@ -237,12 +248,9 @@ export default function HeroEvent({
           ];
   const currentYear = new Date().getUTCFullYear();
   const lastEventDate = sortedEvents[sortedEvents.length - 1]?.date;
-  const maxEventYearValue = lastEventDate
-    ? new Date(lastEventDate).getUTCFullYear()
-    : currentYear;
-  const maxEventYearLabel = Number.isFinite(maxEventYearValue)
-    ? maxEventYearValue.toLocaleString("en-US")
-    : "5B years ahead";
+  const maxEventYearLabel = lastEventDate
+    ? formatHeroTimelineYearLabel(lastEventDate)
+    : String(currentYear);
   const sliderProgress =
     sortedEvents.length > 1 ? (activeIndex / (sortedEvents.length - 1)) * 100 : 0;
 
@@ -296,25 +304,49 @@ export default function HeroEvent({
           {/* Date + countdown share one stack; adjust vertical gap between sections */}
           <div className="mt-5 flex h-full w-full flex-col items-center gap-4 md:mt-6 md:items-stretch">
             <div className="hero-event__date-countdown flex w-full flex-col gap-3">
-              <div className="inline-flex items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
-                <span className="event-card__date-icon">
-                  <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
-                </span>
-                <div className="flex min-w-0 flex-row items-start justify-end gap-3 text-left">
-                  <span>{formatEventDateOnlyLong(displayEvent.date)}</span>
-                  {eventHasSpecificUtcTime(displayEvent.date) ? (
-                    <span className="text-[16px] leading-[20px] text-ds-neutral-500">
-                      {formatEventTimeUtcLabel(displayEvent.date)}
-                    </span>
-                  ) : null}
+              {showHeroDateRow ? (
+                <div className="inline-flex items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
+                  <span className="event-card__date-icon">
+                    <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
+                  </span>
+                  <div className="flex min-w-0 flex-row items-start justify-end gap-3 text-left">
+                    <span>{formatEventDateOnlyLong(displayEvent.date)}</span>
+                    {eventHasSpecificUtcTime(displayEvent.date) ? (
+                      <span className="text-[16px] leading-[20px] text-ds-neutral-500">
+                        {formatEventTimeUtcLabel(displayEvent.date)}
+                      </span>
+                    ) : null}
+                  </div>
                 </div>
-              </div>
+              ) : null}
 
               {countdown.isPast ? (
                 <p className="type-body-medium-tight text-ds-success-300">
                   This event has already occurred.
                 </p>
-              ) : showLongTermYearsOnly ? (
+              ) : isMillionsOrBillionsLive ? (
+                <div className="hero-countdown -mx-2 flex h-[96px] w-[calc(100%+1rem)] flex-nowrap items-stretch justify-between gap-2 sm:mx-0 sm:w-full sm:gap-2.5 md:gap-2">
+                  <div
+                    className="relative flex h-[102px] min-h-[92px] min-w-0 flex-1 flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-2 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[102px] md:rounded-2xl md:py-2"
+                    style={{ height: "100%" }}
+                    aria-label={`${megaScale.numberPart}${megaScale.scaleWord ? ` ${megaScale.scaleWord}` : ""} years from now`}
+                  >
+                    <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
+                      <span className="type-countdown-value-regular tabular-nums">
+                        {megaScale.numberPart}
+                      </span>
+                      {megaScale.scaleWord ? (
+                        <span className="font-sans text-[18px] font-semibold leading-tight text-ds-neutral-300 sm:text-[22px] md:text-[24px]">
+                          {megaScale.scaleWord}
+                        </span>
+                      ) : null}
+                    </div>
+                    <span className="w-full text-center font-sans text-[10px] font-semibold uppercase leading-none tracking-[0.2em] text-ds-neutral-500 md:text-[12px]">
+                      YEARS FROM NOW
+                    </span>
+                  </div>
+                </div>
+              ) : useBigLongTermCountdown ? (
                 <div className="flex w-full items-center justify-center rounded-xl border border-[var(--ds-neutral-800)] bg-ds-neutral-1000 px-4 py-3 md:px-6 md:py-4">
                   <div className="flex items-baseline gap-2">
                     <span className="type-countdown-value-regular tabular-nums">
@@ -334,7 +366,9 @@ export default function HeroEvent({
                       valueText={
                         segment.label === "DAYS"
                           ? formatCountdownDaysDisplay(segment.value)
-                          : segment.value.toString().padStart(2, "0")
+                          : segment.label === "YEARS" && segment.value > 99
+                            ? segment.value.toLocaleString("en-US")
+                            : segment.value.toString().padStart(2, "0")
                       }
                     />
                   ))}
@@ -372,10 +406,10 @@ export default function HeroEvent({
                 </span>
               </label>
             </div>
-            <div className="flex h-full items-end justify-end">
+            <div className="flex h-full shrink-0 items-end justify-end">
               <span className="flex items-end justify-end gap-2 pr-3 font-sans font-semibold text-left align-middle text-[14px] leading-[18px] text-ds-neutral-500">
                 Year:{" "}
-                <span className="font-bold text-[24px] leading-[24px] text-ds-neutral-00">
+                <span className="whitespace-nowrap font-bold text-[24px] leading-[24px] text-ds-neutral-00">
                   {formatEventYear(liveEvent.date)}
                 </span>
               </span>
@@ -409,7 +443,10 @@ export default function HeroEvent({
             <span className="font-semibold" style={{ color: "rgba(107, 114, 128, 1)" }}>
               Now
             </span>
-            <span className="font-semibold" style={{ color: "rgba(107, 114, 128, 1)" }}>
+            <span
+              className="whitespace-nowrap text-right font-semibold"
+              style={{ color: "rgba(107, 114, 128, 1)" }}
+            >
               {maxEventYearLabel}
             </span>
           </div>

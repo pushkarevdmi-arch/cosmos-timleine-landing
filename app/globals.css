@@ -104,7 +104,7 @@ svg:not([class*="text-"]) {
     @apply object-cover;
     height: 180px !important;
     display: block;
-    transition: transform 480ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 750ms cubic-bezier(0.33, 1, 0.68, 1);
     will-change: transform;
     transform-origin: center center;
   }
@@ -117,7 +117,7 @@ svg:not([class*="text-"]) {
 
   .hero-event__image {
     display: block;
-    transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: transform 800ms cubic-bezier(0.33, 1, 0.68, 1);
     will-change: transform;
     transform-origin: center center;
   }
@@ -260,6 +260,14 @@ svg:not([class*="text-"]) {
 
   .event-card__countdown-label {
     @apply mt-0.5 sm:mt-1 uppercase tracking-[0.22em] text-[12px] leading-[16px] font-semibold text-ds-neutral-500;
+  }
+
+  .event-card__countdown-value--mega {
+    @apply text-[26px] leading-[1.1] sm:text-[32px];
+  }
+
+  .event-card__countdown-label--from-now {
+    @apply uppercase tracking-[0.22em] text-[11px] leading-[15px] sm:text-[12px] sm:leading-[16px];
   }
 
   .event-card__explore {

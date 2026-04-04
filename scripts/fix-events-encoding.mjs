@@ -1,5 +1,5 @@
 /**
- * Repair U+FFFD in data/events.json (lost UTF-8 punctuation).
+ * Repair U+FFFD in data/events/*.json (lost UTF-8 punctuation).
  * Run: node scripts/fix-events-encoding.mjs
  */
 import fs from "fs";
@@ -7,7 +7,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const filePath = path.join(__dirname, "../data/events.json");
+const EVENT_JSON_FILES = [
+  "next-100-years.json",
+  "next-10000-years.json",
+  "millions-of-years.json",
+  "billions-of-years.json",
+].map((name) => path.join(__dirname, "../data/events", name));
 
 const EN = "\u2013";
 const EM = "\u2014";
@@ -82,24 +87,26 @@ function walk(o) {
   }
 }
 
-const raw = fs.readFileSync(filePath, "utf8");
-const data = JSON.parse(raw);
-walk(data);
+for (const filePath of EVENT_JSON_FILES) {
+  const raw = fs.readFileSync(filePath, "utf8");
+  const data = JSON.parse(raw);
+  walk(data);
 
-function collectBad(o, acc) {
-  if (typeof o === "string") {
-    if (o.includes(F)) acc.push(o);
-  } else if (Array.isArray(o)) o.forEach((x) => collectBad(x, acc));
-  else if (o && typeof o === "object")
-    Object.values(o).forEach((x) => collectBad(x, acc));
-}
-const leftover = [];
-collectBad(data, leftover);
-if (leftover.length) {
-  console.error("Still contain U+FFFD:", leftover.length);
-  for (const x of leftover) console.error(x.slice(0, 200));
-  process.exit(1);
-}
+  function collectBad(o, acc) {
+    if (typeof o === "string") {
+      if (o.includes(F)) acc.push(o);
+    } else if (Array.isArray(o)) o.forEach((x) => collectBad(x, acc));
+    else if (o && typeof o === "object")
+      Object.values(o).forEach((x) => collectBad(x, acc));
+  }
+  const leftover = [];
+  collectBad(data, leftover);
+  if (leftover.length) {
+    console.error("Still contain U+FFFD:", leftover.length, filePath);
+    for (const x of leftover) console.error(x.slice(0, 200));
+    process.exit(1);
+  }
 
-fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n", "utf8");
-console.log("OK: wrote", filePath);
+  fs.writeFileSync(filePath, JSON.stringify(data, null, 2) + "\n", "utf8");
+  console.log("OK: wrote", filePath);
+}

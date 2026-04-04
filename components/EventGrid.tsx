@@ -3,16 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import type { HeroEventData } from "./HeroEvent";
 import EventCard from "./EventCard";
-import { getEventCalendarYear } from "@/utils/eventDate";
+import { groupEventsByTimeSection } from "@/utils/eventSections";
 
 type EventGridProps = {
   events: HeroEventData[];
   onExplore?: (event: HeroEventData) => void;
-};
-
-type SectionGroup = {
-  section: string;
-  events: HeroEventData[];
 };
 
 /** Cards stick below expanded category bar (top-0 strip + pt-6 + label + pb-10) */
@@ -23,20 +18,6 @@ const DIM_OVERLAP_PX = 120;
 
 /** Pull following card up so it peeks below the current slide (mobile, not last in section) */
 const MOBILE_CARD_OVERLAP_PULL_CLASS = "max-sm:-mb-[16vh]";
-
-function groupEventsBySection(events: HeroEventData[]): SectionGroup[] {
-  const groups: SectionGroup[] = [];
-  for (const event of events) {
-    const section = getTimeRangeSection(event);
-    const last = groups[groups.length - 1];
-    if (last && last.section === section) {
-      last.events.push(event);
-    } else {
-      groups.push({ section, events: [event] });
-    }
-  }
-  return groups;
-}
 
 function EventGridSection({
   section,
@@ -207,7 +188,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
     );
   }
 
-  const groups = groupEventsBySection(events);
+  const groups = groupEventsByTimeSection(events);
 
   return (
     <div className="grid items-stretch gap-0 sm:grid-cols-2 sm:gap-6">
@@ -226,19 +207,4 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
       ))}
     </div>
   );
-}
-
-function getTimeRangeSection(event: HeroEventData) {
-  if (event.timeCategory) return event.timeCategory;
-
-  const eventYear = getEventCalendarYear(event.date);
-  if (!Number.isFinite(eventYear)) return "Next 100 Years";
-
-  const currentYear = new Date().getUTCFullYear();
-  const yearsAhead = Math.max(0, eventYear - currentYear);
-
-  if (yearsAhead <= 100) return "Next 100 Years";
-  if (yearsAhead <= 10000) return "Next 10,000 Years";
-  if (yearsAhead <= 1000000000) return "Millions of Years";
-  return "Billions of Years";
 }

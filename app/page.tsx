@@ -8,6 +8,7 @@ import {
   useCallback,
   useEffect,
   useRef,
+  useSyncExternalStore,
 } from "react";
 import HeroEvent, { HeroEventData } from "@/components/HeroEvent";
 import ViewToggle from "@/components/ViewToggle";
@@ -15,7 +16,11 @@ import EventGrid from "@/components/EventGrid";
 import EventTimeline from "@/components/EventTimeline";
 import EventDetailsModal from "@/components/EventDetailsModal";
 import eventsData from "@/data/events";
-import { compareEventDateStrings, getEventCalendarYear } from "@/utils/eventDate";
+import { compareEventDateStrings } from "@/utils/eventDate";
+import {
+  getTimeRangeSection,
+  groupEventsByTimeSection,
+} from "@/utils/eventSections";
 
 const BUY_ME_A_COFFEE_URL =
   process.env.NEXT_PUBLIC_BUY_ME_A_COFFEE_URL ?? "https://www.buymeacoffee.com";
@@ -69,21 +74,6 @@ function deriveKeyFacts(mainDescription: string) {
   return result;
 }
 
-function getTimeRangeSectionLabel(event: HeroEventData): TimeRangeOption {
-  if (event.timeCategory) return event.timeCategory;
-
-  const eventYear = getEventCalendarYear(event.date);
-  if (!Number.isFinite(eventYear)) return "Next 100 Years";
-
-  const currentYear = new Date().getUTCFullYear();
-  const yearsAhead = Math.max(0, eventYear - currentYear);
-
-  if (yearsAhead <= 100) return "Next 100 Years";
-  if (yearsAhead <= 10000) return "Next 10,000 Years";
-  if (yearsAhead <= 1000000000) return "Millions of Years";
-  return "Billions of Years";
-}
-
 const eventsSeedBase = eventsData as unknown as HeroEventData[];
 /** Cards appended per “load more” / infinite scroll. */
 const EVENTS_BATCH_SIZE = 11;
@@ -97,6 +87,18 @@ const TIME_RANGE_OPTIONS = [
 ] as const;
 type TimeRangeOption = (typeof TIME_RANGE_OPTIONS)[number];
 type FilterDropdown = "time" | "tag" | null;
+
+function useIsNarrowMobile() {
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mq = window.matchMedia("(max-width: 639px)");
+      mq.addEventListener("change", onStoreChange);
+      return () => mq.removeEventListener("change", onStoreChange);
+    },
+    () => window.matchMedia("(max-width: 639px)").matches,
+    () => false
+  );
+}
 const EVENT_TAGS: Record<string, string> = {
   "venus-jupiter-great-conjunction-2026": "Conjunction",
   "greatest-solar-eclipse-europe-2026": "Eclipse",
@@ -121,7 +123,9 @@ const EVENT_TAGS: Record<string, string> = {
 const eventsSeed: HeroEventData[] = [...eventsSeedBase].map(
   (event) => ({
     ...event,
-    timeCategory: event.timeCategory ?? getTimeRangeSectionLabel(event),
+    timeCategory:
+      event.timeCategory ??
+      (getTimeRangeSection(event) as HeroEventData["timeCategory"]),
     tags: event.tags?.length ? event.tags : [EVENT_TAGS[event.id] ?? "Solar system"],
     // Allow content in `data/events/*.json` (merged via `data/events/index.ts`) to override auto-generated fields.
     // If a field is missing (`undefined`), we fall back to derived content.
@@ -147,9 +151,16 @@ export default function Home() {
     null
   );
   const [heroActiveEventId, setHeroActiveEventId] = useState<string | null>(null);
+  const [mobileGridSectionsVisible, setMobileGridSectionsVisible] = useState(1);
+  const isNarrowMobile = useIsNarrowMobile();
   const isFetchingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
   const filterPopoverRef = useRef<HTMLDivElement | null>(null);
+  const mobileGridSentinelRef = useRef<HTMLDivElement | null>(null);
+  const mobileGridSectionsVisibleRef = useRef(1);
+  const maxTimeSectionsRef = useRef(0);
+  const hasMoreEventsRef = useRef(false);
+  const loadMoreEventsRef = useRef<() => void>(() => {});
 
   const sortedEvents = useMemo(
     () =>
@@ -168,7 +179,7 @@ export default function Home() {
     return sortedEvents.filter((event) => {
       const matchesTimeRange =
         selectedTimeRange === "all" ||
-        getTimeRangeSectionLabel(event) === selectedTimeRange;
+        getTimeRangeSection(event) === selectedTimeRange;
       const matchesTag =
         selectedTags.length === 0 ||
         (event.tags ? event.tags.some((tag) => selectedTags.includes(tag)) : false);
@@ -190,6 +201,24 @@ export default function Home() {
     (event) => event.id !== activeHeroEventId
   );
 
+  const timeSectionGroups = useMemo(
+    () => groupEventsByTimeSection(remainingEvents),
+    [remainingEvents]
+  );
+
+  const eventsForEventGrid = useMemo(() => {
+    if (!isNarrowMobile || viewMode !== "grid") return remainingEvents;
+    return timeSectionGroups
+      .slice(0, mobileGridSectionsVisible)
+      .flatMap((group) => group.events);
+  }, [
+    isNarrowMobile,
+    mobileGridSectionsVisible,
+    remainingEvents,
+    timeSectionGroups,
+    viewMode,
+  ]);
+
   const loadMoreEvents = useCallback(() => {
     if (isFetchingRef.current || !hasMoreEvents) return;
     isFetchingRef.current = true;
@@ -203,6 +232,63 @@ export default function Home() {
       isFetchingRef.current = false;
     }, 300);
   }, [filteredEvents.length, hasMoreEvents]);
+
+  loadMoreEventsRef.current = loadMoreEvents;
+
+  useEffect(() => {
+    mobileGridSectionsVisibleRef.current = mobileGridSectionsVisible;
+  }, [mobileGridSectionsVisible]);
+
+  useEffect(() => {
+    maxTimeSectionsRef.current = timeSectionGroups.length;
+  }, [timeSectionGroups.length]);
+
+  useEffect(() => {
+    hasMoreEventsRef.current = hasMoreEvents;
+  }, [hasMoreEvents]);
+
+  useEffect(() => {
+    setMobileGridSectionsVisible(1);
+  }, [selectedTags, selectedTimeRange]);
+
+  const mobileGridSentinelActive =
+    isNarrowMobile &&
+    viewMode === "grid" &&
+    (mobileGridSectionsVisible < timeSectionGroups.length || hasMoreEvents);
+
+  useEffect(() => {
+    if (!isNarrowMobile || viewMode !== "grid") return;
+    const el = mobileGridSentinelRef.current;
+    if (!el) return;
+
+    let canTrigger = true;
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry) return;
+
+        if (!entry.isIntersecting) {
+          canTrigger = true;
+          return;
+        }
+
+        if (!canTrigger) return;
+        canTrigger = false;
+
+        const maxS = maxTimeSectionsRef.current;
+        const v = mobileGridSectionsVisibleRef.current;
+        if (v < maxS) {
+          setMobileGridSectionsVisible(Math.min(v + 1, maxS));
+        } else if (hasMoreEventsRef.current) {
+          loadMoreEventsRef.current();
+        }
+      },
+      { root: null, rootMargin: "240px 0px", threshold: 0 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, [isNarrowMobile, viewMode, timeSectionGroups, hasMoreEvents, loadMoreEvents]);
 
   useEffect(() => {
     const handleOutsideClick = (event: globalThis.MouseEvent) => {
@@ -224,6 +310,7 @@ export default function Home() {
 
   useEffect(() => {
     const checkShouldLoad = () => {
+      if (isNarrowMobile && viewMode === "grid") return;
       if (isFetchingRef.current || !hasMoreEvents) return;
       const thresholdPx = 320;
       const scrollBottom = window.innerHeight + window.scrollY;
@@ -249,7 +336,7 @@ export default function Home() {
         window.cancelAnimationFrame(rafRef.current);
       }
     };
-  }, [hasMoreEvents, loadMoreEvents]);
+  }, [hasMoreEvents, isNarrowMobile, loadMoreEvents, viewMode]);
 
   const handleDropdownKeyboard = (
     event: ReactKeyboardEvent<HTMLButtonElement>,
@@ -599,9 +686,16 @@ export default function Home() {
                 />
               )}
               <EventGrid
-                events={remainingEvents}
+                events={eventsForEventGrid}
                 onExplore={(event) => setSelectedEvent(event)}
               />
+              {mobileGridSentinelActive ? (
+                <div
+                  ref={mobileGridSentinelRef}
+                  className="h-px w-full shrink-0"
+                  aria-hidden
+                />
+              ) : null}
             </>
           ) : (
             <EventTimeline
@@ -610,7 +704,8 @@ export default function Home() {
             />
           )}
 
-          {(isLoadingMore || hasMoreEvents) && (
+          {(isLoadingMore ||
+            (hasMoreEvents && (!isNarrowMobile || viewMode !== "grid"))) && (
             <div className="mt-6 flex justify-center">
               {isLoadingMore ? (
                 <div

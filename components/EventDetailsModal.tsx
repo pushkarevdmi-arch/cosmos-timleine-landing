@@ -6,7 +6,8 @@ import {
   formatEventTimeUtcLabel,
 } from "@/utils/eventDate";
 import type { HeroEventData } from "./HeroEvent";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 
 type EventDetailsModalProps = {
   event: HeroEventData;
@@ -17,6 +18,12 @@ export default function EventDetailsModal({
   event,
   onClose,
 }: EventDetailsModalProps) {
+  const [portalReady, setPortalReady] = useState(false);
+
+  useEffect(() => {
+    setPortalReady(true);
+  }, []);
+
   const {
     title,
     date,
@@ -57,8 +64,10 @@ export default function EventDetailsModal({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [onClose]);
 
-  return (
-    <div className="fixed inset-0 z-30 flex items-center justify-center overflow-y-auto bg-ds-neutral-1000/80 px-4 py-6 backdrop-blur-sm sm:px-6 sm:py-12">
+  if (!portalReady) return null;
+
+  return createPortal(
+    <div className="fixed inset-0 z-[20000] flex items-center justify-center overflow-y-auto bg-ds-neutral-1000/80 px-4 py-6 backdrop-blur-sm sm:px-6 sm:py-12">
       <button
         type="button"
         aria-label="Close"
@@ -169,7 +178,8 @@ export default function EventDetailsModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 

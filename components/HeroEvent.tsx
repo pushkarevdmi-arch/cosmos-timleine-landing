@@ -48,6 +48,7 @@ const LONG_TERM_SECTIONS = new Set([
 ]);
 
 const HIDE_HERO_DATE_SECTIONS = new Set([
+  "Next 10,000 Years",
   "Millions of Years",
   "Billions of Years",
 ]);
@@ -220,18 +221,16 @@ export default function HeroEvent({
   const normalizedYears = countdown.years;
   const normalizedDays = countdown.days;
   const precision = liveEvent.countdownPrecision ?? "full";
-  const isMillionsOrBillionsLive =
+  /** Same countdown + no calendar row as EventCard for long-horizon categories. */
+  const useMegaYearsCountdownLayout =
+    liveEvent.timeCategory === "Next 10,000 Years" ||
     liveEvent.timeCategory === "Millions of Years" ||
     liveEvent.timeCategory === "Billions of Years";
   const showHeroDateRow =
     !displayEvent.timeCategory ||
     !HIDE_HERO_DATE_SECTIONS.has(displayEvent.timeCategory);
   const useBigLongTermCountdown =
-    showLongTermYearsOnly &&
-    !isMillionsOrBillionsLive &&
-    !(
-      liveEvent.timeCategory === "Next 10,000 Years" && precision === "year"
-    );
+    showLongTermYearsOnly && !useMegaYearsCountdownLayout;
   const megaScale = formatMegaYearScaleParts(countdown.years);
   const heroCountdownSegments =
     precision === "year"
@@ -324,7 +323,7 @@ export default function HeroEvent({
                 <p className="type-body-medium-tight text-ds-success-300">
                   This event has already occurred.
                 </p>
-              ) : isMillionsOrBillionsLive ? (
+              ) : useMegaYearsCountdownLayout ? (
                 <div className="hero-countdown -mx-2 flex h-[96px] w-[calc(100%+1rem)] flex-nowrap items-stretch justify-between gap-2 sm:mx-0 sm:w-full sm:gap-2.5 md:gap-2">
                   <div
                     className="relative flex h-[102px] min-h-[92px] min-w-0 flex-1 flex-col items-center justify-center gap-1.5 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-2 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:gap-2 md:min-h-[102px] md:rounded-2xl md:py-2"

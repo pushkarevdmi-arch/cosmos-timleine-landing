@@ -17,6 +17,9 @@ import EventDetailsModal from "@/components/EventDetailsModal";
 import eventsData from "@/data/events";
 import { compareEventDateStrings, getEventCalendarYear } from "@/utils/eventDate";
 
+const BUY_ME_A_COFFEE_URL =
+  process.env.NEXT_PUBLIC_BUY_ME_A_COFFEE_URL ?? "https://www.buymeacoffee.com";
+
 function splitSentences(text: string) {
   return text
     .split(/(?<=[.!?])\s+/)
@@ -607,14 +610,53 @@ export default function Home() {
           )}
         </section>
 
-        {/* Footer */}
-        <footer className="mt-10 border-t border-ds-neutral-800/80 pt-5 font-sans text-body-small-400 text-ds-neutral-500">
-          <div className="flex flex-col items-start justify-between gap-2 sm:flex-row sm:items-center">
-            <p>Inspired by real astronomy and long-range cosmology.</p>
-            <p className="font-sans text-body-small-400 text-ds-neutral-600">
-              Times and distances are approximate and simplified for an
-              immersive experience.
-            </p>
+        <footer className="mt-14 font-sans sm:mt-16">
+          <div className="relative overflow-hidden rounded-2xl border border-ds-neutral-800 bg-gradient-to-b from-ds-neutral-900/90 to-ds-neutral-950 px-5 py-8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] sm:rounded-3xl sm:px-8 sm:py-10">
+            <div
+              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ds-primary-400/40 to-transparent"
+              aria-hidden
+            />
+            <div className="relative flex flex-col gap-8">
+              <div>
+                <p className="max-w-2xl text-[17px] font-medium leading-7 text-ds-neutral-100 sm:text-lg sm:leading-8">
+                  Inspired by real astronomy and long-range cosmology.
+                </p>
+              </div>
+
+              <div className="max-w-2xl space-y-3 text-body-medium-400 text-ds-neutral-400">
+                <p>
+                  Created with passion by{" "}
+                  <span className="font-medium text-ds-neutral-200">
+                    Dmitri Pushkarev
+                  </span>{" "}
+                  — an independent astronomy enthusiast.
+                  <br />
+                  This project is a non-commercial labor of love.
+                </p>
+                <div className="flex flex-col gap-3 pt-1">
+                  <p className="text-[17px] text-ds-neutral-400">
+                    If you enjoy the site and want to support its development,
+                    you can
+                  </p>
+                  <a
+                    href={BUY_ME_A_COFFEE_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-ds-primary-400/40 bg-ds-primary-400/10 px-5 py-2.5 text-sm font-semibold text-ds-primary-300 transition hover:border-ds-primary-400/70 hover:bg-ds-primary-400/15 hover:text-ds-primary-200 sm:w-auto sm:self-start"
+                  >
+                    Buy me a coffee
+                    <span className="text-base leading-none opacity-80" aria-hidden>
+                      ↗
+                    </span>
+                  </a>
+                </div>
+              </div>
+
+              <div className="rounded-xl border border-ds-neutral-850 bg-ds-neutral-950/70 px-4 py-3.5 text-[13px] leading-relaxed text-ds-neutral-600 sm:px-5">
+                All times and distances are approximate and simplified for an
+                immersive experience.
+              </div>
+            </div>
           </div>
         </footer>
       </main>

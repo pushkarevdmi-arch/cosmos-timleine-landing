@@ -208,9 +208,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__header {
-    @apply flex w-full flex-col items-center justify-start gap-1 py-1;
-    height: 84px;
-    overflow: hidden;
+    @apply flex w-full shrink-0 flex-col items-center justify-start gap-1 py-1;
   }
 
   .event-card__title {

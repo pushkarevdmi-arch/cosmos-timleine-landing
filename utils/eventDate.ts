@@ -38,6 +38,11 @@ function formatYearDigitsWithGrouping(yStr: string): string {
   return n.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+/** Plain calendar year digits (no thousands separators) for card / readable labels. */
+function formatYearDigitsPlain(yStr: string): string {
+  return yStr.replace(/^0+/, "") || "0";
+}
+
 /** Year label for hero slider / headings (supports years beyond `Number.MAX_SAFE_INTEGER`). */
 export function formatEventCalendarYearLabel(dateStr: string): string {
   const instant = getEventInstantMs(dateStr);
@@ -355,7 +360,7 @@ export function formatEventDateOnlyLong(dateStr: string, nowMs = Date.now()): st
 
   // Year-only in source (`"2134"`): never show a fake Jan 1 from internal Date.UTC anchoring.
   if (parts.m === null) {
-    return formatYearDigitsWithGrouping(parts.yStr);
+    return formatYearDigitsPlain(parts.yStr);
   }
 
   const instant = getEventInstantMs(dateStr);
@@ -364,7 +369,7 @@ export function formatEventDateOnlyLong(dateStr: string, nowMs = Date.now()): st
   }
 
   const monthName = MONTH_LONG_EN[parts.m - 1] ?? "Month";
-  const yearLabel = formatYearDigitsWithGrouping(parts.yStr);
+  const yearLabel = formatYearDigitsPlain(parts.yStr);
   return `${monthName} ${String(parts.d).padStart(2, "0")}, ${yearLabel}`;
 }
 
@@ -379,7 +384,7 @@ export function formatEventDateOnlyShort(dateStr: string, nowMs = Date.now()): s
   }
 
   if (parts.m === null) {
-    return formatYearDigitsWithGrouping(parts.yStr);
+    return formatYearDigitsPlain(parts.yStr);
   }
 
   const instant = getEventInstantMs(dateStr);
@@ -388,7 +393,7 @@ export function formatEventDateOnlyShort(dateStr: string, nowMs = Date.now()): s
   }
 
   const monthShort = MONTH_LONG_EN[parts.m - 1]?.slice(0, 3) ?? "?";
-  const yearLabel = formatYearDigitsWithGrouping(parts.yStr);
+  const yearLabel = formatYearDigitsPlain(parts.yStr);
   return `${monthShort} ${parts.d}, ${yearLabel}`;
 }
 

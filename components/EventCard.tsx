@@ -28,6 +28,7 @@ const LONG_TERM_SECTIONS = new Set([
 ]);
 
 const HIDE_CARD_DATE_SECTIONS = new Set([
+  "Next 10,000 Years",
   "Millions of Years",
   "Billions of Years",
 ]);
@@ -126,17 +127,15 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
   const longTermCountdown = formatLongTermYears(countdown.years);
   const isInteractive = Boolean(onExplore);
   const precision = event.countdownPrecision ?? "full";
-  const isMillionsOrBillionsCard =
+  /** Same countdown chrome as Millions/Billions: big number + “years from now”. */
+  const useMegaYearsCountdownLayout =
+    event.timeCategory === "Next 10,000 Years" ||
     event.timeCategory === "Millions of Years" ||
     event.timeCategory === "Billions of Years";
 
-  /** Year-only countdown: one YEARS segment (no big long-range pill). */
+  /** Long-range pill (not used for mega-layout categories). */
   const useBigLongTermCountdown =
-    showLongTermYearsOnly &&
-    !isMillionsOrBillionsCard &&
-    !(
-      event.timeCategory === "Next 10,000 Years" && precision === "year"
-    );
+    showLongTermYearsOnly && !useMegaYearsCountdownLayout;
 
   const megaScale = formatMegaYearScaleParts(countdown.years);
 
@@ -198,7 +197,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
             <div className="event-card__countdown">
               {countdown.isPast ? (
                 <p className="event-card__past-message">Event in the past</p>
-              ) : isMillionsOrBillionsCard ? (
+              ) : useMegaYearsCountdownLayout ? (
                 <div className="event-card__countdown-grid">
                   <div className="event-card__countdown-segment">
                     <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
@@ -206,7 +205,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                         {megaScale.numberPart}
                       </span>
                       {megaScale.scaleWord ? (
-                        <span className="font-sans text-[17px] font-semibold leading-tight text-ds-neutral-00 sm:text-[28px] sm:leading-[28px]">
+                        <span className="font-sans text-[17px] font-semibold leading-tight text-ds-neutral-00 sm:text-[24px] sm:leading-[24px]">
                           {megaScale.scaleWord}
                         </span>
                       ) : null}

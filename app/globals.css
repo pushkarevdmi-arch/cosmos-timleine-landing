@@ -88,8 +88,8 @@ svg:not([class*="text-"]) {
   .event-card--interactive:hover,
   .event-card--interactive:focus-visible,
   .event-card--interactive:focus-within {
-    border-color: var(--ds-neutral-600);
-    box-shadow: inset 0 0 0 1px var(--ds-neutral-600);
+    border-color: var(--ds-neutral-700);
+    box-shadow: inset 0 0 0 1px var(--ds-neutral-700);
   }
 
   .event-card--interactive:focus-visible {

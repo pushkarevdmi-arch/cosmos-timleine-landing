@@ -15,11 +15,14 @@ type SectionGroup = {
   events: HeroEventData[];
 };
 
-/** Category label: 24px from top (top-6) + line + padding; cards stick below */
-const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[4.5rem]";
+/** Cards stick below expanded category bar (top-0 strip + pt-6 + label + pb-10) */
+const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[7rem]";
 
 /** When the next card’s top crosses this (px), the previous card dims */
-const DIM_OVERLAP_PX = 100;
+const DIM_OVERLAP_PX = 120;
+
+/** Pull following card up so it peeks below the current slide (mobile, not last in section) */
+const MOBILE_CARD_OVERLAP_PULL_CLASS = "max-sm:-mb-[16vh]";
 
 function groupEventsBySection(events: HeroEventData[]): SectionGroup[] {
   const groups: SectionGroup[] = [];
@@ -49,28 +52,51 @@ function EventGridSection({
   const shellRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionIds = sectionEvents.map((e) => e.id).join(",");
 
-  const [dimPrevious, setDimPrevious] = useState<boolean[]>(() =>
-    sectionEvents.map(() => false)
-  );
+  const [dim, setDim] = useState<{
+    under: boolean[];
+    over: boolean[];
+  }>(() => ({
+    under: sectionEvents.map(() => false),
+    over: sectionEvents.map(() => false),
+  }));
+
+  /** Mobile: index of card under pointer — previous card gets a dim */
+  const [pointerOverIndex, setPointerOverIndex] = useState<number | null>(null);
 
   const measureDim = useCallback(() => {
     const mq = window.matchMedia("(min-width: 640px)");
     if (mq.matches) {
-      setDimPrevious(sectionEvents.map(() => false));
+      setDim({
+        under: sectionEvents.map(() => false),
+        over: sectionEvents.map(() => false),
+      });
+      setPointerOverIndex(null);
       return;
     }
     const n = sectionEvents.length;
-    const next = sectionEvents.map((_, i) => {
+    const under = sectionEvents.map((_, i) => {
       if (i >= n - 1) return false;
       const elNext = shellRefs.current[i + 1];
       if (!elNext) return false;
       return elNext.getBoundingClientRect().top < DIM_OVERLAP_PX;
     });
-    setDimPrevious((prev) =>
-      prev.length === next.length && prev.every((v, j) => v === next[j])
-        ? prev
-        : next
-    );
+    const over = sectionEvents.map((_, j) => {
+      if (j < 1) return false;
+      const el = shellRefs.current[j];
+      if (!el) return false;
+      return el.getBoundingClientRect().top < DIM_OVERLAP_PX;
+    });
+    setDim((prev) => {
+      if (
+        prev.under.length === under.length &&
+        prev.over.length === over.length &&
+        prev.under.every((v, j) => v === under[j]) &&
+        prev.over.every((v, j) => v === over[j])
+      ) {
+        return prev;
+      }
+      return { under, over };
+    });
   }, [sectionEvents]);
 
   useEffect(() => {
@@ -92,7 +118,7 @@ function EventGridSection({
   return (
     <>
       <div
-        className="col-span-full mt-2 mb-1 max-sm:sticky max-sm:top-6 max-sm:bg-ds-neutral-1000 max-sm:pb-2 sm:relative sm:top-auto sm:z-auto sm:bg-transparent"
+        className="col-span-full mt-2 max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:z-auto max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent"
         style={{ zIndex: headerZ }}
       >
         <div className="flex items-center gap-3">
@@ -101,21 +127,62 @@ function EventGridSection({
         </div>
       </div>
 
-      {sectionEvents.map((event, indexInSection) => (
+      {sectionEvents.map((event, indexInSection) => {
+        const dimUnderScroll = dim.under[indexInSection];
+        const dimUnderPointer =
+          pointerOverIndex !== null &&
+          pointerOverIndex === indexInSection + 1;
+        const showUnderDim = dimUnderScroll || dimUnderPointer;
+
+        return (
         <div
           key={event.id}
           ref={(el) => {
             shellRefs.current[indexInSection] = el;
           }}
-          className={`h-full max-sm:sticky ${MOBILE_CARD_STICKY_TOP_CLASS} max-sm:min-h-[100dvh] max-sm:flex max-sm:items-center max-sm:justify-center sm:static sm:z-auto sm:min-h-0 sm:block`}
+          className={[
+            "max-sm:sticky max-sm:h-auto max-sm:min-h-[100dvh] max-sm:bg-ds-neutral-1000 max-sm:flex max-sm:items-start max-sm:justify-center max-sm:pt-1 sm:h-full",
+            MOBILE_CARD_STICKY_TOP_CLASS,
+            indexInSection < sectionEvents.length - 1
+              ? MOBILE_CARD_OVERLAP_PULL_CLASS
+              : "",
+            "sm:static sm:z-auto sm:min-h-0 sm:block",
+          ].join(" ")}
           style={{
             zIndex: groupIndex * 1000 + 10 + indexInSection + 1,
           }}
         >
-          <div className="relative h-full w-full max-sm:max-w-[min(100%,28rem)]">
+          <div
+            className="event-grid-mobile-uniform relative w-full max-sm:max-w-[min(100%,28rem)] sm:h-full"
+            onPointerEnter={() => {
+              if (window.matchMedia("(min-width: 640px)").matches) return;
+              setPointerOverIndex(indexInSection);
+            }}
+            onPointerLeave={(e) => {
+              if (window.matchMedia("(min-width: 640px)").matches) return;
+              const next = e.relatedTarget;
+              if (
+                next instanceof Node &&
+                e.currentTarget.contains(next)
+              ) {
+                return;
+              }
+              setPointerOverIndex((current) =>
+                current === indexInSection ? null : current
+              );
+            }}
+          >
+            {/* Card underneath: scroll stack or pointer on the next card */}
             <div
               className={`pointer-events-none absolute inset-0 z-[1] rounded-3xl bg-ds-neutral-1000/55 transition-opacity duration-300 ease-out sm:hidden ${
-                dimPrevious[indexInSection] ? "opacity-100" : "opacity-0"
+                showUnderDim ? "opacity-100" : "opacity-0"
+              }`}
+              aria-hidden
+            />
+            {/* This card sliding up onto the previous one */}
+            <div
+              className={`pointer-events-none absolute inset-0 z-[1] rounded-3xl bg-ds-neutral-1000/40 transition-opacity duration-300 ease-out sm:hidden ${
+                dim.over[indexInSection] ? "opacity-100" : "opacity-0"
               }`}
               aria-hidden
             />
@@ -124,7 +191,8 @@ function EventGridSection({
             </div>
           </div>
         </div>
-      ))}
+        );
+      })}
     </>
   );
 }
@@ -142,7 +210,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
   const groups = groupEventsBySection(events);
 
   return (
-    <div className="grid items-stretch gap-6 sm:grid-cols-2">
+    <div className="grid items-stretch gap-0 sm:grid-cols-2 sm:gap-6">
       {groups.map(({ section, events: sectionEvents }, groupIndex) => (
         <div
           key={`${section}-${sectionEvents[0]?.id ?? groupIndex}`}

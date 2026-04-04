@@ -115,6 +115,38 @@ svg:not([class*="text-"]) {
     transform: scale(1.1565);
   }
 
+  /* Event grid mobile sticky stack: uniform card height + scroll inside content */
+  @media (max-width: 639px) {
+    .event-grid-mobile-uniform {
+      height: min(516px, calc(72dvh - 32px));
+    }
+
+    .event-grid-mobile-uniform .event-card {
+      height: 100%;
+      min-height: 0;
+      align-items: stretch;
+      justify-content: flex-start;
+    }
+
+    .event-grid-mobile-uniform .event-card__content {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .event-grid-mobile-uniform .event-card__image-wrap {
+      height: 260px;
+    }
+
+    /* Stretch to 260×100% frame (no cover crop); base .event-card__image is object-cover */
+    .event-grid-mobile-uniform .event-card__image {
+      height: 100% !important;
+      width: 100% !important;
+      object-fit: fill;
+    }
+  }
+
   .hero-event__image {
     display: block;
     transition: transform 800ms cubic-bezier(0.33, 1, 0.68, 1);

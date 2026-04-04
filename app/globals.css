@@ -228,7 +228,19 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__date {
-    @apply mt-0 mb-1 flex items-center justify-center gap-2 text-ds-neutral-300 text-[16px] leading-[20px];
+    @apply mt-0 mb-1 flex w-full flex-nowrap items-center justify-center gap-2 text-ds-neutral-300 text-[16px] leading-[20px];
+  }
+
+  .event-card__date-main {
+    @apply flex min-w-0 items-center gap-2;
+  }
+
+  .event-card__date-day {
+    @apply min-w-0 whitespace-nowrap;
+  }
+
+  .event-card__date-time {
+    @apply shrink-0 whitespace-nowrap text-[16px] leading-[20px] text-ds-neutral-500;
   }
 
   .event-card__date-icon {
@@ -247,8 +259,15 @@ svg:not([class*="text-"]) {
     @apply flex w-full justify-between gap-2 font-mono text-ds-neutral-100 sm:justify-center;
   }
 
-  /* Below `sm`: bleed into meta `px-12` so segments span like hero countdown (full content width). */
+  /* Below `sm`: bleed into meta `px-12` (full content width for countdown + date row). */
   @media (max-width: 639px) {
+    .event-card__date {
+      margin-left: -3rem;
+      margin-right: -3rem;
+      width: calc(100% + 6rem);
+      gap: 14px; /* 8px + 6px between date block and time */
+    }
+
     .event-card__countdown-grid {
       margin-left: -3rem;
       margin-right: -3rem;
@@ -276,16 +295,16 @@ svg:not([class*="text-"]) {
     @apply uppercase tracking-[0.22em] text-[11px] leading-[15px] sm:text-[12px] sm:leading-[16px];
   }
 
-  /* After base label rules so 14px wins below `sm` (Tailwind `text-[12px]`/`text-[11px]` otherwise overrides earlier @media). */
+  /* Mobile: smaller countdown captions inside event cards (YEARS / DAYS / HRS / years from now). */
   @media (max-width: 639px) {
     .event-card__countdown-label {
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
+      line-height: 16px;
     }
 
     .event-card__countdown-label--from-now {
-      font-size: 14px;
-      line-height: 18px;
+      font-size: 12px;
+      line-height: 16px;
     }
   }
 

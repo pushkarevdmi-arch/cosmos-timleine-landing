@@ -67,43 +67,46 @@ export default function EventDetailsModal({
       />
 
       <div className="relative z-10 flex w-[calc(100vw-32px)] max-h-[calc(100dvh-48px)] max-w-[680px] flex-col overflow-hidden rounded-3xl border border-ds-neutral-800 bg-ds-neutral-950/95 shadow-xl backdrop-blur sm:w-full sm:max-h-[calc(100dvh-96px)]">
-        <div className="flex items-start justify-between gap-2 bg-ds-neutral-900 px-8 py-8">
-          <div className="flex flex-col gap-2 px-[3px] max-w-[560px]">
-            <h2 className="font-sans text-h4-600 text-ds-neutral-50">
-              {title}
-            </h2>
-            <div
-              className="mt-1 flex flex-row gap-6 type-era-label text-ds-neutral-400"
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontWeight: 400,
-                fontSize: "14px",
-                lineHeight: "18px",
-              }}
-            >
-              <span>{formatEventDateOnlyLong(date)}</span>
-              {eventHasSpecificUtcTime(date) ? (
-                <>
-                  <span
-                    aria-hidden="true"
-                    className="h-[14px] w-px self-center bg-ds-neutral-700"
-                  />
-                  <span className="text-ds-neutral-500">
-                    {formatEventTimeUtcLabel(date)}
-                  </span>
-                </>
-              ) : null}
+        <div className="flex flex-col gap-4 bg-ds-neutral-900 px-8 py-8">
+          <div className="flex items-start justify-between gap-3">
+            <div className="flex min-w-0 flex-1 flex-col pl-[3px] pr-[3px] max-sm:pr-8 max-w-[560px]">
+              <h2 className="break-words font-sans text-h4-600 text-ds-neutral-50">
+                {title}
+              </h2>
             </div>
+
+            <button
+              type="button"
+              onClick={onClose}
+              className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-ds-neutral-700/80 bg-ds-neutral-900 text-[24px] leading-none text-ds-neutral-400 hover:border-ds-neutral-500 hover:text-ds-neutral-100 max-sm:absolute max-sm:right-4 max-sm:top-4 max-sm:z-40 sm:static"
+            >
+              <span className="sr-only">Close</span>
+              ×
+            </button>
           </div>
 
-          <button
-            type="button"
-            onClick={onClose}
-            className="absolute right-4 top-4 z-40 inline-flex h-12 w-12 items-center justify-center rounded-full border border-ds-neutral-700/80 bg-ds-neutral-900 text-[24px] leading-none text-ds-neutral-400 hover:border-ds-neutral-500 hover:text-ds-neutral-100"
+          <div
+            className="flex w-full flex-row flex-nowrap items-center gap-2 whitespace-nowrap sm:gap-3 type-era-label text-ds-neutral-400 pl-[3px] pr-[3px]"
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontWeight: 400,
+              fontSize: "14px",
+              lineHeight: "18px",
+            }}
           >
-            <span className="sr-only">Close</span>
-            ×
-          </button>
+            <span>{formatEventDateOnlyLong(date)}</span>
+            {eventHasSpecificUtcTime(date) ? (
+              <>
+                <span
+                  aria-hidden="true"
+                  className="h-[14px] w-px self-center bg-ds-neutral-700"
+                />
+                <span className="text-ds-neutral-500">
+                  {formatEventTimeUtcLabel(date)}
+                </span>
+              </>
+            ) : null}
+          </div>
         </div>
 
         <div className="flex-1 overflow-y-auto modal-scroll">

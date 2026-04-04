@@ -92,10 +92,9 @@ export default function EventTimeline({
                       <button
                         type="button"
                         onClick={() => onOpen(event)}
-                        className="group flex w-full cursor-pointer items-start gap-3 rounded-2xl border border-ds-neutral-800/80 bg-[var(--app-surface-elevated)] px-8 py-8 text-left transition hover:border-ds-primary-400/70"
+                        className="group flex w-full cursor-pointer flex-col gap-3 rounded-2xl border border-ds-neutral-800/80 bg-[var(--app-surface-elevated)] px-8 py-8 text-left transition hover:border-ds-primary-400/70 sm:flex-row sm:items-start sm:gap-3"
                       >
-                        {/* Content */}
-                        <div className="min-w-0 flex flex-1 flex-col gap-1.5">
+                        <div className="order-2 flex min-w-0 flex-1 flex-col gap-1.5 sm:order-1">
                           <h3 className="font-sans text-[20px] leading-[24px] font-semibold text-ds-neutral-50">
                             {event.title}
                           </h3>
@@ -104,16 +103,16 @@ export default function EventTimeline({
                           </p>
                         </div>
 
-                        <div className="ml-2 flex flex-col items-end gap-1 text-right">
-                          <p className="type-era-label text-ds-neutral-500">
-                            Date
+                        <div className="order-1 flex w-full flex-row items-baseline sm:order-2 sm:ml-2 sm:w-auto sm:shrink-0 sm:flex-col sm:items-end sm:gap-1 sm:text-right">
+                          <p className="type-era-label hidden shrink-0 text-ds-neutral-500 sm:block">
+                            Date:
                           </p>
-                          <div className="flex flex-col items-end gap-1.5">
-                            <p className="font-sans text-[18px] leading-[20px] font-semibold text-ds-neutral-100">
+                          <div className="flex min-w-0 flex-row flex-wrap items-baseline gap-x-4 gap-y-1 sm:flex-col sm:items-end sm:gap-x-0 sm:gap-y-1.5 sm:text-right">
+                            <p className="font-sans text-[14px] leading-[18px] font-semibold text-ds-neutral-100 sm:text-[18px] sm:leading-[20px]">
                               {formatEventDateOnlyShort(event.date)}
                             </p>
                             {eventHasSpecificUtcTime(event.date) ? (
-                              <p className="font-sans text-[14px] leading-[18px] font-medium text-ds-neutral-400">
+                              <p className="font-sans text-[14px] leading-[18px] font-semibold text-ds-neutral-300 sm:font-medium sm:text-ds-neutral-400">
                                 {formatEventTimeUtcLabel(event.date)}
                               </p>
                             ) : null}

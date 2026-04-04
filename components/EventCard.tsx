@@ -180,17 +180,15 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
           <div className="flex w-full flex-col gap-1 px-12">
             {showCardDateRow ? (
               <div className="event-card__date">
-                <span className="event-card__date-icon">
-                  <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
-                </span>
-                <div className="flex min-w-0 flex-row gap-3 text-center md:text-left">
-                  <span>{formatEventDateOnlyLong(event.date)}</span>
-                  {eventHasSpecificUtcTime(event.date) ? (
-                    <span className="text-[16px] leading-[20px] text-ds-neutral-500">
-                      {formatEventTimeUtcLabel(event.date)}
-                    </span>
-                  ) : null}
+                <div className="event-card__date-main">
+                  <span className="event-card__date-icon">
+                    <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
+                  </span>
+                  <span className="event-card__date-day">{formatEventDateOnlyLong(event.date)}</span>
                 </div>
+                {eventHasSpecificUtcTime(event.date) ? (
+                  <span className="event-card__date-time">{formatEventTimeUtcLabel(event.date)}</span>
+                ) : null}
               </div>
             ) : null}
 

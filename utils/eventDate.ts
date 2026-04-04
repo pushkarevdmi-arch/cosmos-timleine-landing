@@ -54,22 +54,22 @@ export function formatEventCalendarYearLabel(dateStr: string): string {
   return formatYearDigitsWithGrouping(parts.yStr);
 }
 
-const HERO_YEAR_GROUPED_MAX_CHARS = 20;
+const HERO_YEAR_PLAIN_MAX_CHARS = 20;
 
 /**
- * Hero timeline only: avoids huge comma-grouped year strings (e.g. heat-death scales).
- * When the grouped year would be too long, returns a fixed human label.
+ * Hero timeline only: plain calendar year digits (no thousands separators).
+ * When the digit string would be too long, returns a fixed human label.
  */
 export function formatHeroTimelineYearLabel(dateStr: string): string {
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
-    return new Date(instant).getUTCFullYear().toLocaleString("en-US");
+    return String(new Date(instant).getUTCFullYear());
   }
   const parts = parseEventYmd(dateStr);
   if (!parts) return "—";
-  const grouped = formatYearDigitsWithGrouping(parts.yStr);
-  if (grouped.length <= HERO_YEAR_GROUPED_MAX_CHARS) {
-    return grouped;
+  const plain = formatYearDigitsPlain(parts.yStr);
+  if (plain.length <= HERO_YEAR_PLAIN_MAX_CHARS) {
+    return plain;
   }
   return "End of time";
 }

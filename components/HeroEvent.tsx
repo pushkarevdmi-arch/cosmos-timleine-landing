@@ -295,8 +295,8 @@ export default function HeroEvent({
           </div>
 
           {/* Date + countdown share one stack; adjust vertical gap between sections */}
-          <div className="mt-5 flex h-full w-full flex-col items-center gap-4 md:mt-6 md:items-stretch">
-            <div className="hero-event__date-countdown flex w-full flex-col gap-3">
+          <div className="mt-4 flex h-full w-full flex-col items-center gap-3 md:mt-6 md:gap-4 md:items-stretch">
+            <div className="hero-event__date-countdown flex w-full flex-col gap-2 md:gap-3">
               {showHeroDateRow ? (
                 <div className="inline-flex items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
                   <span className="event-card__date-icon">

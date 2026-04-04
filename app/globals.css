@@ -201,7 +201,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex h-full flex-1 flex-col gap-4 px-6 pb-4 pt-4 sm:px-8 sm:pb-7 sm:pt-5;
+    @apply flex h-full flex-1 flex-col gap-4 px-6 pb-6 pt-4 sm:px-8 sm:pb-7 sm:pt-5;
     background: unset;
     background-color: rgba(15, 20, 31, 1);
     width: 100%;
@@ -212,7 +212,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__title {
-    @apply m-0 text-center text-ds-neutral-50 font-semibold text-[16px] leading-[24px] sm:text-[20px] sm:leading-[28px];
+    @apply m-0 text-center text-ds-neutral-50 font-semibold text-[18px] leading-[26px] sm:text-[20px] sm:leading-[28px];
   }
 
   .event-card__description {
@@ -244,8 +244,16 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid {
-    /* Keep countdown inside card padding (no negative margins / width calc). */
     @apply flex w-full justify-between gap-2 font-mono text-ds-neutral-100 sm:justify-center;
+  }
+
+  /* Below `sm`: bleed into meta `px-12` so segments span like hero countdown (full content width). */
+  @media (max-width: 639px) {
+    .event-card__countdown-grid {
+      margin-left: -3rem;
+      margin-right: -3rem;
+      width: calc(100% + 6rem);
+    }
   }
 
   .event-card__countdown-segment {
@@ -257,7 +265,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-label {
-    @apply mt-0.5 sm:mt-1 uppercase tracking-[0.22em] text-[12px] leading-[16px] font-semibold text-ds-neutral-500;
+    @apply mt-0.5 sm:mt-1 uppercase tracking-[0.22em] text-[14px] leading-[16px] font-semibold text-ds-neutral-500;
   }
 
   .event-card__countdown-value--mega {
@@ -266,6 +274,19 @@ svg:not([class*="text-"]) {
 
   .event-card__countdown-label--from-now {
     @apply uppercase tracking-[0.22em] text-[11px] leading-[15px] sm:text-[12px] sm:leading-[16px];
+  }
+
+  /* After base label rules so 14px wins below `sm` (Tailwind `text-[12px]`/`text-[11px]` otherwise overrides earlier @media). */
+  @media (max-width: 639px) {
+    .event-card__countdown-label {
+      font-size: 14px;
+      line-height: 18px;
+    }
+
+    .event-card__countdown-label--from-now {
+      font-size: 14px;
+      line-height: 18px;
+    }
   }
 
   .event-card__explore {
@@ -743,6 +764,80 @@ svg:not([class*="text-"]) {
 
 .hero-event-slider:focus-visible::-moz-range-thumb {
   box-shadow: none;
+}
+
+/* Hero timeline slider: compact on small screens (below Tailwind `md`) */
+@media (max-width: 767px) {
+  .hero-event-slider {
+    height: 52px;
+    padding: 6px;
+  }
+
+  .hero-event-slider-dots {
+    left: 22px;
+    right: 22px;
+  }
+
+  .hero-event-slider-visual::before {
+    left: 6px;
+    right: 6px;
+    top: 6px;
+    bottom: 6px;
+  }
+
+  .hero-event-slider-visual::after {
+    left: 6px;
+    top: 6px;
+    bottom: 6px;
+    width: clamp(40px, calc(var(--slider-progress) + 6px), calc(100% - 32px));
+    min-width: 40px;
+    max-width: calc(100% - 12px);
+  }
+
+  .hero-event-slider-wrap::before {
+    left: 6px;
+    width: 58px;
+    height: 58px;
+    transform: translate(-11px, -50%);
+    filter: blur(9px);
+  }
+
+  .hero-event-slider::-webkit-slider-runnable-track {
+    height: 40px;
+  }
+
+  .hero-event-slider::-webkit-slider-thumb {
+    width: 54px;
+    height: 54px;
+    margin-top: -7px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+  }
+
+  .hero-event-slider:hover::-webkit-slider-thumb {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
+  }
+
+  .hero-event-slider:active::-webkit-slider-thumb {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+  }
+
+  .hero-event-slider::-moz-range-track {
+    height: 40px;
+  }
+
+  .hero-event-slider::-moz-range-thumb {
+    width: 54px;
+    height: 54px;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+  }
+
+  .hero-event-slider:hover::-moz-range-thumb {
+    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
+  }
+
+  .hero-event-slider:active::-moz-range-thumb {
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+  }
 }
 
 @keyframes hero-slider-start-nudge {

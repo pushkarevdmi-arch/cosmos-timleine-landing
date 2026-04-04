@@ -285,7 +285,7 @@ export default function Home() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-10 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-16 flex flex-col items-center justify-center">
+        <header className="mb-[104px] flex flex-col items-center justify-center sm:mb-16">
           <div className="flex items-center gap-3">
             <Image
               src="/logo.svg"
@@ -336,7 +336,7 @@ export default function Home() {
         {/* View toggle */}
         <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="w-full text-center sm:text-left">
-            <h2 className="font-sans text-h2-400 text-ds-neutral-00">
+            <h2 className="font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
               Upcoming{" "}
               <span
                 className="font-dynamite"

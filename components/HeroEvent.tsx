@@ -290,7 +290,7 @@ export default function HeroEvent({
           className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
-          <div className="flex w-full min-w-0 flex-col items-center gap-2 md:items-start">
+          <div className="flex w-full min-w-0 flex-col items-center gap-6 md:gap-2 md:items-start">
             <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[18px] leading-[26px] sm:text-[24px] sm:leading-[32px]">
               {displayEvent.title}
             </h3>
@@ -300,7 +300,7 @@ export default function HeroEvent({
           </div>
 
           {/* Date + countdown share one stack; adjust vertical gap between sections */}
-          <div className="mt-4 flex h-full w-full min-w-0 flex-col items-center gap-2 md:mt-6 md:items-stretch">
+          <div className="mt-8 flex h-full w-full min-w-0 flex-col items-center gap-2 md:mt-6 md:items-stretch">
             <div className="hero-event__date-countdown flex w-full min-w-0 flex-col gap-2">
               {showHeroDateRow ? (
                 <div className="mx-1 flex flex-wrap items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">

@@ -176,6 +176,8 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
           <p className="event-card__description">{event.shortDescription}</p>
         </div>
 
+        <div className="event-card__content-spacer" aria-hidden />
+
         <div className="event-card__meta">
           <div className="flex w-full flex-col gap-1 px-12">
             {showCardDateRow ? (

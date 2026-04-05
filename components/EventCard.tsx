@@ -33,6 +33,10 @@ const HIDE_CARD_DATE_SECTIONS = new Set([
   "Billions of Years",
 ]);
 
+/** Mobile-first: 12px; sm+ 14/16. Letter-spacing stays normal (0) at all breakpoints. */
+const EVENT_CARD_COUNTDOWN_LABEL_CLASS =
+  "event-card__countdown-label text-[12px] leading-[14px] tracking-normal sm:text-[14px] sm:leading-[16px]";
+
 function useCountdown(targetDate: string): Countdown {
   const getDiff = (): Countdown => {
     const b = getCountdownBreakdown(targetDate);
@@ -206,7 +210,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                 <div className="event-card__countdown-grid">
                   <div className="event-card__countdown-segment">
                     <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
-                      <span className="event-card__countdown-value event-card__countdown-value--mega">
+                      <span className="event-card__countdown-value event-card__countdown-value--mega text-[20px] leading-[1.15] sm:text-[32px] sm:leading-[1.1]">
                         {megaScale.numberPart}
                       </span>
                       {megaScale.scaleWord ? (
@@ -215,7 +219,9 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                         </span>
                       ) : null}
                     </div>
-                    <span className="event-card__countdown-label event-card__countdown-label--from-now">
+                    <span
+                      className={`${EVENT_CARD_COUNTDOWN_LABEL_CLASS} event-card__countdown-label--from-now`}
+                    >
                       years from now
                     </span>
                   </div>
@@ -234,25 +240,25 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
               ) : (
                 <div className="event-card__countdown-grid">
                   <div className="event-card__countdown-segment">
-                    <span className="event-card__countdown-value">
+                    <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[24px] sm:leading-[24px]">
                       {countdown.years.toString().padStart(2, "0")}
                     </span>
-                    <span className="event-card__countdown-label">YEARS</span>
+                    <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>YEARS</span>
                   </div>
                   {precision !== "year" ? (
                     <div className="event-card__countdown-segment">
-                      <span className="event-card__countdown-value">
+                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[24px] sm:leading-[24px]">
                         {formatCountdownDaysDisplay(countdown.days)}
                       </span>
-                      <span className="event-card__countdown-label">DAYS</span>
+                      <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>DAYS</span>
                     </div>
                   ) : null}
                   {precision === "full" ? (
                     <div className="event-card__countdown-segment">
-                      <span className="event-card__countdown-value">
+                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[24px] sm:leading-[24px]">
                         {countdown.hours.toString().padStart(2, "0")}
                       </span>
-                      <span className="event-card__countdown-label">HRS</span>
+                      <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>HRS</span>
                     </div>
                   ) : null}
                 </div>

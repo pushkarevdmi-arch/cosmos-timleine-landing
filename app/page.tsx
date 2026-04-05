@@ -685,10 +685,12 @@ export default function Home() {
                   onExplore={(event) => setSelectedEvent(event)}
                 />
               )}
-              <EventGrid
-                events={eventsForEventGrid}
-                onExplore={(event) => setSelectedEvent(event)}
-              />
+              <div className={nextEvent ? "pt-6" : undefined}>
+                <EventGrid
+                  events={eventsForEventGrid}
+                  onExplore={(event) => setSelectedEvent(event)}
+                />
+              </div>
               {mobileGridSentinelActive ? (
                 <div
                   ref={mobileGridSentinelRef}

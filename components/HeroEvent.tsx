@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { type CSSProperties, useEffect, useMemo, useState } from "react";
+import { type CSSProperties, type MouseEvent, useEffect, useMemo, useState } from "react";
 import {
   compareEventDateStrings,
   eventHasSpecificUtcTime,
@@ -138,13 +138,13 @@ function HeroFlipSegment({
 }) {
   return (
     <div
-      className="hero-flip-segment relative flex min-w-0 min-h-0 w-full flex-1 basis-0 select-none flex-col items-center justify-center gap-[4px] overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-2 sm:px-2.5 sm:py-3.5 md:min-h-[102px] md:rounded-2xl md:py-2"
+      className="hero-flip-segment relative flex min-w-0 min-h-0 w-full flex-1 basis-0 select-none flex-col items-center justify-center gap-[4px] overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-1 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:rounded-2xl md:py-2"
       aria-label={`${label}: ${valueText}`}
     >
-      <span className="event-card__countdown-value text-center text-[24px] leading-[24px] tabular-nums sm:text-[30px] sm:leading-none md:text-[34px] lg:text-[32px] lg:leading-[36px]">
+      <span className="event-card__countdown-value text-center text-[20px] leading-[20px] tabular-nums sm:text-[30px] sm:leading-none md:text-[34px] lg:text-[32px] lg:leading-[36px]">
         {valueText}
       </span>
-      <span className="event-card__countdown-label w-full text-center sm:text-[10px] sm:leading-none sm:tracking-[0.2em] md:text-[14px] md:leading-[16px]">
+      <span className="event-card__countdown-label w-full text-center tracking-normal text-[12px] leading-[14px] sm:text-[10px] sm:leading-none md:text-[14px] md:leading-[16px]">
         {label}
       </span>
     </div>
@@ -259,10 +259,21 @@ export default function HeroEvent({
     (heroTimelineYearDisplay.kind === "plain" &&
       heroTimelineYearDisplay.text === HERO_TIMELINE_END_OF_TIME_LABEL);
 
+  const handleHeroMainAreaClick = (e: MouseEvent<HTMLDivElement>) => {
+    if (!onExplore) return;
+    if (!window.matchMedia("(max-width: 767px)").matches) return;
+    const t = e.target as HTMLElement;
+    if (t.closest("button, a, [role='button']")) return;
+    onExplore(displayEvent);
+  };
+
   return (
     <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
       <div
+        onClick={onExplore ? handleHeroMainAreaClick : undefined}
         className={`grid min-w-0 w-full flex-1 gap-0 border-0 bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
+          onExplore ? "max-md:cursor-pointer" : ""
+        } ${
           isVisible
             ? "opacity-100 translate-y-0 blur-0"
             : "opacity-0 -translate-y-0.5 blur-[1.5px]"
@@ -287,10 +298,10 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10 md:text-left"
+          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-12 md:pb-6 md:pt-10 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
-          <div className="flex w-full min-w-0 flex-col items-center gap-6 md:gap-2 md:items-start">
+          <div className="flex w-full min-w-0 flex-col items-center gap-2 md:items-start">
             <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[18px] leading-[26px] sm:text-[24px] sm:leading-[32px]">
               {displayEvent.title}
             </h3>
@@ -327,9 +338,9 @@ export default function HeroEvent({
                   This event has already occurred.
                 </p>
               ) : useMegaYearsCountdownLayout ? (
-                <div className="hero-countdown flex h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-[8px] md:justify-start">
+                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-1 md:flex md:h-[88px] md:gap-2 md:justify-start md:pr-12">
                   <div
-                    className="relative flex min-h-0 min-w-0 w-full flex-1 basis-0 flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-2 sm:px-2.5 sm:py-3.5 md:min-h-[102px] md:rounded-2xl md:py-2"
+                    className="relative flex min-h-0 min-w-0 w-full flex-1 basis-0 flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-1 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:rounded-2xl md:py-2"
                     aria-label={`${megaScale.numberPart}${megaScale.scaleWord ? ` ${megaScale.scaleWord}` : ""} years from now`}
                   >
                     <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
@@ -348,7 +359,7 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : useBigLongTermCountdown ? (
-                <div className="flex w-full items-center justify-center rounded-xl border border-[var(--ds-neutral-800)] bg-ds-neutral-1000 px-4 py-3 md:px-6 md:py-4">
+                <div className="hidden w-full items-center justify-center rounded-xl border border-[var(--ds-neutral-800)] bg-ds-neutral-1000 px-4 py-3 md:flex md:px-6 md:py-4">
                   <div className="flex items-baseline gap-2">
                     <span className="type-countdown-value-regular tabular-nums">
                       {longTermCountdown.value}
@@ -359,7 +370,7 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown flex h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-[8px] md:justify-start">
+                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-1 md:flex md:h-[88px] md:gap-2 md:justify-start md:pr-12">
                   {heroCountdownSegments.map((segment) => (
                     <HeroFlipSegment
                       key={segment.label}
@@ -379,8 +390,11 @@ export default function HeroEvent({
 
             <button
               type="button"
-                onClick={() => onExplore?.(displayEvent)}
-                className="group mt-3 inline-flex cursor-pointer items-center justify-center gap-1.5 md:justify-start md:self-start"
+              onClick={(e) => {
+                e.stopPropagation();
+                onExplore?.(displayEvent);
+              }}
+              className="group mt-3 inline-flex cursor-pointer items-center justify-center gap-1.5 md:justify-start md:self-start"
             >
               <span className="event-card__explore-icon">
                 <img src="/icons/rocket.svg" width="20" height="20" />
@@ -394,7 +408,7 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-10 pt-8 md:px-8 md:pb-6">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-[6px] md:gap-1 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-8 pt-6 md:px-8 md:pb-6">
           <div className="mb-3 min-w-0 text-center md:hidden">
             <label
               htmlFor="hero-event-time-slider"

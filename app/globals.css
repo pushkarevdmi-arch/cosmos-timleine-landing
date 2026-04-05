@@ -363,19 +363,6 @@ svg:not([class*="text-"]) {
     @apply uppercase tracking-[0.22em] text-[11px] leading-[15px] sm:text-[14px] sm:leading-[16px];
   }
 
-  /* Mobile: countdown captions inside event cards (YEARS / DAYS / HRS / years from now). */
-  @media (max-width: 639px) {
-    .event-card__countdown-label {
-      font-size: 14px;
-      line-height: 16px;
-    }
-
-    .event-card__countdown-label--from-now {
-      font-size: 14px;
-      line-height: 16px;
-    }
-  }
-
   .event-card__explore {
     @apply mt-3 inline-flex items-center justify-center gap-1.5 transition;
     color: var(--ds-primary-400);
@@ -554,10 +541,10 @@ svg:not([class*="text-"]) {
   .type-era-label {
     font-family: var(--font-sans);
     font-weight: 400;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 18px;
+    line-height: 20px;
     text-transform: uppercase;
-    letter-spacing: 0.22em;
+    letter-spacing: 2px;
   }
 
   /* Micro labels / countdown */
@@ -650,10 +637,10 @@ svg:not([class*="text-"]) {
 .hero-event-slider {
   width: 100%;
   box-sizing: border-box;
-  padding: 8px;
+  padding: 7px;
   appearance: none;
   -webkit-appearance: none;
-  height: 64px;
+  height: 58px;
   border-radius: 9999px;
   background: transparent;
   border: none;
@@ -699,10 +686,10 @@ svg:not([class*="text-"]) {
 .hero-event-slider-visual::before {
   content: "";
   position: absolute;
-  left: 8px;
-  right: 8px;
-  top: 8px;
-  bottom: 8px;
+  left: 7px;
+  right: 7px;
+  top: 7px;
+  bottom: 7px;
   border-radius: 9999px;
   background: #1f2937;
 }
@@ -710,12 +697,12 @@ svg:not([class*="text-"]) {
 .hero-event-slider-visual::after {
   content: "";
   position: absolute;
-  left: 8px;
-  top: 8px;
-  bottom: 8px;
-  width: clamp(48px, calc(var(--slider-progress) + 8px), calc(100% - 40px));
-  min-width: 48px;
-  max-width: calc(100% - 16px);
+  left: 7px;
+  top: 7px;
+  bottom: 7px;
+  width: clamp(44px, calc(var(--slider-progress) + 7px), calc(100% - 36px));
+  min-width: 44px;
+  max-width: calc(100% - 14px);
   border-radius: 9999px 0 0 9999px;
   background: linear-gradient(
     90deg,
@@ -730,12 +717,12 @@ svg:not([class*="text-"]) {
 .hero-event-slider-wrap::before {
   content: "";
   position: absolute;
-  left: 8px;
+  left: 7px;
   top: 50%;
-  width: 74px;
-  height: 74px;
+  width: 66px;
+  height: 66px;
   border-radius: 9999px;
-  transform: translate(-14px, -50%);
+  transform: translate(-12px, -50%);
   pointer-events: none;
   background: radial-gradient(
     circle,
@@ -752,7 +739,7 @@ svg:not([class*="text-"]) {
 }
 
 .hero-event-slider::-webkit-slider-runnable-track {
-  height: 48px;
+  height: 44px;
   border-radius: 9999px;
   background: transparent;
 }
@@ -760,11 +747,11 @@ svg:not([class*="text-"]) {
 .hero-event-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 65px;
-  height: 65px;
+  width: 58px;
+  height: 58px;
   border-radius: 9999px;
   margin-left: 0;
-  margin-top: -8.5px;
+  margin-top: -7px;
   border: 3px solid transparent;
   background:
     linear-gradient(315deg, #24223a 0%, #513543 100%) padding-box,
@@ -806,15 +793,15 @@ svg:not([class*="text-"]) {
 }
 
 .hero-event-slider::-moz-range-track {
-  height: 48px;
+  height: 44px;
   border-radius: 9999px;
   background: transparent;
   border: none;
 }
 
 .hero-event-slider::-moz-range-thumb {
-  width: 65px;
-  height: 65px;
+  width: 58px;
+  height: 58px;
   border-radius: 9999px;
   margin-left: 0;
   border: 3px solid transparent;
@@ -853,16 +840,21 @@ svg:not([class*="text-"]) {
   box-shadow: none;
 }
 
-/* Hero timeline slider: compact on small screens (below Tailwind `md`) */
+/* Hero timeline slider: touch-friendly height on small screens (below Tailwind `md`) */
 @media (max-width: 767px) {
   .hero-event-slider {
-    height: 52px;
+    height: 56px;
     padding: 6px;
   }
 
   .hero-event-slider-dots {
     left: 22px;
     right: 22px;
+  }
+
+  .hero-event-slider-dot {
+    width: 5px;
+    height: 5px;
   }
 
   .hero-event-slider-visual::before {
@@ -876,54 +868,54 @@ svg:not([class*="text-"]) {
     left: 6px;
     top: 6px;
     bottom: 6px;
-    width: clamp(40px, calc(var(--slider-progress) + 6px), calc(100% - 32px));
+    width: clamp(40px, calc(var(--slider-progress) + 6px), calc(100% - 30px));
     min-width: 40px;
     max-width: calc(100% - 12px);
   }
 
   .hero-event-slider-wrap::before {
     left: 6px;
-    width: 58px;
-    height: 58px;
-    transform: translate(-11px, -50%);
+    width: 56px;
+    height: 56px;
+    transform: translate(-9px, -50%);
     filter: blur(9px);
   }
 
   .hero-event-slider::-webkit-slider-runnable-track {
-    height: 40px;
+    height: 44px;
   }
 
   .hero-event-slider::-webkit-slider-thumb {
-    width: 54px;
-    height: 54px;
-    margin-top: -7px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+    width: 56px;
+    height: 56px;
+    margin-top: -6px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.38);
   }
 
   .hero-event-slider:hover::-webkit-slider-thumb {
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
   }
 
   .hero-event-slider:active::-webkit-slider-thumb {
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.48);
   }
 
   .hero-event-slider::-moz-range-track {
-    height: 40px;
+    height: 44px;
   }
 
   .hero-event-slider::-moz-range-thumb {
-    width: 54px;
-    height: 54px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.38);
+    width: 56px;
+    height: 56px;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.38);
   }
 
   .hero-event-slider:hover::-moz-range-thumb {
-    box-shadow: 0 14px 32px rgba(0, 0, 0, 0.42);
+    box-shadow: 0 16px 34px rgba(0, 0, 0, 0.42);
   }
 
   .hero-event-slider:active::-moz-range-thumb {
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.48);
+    box-shadow: 0 18px 38px rgba(0, 0, 0, 0.48);
   }
 }
 

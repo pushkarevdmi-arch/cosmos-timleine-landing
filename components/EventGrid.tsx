@@ -13,11 +13,15 @@ type EventGridProps = {
 /** Cards stick below expanded category bar (top-0 strip + pt-6 + label + pb-10) */
 const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[7rem]";
 
-/** When the next card’s top crosses this (px), the previous card dims */
-const DIM_OVERLAP_PX = 120;
+/**
+ * Dim the previous card only once the next card’s face overlaps it vertically
+ * by at least this many pixels (refs measure `.event-grid-mobile-uniform`, not
+ * the tall sticky shell).
+ */
+const OVERLAP_FACE_MIN_PX = 16;
 
 /** Pull following card up so it peeks below the current slide (mobile, not last in section) */
-const MOBILE_CARD_OVERLAP_PULL_CLASS = "max-sm:-mb-[16vh]";
+const MOBILE_CARD_OVERLAP_PULL_CLASS = "max-sm:-mb-[22vh]";
 
 function EventGridSection({
   section,
@@ -30,16 +34,12 @@ function EventGridSection({
   groupIndex: number;
   onExplore?: (event: HeroEventData) => void;
 }) {
-  const shellRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const cardFaceRefs = useRef<(HTMLDivElement | null)[]>([]);
   const sectionIds = sectionEvents.map((e) => e.id).join(",");
 
-  const [dim, setDim] = useState<{
-    under: boolean[];
-    over: boolean[];
-  }>(() => ({
-    under: sectionEvents.map(() => false),
-    over: sectionEvents.map(() => false),
-  }));
+  const [dimUnder, setDimUnder] = useState<boolean[]>(() =>
+    sectionEvents.map(() => false)
+  );
 
   /** Mobile: index of card under pointer — previous card gets a dim */
   const [pointerOverIndex, setPointerOverIndex] = useState<number | null>(null);
@@ -47,41 +47,34 @@ function EventGridSection({
   const measureDim = useCallback(() => {
     const mq = window.matchMedia("(min-width: 640px)");
     if (mq.matches) {
-      setDim({
-        under: sectionEvents.map(() => false),
-        over: sectionEvents.map(() => false),
-      });
+      setDimUnder(sectionEvents.map(() => false));
       setPointerOverIndex(null);
       return;
     }
     const n = sectionEvents.length;
     const under = sectionEvents.map((_, i) => {
       if (i >= n - 1) return false;
-      const elNext = shellRefs.current[i + 1];
-      if (!elNext) return false;
-      return elNext.getBoundingClientRect().top < DIM_OVERLAP_PX;
+      const elPrev = cardFaceRefs.current[i];
+      const elNext = cardFaceRefs.current[i + 1];
+      if (!elPrev || !elNext) return false;
+      const pr = elPrev.getBoundingClientRect();
+      const nr = elNext.getBoundingClientRect();
+      const overlapY = Math.min(pr.bottom, nr.bottom) - Math.max(pr.top, nr.top);
+      return overlapY >= OVERLAP_FACE_MIN_PX;
     });
-    const over = sectionEvents.map((_, j) => {
-      if (j < 1) return false;
-      const el = shellRefs.current[j];
-      if (!el) return false;
-      return el.getBoundingClientRect().top < DIM_OVERLAP_PX;
-    });
-    setDim((prev) => {
+    setDimUnder((prev) => {
       if (
-        prev.under.length === under.length &&
-        prev.over.length === over.length &&
-        prev.under.every((v, j) => v === under[j]) &&
-        prev.over.every((v, j) => v === over[j])
+        prev.length === under.length &&
+        prev.every((v, j) => v === under[j])
       ) {
         return prev;
       }
-      return { under, over };
+      return under;
     });
   }, [sectionEvents]);
 
   useEffect(() => {
-    shellRefs.current.length = sectionEvents.length;
+    cardFaceRefs.current.length = sectionEvents.length;
     measureDim();
     window.addEventListener("scroll", measureDim, { passive: true });
     window.addEventListener("resize", measureDim);
@@ -99,17 +92,19 @@ function EventGridSection({
   return (
     <>
       <div
-        className="col-span-full mt-2 max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:z-auto max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent"
+        className={`col-span-full max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:z-auto max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent ${
+          groupIndex === 0 ? "mt-2" : "mt-8"
+        }`}
         style={{ zIndex: headerZ }}
       >
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 pt-6">
           <span className="type-era-label text-ds-neutral-00">{section}</span>
           <span className="h-px flex-1 bg-ds-neutral-800/80" />
         </div>
       </div>
 
       {sectionEvents.map((event, indexInSection) => {
-        const dimUnderScroll = dim.under[indexInSection];
+        const dimUnderScroll = dimUnder[indexInSection];
         const dimUnderPointer =
           pointerOverIndex !== null &&
           pointerOverIndex === indexInSection + 1;
@@ -118,11 +113,8 @@ function EventGridSection({
         return (
         <div
           key={event.id}
-          ref={(el) => {
-            shellRefs.current[indexInSection] = el;
-          }}
           className={[
-            "max-sm:sticky max-sm:h-auto max-sm:min-h-[100dvh] max-sm:bg-ds-neutral-1000 max-sm:flex max-sm:items-start max-sm:justify-center max-sm:pt-1 sm:h-full",
+            "max-sm:sticky max-sm:h-auto max-sm:min-h-[88dvh] max-sm:bg-ds-neutral-1000 max-sm:flex max-sm:items-start max-sm:justify-center max-sm:pt-1 sm:h-full",
             MOBILE_CARD_STICKY_TOP_CLASS,
             indexInSection < sectionEvents.length - 1
               ? MOBILE_CARD_OVERLAP_PULL_CLASS
@@ -134,6 +126,9 @@ function EventGridSection({
           }}
         >
           <div
+            ref={(el) => {
+              cardFaceRefs.current[indexInSection] = el;
+            }}
             className="event-grid-mobile-uniform relative w-full max-sm:max-w-[min(100%,28rem)] sm:h-full"
             onPointerEnter={() => {
               if (window.matchMedia("(min-width: 640px)").matches) return;
@@ -153,23 +148,16 @@ function EventGridSection({
               );
             }}
           >
-            {/* Card underneath: scroll stack or pointer on the next card */}
+            <div className="relative z-[2] h-full">
+              <EventCard event={event} onExplore={onExplore} />
+            </div>
+            {/* Above card: previous feels inactive once the next card enters its zone */}
             <div
-              className={`pointer-events-none absolute inset-0 z-[1] rounded-3xl bg-ds-neutral-1000/55 transition-opacity duration-300 ease-out sm:hidden ${
+              className={`pointer-events-none absolute inset-0 z-[3] rounded-3xl bg-ds-neutral-950/60 transition-opacity duration-300 ease-out sm:hidden ${
                 showUnderDim ? "opacity-100" : "opacity-0"
               }`}
               aria-hidden
             />
-            {/* This card sliding up onto the previous one */}
-            <div
-              className={`pointer-events-none absolute inset-0 z-[1] rounded-3xl bg-ds-neutral-1000/40 transition-opacity duration-300 ease-out sm:hidden ${
-                dim.over[indexInSection] ? "opacity-100" : "opacity-0"
-              }`}
-              aria-hidden
-            />
-            <div className="relative z-[2] h-full">
-              <EventCard event={event} onExplore={onExplore} />
-            </div>
           </div>
         </div>
         );

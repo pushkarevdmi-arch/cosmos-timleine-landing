@@ -138,10 +138,10 @@ function HeroFlipSegment({
 }) {
   return (
     <div
-      className="hero-flip-segment relative flex min-w-0 flex-1 select-none flex-col items-center justify-center gap-[4px] overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-2 sm:px-2 sm:py-2 md:min-h-[102px] md:rounded-2xl md:py-2"
+      className="hero-flip-segment relative flex min-w-0 min-h-0 w-full flex-1 basis-0 select-none flex-col items-center justify-center gap-[4px] overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-2 sm:px-2.5 sm:py-3.5 md:min-h-[102px] md:rounded-2xl md:py-2"
       aria-label={`${label}: ${valueText}`}
     >
-      <span className="event-card__countdown-value text-center tabular-nums tracking-tight sm:text-[30px] sm:leading-none md:text-[34px] lg:text-[32px] lg:leading-[36px]">
+      <span className="event-card__countdown-value text-center text-[24px] leading-[24px] tabular-nums sm:text-[30px] sm:leading-none md:text-[34px] lg:text-[32px] lg:leading-[36px]">
         {valueText}
       </span>
       <span className="event-card__countdown-label w-full text-center sm:text-[10px] sm:leading-none sm:tracking-[0.2em] md:text-[14px] md:leading-[16px]">
@@ -255,16 +255,16 @@ export default function HeroEvent({
   if (!displayEvent || !liveEvent) return null;
 
   return (
-    <section className="relative flex h-fit w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
+    <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
       <div
-        className={`grid w-full flex-1 gap-0 border-0 bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
+        className={`grid min-w-0 w-full flex-1 gap-0 border-0 bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
           isVisible
             ? "opacity-100 translate-y-0 blur-0"
             : "opacity-0 -translate-y-0.5 blur-[1.5px]"
         }`}
       >
         {/* Left: visual */}
-        <div className="hero-event__image-wrap relative h-[160px] min-h-[160px] overflow-hidden rounded-t-3xl rounded-b-none md:h-auto md:min-h-[220px] md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
+        <div className="hero-event__image-wrap relative h-[160px] min-h-[160px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:h-auto md:min-h-[220px] md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
           <Image
             src={displayEvent.image}
             alt={displayEvent.title}
@@ -282,11 +282,11 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className="flex h-full flex-col justify-between gap-2 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10 md:text-left"
+          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-2 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
-          <div className="flex flex-col items-center gap-1.5 md:items-start">
-            <h3 className="m-0 font-sans font-semibold text-ds-neutral-50 text-[18px] leading-[26px] sm:text-[24px] sm:leading-[32px]">
+          <div className="flex w-full min-w-0 flex-col items-center gap-2 md:items-start">
+            <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[18px] leading-[26px] sm:text-[24px] sm:leading-[32px]">
               {displayEvent.title}
             </h3>
             <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-none md:min-h-[40px]">
@@ -295,19 +295,23 @@ export default function HeroEvent({
           </div>
 
           {/* Date + countdown share one stack; adjust vertical gap between sections */}
-          <div className="mt-4 flex h-full w-full flex-col items-center gap-3 md:mt-6 md:gap-4 md:items-stretch">
-            <div className="hero-event__date-countdown flex w-full flex-col gap-2 md:gap-3">
+          <div className="mt-4 flex h-full w-full min-w-0 flex-col items-center gap-3 md:mt-6 md:gap-6 md:items-stretch">
+            <div className="hero-event__date-countdown flex w-full min-w-0 flex-col gap-2">
               {showHeroDateRow ? (
-                <div className="inline-flex items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
+                <div className="mx-1 flex flex-wrap items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
                   <span className="event-card__date-icon">
                     <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
                   </span>
-                  <div className="flex min-w-0 flex-row items-start justify-end gap-3 text-left">
+                  <div className="flex min-w-0 flex-row flex-wrap items-center justify-center gap-2 text-left md:justify-start md:gap-3">
                     <span>{formatEventDateOnlyLong(displayEvent.date)}</span>
                     {eventHasSpecificUtcTime(displayEvent.date) ? (
-                      <span className="text-[16px] leading-[20px] text-ds-neutral-500">
-                        {formatEventTimeUtcLabel(displayEvent.date)}
-                      </span>
+                      <>
+                        <span
+                          className="h-4 w-px shrink-0 bg-ds-neutral-600"
+                          aria-hidden="true"
+                        />
+                        <span>{formatEventTimeUtcLabel(displayEvent.date)}</span>
+                      </>
                     ) : null}
                   </div>
                 </div>
@@ -318,9 +322,9 @@ export default function HeroEvent({
                   This event has already occurred.
                 </p>
               ) : useMegaYearsCountdownLayout ? (
-                <div className="hero-countdown -mx-2 flex w-[calc(100%+1rem)] flex-nowrap items-stretch justify-between gap-1 sm:mx-0 sm:h-[96px] sm:w-full sm:gap-2.5 md:gap-2">
+                <div className="hero-countdown flex h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-[8px] md:justify-start">
                   <div
-                    className="relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-2 sm:px-2 sm:py-2 md:min-h-[102px] md:rounded-2xl md:py-2"
+                    className="relative flex min-h-0 min-w-0 w-full flex-1 basis-0 flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-2 sm:px-2.5 sm:py-3.5 md:min-h-[102px] md:rounded-2xl md:py-2"
                     aria-label={`${megaScale.numberPart}${megaScale.scaleWord ? ` ${megaScale.scaleWord}` : ""} years from now`}
                   >
                     <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
@@ -350,7 +354,7 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown -mx-2 flex w-[calc(100%+1rem)] flex-nowrap items-stretch justify-between gap-1 sm:mx-0 sm:h-[96px] sm:w-full sm:gap-2.5 md:gap-2">
+                <div className="hero-countdown flex h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-[8px] md:justify-start">
                   {heroCountdownSegments.map((segment) => (
                     <HeroFlipSegment
                       key={segment.label}
@@ -385,7 +389,7 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-10 pt-8 md:px-8 md:pb-6">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-950 px-5 pb-10 pt-8 md:px-8 md:pb-6">
           <div className="mb-3 min-w-0 text-center md:hidden">
             <label
               htmlFor="hero-event-time-slider"
@@ -410,16 +414,16 @@ export default function HeroEvent({
               </label>
             </div>
             <div className="flex h-full shrink-0 items-end justify-end">
-              <span className="flex items-end justify-end gap-2 pr-3 text-left align-middle font-sans text-[14px] font-semibold leading-[18px] text-ds-neutral-500">
+              <span className="flex items-end justify-end gap-2 pr-3 text-left align-middle font-sans text-[14px] font-normal leading-[18px] text-ds-neutral-500">
                 Year:{" "}
-                <span className="whitespace-nowrap text-[24px] font-bold leading-[24px] text-ds-neutral-00">
+                <span className="whitespace-nowrap font-['Dynamite'] tracking-[3px] text-[24px] font-bold leading-[24px] text-ds-neutral-00">
                   {formatEventYear(liveEvent.date)}
                 </span>
               </span>
             </div>
           </div>
           <div
-            className="hero-event-slider-wrap"
+            className="hero-event-slider-wrap min-w-0 w-full max-w-full"
             data-at-start={activeIndex === 0 ? "true" : "false"}
             style={{ "--slider-progress": `${sliderProgress}%` } as CSSProperties}
           >
@@ -442,12 +446,12 @@ export default function HeroEvent({
               aria-label="Timeline slider"
             />
           </div>
-          <div className="mt-2 hidden items-center justify-between px-3 font-sans text-[14px] leading-[20px] text-ds-neutral-500 md:flex">
-            <span className="font-semibold" style={{ color: "rgba(107, 114, 128, 1)" }}>
+          <div className="mt-1 hidden items-center justify-between px-4 font-sans text-[14px] leading-[20px] text-ds-neutral-500 md:flex">
+            <span className="font-normal" style={{ color: "rgba(107, 114, 128, 1)" }}>
               Now
             </span>
             <span
-              className="whitespace-nowrap text-right font-semibold"
+              className="whitespace-nowrap text-right font-normal"
               style={{ color: "rgba(107, 114, 128, 1)" }}
             >
               {maxEventYearLabel}

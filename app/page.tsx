@@ -675,7 +675,7 @@ export default function Home() {
         </section>
 
         {/* Events area (hero event + list) */}
-        <section className="flex-1 space-y-16">
+        <section className="min-w-0 flex-1 space-y-16">
           {viewMode === "grid" ? (
             <>
               {nextEvent && (

@@ -72,7 +72,7 @@ svg:not([class*="text-"]) {
 
 @layer components {
   .event-card {
-    @apply flex h-full w-full flex-col items-center justify-center gap-0 overflow-hidden rounded-3xl;
+    @apply flex h-full w-full max-w-full min-h-0 flex-col items-center justify-start gap-0 overflow-hidden rounded-3xl max-sm:justify-center;
     border-width: 1px;
     border-style: solid;
     border-color: var(--ds-neutral-800);
@@ -233,7 +233,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex h-full flex-1 flex-col gap-4 px-6 pb-6 pt-4 sm:px-8 sm:pb-7 sm:pt-5;
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-4 px-6 pb-6 pt-4 sm:px-8 sm:pb-7 sm:pt-5;
     background: unset;
     background-color: rgba(15, 20, 31, 1);
     width: 100%;
@@ -244,7 +244,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__title {
-    @apply m-0 text-center text-ds-neutral-50 font-semibold text-[18px] leading-[26px] sm:text-[20px] sm:leading-[28px];
+    @apply m-0 text-center text-ds-neutral-50 font-normal text-[18px] leading-[26px] sm:text-[20px] sm:leading-[28px];
   }
 
   .event-card__description {
@@ -255,24 +255,40 @@ svg:not([class*="text-"]) {
     overflow: hidden; /* hide overflowing text */
   }
 
+  /* Desktop grid: reserve two lines so short blurbs don’t shift the meta block upward */
+  @media (min-width: 640px) {
+    .event-card__description {
+      min-height: calc(2 * 1.5rem); /* 2 × line-height (24px) */
+    }
+  }
+
   .event-card__meta {
     @apply mt-auto flex w-full flex-col items-center justify-center gap-3;
   }
 
   .event-card__date {
-    @apply mt-0 mb-1 flex w-full flex-nowrap items-center justify-center gap-2 text-ds-neutral-300 text-[16px] leading-[20px];
+    @apply mt-0 mb-1 flex w-full min-w-0 justify-center;
   }
 
-  .event-card__date-main {
-    @apply flex min-w-0 items-center gap-2;
+  /* Single shrink-wrapped row, centered inside full-width .event-card__date */
+  .event-card__date-cluster {
+    @apply flex max-w-full min-w-0 flex-nowrap items-center gap-2 font-sans font-normal text-[16px] leading-[20px] text-ds-neutral-300 sm:gap-3;
+  }
+
+  .event-card__date-text-row {
+    @apply flex min-w-0 flex-nowrap items-center gap-2 sm:gap-3;
   }
 
   .event-card__date-day {
-    @apply min-w-0 whitespace-nowrap;
+    @apply min-w-0 truncate;
   }
 
   .event-card__date-time {
-    @apply shrink-0 whitespace-nowrap text-[16px] leading-[20px] text-ds-neutral-500;
+    @apply shrink-0 whitespace-nowrap text-ds-neutral-300;
+  }
+
+  .event-card__date-divider {
+    @apply h-4 w-px shrink-0 bg-ds-neutral-600;
   }
 
   .event-card__date-icon {
@@ -297,7 +313,10 @@ svg:not([class*="text-"]) {
       margin-left: -3rem;
       margin-right: -3rem;
       width: calc(100% + 6rem);
-      gap: 14px; /* 8px + 6px between date block and time */
+    }
+
+    .event-card__date-text-row {
+      gap: 14px; /* match prior spacing between date and time on narrow cards */
     }
 
     .event-card__countdown-grid {
@@ -313,7 +332,9 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-value {
-    @apply text-[20px] leading-[20px] font-bold tabular-nums text-ds-neutral-50;
+    @apply text-[24px] leading-[24px] font-bold tabular-nums text-ds-neutral-50;
+    font-family: "Dynamite", ui-sans-serif, system-ui, sans-serif;
+    letter-spacing: 3px;
   }
 
   .event-card__countdown-label {
@@ -330,18 +351,18 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-label--from-now {
-    @apply uppercase tracking-[0.22em] text-[11px] leading-[15px] sm:text-[12px] sm:leading-[16px];
+    @apply uppercase tracking-[0.22em] text-[11px] leading-[15px] sm:text-[14px] sm:leading-[16px];
   }
 
-  /* Mobile: smaller countdown captions inside event cards (YEARS / DAYS / HRS / years from now). */
+  /* Mobile: countdown captions inside event cards (YEARS / DAYS / HRS / years from now). */
   @media (max-width: 639px) {
     .event-card__countdown-label {
-      font-size: 12px;
+      font-size: 14px;
       line-height: 16px;
     }
 
     .event-card__countdown-label--from-now {
-      font-size: 12px;
+      font-size: 14px;
       line-height: 16px;
     }
   }

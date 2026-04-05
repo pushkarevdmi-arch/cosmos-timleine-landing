@@ -622,7 +622,7 @@ svg:not([class*="text-"]) {
 
   .type-button-label {
     font-family: var(--font-sans);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 16px;
     line-height: 24px;
     color: var(--ds-primary-300);

@@ -270,7 +270,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
               <img src="/icons/rocket.svg" width="20" height="20" />
             </span>
             <span className="type-button-label">
-              Explore event
+              Explore
             </span>
           </button>
         </div>

@@ -56,22 +56,98 @@ export function formatEventCalendarYearLabel(dateStr: string): string {
 
 const HERO_YEAR_PLAIN_MAX_CHARS = 20;
 
+/** Hero “Year:” + related UI: at this mega scale (9,007 Trillion CE and up) show verbal end label instead of digits. */
+export const HERO_TIMELINE_END_OF_TIME_LABEL = "End of Time";
+
+const HERO_TIMELINE_TRILLIONS_THRESHOLD = BigInt(9007);
+
+/** Calendar year (not “years until”): same Million / Billion / Trillion thresholds as {@link formatMegaYearScaleParts}. */
+function formatMegaCalendarYearScaleFromBigInt(y: bigint): {
+  numberPart: string;
+  scaleWord: string | null;
+} {
+  const yNorm = y < BigInt(0) ? BigInt(0) : y;
+  const trillion = BigInt("1000000000000");
+  const billion = BigInt("1000000000");
+  const million = BigInt("1000000");
+
+  const roundDiv = (n: bigint, d: bigint) => (n + d / BigInt(2)) / d;
+
+  const formatPart = (n: bigint) => {
+    if (n <= BigInt(Number.MAX_SAFE_INTEGER)) {
+      return Number(n).toLocaleString("en-US");
+    }
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
+  if (yNorm >= trillion) {
+    return {
+      numberPart: formatPart(roundDiv(yNorm, trillion)),
+      scaleWord: "Trillion",
+    };
+  }
+  if (yNorm >= billion) {
+    return {
+      numberPart: formatPart(roundDiv(yNorm, billion)),
+      scaleWord: "Billion",
+    };
+  }
+  if (yNorm >= million) {
+    return {
+      numberPart: formatPart(roundDiv(yNorm, million)),
+      scaleWord: "Million",
+    };
+  }
+  return { numberPart: formatPart(yNorm), scaleWord: null };
+}
+
+export type HeroTimelineYearDisplay =
+  | { kind: "mega"; numberPart: string; scaleWord: string }
+  | { kind: "plain"; text: string };
+
 /**
- * Hero timeline only: plain calendar year digits (no thousands separators).
- * When the digit string would be too long, returns a fixed human label.
+ * Hero timeline “Year:” value: plain CE year, or the same mega scale as event cards (e.g. 2 + Billion).
  */
-export function formatHeroTimelineYearLabel(dateStr: string): string {
+export function getHeroTimelineYearDisplay(dateStr: string): HeroTimelineYearDisplay {
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
-    return String(new Date(instant).getUTCFullYear());
+    return { kind: "plain", text: String(new Date(instant).getUTCFullYear()) };
   }
   const parts = parseEventYmd(dateStr);
-  if (!parts) return "—";
+  if (!parts) return { kind: "plain", text: "—" };
   const plain = formatYearDigitsPlain(parts.yStr);
-  if (plain.length <= HERO_YEAR_PLAIN_MAX_CHARS) {
-    return plain;
+  let y: bigint;
+  try {
+    y = BigInt(plain);
+  } catch {
+    return { kind: "plain", text: "—" };
   }
-  return "End of time";
+  const million = BigInt("1000000");
+  if (y < million) {
+    if (plain.length > HERO_YEAR_PLAIN_MAX_CHARS) {
+      return { kind: "plain", text: plain.slice(0, HERO_YEAR_PLAIN_MAX_CHARS) + "…" };
+    }
+    return { kind: "plain", text: plain };
+  }
+  const trillion = BigInt("1000000000000");
+  const roundToTrillions = (n: bigint) => (n + trillion / BigInt(2)) / trillion;
+  if (roundToTrillions(y) >= HERO_TIMELINE_TRILLIONS_THRESHOLD) {
+    return { kind: "plain", text: HERO_TIMELINE_END_OF_TIME_LABEL };
+  }
+  const mega = formatMegaCalendarYearScaleFromBigInt(y);
+  if (!mega.scaleWord) {
+    return { kind: "plain", text: mega.numberPart };
+  }
+  return { kind: "mega", numberPart: mega.numberPart, scaleWord: mega.scaleWord };
+}
+
+/**
+ * Hero timeline / slider end label: compact string (e.g. "2 Billion" for large calendar years).
+ */
+export function formatHeroTimelineYearLabel(dateStr: string): string {
+  const d = getHeroTimelineYearDisplay(dateStr);
+  if (d.kind === "plain") return d.text;
+  return `${d.numberPart} ${d.scaleWord}`;
 }
 
 export function parseEventYmd(dateStr: string): ParsedYmd | null {

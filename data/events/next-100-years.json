@@ -21,11 +21,6 @@
       {
         "type": "rarity",
         "label": "Rare"
-      },
-      {
-        "type": "location",
-        "label": "Europe",
-        "icon": "Europe"
       }
     ],
     "image": "/images/events/1-100-venus-jupiter-great-conjunction.jpg",
@@ -59,7 +54,7 @@
       },
       {
         "type": "location",
-        "label": "Europe, Africa, W. Asia",
+        "label": "Europe",
         "icon": "Europe"
       }
     ],
@@ -216,11 +211,6 @@
       {
         "type": "rarity",
         "label": "Extremely Rare"
-      },
-      {
-        "type": "location",
-        "label": "North America",
-        "icon": "North-America"
       }
     ],
     "image": "/images/events/1-100-great-mars-opposition.jpg",
@@ -317,8 +307,8 @@
       },
       {
         "type": "location",
-        "label": "Europe",
-        "icon": "Europe"
+        "label": "North America",
+        "icon": "North-America"
       }
     ],
     "image": "/images/events/1-100-greatest-solar-eclipse-north-america.jpg",
@@ -415,8 +405,8 @@
       },
       {
         "type": "location",
-        "label": "Pacific & North America",
-        "icon": "North-America"
+        "label": "Europe",
+        "icon": "Europe"
       }
     ],
     "image": "/images/events/1-100-greatest-solar-eclipse-europe.jpg",

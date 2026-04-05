@@ -7,8 +7,9 @@ import {
   formatCountdownDaysDisplay,
   formatEventDateOnlyLong,
   formatEventTimeUtcLabel,
-  formatHeroTimelineYearLabel,
   formatMegaYearScaleParts,
+  getHeroTimelineYearDisplay,
+  HERO_TIMELINE_END_OF_TIME_LABEL,
   getApproxYearsRemaining,
   getCountdownBreakdown,
   getEventCalendarYear,
@@ -53,6 +54,9 @@ const HIDE_HERO_DATE_SECTIONS = new Set([
   "Billions of Years",
 ]);
 
+const heroTimelineLabelFont =
+  "font-sans text-[17px] font-semibold leading-tight text-ds-neutral-00 sm:text-[24px] sm:leading-[24px]";
+
 type Countdown = {
   years: number;
   days: number;
@@ -86,10 +90,6 @@ function useCountdown(targetDate: string): Countdown {
   }, [targetDate]);
 
   return countdown;
-}
-
-function formatEventYear(dateStr: string) {
-  return formatHeroTimelineYearLabel(dateStr);
 }
 
 function isLongTermEvent(event: HeroEventData) {
@@ -239,11 +239,6 @@ export default function HeroEvent({
             { label: "DAYS" as const, value: normalizedDays },
             { label: "HRS" as const, value: countdown.hours },
           ];
-  const currentYear = new Date().getUTCFullYear();
-  const lastEventDate = sortedEvents[sortedEvents.length - 1]?.date;
-  const maxEventYearLabel = lastEventDate
-    ? formatHeroTimelineYearLabel(lastEventDate)
-    : String(currentYear);
   const sliderProgress =
     sortedEvents.length > 1 ? (activeIndex / (sortedEvents.length - 1)) * 100 : 0;
 
@@ -253,6 +248,16 @@ export default function HeroEvent({
   }, [displayEvent, onActiveEventChange]);
 
   if (!displayEvent || !liveEvent) return null;
+
+  const atTimelineEnd =
+    sortedEvents.length > 0 && activeIndex === sortedEvents.length - 1;
+  const heroTimelineYearDisplay = atTimelineEnd
+    ? ({ kind: "plain" as const, text: HERO_TIMELINE_END_OF_TIME_LABEL })
+    : getHeroTimelineYearDisplay(liveEvent.date);
+  const showHeroYearVerbalEnd =
+    atTimelineEnd ||
+    (heroTimelineYearDisplay.kind === "plain" &&
+      heroTimelineYearDisplay.text === HERO_TIMELINE_END_OF_TIME_LABEL);
 
   return (
     <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
@@ -282,7 +287,7 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-2 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10 md:text-left"
+          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-8 md:pt-10 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="flex w-full min-w-0 flex-col items-center gap-2 md:items-start">
@@ -295,7 +300,7 @@ export default function HeroEvent({
           </div>
 
           {/* Date + countdown share one stack; adjust vertical gap between sections */}
-          <div className="mt-4 flex h-full w-full min-w-0 flex-col items-center gap-3 md:mt-6 md:gap-6 md:items-stretch">
+          <div className="mt-4 flex h-full w-full min-w-0 flex-col items-center gap-2 md:mt-6 md:items-stretch">
             <div className="hero-event__date-countdown flex w-full min-w-0 flex-col gap-2">
               {showHeroDateRow ? (
                 <div className="mx-1 flex flex-wrap items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
@@ -328,7 +333,7 @@ export default function HeroEvent({
                     aria-label={`${megaScale.numberPart}${megaScale.scaleWord ? ` ${megaScale.scaleWord}` : ""} years from now`}
                   >
                     <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
-                      <span className="event-card__countdown-value event-card__countdown-value--mega tabular-nums sm:text-[24px] sm:font-semibold sm:leading-[24px] sm:tracking-[-1px] md:text-[38px] md:leading-[38px]">
+                      <span className="event-card__countdown-value event-card__countdown-value--mega tabular-nums sm:text-[24px] sm:font-semibold sm:leading-[24px] sm:tracking-[3px] md:text-[38px] md:leading-[38px]">
                         {megaScale.numberPart}
                       </span>
                       {megaScale.scaleWord ? (
@@ -381,7 +386,7 @@ export default function HeroEvent({
                 <img src="/icons/rocket.svg" width="20" height="20" />
               </span>
               <span className="type-button-label group-hover:text-[var(--ds-primary-200)]">
-                Explore event
+                Explore
               </span>
             </button>
           </div>
@@ -414,11 +419,22 @@ export default function HeroEvent({
               </label>
             </div>
             <div className="flex h-full shrink-0 items-end justify-end">
-              <span className="flex items-end justify-end gap-2 pr-3 text-left align-middle font-sans text-[14px] font-normal leading-[18px] text-ds-neutral-500">
-                Year:{" "}
-                <span className="whitespace-nowrap font-['Dynamite'] tracking-[3px] text-[24px] font-bold leading-[24px] text-ds-neutral-00">
-                  {formatEventYear(liveEvent.date)}
-                </span>
+              <span className="flex flex-wrap items-end justify-end gap-x-2 gap-y-1 pr-3 text-left align-middle font-sans text-[14px] font-normal leading-[18px] text-ds-neutral-500">
+                <span className="font-sans">Year:</span>{" "}
+                {heroTimelineYearDisplay.kind === "mega" ? (
+                  <span className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0">
+                    <span className="whitespace-nowrap font-['Dynamite'] tracking-[3px] text-[24px] font-bold leading-[24px] text-ds-neutral-00">
+                      {heroTimelineYearDisplay.numberPart}
+                    </span>
+                    <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.scaleWord}</span>
+                  </span>
+                ) : showHeroYearVerbalEnd ? (
+                  <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.text}</span>
+                ) : (
+                  <span className="whitespace-nowrap font-['Dynamite'] tracking-[3px] text-[24px] font-bold leading-[24px] text-ds-neutral-00">
+                    {heroTimelineYearDisplay.text}
+                  </span>
+                )}
               </span>
             </div>
           </div>
@@ -447,14 +463,17 @@ export default function HeroEvent({
             />
           </div>
           <div className="mt-1 hidden items-center justify-between px-4 font-sans text-[14px] leading-[20px] text-ds-neutral-500 md:flex">
-            <span className="font-normal" style={{ color: "rgba(107, 114, 128, 1)" }}>
+            <span
+              className="font-sans font-normal"
+              style={{ color: "rgba(107, 114, 128, 1)" }}
+            >
               Now
             </span>
             <span
-              className="whitespace-nowrap text-right font-normal"
+              className="whitespace-nowrap text-right font-sans font-normal"
               style={{ color: "rgba(107, 114, 128, 1)" }}
             >
-              {maxEventYearLabel}
+              {HERO_TIMELINE_END_OF_TIME_LABEL}
             </span>
           </div>
         </div>

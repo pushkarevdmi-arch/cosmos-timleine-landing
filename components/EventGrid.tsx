@@ -10,18 +10,25 @@ type EventGridProps = {
   onExplore?: (event: HeroEventData) => void;
 };
 
-/** Cards stick below expanded category bar (top-0 strip + pt-6 + label + pb-10) */
-const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[7rem]";
+/**
+ * Cards stick below the category label row (must stay in sync with section header
+ * padding: outer pt-6 + inner pt-6 + label line + pb-10).
+ */
+const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[8.25rem]";
 
 /**
  * Dim the previous card only once the next card’s face overlaps it vertically
- * by at least this many pixels (refs measure `.event-grid-mobile-uniform`, not
- * the tall sticky shell).
+ * by at least this fraction of the previous card face height (refs measure
+ * `.event-grid-mobile-uniform`, not the tall sticky shell). A low pixel
+ * threshold caused false positives on real phones (sticky stack + subpixels).
  */
-const OVERLAP_FACE_MIN_PX = 16;
+const OVERLAP_FACE_MIN_RATIO = 0.5;
 
-/** Pull following card up so it peeks below the current slide (mobile, not last in section) */
-const MOBILE_CARD_OVERLAP_PULL_CLASS = "max-sm:-mb-[22vh]";
+/**
+ * Pull following card up for stacked-scroll affordance. Too strong a pull caused
+ * cards to collide and the category bar to feel “lost” on narrow phones.
+ */
+const MOBILE_CARD_OVERLAP_PULL_CLASS = "max-sm:-mb-[14vh]";
 
 function EventGridSection({
   section,
@@ -41,7 +48,11 @@ function EventGridSection({
     sectionEvents.map(() => false)
   );
 
-  /** Mobile: index of card under pointer — previous card gets a dim */
+  /**
+   * Mobile: index of card under pointer — previous card gets a dim.
+   * Only when the device supports real hover; touch devices otherwise kept
+   * false-positive dimming from pointer events during scroll/layout.
+   */
   const [pointerOverIndex, setPointerOverIndex] = useState<number | null>(null);
 
   const measureDim = useCallback(() => {
@@ -59,8 +70,10 @@ function EventGridSection({
       if (!elPrev || !elNext) return false;
       const pr = elPrev.getBoundingClientRect();
       const nr = elNext.getBoundingClientRect();
+      const prevH = pr.height;
+      if (prevH <= 1) return false;
       const overlapY = Math.min(pr.bottom, nr.bottom) - Math.max(pr.top, nr.top);
-      return overlapY >= OVERLAP_FACE_MIN_PX;
+      return overlapY >= prevH * OVERLAP_FACE_MIN_RATIO;
     });
     setDimUnder((prev) => {
       if (
@@ -87,12 +100,13 @@ function EventGridSection({
     };
   }, [measureDim, sectionIds, sectionEvents.length]);
 
-  const headerZ = groupIndex * 1000 + 100;
+  /** Above all cards in this section (cards use +10 + index). */
+  const headerZ = groupIndex * 1000 + 500;
 
   return (
-    <>
+    <div className="col-span-full max-sm:block sm:contents">
       <div
-        className={`col-span-full max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:z-auto max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent ${
+        className={`col-span-full max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 max-sm:shadow-[0_1px_0_0_var(--ds-neutral-800)] sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
           groupIndex === 0 ? "mt-2" : "mt-8"
         }`}
         style={{ zIndex: headerZ }}
@@ -132,10 +146,12 @@ function EventGridSection({
             className="event-grid-mobile-uniform relative w-full max-sm:max-w-[min(100%,28rem)] sm:h-full"
             onPointerEnter={() => {
               if (window.matchMedia("(min-width: 640px)").matches) return;
+              if (!window.matchMedia("(hover: hover)").matches) return;
               setPointerOverIndex(indexInSection);
             }}
             onPointerLeave={(e) => {
               if (window.matchMedia("(min-width: 640px)").matches) return;
+              if (!window.matchMedia("(hover: hover)").matches) return;
               const next = e.relatedTarget;
               if (
                 next instanceof Node &&
@@ -162,7 +178,7 @@ function EventGridSection({
         </div>
         );
       })}
-    </>
+    </div>
   );
 }
 
@@ -181,17 +197,13 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
   return (
     <div className="grid items-stretch gap-0 sm:grid-cols-2 sm:gap-6">
       {groups.map(({ section, events: sectionEvents }, groupIndex) => (
-        <div
+        <EventGridSection
           key={`${section}-${sectionEvents[0]?.id ?? groupIndex}`}
-          className="contents"
-        >
-          <EventGridSection
-            section={section}
-            sectionEvents={sectionEvents}
-            groupIndex={groupIndex}
-            onExplore={onExplore}
-          />
-        </div>
+          section={section}
+          sectionEvents={sectionEvents}
+          groupIndex={groupIndex}
+          onExplore={onExplore}
+        />
       ))}
     </div>
   );

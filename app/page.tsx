@@ -775,6 +775,7 @@ export default function Home() {
 
       {selectedEvent && (
         <EventDetailsModal
+          key={selectedEvent.id}
           event={selectedEvent}
           onClose={() => setSelectedEvent(null)}
         />

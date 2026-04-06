@@ -6,7 +6,13 @@ import {
   formatEventTimeUtcLabel,
 } from "@/utils/eventDate";
 import type { HeroEventData } from "./HeroEvent";
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type TransitionEvent,
+} from "react";
 import { createPortal } from "react-dom";
 
 type EventDetailsModalProps = {
@@ -19,14 +25,43 @@ export default function EventDetailsModal({
   onClose,
 }: EventDetailsModalProps) {
   const [portalReady, setPortalReady] = useState(false);
+  const [entered, setEntered] = useState(false);
+  const [exiting, setExiting] = useState(false);
 
   useEffect(() => {
     setPortalReady(true);
   }, []);
 
+  const requestClose = useCallback(() => {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      onClose();
+      return;
+    }
+    setExiting(true);
+  }, [onClose]);
+
+  useEffect(() => {
+    const id = requestAnimationFrame(() => setEntered(true));
+    return () => cancelAnimationFrame(id);
+  }, []);
+
+  // Mobile Safari sometimes skips `transitionend` on transform; without this the portal
+  // (and dim layer on desktop) never unmounts.
+  useEffect(() => {
+    if (!exiting) return;
+    const id = window.setTimeout(() => {
+      onClose();
+    }, 360);
+    return () => window.clearTimeout(id);
+  }, [exiting, onClose]);
+
   const {
     title,
     date,
+    image,
     mainDescription,
     whyItMatters,
     whatYoullSee,
@@ -57,45 +92,74 @@ export default function EventDetailsModal({
 
   useEffect(() => {
     function handleKeyDown(e: KeyboardEvent) {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") requestClose();
     }
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [onClose]);
+  }, [requestClose]);
+
+  function handlePanelTransitionEnd(e: TransitionEvent<HTMLDivElement>) {
+    if (e.target !== e.currentTarget) return;
+    if (e.propertyName !== "transform") return;
+    if (exiting) onClose();
+  }
 
   if (!portalReady) return null;
 
+  const panelOpen = entered && !exiting;
+
   return createPortal(
-    <div className="fixed inset-0 z-[20000] flex items-center justify-center overflow-y-auto bg-ds-neutral-1000/80 px-4 py-6 backdrop-blur-sm sm:px-6 sm:py-12">
+    <div className="fixed inset-0 z-[20000]">
       <button
         type="button"
-        aria-label="Close"
-        className="absolute inset-0 h-full w-full cursor-default"
-        onClick={onClose}
+        aria-label="Close details"
+        className="absolute inset-0 hidden cursor-default bg-ds-neutral-1000/80 backdrop-blur-sm md:block"
+        onClick={requestClose}
       />
 
-      <div className="relative z-10 flex w-[calc(100vw-32px)] max-h-[calc(100dvh-48px)] max-w-[680px] flex-col overflow-hidden rounded-3xl border border-ds-neutral-800 bg-ds-neutral-950/95 shadow-xl backdrop-blur sm:w-full sm:max-h-[calc(100dvh-96px)]">
-        <div className="flex flex-col gap-4 bg-ds-neutral-900 px-8 py-8">
-          <div className="flex items-start justify-between gap-3">
-            <div className="flex min-w-0 flex-1 flex-col pl-[3px] pr-[3px] max-sm:pr-8 max-w-[560px]">
-              <h2 className="break-words font-sans text-h4-600 text-ds-neutral-50">
-                {title}
-              </h2>
-            </div>
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="event-details-title"
+        className={`absolute right-0 top-0 z-10 flex h-full w-full max-w-[680px] flex-col overflow-hidden border-l border-ds-neutral-800 bg-ds-neutral-950/95 shadow-xl backdrop-blur transition-transform duration-300 ease-out motion-reduce:transition-none ${
+          panelOpen ? "translate-x-0" : "translate-x-full"
+        }`}
+        onTransitionEnd={handlePanelTransitionEnd}
+      >
+        <div className="relative h-[220px] w-full shrink-0 overflow-hidden bg-ds-neutral-950">
+          <Image
+            src={image}
+            alt=""
+            fill
+            sizes="(max-width: 680px) 100vw, 680px"
+            className="object-cover"
+            priority
+          />
+          <div
+            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-neutral-1000/40 to-transparent"
+            aria-hidden
+          />
+          <button
+            type="button"
+            onClick={requestClose}
+            className="pointer-events-auto absolute right-4 top-4 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-ds-neutral-700/80 bg-ds-neutral-900/90 text-[24px] leading-none text-ds-neutral-100 shadow-lg backdrop-blur-sm hover:border-ds-neutral-500 hover:bg-ds-neutral-900"
+          >
+            <span className="sr-only">Close</span>
+            ×
+          </button>
+        </div>
 
-            <button
-              type="button"
-              onClick={onClose}
-              className="inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-ds-neutral-700/80 bg-ds-neutral-900 text-[24px] leading-none text-ds-neutral-400 hover:border-ds-neutral-500 hover:text-ds-neutral-100 max-sm:absolute max-sm:right-4 max-sm:top-4 max-sm:z-40 sm:static"
-            >
-              <span className="sr-only">Close</span>
-              ×
-            </button>
-          </div>
+        <div className="flex shrink-0 flex-col gap-4 px-8 pb-6 pt-8">
+          <h2
+            id="event-details-title"
+            className="break-words pl-[3px] pr-[3px] font-sans text-h4-600 text-ds-neutral-50"
+          >
+            {title}
+          </h2>
 
           <div
-            className="flex w-full flex-row flex-nowrap items-center gap-2 whitespace-nowrap sm:gap-3 type-era-label text-ds-neutral-400 pl-[3px] pr-[3px]"
+            className="flex w-full flex-row flex-nowrap items-center gap-2 whitespace-nowrap pl-[3px] pr-[3px] type-era-label text-ds-neutral-400 sm:gap-3"
             style={{
               fontFamily: "var(--font-sans)",
               fontWeight: 400,
@@ -118,8 +182,8 @@ export default function EventDetailsModal({
           </div>
         </div>
 
-        <div className="flex-1 overflow-y-auto modal-scroll">
-          <div className="flex flex-col gap-8 px-8 pt-8 pb-12 type-body-tight text-ds-neutral-200">
+        <div className="min-h-0 flex-1 overflow-y-auto modal-scroll">
+          <div className="flex flex-col gap-8 px-8 pb-12 pt-2 type-body-tight text-ds-neutral-200">
             <p className="text-[18px] leading-[26px] text-ds-neutral-300">
               {mainDescription}
             </p>
@@ -182,4 +246,3 @@ export default function EventDetailsModal({
     document.body
   );
 }
-

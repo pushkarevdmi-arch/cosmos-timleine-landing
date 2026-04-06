@@ -28,7 +28,7 @@ const OVERLAP_FACE_MIN_RATIO = 0.5;
  * Pull following card up for stacked-scroll affordance. Too strong a pull caused
  * cards to collide and the category bar to feel “lost” on narrow phones.
  */
-const MOBILE_CARD_OVERLAP_PULL_CLASS = "max-sm:-mb-[14vh]";
+const MOBILE_CARD_OVERLAP_PULL_CLASS = "";
 
 function EventGridSection({
   section,
@@ -106,14 +106,14 @@ function EventGridSection({
   return (
     <div className="col-span-full max-sm:block sm:contents">
       <div
-        className={`col-span-full max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 max-sm:shadow-[0_1px_0_0_var(--ds-neutral-800)] sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
+        className={`col-span-full max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
           groupIndex === 0 ? "mt-2" : "mt-8"
         }`}
         style={{ zIndex: headerZ }}
       >
         <div className="flex items-center gap-3 pt-6">
           <span className="type-era-label text-ds-neutral-00">{section}</span>
-          <span className="h-px flex-1 bg-ds-neutral-800/80" />
+          <span className="hidden h-px flex-1 bg-ds-neutral-800/80 sm:block" />
         </div>
       </div>
 

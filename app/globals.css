@@ -549,7 +549,6 @@ svg:not([class*="text-"]) {
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-    text-transform: uppercase;
     letter-spacing: 2px;
   }
 

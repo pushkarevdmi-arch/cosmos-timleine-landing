@@ -268,7 +268,7 @@ export default function HeroEvent({
   };
 
   return (
-    <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
+    <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] max-md:border-[var(--ds-neutral-700)] bg-ds-neutral-950">
       <div
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         className={`grid min-w-0 w-full flex-1 gap-0 border-0 bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
@@ -280,7 +280,7 @@ export default function HeroEvent({
         }`}
       >
         {/* Left: visual */}
-        <div className="hero-event__image-wrap relative h-[160px] min-h-[160px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:h-auto md:min-h-[220px] md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
+        <div className="hero-event__image-wrap relative h-[200px] min-h-[200px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:h-auto md:min-h-[220px] md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none">
           <Image
             src={displayEvent.image}
             alt={displayEvent.title}
@@ -298,11 +298,11 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-6 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-12 md:pb-6 md:pt-10 md:text-left"
+          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-10 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-12 md:pb-6 md:pt-10 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="flex w-full min-w-0 flex-col items-center gap-2 md:items-start">
-            <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[18px] leading-[26px] sm:text-[24px] sm:leading-[32px]">
+            <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[20px] leading-[28px] sm:text-[24px] sm:leading-[32px]">
               {displayEvent.title}
             </h3>
             <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-none md:min-h-[40px]">
@@ -394,7 +394,7 @@ export default function HeroEvent({
                 e.stopPropagation();
                 onExplore?.(displayEvent);
               }}
-              className="group mt-3 inline-flex cursor-pointer items-center justify-center gap-1.5 md:justify-start md:self-start"
+              className="group mt-3 hidden cursor-pointer items-center justify-center gap-1.5 md:inline-flex md:justify-start md:self-start"
             >
               <span className="event-card__explore-icon">
                 <img src="/icons/rocket.svg" width="20" height="20" />

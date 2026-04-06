@@ -87,6 +87,12 @@ svg:not([class*="text-"]) {
     transition: border-color 180ms ease;
   }
 
+  @media (max-width: 767px) {
+    .event-card {
+      border-color: var(--ds-neutral-700);
+    }
+  }
+
   .event-card--interactive {
     cursor: pointer;
   }
@@ -241,7 +247,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-6 pb-6 pt-4 sm:px-8 sm:pb-7 sm:pt-5;
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-6 pb-10 pt-4 sm:px-8 sm:pb-7 sm:pt-5;
     background: unset;
     background-color: rgba(15, 20, 31, 1);
     width: 100%;
@@ -259,7 +265,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__title {
-    @apply m-0 text-center text-ds-neutral-50 font-normal text-[18px] leading-[26px] sm:text-[20px] sm:leading-[28px];
+    @apply m-0 text-center text-ds-neutral-50 font-normal text-[20px] leading-[28px];
   }
 
   .event-card__description {

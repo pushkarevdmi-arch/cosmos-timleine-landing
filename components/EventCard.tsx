@@ -268,7 +268,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
 
           <button
             type="button"
-            className="event-card__explore"
+            className="event-card__explore hidden sm:inline-flex"
             onClick={(e) => {
               e.stopPropagation();
               onExplore?.(event);

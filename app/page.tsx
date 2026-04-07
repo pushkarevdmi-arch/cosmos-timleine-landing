@@ -408,7 +408,7 @@ export default function Home() {
           <div className="relative w-full overflow-hidden rounded-3xl border-2 border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
             <video
               className="block h-[220px] w-full object-cover sm:h-[300px] lg:h-[200px]"
-              src="/videos/hero-video3.mp4"
+              src="/videos/hero-video-main.mp4"
               autoPlay
               loop
               muted

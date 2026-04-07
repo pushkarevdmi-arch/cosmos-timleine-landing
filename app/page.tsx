@@ -370,9 +370,9 @@ export default function Home() {
       <div className="pointer-events-none fixed inset-0 -z-10 bg-ds-neutral-1000" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-60 [background-image:radial-gradient(circle_at_top,_rgba(59,130,246,0.32),_transparent_55%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.3),_transparent_55%),radial-gradient(circle_at_80%_30%,rgba(236,72,153,0.28),_transparent_60%)]" />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-10 xl:max-w-[min(84rem,calc(100vw-6rem))]">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-[104px] flex flex-col items-center justify-center sm:mb-16">
+        <header className="mb-[144px] flex flex-col items-center justify-center sm:mb-[104px]">
           <div className="flex items-center gap-3">
             <Image
               src="/logo.svg"
@@ -390,7 +390,7 @@ export default function Home() {
             <h1 className="font-sans text-h1-400 text-ds-neutral-50 w-full text-center">
               Journey{" "}
               <span
-                className="font-dynamite"
+                className="font-dynamite leading-[40px] h-[40px] inline-block"
                 style={{ fontFamily: "Dynamite" }}
               >
                 Into
@@ -404,10 +404,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mb-32 w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] lg:mb-32">
-          <div className="relative w-full overflow-hidden rounded-3xl border-2 border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
+        <section className="mb-32 h-[240px] w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] lg:mb-32">
+          <div className="relative h-[240px] w-full overflow-hidden rounded-3xl border-2 border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
             <video
-              className="block h-[220px] w-full object-cover sm:h-[300px] lg:h-[200px]"
+              className="block h-[240px] w-full object-cover"
               src="/videos/hero-video2.mp4"
               autoPlay
               loop

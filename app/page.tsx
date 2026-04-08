@@ -365,7 +365,7 @@ export default function Home() {
     selectedTimeRange !== "all" || selectedTags.length > 0;
 
   return (
-    <div className="min-h-screen bg-ds-neutral-1000 px-20 text-ds-neutral-100">
+    <div className="min-h-screen bg-ds-neutral-1000 px-0 text-ds-neutral-100">
       {/* Cosmic background */}
       <div className="pointer-events-none fixed inset-0 -z-10 bg-ds-neutral-1000" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-60 [background-image:radial-gradient(circle_at_top,_rgba(59,130,246,0.32),_transparent_55%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.3),_transparent_55%),radial-gradient(circle_at_80%_30%,rgba(236,72,153,0.28),_transparent_60%)]" />

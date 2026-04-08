@@ -12,9 +12,9 @@ type EventGridProps = {
 
 /**
  * Cards stick below the category label row (must stay in sync with section header
- * padding: outer pt-6 + inner pt-6 + label line + pb-10).
+ * padding: outer pt-6 + inner pt-6 + label line + pb-6).
  */
-const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[8.25rem]";
+const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[7.25rem]";
 
 /**
  * Dim the previous card only once the next card’s face overlaps it vertically
@@ -106,7 +106,7 @@ function EventGridSection({
   return (
     <div className="col-span-full max-sm:block sm:contents">
       <div
-        className={`col-span-full max-sm:-mx-4 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-10 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
+        className={`col-span-full max-sm:mx-0 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-6 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
           groupIndex === 0 ? "mt-2" : "mt-8"
         }`}
         style={{ zIndex: headerZ }}

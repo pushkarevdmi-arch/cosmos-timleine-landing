@@ -372,7 +372,7 @@ export default function Home() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-[144px] flex flex-col items-center justify-center sm:mb-[104px]">
+        <header className="mb-[120px] flex flex-col items-center justify-center sm:mb-[104px]">
           <div className="flex items-center gap-3">
             <Image
               src="/logo.svg"
@@ -387,7 +387,7 @@ export default function Home() {
         {/* Hero heading */}
         <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
           <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
-            <h1 className="font-sans text-h1-400 leading-[48px] text-ds-neutral-50 w-full text-center">
+            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] text-ds-neutral-50 w-full text-center">
               Journey{" "}
               <span
                 className="font-dynamite leading-[40px] h-[40px] inline-block"
@@ -723,50 +723,45 @@ export default function Home() {
         </section>
 
         <footer className="mt-14 font-sans sm:mt-16">
-          <div className="relative overflow-hidden rounded-2xl border border-ds-neutral-800 bg-gradient-to-b from-ds-neutral-900/90 to-ds-neutral-950 px-5 py-8 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.04)] sm:rounded-3xl sm:px-8 sm:py-10">
+          <div className="relative overflow-hidden rounded-2xl border border-ds-neutral-800 bg-ds-neutral-950 px-5 py-8 text-left sm:rounded-3xl sm:px-8 sm:py-10">
             <div
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ds-primary-400/40 to-transparent"
               aria-hidden
             />
             <div className="relative flex flex-col gap-8">
-              <div>
-                <p className="max-w-2xl text-[17px] font-medium leading-7 text-ds-neutral-100 sm:text-lg sm:leading-8">
-                  Inspired by real astronomy and long-range cosmology.
-                </p>
-              </div>
-
-              <div className="max-w-2xl space-y-3 text-body-medium-400 text-ds-neutral-400">
-                <p>
-                  Created with passion by{" "}
-                  <span className="font-medium text-ds-neutral-200">
-                    Dmitri Pushkarev
-                  </span>{" "}
-                  — an independent astronomy enthusiast.
-                  <br />
-                  This project is a non-commercial labor of love.
-                </p>
-                <div className="flex flex-col gap-3 pt-1">
-                  <p className="text-[17px] text-ds-neutral-400">
-                    If you enjoy the site and want to support its development,
-                    you can
+              <div className="flex w-full flex-col gap-8 lg:flex-row lg:items-end lg:justify-end lg:gap-10">
+                <div className="flex min-w-0 w-full flex-col gap-4 text-body-medium-400 text-ds-neutral-400">
+                  <Image
+                    src="/logo.svg"
+                    alt="Cosmic Timeline logo"
+                    width={240}
+                    height={32}
+                    className="h-8 w-fit shrink-0"
+                  />
+                  <p className="max-w-md">
+                    This project is a non-commercial labor of love.
                   </p>
+                </div>
+                <div className="flex min-w-0 w-full flex-col gap-3 lg:max-w-sm lg:items-end lg:text-right">
                   <a
                     href={BUY_ME_A_COFFEE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-ds-primary-400/40 bg-ds-primary-400/10 px-5 py-2.5 text-sm font-semibold text-ds-primary-300 transition hover:border-ds-primary-400/70 hover:bg-ds-primary-400/15 hover:text-ds-primary-200 sm:w-auto sm:self-start"
+                    className="inline-flex w-full items-center justify-center rounded-full border border-ds-primary-400/40 bg-ds-primary-400/10 px-10 py-3.5 text-base font-semibold text-ds-primary-300 transition hover:border-ds-primary-400/70 hover:bg-ds-primary-400/15 hover:text-ds-primary-200 sm:w-auto sm:self-start lg:self-end"
                   >
                     Buy me a coffee
-                    <span className="text-base leading-none opacity-80" aria-hidden>
-                      ↗
-                    </span>
                   </a>
                 </div>
               </div>
 
-              <div className="rounded-xl border border-ds-neutral-850 bg-ds-neutral-950/70 px-4 py-3.5 text-[13px] leading-relaxed text-ds-neutral-600 sm:px-5">
-                All times and distances are approximate and simplified for an
-                immersive experience.
+              <div className="flex w-full flex-col gap-3 rounded-xl bg-ds-neutral-900 px-4 py-3.5 text-[13px] leading-relaxed text-white sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5">
+                <p className="min-w-0 text-left">
+                  All times and distances are approximate and simplified for an
+                  immersive experience.
+                </p>
+                <p className="shrink-0 self-end text-ds-neutral-400 sm:self-auto sm:text-right">
+                  Created by Dmitri Pushkarev
+                </p>
               </div>
             </div>
           </div>

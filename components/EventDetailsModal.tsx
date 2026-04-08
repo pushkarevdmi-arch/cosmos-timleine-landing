@@ -58,6 +58,46 @@ export default function EventDetailsModal({
     return () => window.clearTimeout(id);
   }, [exiting, onClose]);
 
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollY = window.scrollY;
+
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    const prevBodyPosition = body.style.position;
+    const prevBodyTop = body.style.top;
+    const prevBodyLeft = body.style.left;
+    const prevBodyRight = body.style.right;
+    const prevBodyWidth = body.style.width;
+    const prevBodyPaddingRight = body.style.paddingRight;
+
+    const scrollbarW = window.innerWidth - html.clientWidth;
+
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    if (scrollbarW > 0) {
+      body.style.paddingRight = `${scrollbarW}px`;
+    }
+
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      body.style.overflow = prevBodyOverflow;
+      body.style.position = prevBodyPosition;
+      body.style.top = prevBodyTop;
+      body.style.left = prevBodyLeft;
+      body.style.right = prevBodyRight;
+      body.style.width = prevBodyWidth;
+      body.style.paddingRight = prevBodyPaddingRight;
+      window.scrollTo(0, scrollY);
+    };
+  }, []);
+
   const {
     title,
     date,
@@ -127,7 +167,7 @@ export default function EventDetailsModal({
         }`}
         onTransitionEnd={handlePanelTransitionEnd}
       >
-        <div className="relative h-[220px] w-full shrink-0 overflow-hidden bg-ds-neutral-950">
+        <div className="relative h-[200px] w-full shrink-0 overflow-hidden bg-ds-neutral-950 sm:h-[220px]">
           <Image
             src={image}
             alt=""
@@ -150,40 +190,40 @@ export default function EventDetailsModal({
           </button>
         </div>
 
-        <div className="flex shrink-0 flex-col gap-4 px-8 pb-6 pt-8">
-          <h2
-            id="event-details-title"
-            className="break-words pl-[3px] pr-[3px] font-sans text-h4-600 text-ds-neutral-50"
-          >
-            {title}
-          </h2>
-
-          <div
-            className="flex w-full flex-row flex-nowrap items-center gap-2 whitespace-nowrap pl-[3px] pr-[3px] type-era-label text-ds-neutral-400 sm:gap-3"
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontWeight: 400,
-              fontSize: "14px",
-              lineHeight: "18px",
-            }}
-          >
-            <span>{formatEventDateOnlyLong(date)}</span>
-            {eventHasSpecificUtcTime(date) ? (
-              <>
-                <span
-                  aria-hidden="true"
-                  className="h-[14px] w-px self-center bg-ds-neutral-700"
-                />
-                <span className="text-ds-neutral-500">
-                  {formatEventTimeUtcLabel(date)}
-                </span>
-              </>
-            ) : null}
-          </div>
-        </div>
-
         <div className="min-h-0 flex-1 overflow-y-auto modal-scroll">
-          <div className="flex flex-col gap-8 px-8 pb-12 pt-2 type-body-tight text-ds-neutral-200">
+          <div className="flex flex-col gap-8 px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
+            <div className="flex flex-col gap-4">
+              <h2
+                id="event-details-title"
+                className="break-words pl-[3px] pr-[3px] font-sans text-h4-600 text-ds-neutral-50"
+              >
+                {title}
+              </h2>
+
+              <div
+                className="flex w-full flex-row flex-nowrap items-center gap-2 whitespace-nowrap pl-[3px] pr-[3px] type-era-label text-ds-neutral-400 sm:gap-3"
+                style={{
+                  fontFamily: "var(--font-sans)",
+                  fontWeight: 400,
+                  fontSize: "14px",
+                  lineHeight: "18px",
+                }}
+              >
+                <span>{formatEventDateOnlyLong(date)}</span>
+                {eventHasSpecificUtcTime(date) ? (
+                  <>
+                    <span
+                      aria-hidden="true"
+                      className="h-[14px] w-px self-center bg-ds-neutral-700"
+                    />
+                    <span className="text-ds-neutral-500">
+                      {formatEventTimeUtcLabel(date)}
+                    </span>
+                  </>
+                ) : null}
+              </div>
+            </div>
+
             <p className="text-[18px] leading-[26px] text-ds-neutral-300">
               {mainDescription}
             </p>

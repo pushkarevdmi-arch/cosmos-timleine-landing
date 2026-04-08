@@ -387,7 +387,7 @@ export default function Home() {
         {/* Hero heading */}
         <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
           <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
-            <h1 className="font-sans text-h1-400 leading-[40px] text-ds-neutral-50 w-full text-center">
+            <h1 className="font-sans text-h1-400 leading-[48px] text-ds-neutral-50 w-full text-center">
               Journey{" "}
               <span
                 className="font-dynamite leading-[40px] h-[40px] inline-block"
@@ -404,10 +404,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mb-32 h-[240px] w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] lg:mb-32">
-          <div className="relative h-[240px] w-full overflow-hidden rounded-3xl border-2 border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
+        <section className="mb-32 h-[220px] w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] lg:mb-32">
+          <div className="relative h-[220px] w-full overflow-hidden rounded-3xl border-2 border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
             <video
-              className="block h-[240px] w-full object-cover"
+              className="block h-[220px] w-full object-cover"
               src="/videos/hero-video-main_3.mp4"
               autoPlay
               loop

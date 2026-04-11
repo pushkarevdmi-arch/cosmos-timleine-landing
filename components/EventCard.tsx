@@ -172,7 +172,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                   >
                     <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
                       <img
-                        src="/icons/gg_calendar.svg"
+                        src="/icons/calendar.svg"
                         width={22}
                         height={22}
                         alt=""

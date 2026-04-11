@@ -2,24 +2,40 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+export const PRELOADER_EXIT_EVENT = "cosmos-preloader-exit-start";
+
+const pad2 = (n: number) => n.toString().padStart(2, "0");
+
+function splitHms(totalSeconds: number) {
+  const h = Math.floor(totalSeconds / 3600);
+  const m = Math.floor((totalSeconds % 3600) / 60);
+  const s = totalSeconds % 60;
+  return { h, m, s };
+}
+
 type NumericPreloaderProps = {
   /**
-   * Длительность анимации от `0%` до `100%` (мс).
+   * Длительность «открутки» таймера от 00:01:59 к 00:00:00 (мс), как раньше у полосы 0→100%.
    */
   rampUpMs?: number;
   /**
-   * Максимальное время (мс), после которого прелоадер всё равно спрячется (защита от зависаний).
+   * Максимальное время (мс), после которого считаем загрузку завершённой, если `load` не пришёл.
    */
   maxWaitMs?: number;
+  /**
+   * Стартовое значение обратного отсчёта в секундах (119 = 00:01:59).
+   */
+  initialSeconds?: number;
 };
 
 export default function NumericPreloader({
   rampUpMs = 2000,
   maxWaitMs = 2000,
+  initialSeconds = 119,
 }: NumericPreloaderProps) {
   const [isExiting, setIsExiting] = useState(false);
   const [shouldRender, setShouldRender] = useState(true);
-  const [progress, setProgress] = useState(0);
+  const [remainingSec, setRemainingSec] = useState(initialSeconds);
   const [animationDone, setAnimationDone] = useState(false);
   const [loadDone, setLoadDone] = useState(false);
 
@@ -29,9 +45,10 @@ export default function NumericPreloader({
   }, []);
 
   useEffect(() => {
-    const exitAfterMs = 200;
+    const exitAfterMs = 320;
 
     if (!isExiting) return;
+    window.dispatchEvent(new CustomEvent(PRELOADER_EXIT_EVENT));
     const t = window.setTimeout(() => setShouldRender(false), exitAfterMs);
     return () => window.clearTimeout(t);
   }, [isExiting]);
@@ -44,10 +61,9 @@ export default function NumericPreloader({
 
   useEffect(() => {
     if (reducedMotion) {
-      // При reduced motion просто быстро покажем 100% и скроем.
       let loadDoneTimeout: number | undefined;
       const t = window.setTimeout(() => {
-        setProgress(100);
+        setRemainingSec(0);
         setAnimationDone(true);
         loadDoneTimeout = window.setTimeout(() => {
           setLoadDone(true);
@@ -59,7 +75,6 @@ export default function NumericPreloader({
       };
     }
 
-    const startedAt = Date.now();
     let fallbackId: number | null = null;
     let rafId: number | null = null;
 
@@ -70,8 +85,11 @@ export default function NumericPreloader({
       const elapsedMs = now - frameStart;
       const ratio = Math.min(1, elapsedMs / rampUpMs);
       const eased = easeOutCubic(ratio);
-      const next = Math.max(0, Math.min(100, Math.round(eased * 100)));
-      setProgress(next);
+      const nextSec = Math.max(
+        0,
+        Math.min(initialSeconds, Math.floor(initialSeconds * (1 - eased))),
+      );
+      setRemainingSec(nextSec);
 
       if (ratio >= 1) {
         setAnimationDone(true);
@@ -88,8 +106,6 @@ export default function NumericPreloader({
     };
 
     window.addEventListener("load", handleLoad, { once: true });
-
-    // Если `load` по какой-то причине не сработает, всё равно уберём оверлей.
     fallbackId = window.setTimeout(() => handleLoad(), maxWaitMs);
 
     if (document.readyState === "complete") handleLoad();
@@ -99,25 +115,46 @@ export default function NumericPreloader({
       if (fallbackId) window.clearTimeout(fallbackId);
       window.removeEventListener("load", handleLoad);
     };
-  }, [maxWaitMs, rampUpMs, reducedMotion]);
+  }, [initialSeconds, maxWaitMs, rampUpMs, reducedMotion]);
 
   if (!shouldRender) return null;
 
+  const { h, m, s } = splitHms(remainingSec);
+
   return (
     <div
+      aria-busy="true"
       aria-label="Loading"
       role="progressbar"
-      aria-valuenow={progress}
+      aria-valuenow={initialSeconds - remainingSec}
       aria-valuemin={0}
-      aria-valuemax={100}
-      className={`fixed inset-0 z-[9999] flex items-center justify-center bg-ds-neutral-1000 text-ds-neutral-50 transition-opacity duration-200 ${
+      aria-valuemax={initialSeconds}
+      className={`flex items-center justify-center text-white transition-opacity duration-300 ease-out ${
         isExiting ? "opacity-0" : "opacity-100"
       }`}
+      style={{
+        position: "fixed",
+        left: 0,
+        top: 0,
+        right: 0,
+        bottom: 0,
+        width: "100%",
+        minHeight: "100dvh",
+        margin: 0,
+        backgroundColor: "#000000",
+        zIndex: 2147483646,
+      }}
     >
-      <div className="tabular-nums font-dynamite text-[64px] leading-[64px]">
-        {progress}%
+      <div
+        className="inline-flex items-baseline gap-x-2 font-departure-mono tabular-nums text-[clamp(1.625rem,7vw,3.375rem)] leading-none tracking-wide [font-variant-numeric:slashed-zero]"
+        aria-hidden="true"
+      >
+        <span className="text-white">{pad2(h)}</span>
+        <span className="px-1 text-ds-neutral-400">:</span>
+        <span className="text-white">{pad2(m)}</span>
+        <span className="px-1 text-ds-neutral-400">:</span>
+        <span className="text-white">{pad2(s)}</span>
       </div>
     </div>
   );
 }
-

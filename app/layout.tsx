@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import ContentReveal from "@/components/ContentReveal";
 import NumericPreloader from "@/components/NumericPreloader";
 
 const interTight = localFont({
@@ -46,7 +47,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${interTight.className} ${interTight.variable} antialiased`}>
         <NumericPreloader />
-        {children}
+        <ContentReveal>{children}</ContentReveal>
       </body>
     </html>
   );

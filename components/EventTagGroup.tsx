@@ -29,7 +29,7 @@ export default function EventTagGroup({
   specialTags = [],
 }: EventTagGroupProps) {
   return (
-    <div className="event-card__badge-row">
+    <div className="event-tag-group event-card__badge-row">
       <div className="event-card__category">{primaryTag}</div>
       {specialTags.map((tag) => {
         // Skip location tags that describe multiple broad regions (e.g. "Europe, Africa, W. Asia"),

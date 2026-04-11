@@ -1,6 +1,13 @@
 "use client";
 import Image from "next/image";
-import { type CSSProperties, type MouseEvent, useEffect, useMemo, useState } from "react";
+import {
+  type CSSProperties,
+  type KeyboardEvent,
+  type MouseEvent,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import {
   compareEventDateStrings,
   eventHasSpecificUtcTime,
@@ -53,6 +60,9 @@ const HIDE_HERO_DATE_SECTIONS = new Set([
   "Millions of Years",
   "Billions of Years",
 ]);
+
+/** Decorative ticks under the hero timeline track (not tied to event count). */
+const HERO_TIMELINE_SLIDER_TICKS = 18;
 
 const heroTimelineLabelFont =
   "font-sans text-[17px] font-semibold leading-tight text-ds-neutral-00 sm:text-[24px] sm:leading-[24px]";
@@ -138,7 +148,7 @@ function HeroFlipSegment({
 }) {
   return (
     <div
-      className="hero-flip-segment relative flex min-w-0 min-h-0 w-full flex-1 basis-0 select-none flex-col items-center justify-center gap-[4px] overflow-hidden rounded-2xl border border-[var(--ds-neutral-850)] bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-1 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:rounded-2xl md:py-4"
+      className="hero-flip-segment relative flex min-w-0 min-h-0 w-full flex-1 basis-0 select-none flex-col items-center justify-center gap-[4px] overflow-hidden rounded-2xl border-0 bg-ds-neutral-950 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-1 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:rounded-2xl md:py-4"
       aria-label={`${label}: ${valueText}`}
     >
       <span className="event-card__countdown-value text-center text-[20px] leading-[20px] tabular-nums sm:text-[30px] sm:leading-none md:text-[34px] lg:text-[32px] lg:leading-[36px]">
@@ -261,18 +271,33 @@ export default function HeroEvent({
 
   const handleHeroMainAreaClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!onExplore) return;
-    if (!window.matchMedia("(max-width: 767px)").matches) return;
     const t = e.target as HTMLElement;
-    if (t.closest("button, a, [role='button']")) return;
+    // Ignore real controls inside the hero. Do not use `[role='button']` alone: this grid has
+    // role="button", so closest() would always match and block opening the details panel.
+    const innerInteractive = t.closest(
+      "button, a, input, select, textarea, [role='button']"
+    );
+    if (innerInteractive && innerInteractive !== e.currentTarget) return;
     onExplore(displayEvent);
+  };
+
+  const handleHeroMainAreaKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (!onExplore) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      onExplore(displayEvent);
+    }
   };
 
   return (
     <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col overflow-hidden rounded-3xl border border-[var(--ds-neutral-800)] bg-ds-neutral-950">
       <div
+        role={onExplore ? "button" : undefined}
+        tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
+        onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
         className={`grid min-w-0 w-full flex-1 gap-0 border-0 bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[minmax(0,1.05fr)_minmax(0,1.6fr)] ${
-          onExplore ? "max-md:cursor-pointer" : ""
+          onExplore ? "hero-event--interactive cursor-pointer" : ""
         } ${
           isVisible
             ? "opacity-100 translate-y-0 blur-0"
@@ -298,11 +323,11 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-10 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:pl-12 md:pr-20 md:pb-6 md:pt-10 md:text-left"
+          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-12 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:pl-12 md:pr-20 md:pb-12 md:pt-12 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="flex w-full min-w-0 flex-col items-center gap-2 md:items-start">
-            <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[20px] leading-[28px] sm:text-[24px] sm:leading-[32px]">
+            <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[20px] leading-[28px] sm:text-[28px] sm:leading-[32px]">
               {displayEvent.title}
             </h3>
             <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-none md:min-h-[40px]">
@@ -312,21 +337,36 @@ export default function HeroEvent({
 
           {/* Date + countdown share one stack; adjust vertical gap between sections */}
           <div className="mt-8 flex h-full w-full min-w-0 flex-col items-center gap-2 md:mt-6 md:items-stretch">
-            <div className="hero-event__date-countdown flex w-full min-w-0 flex-col gap-2">
+            <div className="hero-event__date-countdown flex w-full min-w-0 flex-col gap-3">
               {showHeroDateRow ? (
-                <div className="mx-1 flex flex-wrap items-center justify-center gap-2 type-body-tight text-ds-neutral-300 md:justify-start">
-                  <span className="event-card__date-icon">
-                    <img src="/icons/gg_calendar.svg" width="24" height="24" alt="" aria-hidden />
-                  </span>
-                  <div className="flex min-w-0 flex-row flex-wrap items-center justify-center gap-2 text-left md:justify-start md:gap-3">
-                    <span>{formatEventDateOnlyLong(displayEvent.date)}</span>
+                <div className="mr-5 flex h-10 w-fit max-w-full justify-center md:justify-start">
+                  <div
+                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-5 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-5 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    role="group"
+                    aria-label={`Event date${eventHasSpecificUtcTime(displayEvent.date) ? " and time" : ""}`}
+                  >
+                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
+                      <img
+                        src="/icons/gg_calendar.svg"
+                        width={22}
+                        height={22}
+                        alt=""
+                        aria-hidden
+                        className="h-full w-full object-contain brightness-0 invert opacity-90"
+                      />
+                    </span>
+                    <span className="min-w-0 truncate font-departure-mono">
+                      {formatEventDateOnlyLong(displayEvent.date)}
+                    </span>
                     {eventHasSpecificUtcTime(displayEvent.date) ? (
                       <>
                         <span
-                          className="h-4 w-px shrink-0 bg-ds-neutral-600"
+                          className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
                           aria-hidden="true"
                         />
-                        <span>{formatEventTimeUtcLabel(displayEvent.date)}</span>
+                        <span className="shrink-0 whitespace-nowrap font-departure-mono">
+                          {formatEventTimeUtcLabel(displayEvent.date)}
+                        </span>
                       </>
                     ) : null}
                   </div>
@@ -387,22 +427,6 @@ export default function HeroEvent({
                 </div>
               )}
             </div>
-
-            <button
-              type="button"
-              onClick={(e) => {
-                e.stopPropagation();
-                onExplore?.(displayEvent);
-              }}
-              className="group mt-3 hidden cursor-pointer items-center justify-center gap-1.5 md:inline-flex md:justify-start md:self-start"
-            >
-              <span className="event-card__explore-icon">
-                <img src="/icons/rocket.svg" width="20" height="20" />
-              </span>
-              <span className="type-button-label group-hover:text-[var(--ds-primary-200)]">
-                Explore
-              </span>
-            </button>
           </div>
         </div>
       </div>
@@ -434,10 +458,10 @@ export default function HeroEvent({
             </div>
             <div className="flex h-full shrink-0 items-end justify-end">
               <span className="flex flex-wrap items-end justify-end gap-x-2 gap-y-1 pr-3 text-left align-middle font-sans text-[14px] font-normal leading-[18px] text-ds-neutral-500">
-                <span className="font-sans">Year:</span>{" "}
+                <span className="font-departure-mono">Year:</span>{" "}
                 {heroTimelineYearDisplay.kind === "mega" ? (
                   <span className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0">
-                    <span className="whitespace-nowrap font-['Dynamite'] tracking-[3px] text-[24px] font-bold leading-[24px] text-ds-neutral-00">
+                    <span className="whitespace-nowrap font-departure-mono tracking-[1px] text-[24px] !font-bold leading-[24px] text-ds-neutral-00">
                       {heroTimelineYearDisplay.numberPart}
                     </span>
                     <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.scaleWord}</span>
@@ -445,7 +469,7 @@ export default function HeroEvent({
                 ) : showHeroYearVerbalEnd ? (
                   <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.text}</span>
                 ) : (
-                  <span className="whitespace-nowrap font-['Dynamite'] tracking-[3px] text-[24px] font-bold leading-[24px] text-ds-neutral-00">
+                  <span className="whitespace-nowrap font-departure-mono tracking-[1px] text-[24px] !font-bold leading-[24px] text-ds-neutral-00">
                     {heroTimelineYearDisplay.text}
                   </span>
                 )}
@@ -459,7 +483,7 @@ export default function HeroEvent({
           >
             <div aria-hidden="true" className="hero-event-slider-visual" />
             <div aria-hidden="true" className="hero-event-slider-dots">
-              {Array.from({ length: 12 }).map((_, index) => (
+              {Array.from({ length: HERO_TIMELINE_SLIDER_TICKS }).map((_, index) => (
                 <span key={index} className="hero-event-slider-dot" />
               ))}
             </div>
@@ -476,15 +500,15 @@ export default function HeroEvent({
               aria-label="Timeline slider"
             />
           </div>
-          <div className="mt-1 hidden items-center justify-between px-4 font-sans text-[14px] leading-[20px] text-ds-neutral-500 md:flex">
+          <div className="mt-1 hidden items-center justify-between px-4 font-departure-mono text-[14px] leading-[20px] text-ds-neutral-500 md:flex">
             <span
-              className="font-sans font-normal"
+              className="font-departure-mono font-normal"
               style={{ color: "rgba(107, 114, 128, 1)" }}
             >
               Now
             </span>
             <span
-              className="whitespace-nowrap text-right font-sans font-normal"
+              className="whitespace-nowrap text-right font-departure-mono font-normal"
               style={{ color: "rgba(107, 114, 128, 1)" }}
             >
               {HERO_TIMELINE_END_OF_TIME_LABEL}

@@ -330,25 +330,26 @@ export function formatMegaYearScaleParts(years: number): {
   scaleWord: string | null;
 } {
   const y = Math.max(0, Math.floor(years));
+  const n = (v: number) => v.toLocaleString("en-US", { useGrouping: false });
   if (y >= 1_000_000_000_000) {
     return {
-      numberPart: Math.round(y / 1_000_000_000_000).toLocaleString("en-US"),
+      numberPart: n(Math.round(y / 1_000_000_000_000)),
       scaleWord: "Trillion",
     };
   }
   if (y >= 1_000_000_000) {
     return {
-      numberPart: Math.round(y / 1_000_000_000).toLocaleString("en-US"),
+      numberPart: n(Math.round(y / 1_000_000_000)),
       scaleWord: "Billion",
     };
   }
   if (y >= 1_000_000) {
     return {
-      numberPart: Math.round(y / 1_000_000).toLocaleString("en-US"),
+      numberPart: n(Math.round(y / 1_000_000)),
       scaleWord: "Million",
     };
   }
-  return { numberPart: y.toLocaleString("en-US"), scaleWord: null };
+  return { numberPart: n(y), scaleWord: null };
 }
 
 /**

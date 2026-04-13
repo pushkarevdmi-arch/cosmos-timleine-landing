@@ -323,11 +323,11 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-4 rounded-3xl px-6 pb-12 pt-7 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:pl-12 md:pr-20 md:pb-12 md:pt-12 md:text-left"
+          className="flex h-full min-w-0 max-w-full flex-col justify-between gap-2 rounded-3xl px-6 pb-12 pt-8 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:pl-12 md:pr-20 md:pb-12 md:pt-12 md:text-left"
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="flex w-full min-w-0 flex-col items-center gap-2 md:items-start">
-            <h3 className="m-0 max-w-full break-words font-sans font-normal text-ds-neutral-50 text-[20px] leading-[28px] sm:text-[28px] sm:leading-[32px]">
+            <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[28px] sm:text-[28px] sm:leading-[32px] md:font-normal">
               {displayEvent.title}
             </h3>
             <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-none md:min-h-[40px]">
@@ -352,7 +352,7 @@ export default function HeroEvent({
                         height={22}
                         alt=""
                         aria-hidden
-                        className="h-full w-full object-contain brightness-0 invert opacity-90"
+                        className="h-full w-full object-contain"
                       />
                     </span>
                     <span className="min-w-0 truncate font-departure-mono">

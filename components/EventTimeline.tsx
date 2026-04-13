@@ -68,9 +68,13 @@ export default function EventTimeline({
                     [sectionKey]: !isCollapsed,
                   }))
                 }
-                className="group mt-2 mr-4 flex w-full cursor-pointer items-center gap-4 py-2 text-left"
+                className="group mt-12 mr-4 flex w-full cursor-pointer items-center gap-3 py-2 text-left"
                 aria-expanded={!isCollapsed}
               >
+                <span
+                  className="shrink-0 rounded-[2px] bg-ds-bg-brand-solid h-1 w-5"
+                  aria-hidden
+                />
                 <span className="type-era-label text-ds-neutral-00">
                   {section.title}
                 </span>
@@ -92,23 +96,11 @@ export default function EventTimeline({
                       <button
                         type="button"
                         onClick={() => onOpen(event)}
-                        className="group flex w-full cursor-pointer flex-col gap-3 rounded-2xl border border-ds-neutral-800/80 bg-[var(--app-surface-elevated)] px-8 py-8 text-left transition hover:border-ds-primary-400/70 sm:flex-row sm:items-start sm:gap-3"
+                        className="group flex w-full cursor-pointer flex-col gap-3 rounded-2xl border border-ds-neutral-800 bg-[var(--app-surface-elevated)] px-8 py-8 text-left transition hover:border-ds-primary-400/70 sm:flex-row sm:items-start sm:gap-2"
                       >
-                        <div className="order-2 flex min-w-0 flex-1 flex-col gap-1.5 sm:order-1">
-                          <h3 className="font-sans text-[20px] leading-[24px] font-semibold text-ds-neutral-50">
-                            {event.title}
-                          </h3>
-                          <p className="line-clamp-2 font-sans text-body-medium-400 text-ds-neutral-400">
-                            {event.shortDescription}
-                          </p>
-                        </div>
-
-                        <div className="order-1 flex w-full flex-row items-baseline sm:order-2 sm:ml-2 sm:w-auto sm:shrink-0 sm:flex-col sm:items-end sm:gap-1 sm:text-right">
-                          <p className="type-era-label hidden shrink-0 text-ds-neutral-500 sm:block">
-                            Date:
-                          </p>
-                          <div className="flex min-w-0 flex-row flex-wrap items-baseline gap-x-4 gap-y-1 sm:flex-col sm:items-end sm:gap-x-0 sm:gap-y-1.5 sm:text-right">
-                            <p className="font-sans text-[14px] leading-[18px] font-semibold text-ds-neutral-100 sm:text-[18px] sm:leading-[20px]">
+                        <div className="flex w-full shrink-0 flex-row flex-wrap items-baseline gap-x-3 sm:w-[120px] sm:flex-none sm:flex-col sm:items-start sm:gap-1">
+                          <div className="flex min-w-0 flex-row flex-wrap items-baseline gap-x-4 gap-y-1 sm:w-full sm:flex-col sm:items-start sm:gap-x-0 sm:gap-y-1.5 sm:text-left">
+                            <p className="font-sans text-[14px] leading-[18px] font-semibold text-ds-neutral-100 sm:text-[16px] sm:leading-[20px]">
                               {formatEventDateOnlyShort(event.date)}
                             </p>
                             {eventHasSpecificUtcTime(event.date) ? (
@@ -117,6 +109,20 @@ export default function EventTimeline({
                               </p>
                             ) : null}
                           </div>
+                        </div>
+
+                        <span
+                          aria-hidden
+                          className="hidden h-11 w-0 shrink-0 self-center border-l border-ds-neutral-600 sm:inline-block"
+                        />
+
+                        <div className="flex min-w-0 flex-1 flex-col gap-1.5 sm:pl-4">
+                          <h3 className="font-sans text-[20px] leading-[24px] font-semibold text-ds-neutral-50">
+                            {event.title}
+                          </h3>
+                          <p className="line-clamp-2 font-sans text-body-medium-400 text-ds-neutral-400">
+                            {event.shortDescription}
+                          </p>
                         </div>
                       </button>
                     </li>

@@ -372,15 +372,22 @@ export default function Home() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-[120px] flex flex-col items-center justify-center sm:mb-[104px]">
+        <header className="mb-[112px] flex flex-col items-center justify-center sm:mb-[104px]">
           <div className="flex items-center gap-3">
-            <Image
-              src="/logo.svg"
-              alt="Cosmic Timeline logo"
-              width={120}
-              height={16}
-              priority
-            />
+            <button
+              type="button"
+              onClick={() => window.location.reload()}
+              className="inline-flex cursor-pointer items-center border-0 bg-transparent p-0"
+              aria-label="Reload page"
+            >
+              <Image
+                src="/logo.svg"
+                alt=""
+                width={120}
+                height={16}
+                priority
+              />
+            </button>
           </div>
         </header>
 
@@ -404,10 +411,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mb-32 h-[220px] w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] lg:mb-32">
-          <div className="relative h-[220px] w-full overflow-hidden rounded-3xl border border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)]">
+        <section className="mb-32 h-[240px] w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] sm:h-[220px] lg:mb-32">
+          <div className="relative h-[240px] w-full overflow-hidden rounded-3xl border border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
             <video
-              className="block h-[220px] w-full object-cover"
+              className="block h-[240px] w-full object-cover sm:h-[220px]"
               src="/videos/hero-video-main_8.mp4"
               autoPlay
               loop
@@ -455,10 +462,10 @@ export default function Home() {
                 "text-base font-bold",
                 isFilterOpen
                   ? [
-                      "max-sm:border-transparent max-sm:bg-ds-neutral-700 max-sm:text-ds-neutral-100 max-sm:hover:text-ds-neutral-00",
+                      "max-sm:border-transparent max-sm:bg-ds-neutral-700",
                       hasActiveFilters
-                        ? "sm:text-ds-primary-400 sm:hover:text-ds-primary-300"
-                        : "sm:text-ds-neutral-200 sm:hover:text-ds-neutral-00",
+                        ? "max-sm:text-ds-primary-400 max-sm:hover:text-ds-primary-300 sm:text-ds-primary-400 sm:hover:text-ds-primary-300"
+                        : "max-sm:text-ds-neutral-100 max-sm:hover:text-ds-neutral-00 sm:text-ds-neutral-200 sm:hover:text-ds-neutral-00",
                     ].join(" ")
                   : hasActiveFilters
                     ? "text-ds-primary-400 hover:text-ds-primary-300 sm:text-ds-primary-400"
@@ -475,7 +482,7 @@ export default function Home() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden
-                className="shrink-0"
+                className="shrink-0 text-inherit"
               >
                 <path
                   d="M4.5 7H19.5M7 12H17M10 17H14"
@@ -505,7 +512,7 @@ export default function Home() {
                       onKeyDown={(event) =>
                         handleDropdownKeyboard(event, "time")
                       }
-                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-3 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
+                      className="flex h-12 w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 px-3 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
                     >
                       <span className="truncate">{selectedTimeRangeLabel}</span>
                       <svg
@@ -529,7 +536,7 @@ export default function Home() {
                       <ul
                         role="listbox"
                         aria-label="Filter by time range options"
-                        className="absolute left-0 top-[calc(100%+0.35rem)] z-30 w-full overflow-hidden rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
+                        className="filter-popover-list absolute left-0 top-[calc(100%+0.35rem)] z-30 w-full overflow-hidden rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
                       >
                         <li>
                           <button
@@ -541,7 +548,7 @@ export default function Home() {
                               setSelectedTimeRange("all");
                               setOpenDropdown(null);
                             }}
-                            className="w-full rounded-lg px-2 py-3 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
+                            className="flex h-12 w-full items-center rounded-lg px-2 text-left text-ds-neutral-200 hover:bg-ds-neutral-800"
                           >
                             All ranges
                           </button>
@@ -557,7 +564,7 @@ export default function Home() {
                                 setSelectedTimeRange(range);
                                 setOpenDropdown(null);
                               }}
-                              className="w-full rounded-lg px-2 py-3 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
+                              className="flex h-12 w-full items-center rounded-lg px-2 text-left text-ds-neutral-200 hover:bg-ds-neutral-800"
                             >
                               {range}
                             </button>
@@ -603,7 +610,7 @@ export default function Home() {
                       <ul
                         role="listbox"
                         aria-label="Filter by tag options"
-                        className="absolute left-0 top-[calc(100%+0.35rem)] z-30 max-h-56 w-full overflow-y-auto rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
+                        className="filter-popover-list modal-scroll absolute left-0 top-[calc(100%+0.35rem)] z-30 max-h-56 w-full overflow-y-auto rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
                       >
                         <li>
                           <button
@@ -614,7 +621,7 @@ export default function Home() {
                               isFetchingRef.current = false;
                               setSelectedTags([]);
                             }}
-                            className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
+                            className="flex h-10 w-full items-center justify-between rounded-lg px-2 text-left text-ds-neutral-200 hover:bg-ds-neutral-800"
                           >
                             All tags
                             {selectedTags.length === 0 ? (
@@ -637,7 +644,7 @@ export default function Home() {
                                   return [...current, tag];
                                 });
                               }}
-                              className="flex w-full items-center justify-between rounded-lg px-2 py-2 text-left type-caption-medium text-ds-neutral-200 hover:bg-ds-neutral-800"
+                              className="flex h-10 w-full items-center justify-between rounded-lg px-2 text-left text-ds-neutral-200 hover:bg-ds-neutral-800"
                             >
                               {tag}
                               {selectedTags.includes(tag) ? (
@@ -660,7 +667,7 @@ export default function Home() {
                       setSelectedTags([]);
                       setOpenDropdown(null);
                     }}
-                    className="rounded-xl border border-ds-neutral-700 px-3 py-3 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
+                    className="flex h-10 items-center justify-center rounded-xl border border-ds-neutral-700 px-3 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
                   >
                     Reset filters
                   </button>

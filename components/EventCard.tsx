@@ -177,7 +177,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                         height={22}
                         alt=""
                         aria-hidden
-                        className="h-full w-full object-contain brightness-0 invert opacity-90"
+                        className="h-full w-full object-contain"
                       />
                     </span>
                     <span className="min-w-0 truncate font-departure-mono">

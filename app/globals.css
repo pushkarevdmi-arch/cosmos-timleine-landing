@@ -542,8 +542,8 @@ svg:not([class*="text-"]) {
   .type-caption-medium {
     font-family: var(--font-sans);
     font-weight: 500;
-    font-size: 12px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 18px;
   }
 
   .type-caption-semibold {
@@ -551,6 +551,14 @@ svg:not([class*="text-"]) {
     font-weight: 600;
     font-size: 12px;
     line-height: 16px;
+  }
+
+  /* Home filter listbox rows: 14px from primitives (body-s) */
+  .filter-popover-list > li > button {
+    font-family: var(--font-sans);
+    font-weight: 500;
+    font-size: var(--ds-typography-size-body-s);
+    line-height: var(--ds-typography-line-height-s);
   }
 
   .type-era-label {

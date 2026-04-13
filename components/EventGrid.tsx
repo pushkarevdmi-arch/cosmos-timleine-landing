@@ -112,6 +112,10 @@ function EventGridSection({
         style={{ zIndex: headerZ }}
       >
         <div className="flex items-center gap-3 pt-6">
+          <span
+            className="shrink-0 rounded-[2px] bg-ds-bg-brand-solid h-1 w-5"
+            aria-hidden
+          />
           <span className="type-era-label text-ds-neutral-00">{section}</span>
           <span className="hidden h-px flex-1 bg-ds-neutral-800/80 sm:block" />
         </div>

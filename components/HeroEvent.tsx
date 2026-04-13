@@ -341,7 +341,7 @@ export default function HeroEvent({
               {showHeroDateRow ? (
                 <div className="mr-5 flex h-10 w-fit max-w-full justify-center md:justify-start">
                   <div
-                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-5 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-5 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
                     role="group"
                     aria-label={`Event date${eventHasSpecificUtcTime(displayEvent.date) ? " and time" : ""}`}
                   >

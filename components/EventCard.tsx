@@ -161,7 +161,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
         <div className="event-card__content-spacer" aria-hidden />
 
         <div className="event-card__meta">
-          <div className="flex w-full flex-col gap-2 px-6">
+          <div className="flex w-full flex-col gap-2 sm:px-6">
             {showCardDateRow ? (
               <div className="event-card__date">
                 <div className="flex h-9 w-fit max-w-full justify-center">
@@ -199,7 +199,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
               </div>
             ) : null}
 
-            <div className="event-card__countdown">
+            <div className="event-card__countdown w-full">
               {countdown.isPast ? (
                 <p className="event-card__past-message">Event in the past</p>
               ) : useMegaYearsCountdownLayout ? (

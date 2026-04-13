@@ -104,7 +104,7 @@ svg:not([class*="text-"]) {
 
 @layer components {
   .event-card {
-    @apply flex h-full w-full max-w-full min-h-0 flex-col items-center justify-start gap-0 overflow-hidden rounded-3xl max-sm:justify-center;
+    @apply flex h-full w-full max-w-full min-h-0 flex-col items-stretch justify-start gap-0 overflow-hidden rounded-3xl max-sm:justify-center;
     border-width: 1px;
     border-style: solid;
     border-color: var(--ds-neutral-800);
@@ -165,6 +165,11 @@ svg:not([class*="text-"]) {
       min-height: 0;
       overflow-x: hidden;
       overflow-y: visible;
+    }
+
+    /* Pin date / time / countdown to the bottom of the content area on tall mobile cards */
+    .event-grid-mobile-uniform .event-card__meta {
+      margin-top: auto;
     }
 
     .event-grid-mobile-uniform .event-card__image-wrap {
@@ -283,7 +288,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex min-h-0 w-fit max-w-full flex-1 flex-col gap-0 px-6 pb-10 pt-4 sm:px-12 sm:pb-10 sm:pt-8;
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-6 pb-10 pt-4 sm:px-12 sm:pb-10 sm:pt-8;
     background: unset;
     background-color: rgba(15, 20, 31, 1);
   }
@@ -338,18 +343,9 @@ svg:not([class*="text-"]) {
     @apply flex w-full justify-start gap-1 font-mono text-ds-neutral-100 sm:justify-center sm:gap-2;
   }
 
-  /* Below `sm`: bleed into meta `px-12` (full content width for countdown + date row). */
+  /* Below `sm`: tighter segment gap */
   @media (max-width: 639px) {
-    .event-card__date {
-      margin-left: -3rem;
-      margin-right: -3rem;
-      width: calc(100% + 6rem);
-    }
-
     .event-card__countdown-grid {
-      margin-left: -3rem;
-      margin-right: -3rem;
-      width: calc(100% + 6rem);
       gap: 4px;
     }
   }

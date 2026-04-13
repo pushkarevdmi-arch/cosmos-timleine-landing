@@ -191,7 +191,7 @@ export default function EventDetailsModal({
         </div>
 
         <div className="min-h-0 flex-1 overflow-y-auto modal-scroll">
-          <div className="flex flex-col gap-8 px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
+          <div className="flex flex-col gap-8 bg-[var(--app-surface-elevated)] px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
             <div className="flex flex-col gap-4">
               <h2
                 id="event-details-title"

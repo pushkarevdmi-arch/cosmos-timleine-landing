@@ -12,9 +12,9 @@ type EventGridProps = {
 
 /**
  * Cards stick below the category label row (must stay in sync with section header
- * padding: outer pt-6 + inner pt-6 + label line + pb-6).
+ * padding: outer pt-6 + inner pt-6 + label line (body-l / lh-l) + pb-6).
  */
-const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[7.25rem]";
+const MOBILE_CARD_STICKY_TOP_CLASS = "max-sm:top-[7rem]";
 
 /**
  * Dim the previous card only once the next card’s face overlaps it vertically

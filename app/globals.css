@@ -568,14 +568,6 @@ svg:not([class*="text-"]) {
     line-height: var(--ds-typography-line-height-s);
   }
 
-  .type-era-label {
-    font-family: var(--font-sans);
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28px;
-    letter-spacing: 2px;
-  }
-
   /* Micro labels / countdown */
   .type-micro-regular {
     font-family: var(--font-sans);
@@ -949,4 +941,23 @@ svg:not([class*="text-"]) {
 nextjs-portal {
   left: auto !important;
   top: auto !important;
+}
+
+/*
+ * Era / section titles (Event grid, timeline): unlayered so this always wins
+ * over Tailwind @layer utilities. Breakpoints use 640px to match Tailwind `sm`
+ * (not `min-width: 40rem`, which tracks root font-size and can diverge).
+ */
+.type-era-label {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: var(--ds-typography-size-body-l);
+  line-height: var(--ds-typography-line-height-l);
+  letter-spacing: 2px;
+}
+@media (min-width: 640px) {
+  .type-era-label {
+    font-size: var(--ds-typography-size-h5);
+    line-height: var(--ds-typography-line-height-l);
+  }
 }

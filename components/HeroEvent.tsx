@@ -536,7 +536,7 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-ds-neutral-900 px-5 pb-6 pt-5 md:px-8 md:pb-8 md:pt-6">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-[var(--app-surface-elevated)] px-5 pb-6 pt-5 md:px-8 md:pb-8 md:pt-6">
           <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-2 md:mb-0">
             <label
               htmlFor="hero-event-time-slider"

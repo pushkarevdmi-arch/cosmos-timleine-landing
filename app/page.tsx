@@ -442,7 +442,7 @@ export default function Home() {
           </div>
 
           <div
-            className="relative flex w-full flex-row-reverse items-center justify-between gap-4 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end"
+            className="relative flex w-full flex-row-reverse items-center justify-between gap-6 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end"
             ref={filterPopoverRef}
           >
             <button

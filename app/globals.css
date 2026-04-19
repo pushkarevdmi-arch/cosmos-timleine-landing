@@ -110,7 +110,7 @@ svg:not([class*="text-"]) {
     @apply flex h-full w-full max-w-full min-h-0 flex-col items-stretch justify-start gap-0 overflow-hidden rounded-3xl max-sm:justify-center;
     border-width: 1px;
     border-style: solid;
-    border-color: var(--ds-neutral-900);
+    border-color: color-mix(in srgb, var(--ds-neutral-800) 80%, transparent);
     border-image: none;
     background: unset;
     background-color: unset;

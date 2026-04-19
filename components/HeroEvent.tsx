@@ -162,10 +162,10 @@ function HeroFlipSegment({
 
   return (
     <div
-      className={`hero-flip-segment relative flex min-w-0 min-h-0 w-full flex-1 basis-0 select-none flex-col items-center justify-center gap-[4px] overflow-hidden border-0 bg-ds-neutral-1000 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-1 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:py-4 ${radiusClass}`}
+      className={`hero-flip-segment relative flex min-w-0 min-h-0 w-full flex-1 basis-0 select-none flex-col items-center justify-center gap-[8px] overflow-hidden border-0 bg-ds-neutral-1000 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-2 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:py-3 ${radiusClass}`}
       aria-label={`${label}: ${valueText}`}
     >
-      <span className="event-card__countdown-value text-center text-[20px] leading-[20px] tabular-nums sm:text-[30px] sm:leading-none md:text-[34px] lg:text-[32px] lg:leading-[36px]">
+      <span className="event-card__countdown-value text-center text-[20px] leading-[20px] tabular-nums sm:text-[30px] sm:leading-none md:text-[34px] lg:text-[40px] lg:leading-[40px]">
         {valueText}
       </span>
       <span className="event-card__countdown-label w-full text-center tracking-normal text-[12px] leading-[14px] sm:text-[10px] sm:leading-none md:text-[14px] md:leading-[16px]">
@@ -493,7 +493,7 @@ export default function HeroEvent({
               ) : (
                 <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-24 md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
                   <div
-                    className="hero-countdown__segments flex min-h-0 min-w-0 flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-2xl border-0 shadow-none md:h-full md:min-h-0"
+                    className="hero-countdown__segments flex min-h-0 min-w-0 max-w-[520px] flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-2xl border-0 md:h-full md:min-h-0"
                   >
                     {heroCountdownSegments.map((segment, index) => {
                       const n = heroCountdownSegments.length;

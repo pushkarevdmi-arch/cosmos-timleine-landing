@@ -409,11 +409,6 @@ const timeUtc: Intl.DateTimeFormatOptions = {
   timeZoneName: "short",
 };
 
-/** “Aug 12, 2026” → “Aug 12,2026” (typography: no space after comma). */
-function formatDateWithoutSpaceAfterComma(s: string): string {
-  return s.replace(/, /g, ",");
-}
-
 export function eventHasSpecificUtcTime(dateStr: string): boolean {
   if (!dateStr.includes("T")) return false;
   const d = new Date(dateStr);
@@ -447,14 +442,12 @@ export function formatEventDateOnlyLong(dateStr: string, nowMs = Date.now()): st
 
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
-    return formatDateWithoutSpaceAfterComma(
-      new Intl.DateTimeFormat("en", longDateUtc).format(new Date(instant))
-    );
+    return new Intl.DateTimeFormat("en", longDateUtc).format(new Date(instant));
   }
 
   const monthName = MONTH_LONG_EN[parts.m - 1] ?? "Month";
   const yearLabel = formatYearDigitsPlain(parts.yStr);
-  return `${monthName} ${String(parts.d).padStart(2, "0")},${yearLabel}`;
+  return `${monthName} ${String(parts.d).padStart(2, "0")}, ${yearLabel}`;
 }
 
 export function formatEventDateOnlyShort(dateStr: string, nowMs = Date.now()): string {
@@ -473,14 +466,12 @@ export function formatEventDateOnlyShort(dateStr: string, nowMs = Date.now()): s
 
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
-    return formatDateWithoutSpaceAfterComma(
-      new Intl.DateTimeFormat("en", shortDateUtc).format(new Date(instant))
-    );
+    return new Intl.DateTimeFormat("en", shortDateUtc).format(new Date(instant));
   }
 
   const monthShort = MONTH_LONG_EN[parts.m - 1]?.slice(0, 3) ?? "?";
   const yearLabel = formatYearDigitsPlain(parts.yStr);
-  return `${monthShort} ${parts.d},${yearLabel}`;
+  return `${monthShort} ${parts.d}, ${yearLabel}`;
 }
 
 export function formatEventTimeUtcLabel(dateStr: string): string {

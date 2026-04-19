@@ -11,6 +11,18 @@ type EventTagGroupProps = {
   specialTags?: EventExtraTag[];
 };
 
+/** Category label → `/public/icons/…` (extend as more category SVGs are added). */
+const CATEGORY_ICON_SRC: Record<string, string> = {
+  Conjunction: "/icons/Conjunction.svg",
+};
+
+function getCategoryIconSrc(primaryTag: string): string | undefined {
+  const key = Object.keys(CATEGORY_ICON_SRC).find(
+    (k) => k.toLowerCase() === primaryTag.trim().toLowerCase(),
+  );
+  return key ? CATEGORY_ICON_SRC[key] : undefined;
+}
+
 function getLocationAbbreviation(label: string, icon?: string) {
   const normalized = label.trim().toLowerCase();
   if (normalized === "europe") return "EU";
@@ -28,9 +40,23 @@ export default function EventTagGroup({
   primaryTag = "Solar system",
   specialTags = [],
 }: EventTagGroupProps) {
+  const categoryIconSrc = getCategoryIconSrc(primaryTag);
+
   return (
     <div className="event-tag-group event-card__badge-row">
-      <div className="event-card__category">{primaryTag}</div>
+      <div className="event-card__category">
+        {categoryIconSrc ? (
+          <img
+            src={categoryIconSrc}
+            width={16}
+            height={16}
+            alt=""
+            aria-hidden
+            className="event-card__category-icon"
+          />
+        ) : null}
+        {primaryTag}
+      </div>
       {specialTags.map((tag) => {
         // Skip location tags that describe multiple broad regions (e.g. "Europe, Africa, W. Asia"),
         // but keep specific curated ones like "Pacific & North America" on the card.

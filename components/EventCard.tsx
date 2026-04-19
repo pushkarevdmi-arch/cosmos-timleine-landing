@@ -248,16 +248,16 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                   </div>
                 </div>
               ) : (
-                <div className="event-card__countdown-grid">
+                <div className="event-card__countdown-grid h-[88px]">
                   <div className="event-card__countdown-segment">
-                    <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[24px] sm:leading-[24px]">
+                    <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[28px] sm:leading-[28px]">
                       {countdown.years.toString().padStart(2, "0")}
                     </span>
                     <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>YEARS</span>
                   </div>
                   {precision !== "year" ? (
                     <div className="event-card__countdown-segment">
-                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[24px] sm:leading-[24px]">
+                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[28px] sm:leading-[28px]">
                         {formatCountdownDaysDisplay(countdown.days)}
                       </span>
                       <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>DAYS</span>
@@ -265,7 +265,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                   ) : null}
                   {precision === "full" ? (
                     <div className="event-card__countdown-segment">
-                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[24px] sm:leading-[24px]">
+                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[28px] sm:leading-[28px]">
                         {countdown.hours.toString().padStart(2, "0")}
                       </span>
                       <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>HRS</span>

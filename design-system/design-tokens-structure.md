@@ -87,7 +87,7 @@ So themes are modeled in Figma as **modes** on the semantic collection: same var
 
 ### `typography`
 
-- **`family`** — `display`, `title`, `body` (e.g. Inter Tight).
+- **`family`** — `display`, `title`, `body` (e.g. Geist).
 - **`weight`** — `regular`, `medium`, `Semibold`.
 - **`size`** — Named steps: `display-2xl` … `body-xxs`, `h1`–`h6`, etc.
 - **`line-height`** — Named steps (`10xl` … `xxs`) aligned to type scale.

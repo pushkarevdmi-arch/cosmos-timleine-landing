@@ -72,7 +72,7 @@ export default function EventTimeline({
                 aria-expanded={!isCollapsed}
               >
                 <span
-                  className="shrink-0 rounded-[2px] bg-ds-bg-brand-solid h-1 w-5"
+                  className="shrink-0 rounded-none bg-ds-bg-brand-solid h-1 w-7"
                   aria-hidden
                 />
                 <span className="type-era-label text-ds-neutral-00">

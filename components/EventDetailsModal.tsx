@@ -200,27 +200,39 @@ export default function EventDetailsModal({
                 {title}
               </h2>
 
-              <div
-                className="flex w-full flex-row flex-nowrap items-center gap-2 whitespace-nowrap pl-[3px] pr-[3px] type-era-label text-ds-neutral-400 sm:gap-3"
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontWeight: 400,
-                  fontSize: "14px",
-                  lineHeight: "18px",
-                }}
-              >
-                <span>{formatEventDateOnlyLong(date)}</span>
-                {eventHasSpecificUtcTime(date) ? (
-                  <>
-                    <span
-                      aria-hidden="true"
-                      className="h-[14px] w-px self-center bg-ds-neutral-700"
-                    />
-                    <span className="text-ds-neutral-500">
-                      {formatEventTimeUtcLabel(date)}
+              <div className="pl-[3px] pr-[3px]">
+                <div className="flex h-9 w-fit max-w-full justify-start">
+                  <div
+                    className="hero-event__date-badge inline-flex h-9 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-800 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    role="group"
+                    aria-label={`Event date${eventHasSpecificUtcTime(date) ? " and time" : ""}`}
+                  >
+                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
+                      <img
+                        src="/icons/calendar.svg"
+                        width={22}
+                        height={22}
+                        alt=""
+                        aria-hidden
+                        className="h-full w-full object-contain"
+                      />
                     </span>
-                  </>
-                ) : null}
+                    <span className="min-w-0 truncate font-sans">
+                      {formatEventDateOnlyLong(date)}
+                    </span>
+                    {eventHasSpecificUtcTime(date) ? (
+                      <>
+                        <span
+                          className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
+                          aria-hidden="true"
+                        />
+                        <span className="shrink-0 whitespace-nowrap font-sans">
+                          {formatEventTimeUtcLabel(date)}
+                        </span>
+                      </>
+                    ) : null}
+                  </div>
+                </div>
               </div>
             </div>
 

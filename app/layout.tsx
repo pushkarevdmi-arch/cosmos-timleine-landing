@@ -4,25 +4,25 @@ import "./globals.css";
 import ContentReveal from "@/components/ContentReveal";
 import NumericPreloader from "@/components/NumericPreloader";
 
-const interTight = localFont({
+const geist = localFont({
   src: [
     {
-      path: "../public/fonts/InterTight-Regular.ttf",
+      path: "../public/fonts/Geist-Regular.ttf",
       weight: "400",
       style: "normal",
     },
     {
-      path: "../public/fonts/InterTight-Medium.ttf",
+      path: "../public/fonts/Geist-Medium.ttf",
       weight: "500",
       style: "normal",
     },
     {
-      path: "../public/fonts/InterTight-SemiBold.ttf",
+      path: "../public/fonts/Geist-SemiBold.ttf",
       weight: "600",
       style: "normal",
     },
     {
-      path: "../public/fonts/InterTight-Bold.ttf",
+      path: "../public/fonts/Geist-Bold.ttf",
       weight: "700",
       style: "normal",
     },
@@ -45,7 +45,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${interTight.className} ${interTight.variable} antialiased`}>
+      <body className={`${geist.className} ${geist.variable} antialiased`}>
         <NumericPreloader />
         <ContentReveal>{children}</ContentReveal>
       </body>

@@ -394,10 +394,10 @@ export default function Home() {
         {/* Hero heading */}
         <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
           <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
-            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] text-ds-neutral-50 w-full text-center">
+            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] tracking-[-1px] text-ds-neutral-50 w-full text-center">
               Journey{" "}
               <span
-                className="font-dynamite leading-[40px] h-[40px] inline-block"
+                className="font-dynamite leading-[40px] h-[40px] inline-block tracking-[0px]"
                 style={{ fontFamily: "Dynamite" }}
               >
                 Into
@@ -411,10 +411,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mb-32 h-[240px] w-full rounded-[22px] border border-ds-neutral-850 [border-image:none] sm:h-[220px] lg:mb-32">
-          <div className="relative h-[240px] w-full overflow-hidden rounded-3xl border border-ds-neutral-900 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
+        <section className="mb-32 h-[240px] w-full rounded-[32px] sm:h-[220px] lg:mb-32">
+          <div className="relative h-[240px] w-full overflow-hidden rounded-[32px] border border-ds-neutral-850 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
             <video
-              className="block h-[240px] w-full object-cover sm:h-[220px]"
+              className="block h-[240px] w-full border-0 object-cover sm:h-[220px]"
               src="/videos/hero-video-main_8.mp4"
               autoPlay
               loop
@@ -741,9 +741,9 @@ export default function Home() {
                   <Image
                     src="/logo.svg"
                     alt="Cosmic Timeline logo"
-                    width={240}
-                    height={32}
-                    className="h-8 w-fit shrink-0"
+                    width={180}
+                    height={24}
+                    className="h-6 w-fit shrink-0"
                   />
                   <p className="max-w-md">
                     This project is a non-commercial labor of love.

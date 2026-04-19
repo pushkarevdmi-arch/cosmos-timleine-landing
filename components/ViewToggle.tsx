@@ -24,19 +24,23 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
             aria-pressed={isActive}
             aria-label={option.value === "grid" ? "Grid view" : "Timeline view"}
             className={[
-              "relative flex h-12 min-w-0 flex-1 appearance-none items-center justify-center rounded-xl border-0 transition-colors cursor-pointer sm:flex-none sm:w-12",
+              "relative flex h-12 min-w-0 flex-1 appearance-none items-center justify-center rounded-xl border-0 cursor-pointer sm:flex-none sm:w-12",
+              "transition-[background-color,box-shadow,color] duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0",
               isActive
                 ? "text-ds-neutral-100"
                 : "text-ds-neutral-500 hover:text-ds-neutral-400",
             ].join(" ")}
             style={{
               backgroundColor: isActive ? "var(--ds-neutral-700)" : "transparent",
+              boxShadow: isActive
+                ? "inset 0 1px 0 0 rgba(255, 255, 255, 0.3), 0 16px 22px 0 rgba(0, 0, 0, 0.4)"
+                : "none",
             }}
           >
             {option.value === "grid" ? (
               <span
                 aria-hidden="true"
-                className="size-6 bg-current"
+                className="size-6 bg-current transition-colors duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0"
                 style={{
                   color: isActive ? "var(--ds-neutral-00)" : undefined,
                   WebkitMaskImage: "url('/icons/view-grid.svg')",
@@ -52,7 +56,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
             ) : (
               <span
                 aria-hidden="true"
-                className="size-6 bg-current"
+                className="size-6 bg-current transition-colors duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0"
                 style={{
                   color: isActive ? "var(--ds-neutral-00)" : undefined,
                   WebkitMaskImage: "url('/icons/view-timeline.svg')",

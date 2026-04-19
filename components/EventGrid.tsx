@@ -107,17 +107,16 @@ function EventGridSection({
     <div className="col-span-full max-sm:block sm:contents">
       <div
         className={`col-span-full max-sm:mx-0 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-6 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
-          groupIndex === 0 ? "mt-2" : "mt-8"
+          groupIndex === 0 ? "mt-2" : "mt-12"
         }`}
         style={{ zIndex: headerZ }}
       >
         <div className="flex items-center gap-3 pt-6">
           <span
-            className="shrink-0 rounded-[2px] bg-ds-bg-brand-solid h-1 w-5"
+            className="shrink-0 rounded-none bg-ds-bg-brand-solid h-1 w-7"
             aria-hidden
           />
           <span className="type-era-label text-ds-neutral-00">{section}</span>
-          <span className="hidden h-px flex-1 bg-ds-neutral-800/80 sm:block" />
         </div>
       </div>
 
@@ -168,7 +167,7 @@ function EventGridSection({
               );
             }}
           >
-            <div className="relative z-[2] h-full">
+            <div className="relative z-[2] h-full rounded-3xl">
               <EventCard event={event} onExplore={onExplore} />
             </div>
             {/* Above card: previous feels inactive once the next card enters its zone */}
@@ -199,7 +198,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
   const groups = groupEventsByTimeSection(events);
 
   return (
-    <div className="grid items-stretch gap-0 sm:grid-cols-2 sm:gap-6">
+    <div className="grid items-stretch gap-0 sm:gap-6 md:grid-cols-2">
       {groups.map(({ section, events: sectionEvents }, groupIndex) => (
         <EventGridSection
           key={`${section}-${sectionEvents[0]?.id ?? groupIndex}`}

@@ -203,7 +203,6 @@ export default function HeroEvent({
     getNearestUpcomingEventIndex(sortedEvents)
   );
   const [isVisible, setIsVisible] = useState(true);
-  const openArrowClipIdMobile = useId().replace(/:/g, "");
   const openArrowClipIdDesktop = useId().replace(/:/g, "");
 
   useEffect(() => {
@@ -353,17 +352,6 @@ export default function HeroEvent({
             specialTags={displayEvent.specialTags}
           />
 
-          {onExplore ? (
-            <div
-              className="hero-event__open-hint hero-event__open-hint--on-image pointer-events-none absolute right-4 top-4 z-[11] flex size-[34px] items-center justify-center rounded-full bg-ds-neutral-1000 md:hidden"
-              aria-hidden
-            >
-              <OpenArrowGlyph
-                clipId={openArrowClipIdMobile}
-                className="size-4 shrink-0 text-ds-neutral-400 transition-colors duration-200 ease-out group-hover:text-ds-text-brand group-focus-within:text-ds-text-brand"
-              />
-            </div>
-          ) : null}
         </div>
 
         {/* Right: information */}
@@ -376,7 +364,7 @@ export default function HeroEvent({
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-2">
-            <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[18px] leading-[24px] sm:text-[28px] sm:leading-[32px] md:text-[24px] md:leading-[28px] md:line-clamp-3 md:font-normal">
+            <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[26px] sm:text-[28px] sm:leading-[32px] md:text-[28px] md:leading-[32px] md:line-clamp-3 md:font-normal">
               {displayEvent.title}
             </h3>
             <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-2 md:min-h-[48px]">

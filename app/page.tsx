@@ -457,12 +457,12 @@ export default function Home() {
               className={[
                 "flex shrink-0 cursor-pointer items-center justify-center transition-colors",
                 /* Mobile: match ViewToggle outer box — p-1 + h-12 inner → 56px (3.5rem) square */
-                "max-sm:size-14 rounded-xl border border-ds-neutral-800 bg-ds-neutral-900",
-                "sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:border-0 sm:bg-transparent sm:px-3 sm:py-2",
+                "max-sm:size-14 rounded-xl bg-ds-neutral-900",
+                "sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:bg-transparent sm:px-3 sm:py-2",
                 "text-base font-bold",
                 isFilterOpen
                   ? [
-                      "max-sm:border-transparent max-sm:bg-ds-neutral-700",
+                      "max-sm:bg-ds-neutral-700",
                       hasActiveFilters
                         ? "max-sm:text-ds-primary-400 max-sm:hover:text-ds-primary-300 sm:text-ds-primary-400 sm:hover:text-ds-primary-300"
                         : "max-sm:text-ds-neutral-100 max-sm:hover:text-ds-neutral-00 sm:text-ds-neutral-200 sm:hover:text-ds-neutral-00",

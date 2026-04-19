@@ -856,6 +856,7 @@ svg:not([class*="text-"]) {
     width: 28px;
     height: 28px;
     border-radius: 8px;
+    background-image: none;
     background-size: 18px 18px;
   }
 

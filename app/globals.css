@@ -716,9 +716,10 @@ svg:not([class*="text-"]) {
   background-position: center;
   background-repeat: no-repeat;
   background-size: 24px 24px;
-  transform: translateY(-50%);
+  transform: translateY(-50%) translateZ(0);
   pointer-events: none;
-  z-index: 2;
+  /* Above the range input so WebKit/iOS does not paint the native thumb over the arrow */
+  z-index: 5;
   box-shadow:
     inset 0 1px 0 #ffffff,
     0 16px 21px rgba(0, 0, 0, 0.13),
@@ -825,58 +826,60 @@ svg:not([class*="text-"]) {
   box-shadow: none;
 }
 
-/* Hero timeline slider: shorter track on small screens (below Tailwind `md`) */
+/* Hero timeline slider: below `md` match desktop thumb/track so arrow stays visible (WebKit paints native thumb on top of lower z-index siblings). */
 @media (max-width: 767px) {
   .hero-event-slider-wrap {
-    --hero-slider-fill-width: clamp(28px, calc(var(--slider-progress) + 14px), calc(100% - 8px));
+    --hero-slider-fill-width: clamp(48px, calc(var(--slider-progress) + 20px), calc(100% - 8px));
   }
 
   .hero-event-slider {
-    height: 36px;
+    height: 48px;
     padding: 0 4px;
   }
 
   .hero-event-slider-visual::before {
     left: 4px;
-    height: 36px;
+    height: 48px;
     width: var(--hero-slider-fill-width);
-    border-radius: 10px;
+    border-radius: 12px;
   }
 
   .hero-event-slider-thumb-visual {
-    left: calc(var(--hero-slider-fill-width) - 28px);
-    width: 28px;
-    height: 28px;
-    border-radius: 8px;
-    background-image: none;
-    background-size: 18px 18px;
+    left: calc(var(--hero-slider-fill-width) - 40px);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background-image: url("/icons/arrow-pixel.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
   }
 
   .hero-event-slider-wrap::before {
-    left: 5px;
-    width: 44px;
-    height: 44px;
-    transform: translate(-7px, -50%);
-    filter: blur(8px);
+    left: 4px;
+    width: 66px;
+    height: 66px;
+    transform: translate(-12px, -50%);
+    filter: blur(11px);
   }
 
   .hero-event-slider::-webkit-slider-runnable-track {
-    height: 36px;
+    height: 48px;
   }
 
   .hero-event-slider::-webkit-slider-thumb {
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
     margin-top: 0;
   }
 
   .hero-event-slider::-moz-range-track {
-    height: 36px;
+    height: 48px;
   }
 
   .hero-event-slider::-moz-range-thumb {
-    width: 28px;
-    height: 28px;
+    width: 40px;
+    height: 40px;
   }
 }
 

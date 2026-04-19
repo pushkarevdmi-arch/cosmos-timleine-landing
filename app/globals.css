@@ -3,7 +3,7 @@
 @import "./ds-tailwind-theme.css";
 
 :root {
-  --app-surface-elevated: rgba(15, 20, 31, 1);
+  --app-surface-elevated: rgba(18, 24, 38, 1);
 
   /* Typography presets → primitives from design-system/tokens.json (via --ds-typography-*) */
   --h1-400-size: var(--ds-typography-size-h1);
@@ -295,7 +295,7 @@ svg:not([class*="text-"]) {
 
   .event-card__content {
     @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-6 pb-10 pt-4 sm:px-12 sm:pb-10 sm:pt-8;
-    background-color: rgba(15, 20, 31, 1);
+    background-color: var(--app-surface-elevated);
     background-image: none;
     box-shadow: none;
   }

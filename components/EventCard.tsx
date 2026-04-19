@@ -158,7 +158,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
 
         {isInteractive ? (
           <div
-            className="event-card__open-hint event-card__open-hint--on-image pointer-events-none absolute right-4 top-4 z-[11] hidden size-[34px] items-center justify-center rounded-full bg-ds-neutral-900 md:flex md:size-10"
+            className="event-card__open-hint event-card__open-hint--on-image pointer-events-none absolute right-4 top-4 z-[11] hidden size-12 items-center justify-center rounded-full bg-ds-neutral-800 md:flex"
             aria-hidden
           >
             <OpenArrowGlyph clipId={openArrowClipId} className={openArrowGlyphClass} />

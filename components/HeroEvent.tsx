@@ -318,13 +318,13 @@ export default function HeroEvent({
   };
 
   return (
-    <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col overflow-hidden rounded-3xl border border-ds-neutral-800 bg-ds-neutral-950">
+    <section className="relative flex h-fit w-full min-w-0 max-w-full flex-col gap-2 overflow-hidden rounded-3xl">
       <div
         role={onExplore ? "button" : undefined}
         tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
-        className={`grid h-fit min-w-0 w-full gap-0 border-0 bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[480px_minmax(0,1fr)] ${
+        className={`grid h-fit min-w-0 w-full gap-0 border border-ds-neutral-800 rounded-3xl bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[480px_minmax(0,1fr)] ${
           onExplore ? "hero-event--interactive group cursor-pointer" : ""
         } ${
           isVisible
@@ -334,7 +334,7 @@ export default function HeroEvent({
       >
         {/* Left: visual */}
         <div
-          className={`hero-event__image-wrap relative h-[200px] min-h-[200px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-none ${
+          className={`hero-event__image-wrap relative h-[200px] min-h-[200px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-3xl ${
             heroPanelCompact ? "md:h-[288px] md:min-h-[288px]" : "md:h-[364px] md:min-h-[364px]"
           }`}
         >
@@ -356,7 +356,7 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-none md:px-10 md:pb-10 md:pt-10 md:text-left xl:pr-20 ${
+          className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:px-10 md:pb-10 md:pt-10 md:text-left xl:pr-20 ${
             heroPanelCompact
               ? "min-h-[224px] md:h-[288px] md:min-h-[288px]"
               : "min-h-[232px] md:h-[364px] md:min-h-[364px]"
@@ -523,7 +523,7 @@ export default function HeroEvent({
 
           {onExplore ? (
             <div
-              className="hero-event__open-hint pointer-events-none absolute right-4 top-4 z-[1] hidden size-10 items-center justify-center rounded-full bg-ds-neutral-1000 md:flex"
+              className="hero-event__open-hint pointer-events-none absolute right-4 top-4 z-[1] hidden size-16 items-center justify-center rounded-full bg-ds-neutral-800 md:flex"
               aria-hidden
             >
               <OpenArrowGlyph
@@ -536,7 +536,7 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 border-t border-[var(--ds-neutral-800)] bg-[var(--app-surface-elevated)] px-5 pb-6 pt-5 md:px-8 md:pb-8 md:pt-6">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 rounded-3xl border-t border-[var(--ds-neutral-800)] bg-[var(--app-surface-elevated)] px-5 pb-6 pt-5 md:px-8 md:pb-8 md:pt-6">
           <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-2 md:mb-0">
             <label
               htmlFor="hero-event-time-slider"

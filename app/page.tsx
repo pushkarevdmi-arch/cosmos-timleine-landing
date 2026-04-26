@@ -372,7 +372,7 @@ export default function Home() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-[112px] flex flex-col items-center justify-center sm:mb-[104px] lg:mb-[128px]">
+        <header className="mb-[112px] flex flex-col items-start justify-center sm:mb-[104px] lg:mb-[128px]">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -394,7 +394,7 @@ export default function Home() {
         {/* Hero heading */}
         <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
           <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
-            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] tracking-[-1px] text-ds-neutral-50 w-full text-center">
+            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] tracking-[-1px] text-ds-neutral-50 w-full text-left">
               Journey{" "}
               <span
                 className="font-dynamite leading-[40px] h-[40px] inline-block tracking-[0px]"
@@ -405,16 +405,16 @@ export default function Home() {
               <br />
               the Future of the Universe
             </h1>
-            <p className="max-w-2xl w-full font-sans text-body-medium-400 text-ds-neutral-400 text-center">
+            <p className="max-w-2xl w-full font-sans text-body-medium-400 text-ds-neutral-400 text-left">
               From events in our lifetime to cosmic changes billions of years ahead.
             </p>
           </div>
         </section>
 
-        <section className="mb-32 h-[240px] w-full rounded-[32px] sm:h-[220px] lg:mb-32">
-          <div className="relative h-[240px] w-full overflow-hidden rounded-[32px] border border-ds-neutral-850 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
+        <section className="mb-32 h-[320px] w-full rounded-[32px] sm:h-[220px] lg:mb-32">
+          <div className="relative h-[320px] w-full overflow-hidden rounded-[32px] border border-ds-neutral-850 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
             <video
-              className="block h-[240px] w-full border-0 object-cover sm:h-[220px]"
+              className="block h-[320px] w-full border-0 object-cover sm:h-[220px]"
               src="/videos/hero-video-main_8.mp4"
               autoPlay
               loop
@@ -429,8 +429,8 @@ export default function Home() {
 
         {/* View toggle */}
         <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="w-full text-center sm:text-left">
-            <h2 className="font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
+          <div className="w-full text-left">
+            <h2 className="text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
               Upcoming{" "}
               <span
                 className="font-dynamite"
@@ -512,7 +512,7 @@ export default function Home() {
                       onKeyDown={(event) =>
                         handleDropdownKeyboard(event, "time")
                       }
-                      className="flex h-12 w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 px-3 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
+                      className="flex h-[48px] w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 px-3 type-body-medium-tight text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
                     >
                       <span className="truncate">{selectedTimeRangeLabel}</span>
                       <svg
@@ -766,7 +766,7 @@ export default function Home() {
                   All times and distances are approximate and simplified for an
                   immersive experience.
                 </p>
-                <p className="shrink-0 self-end text-ds-neutral-400 sm:self-auto sm:text-right">
+                <p className="shrink-0 self-start text-left text-ds-neutral-400 sm:self-auto sm:text-right">
                   Created by Dmitri Pushkarev
                 </p>
               </div>

@@ -565,7 +565,7 @@ export default function HeroEvent({
               <span className="hidden font-departure-mono text-[16px] leading-[20px] text-ds-neutral-300 md:block">
                 Year:
               </span>
-              <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-1.5 md:min-h-[36px] md:min-w-[72px] md:px-3 md:py-1.5">
+              <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-2 md:py-2">
                 {heroTimelineYearDisplay.kind === "mega" ? (
                   <span className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0">
                     <span className="whitespace-nowrap font-departure-mono text-[18px] !font-bold leading-[22px] tracking-[1px] text-ds-neutral-00">

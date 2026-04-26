@@ -27,7 +27,7 @@ export default function EventRarityScale({ value }: EventRarityScaleProps) {
           <div
             key={i}
             className={`h-6 w-1 shrink-0 rounded ${
-              i < r ? "bg-ds-primary-600" : "bg-ds-neutral-500"
+              i < r ? "bg-ds-primary-500" : "bg-ds-neutral-700"
             }`}
           />
         ))}

@@ -205,6 +205,11 @@ export default function EventDetailsModal({
                 {title}
               </h2>
 
+              <div
+                className="mx-[3px] h-px shrink-0 bg-[var(--ds-neutral-800)]"
+                aria-hidden
+              />
+
               <div className="pl-[3px] pr-[3px]">
                 <div className="flex w-fit flex-nowrap items-center justify-between gap-6">
                   <div className="flex h-9 w-fit max-w-full min-w-0 justify-start">

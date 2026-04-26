@@ -730,20 +730,20 @@ export default function Home() {
         </section>
 
         <footer className="mt-14 font-sans sm:mt-16">
-          <div className="relative overflow-hidden rounded-2xl border border-ds-neutral-800 bg-ds-neutral-950 px-5 py-8 text-left sm:rounded-3xl sm:px-8 sm:py-10">
+          <div className="relative overflow-hidden rounded-2xl border border-ds-neutral-800 bg-ds-neutral-950 px-0 pt-8 pb-0 text-left sm:rounded-3xl sm:pt-10">
             <div
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ds-primary-400/40 to-transparent"
               aria-hidden
             />
             <div className="relative flex flex-col gap-8">
-              <div className="flex w-full flex-col gap-8 lg:flex-row lg:items-end lg:justify-end lg:gap-10">
-                <div className="flex min-w-0 w-full flex-col gap-4 text-body-medium-400 text-ds-neutral-400">
+              <div className="flex w-full flex-col gap-8 px-6 sm:px-8 lg:flex-row lg:items-end lg:justify-end lg:gap-10">
+                <div className="flex min-w-0 w-full flex-col gap-2 text-body-medium-400 text-ds-neutral-400">
                   <Image
                     src="/logo.svg"
                     alt="Cosmic Timeline logo"
-                    width={180}
-                    height={24}
-                    className="h-6 w-fit shrink-0"
+                    width={240}
+                    height={32}
+                    className="h-8 w-fit shrink-0"
                   />
                   <p className="max-w-md">
                     This project is a non-commercial labor of love.
@@ -761,7 +761,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="flex w-full flex-col gap-3 rounded-xl bg-ds-neutral-900 px-4 py-3.5 text-[13px] leading-relaxed text-white sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-5">
+              <div className="flex w-full flex-col gap-3 rounded-none bg-ds-neutral-900 px-6 py-3.5 text-[13px] leading-relaxed text-white sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8">
                 <p className="min-w-0 text-left">
                   All times and distances are approximate and simplified for an
                   immersive experience.

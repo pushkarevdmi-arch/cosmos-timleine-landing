@@ -370,9 +370,9 @@ export default function Home() {
       <div className="pointer-events-none fixed inset-0 -z-10 bg-ds-neutral-1000" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-60 [background-image:radial-gradient(circle_at_top,_rgba(59,130,246,0.32),_transparent_55%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.3),_transparent_55%),radial-gradient(circle_at_80%_30%,rgba(236,72,153,0.28),_transparent_60%)]" />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-[112px] flex flex-col items-center justify-center sm:mb-[104px]">
+        <header className="mb-[112px] flex flex-col items-center justify-center sm:mb-[104px] lg:mb-[128px]">
           <div className="flex items-center gap-3">
             <button
               type="button"

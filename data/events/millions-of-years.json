@@ -13,18 +13,15 @@
       "Strong disturbance of the Oort cloud",
       "In about 1.29 million years"
     ],
-    "tags": ["Stellar Encounter"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Stellar Encounter"
     ],
     "image": "/images/events/millions-gliese-710.jpg",
     "nextOccurrences": [
       "No closer stellar encounters expected for many millions of years."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "eta-carinae-hypernova",
@@ -40,18 +37,15 @@
       "Possible hypernova",
       "In the next 100,000 – 2 million years"
     ],
-    "tags": ["Supernova"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Supernova"
     ],
     "image": "/images/events/millions-eta-carinae-hypernova.jpg",
     "nextOccurrences": [
       "Events of this scale are extremely rare on million-year timescales."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "constellations-complete-dissolution",
@@ -67,18 +61,15 @@
       "All known constellations dissolve",
       "In about 5 million years"
     ],
-    "tags": ["Stellar Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Stellar Event"
     ],
     "image": "/images/events/millions-constellations-dissolve.jpg",
     "nextOccurrences": [
       "New constellations will form over tens of millions of years."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 3
   },
   {
     "id": "sirius-close-approach",
@@ -94,18 +85,15 @@
       "Will become much brighter",
       "In about 6 million years"
     ],
-    "tags": ["Stellar Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Stellar Event"
     ],
     "image": "/images/events/millions-sirius-close.jpg",
     "nextOccurrences": [
       "Sirius will gradually move away afterward."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 4
   },
   {
     "id": "major-comet-bombardment",
@@ -121,18 +109,15 @@
       "Increased impact risk",
       "In about 15 million years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/millions-comet-bombardment.jpg",
     "nextOccurrences": [
       "Such intense bombardment periods are rare over long timescales."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 4
   },
   {
     "id": "saturn-rings-permanent-disappearance",
@@ -148,18 +133,15 @@
       "Lost through ring rain",
       "In about 200 million years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/millions-saturn-rings-disappear.jpg",
     "nextOccurrences": [
       "Saturn will remain ringless for billions of years."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 4
   },
   {
     "id": "solar-system-chaos",
@@ -175,18 +157,15 @@
       "Possible planetary collisions",
       "In about 500 million years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/millions-solar-system-chaos.jpg",
     "nextOccurrences": [
       "The Solar System will never return to its current stable configuration."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "last-total-solar-eclipse",
@@ -202,17 +181,14 @@
       "Only annular eclipses afterward",
       "In about 600 million years"
     ],
-    "tags": ["Eclipse"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in Millions of Years"
-      }
+    "tags": [
+      "Eclipse"
     ],
     "image": "/images/events/millions-last-total-eclipse.jpg",
     "nextOccurrences": [
       "Total solar eclipses will never occur again."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 4
   }
 ]

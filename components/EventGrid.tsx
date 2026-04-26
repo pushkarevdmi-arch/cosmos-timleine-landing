@@ -106,7 +106,7 @@ function EventGridSection({
   return (
     <div className="col-span-full max-sm:block sm:contents">
       <div
-        className={`col-span-full max-sm:mx-0 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-4 max-sm:pt-6 max-sm:pb-6 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
+        className={`col-span-full max-sm:mx-0 max-sm:mb-0 max-sm:sticky max-sm:top-0 max-sm:bg-ds-neutral-1000 max-sm:px-6 max-sm:pt-6 max-sm:pb-6 sm:mx-0 sm:mb-1 sm:px-0 sm:pb-0 sm:pt-0 sm:relative sm:top-auto sm:z-auto sm:bg-transparent sm:shadow-none ${
           groupIndex === 0 ? "mt-2" : "mt-12"
         }`}
         style={{ zIndex: headerZ }}

@@ -13,18 +13,15 @@
       "Oxygen removed by geological processes",
       "In about 1 billion years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/billions-earth-oxygen-loss.jpg",
     "nextOccurrences": [
       "Complex life will not recover after this point."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "earth-runaway-greenhouse",
@@ -41,16 +38,15 @@
       "All life becomes extinct",
       "In about 2 billion years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/billions-earth-death.jpg",
-    "nextOccurrences": ["Earth will never recover habitability after this event."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "Earth will never recover habitability after this event."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "milky-way-andromeda-early-interaction",
@@ -66,18 +62,15 @@
       "Leads to the formation of Milkomeda",
       "In about 3 billion years"
     ],
-    "tags": ["Galactic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Galactic Event"
     ],
     "image": "/images/events/billions-milky-way-andromeda.jpg",
     "nextOccurrences": [
       "The full merger will occur around 4.5 billion years from now."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "milky-way-andromeda-collision",
@@ -93,16 +86,15 @@
       "Massive star formation burst",
       "In about 4.5 billion years"
     ],
-    "tags": ["Galactic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Galactic Event"
     ],
     "image": "/images/events/billions-milkomeda.jpg",
-    "nextOccurrences": ["The merged galaxy will stabilize over billions of years."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "The merged galaxy will stabilize over billions of years."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "sun-red-giant-earth-destruction",
@@ -118,16 +110,15 @@
       "Earth is vaporized or ejected",
       "In about 7.6 billion years"
     ],
-    "tags": ["Stellar Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Stellar Event"
     ],
     "image": "/images/events/billions-sun-red-giant.jpg",
-    "nextOccurrences": ["The Sun will then evolve into a white dwarf."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "The Sun will then evolve into a white dwarf."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "sun-becomes-white-dwarf",
@@ -143,16 +134,15 @@
       "Solar System plunges into darkness",
       "In about 10 billion years"
     ],
-    "tags": ["Stellar Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Stellar Event"
     ],
     "image": "/images/events/billions-sun-white-dwarf.jpg",
-    "nextOccurrences": ["The white dwarf will continue cooling for trillions of years."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "The white dwarf will continue cooling for trillions of years."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "end-of-star-formation",
@@ -167,16 +157,15 @@
       "All hydrogen for star formation depleted",
       "In about 1 trillion years (10¹² years)"
     ],
-    "tags": ["Cosmic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Cosmic Event"
     ],
     "image": "/images/events/billions-end-star-formation.jpg",
-    "nextOccurrences": ["The universe enters the Degenerate Era."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "The universe enters the Degenerate Era."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "last-star-dies",
@@ -191,16 +180,15 @@
       "Last red dwarfs fade away",
       "In about 100 trillion years (10¹⁴ years)"
     ],
-    "tags": ["Cosmic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Cosmic Event"
     ],
     "image": "/images/events/billions-last-star.jpg",
-    "nextOccurrences": ["The universe enters the Black Hole Era."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "The universe enters the Black Hole Era."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "proton-decay",
@@ -216,16 +204,15 @@
       "All baryonic matter disintegrates",
       "In approximately 10³⁴ years"
     ],
-    "tags": ["Cosmic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Cosmic Event"
     ],
     "image": "/images/events/billions-proton-decay.jpg",
-    "nextOccurrences": ["Only black holes and elementary particles remain."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "Only black holes and elementary particles remain."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "black-hole-era",
@@ -240,16 +227,15 @@
       "Spans from ~10⁴⁰ to 10¹⁰⁰ years",
       "Black holes slowly evaporate"
     ],
-    "tags": ["Cosmic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "tags": [
+      "Cosmic Event"
     ],
     "image": "/images/events/billions-black-hole-era.jpg",
-    "nextOccurrences": ["All black holes will eventually evaporate."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "All black holes will eventually evaporate."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "black-holes-evaporate",
@@ -260,17 +246,19 @@
     "mainDescription": "Over an unimaginable timescale, all black holes will completely evaporate via Hawking radiation, releasing their energy as particles and photons.",
     "whatYoullSee": "The final sources of structure and energy in the universe flickering out.",
     "whyItMatters": "The end of the last macroscopic objects in the cosmos.",
-    "keyFacts": ["Hawking radiation process", "In approximately 10¹⁰⁰ years"],
-    "tags": ["Cosmic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Universe"
-      }
+    "keyFacts": [
+      "Hawking radiation process",
+      "In approximately 10¹⁰⁰ years"
+    ],
+    "tags": [
+      "Cosmic Event"
     ],
     "image": "/images/events/billions-black-holes-evaporate.jpg",
-    "nextOccurrences": ["Only a dilute sea of particles remains."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "Only a dilute sea of particles remains."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "heat-death-of-the-universe",
@@ -287,15 +275,14 @@
       "Eternal expansion and cooling",
       "In ~10¹⁰⁰ years and beyond"
     ],
-    "tags": ["Cosmic Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "The Final End"
-      }
+    "tags": [
+      "Cosmic Event"
     ],
     "image": "/images/events/billions-heat-death.jpg",
-    "nextOccurrences": ["There is no “after” this event."],
-    "countdownPrecision": "year"
+    "nextOccurrences": [
+      "There is no “after” this event."
+    ],
+    "countdownPrecision": "year",
+    "rarity": 5
   }
 ]

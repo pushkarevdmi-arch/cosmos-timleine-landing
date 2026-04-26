@@ -3,7 +3,7 @@
 @import "./ds-tailwind-theme.css";
 
 :root {
-  --app-surface-elevated: rgba(18, 24, 38, 1);
+  --app-surface-elevated: rgba(17, 22, 34, 1);
   /* Hero timeline inactive rail + countdown frame (matches .hero-event-slider-visual) */
   --hero-inactive-track-surface-shadow: 0 1.5px 0 0 rgba(255, 255, 255, 0.1),
     inset 0 0 2px 0 rgba(0, 0, 0, 0.08);
@@ -110,7 +110,7 @@ svg:not([class*="text-"]) {
     @apply flex h-full w-full max-w-full min-h-0 flex-col items-stretch justify-start gap-0 overflow-hidden rounded-3xl max-sm:justify-center;
     border-width: 1px;
     border-style: solid;
-    border-color: color-mix(in srgb, var(--ds-neutral-800) 80%, transparent);
+    border-color: rgba(31, 41, 55, 0.8);
     border-image: none;
     background: unset;
     background-color: unset;
@@ -148,6 +148,11 @@ svg:not([class*="text-"]) {
     transform: scale(1.1565);
   }
 
+  /* Pin date / countdown to the bottom when the card column is stretched (mobile uniform height + desktop grid row). */
+  .event-grid-mobile-uniform .event-card__meta {
+    margin-top: auto;
+  }
+
   /* Event grid mobile sticky stack: uniform card height; image uses cover (no stretch) */
   @media (max-width: 639px) {
     .event-grid-mobile-uniform {
@@ -166,11 +171,6 @@ svg:not([class*="text-"]) {
       min-height: 0;
       overflow-x: hidden;
       overflow-y: visible;
-    }
-
-    /* Pin date / time / countdown to the bottom of the content area on tall mobile cards */
-    .event-grid-mobile-uniform .event-card__meta {
-      margin-top: auto;
     }
 
     .event-grid-mobile-uniform .event-card__image-wrap {
@@ -224,9 +224,9 @@ svg:not([class*="text-"]) {
     height: 34px;
     max-height: 34px;
     background-color: var(--ds-neutral-800);
-    border-width: 1px;
-    border-style: solid;
-    border-color: rgba(55, 65, 81, 1);
+    border-width: 0;
+    border-style: none;
+    border-color: rgba(0, 0, 0, 0);
     border-image: none;
     text-align: center;
     vertical-align: middle;
@@ -258,25 +258,6 @@ svg:not([class*="text-"]) {
     @apply text-[14px] leading-[20px];
   }
 
-  .event-card__extra-tag--rarity {
-    color: var(--ds-primary-200);
-    border-color: transparent;
-    border-image: none;
-    background-image:
-      linear-gradient(var(--ds-neutral-800), var(--ds-neutral-800)),
-      linear-gradient(
-        180deg,
-        rgba(99, 102, 241, 0) 0%,
-        rgba(99, 102, 241, 1) 100%
-      );
-    background-origin: border-box;
-    background-clip: padding-box, border-box;
-  }
-
-  .event-card__extra-tag--rarity > span:not(.event-card__extra-tag-icon) {
-    color: var(--ds-primary-200);
-  }
-
   .event-card__extra-tag--location {
     color: var(--ds-neutral-100);
     background-color: var(--ds-neutral-850);
@@ -302,7 +283,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-6 pb-12 pt-4 sm:px-12 sm:pb-12 sm:pt-6;
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[24px] pb-12 pt-4 sm:pb-12 sm:pt-6 lg:px-12;
     background-color: var(--app-surface-elevated);
     background-image: none;
     box-shadow: none;
@@ -344,7 +325,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__date {
-    @apply mt-0 mb-1 flex w-full min-w-0 justify-center;
+    @apply mt-0 mb-0 flex w-full min-w-0 justify-center;
   }
 
   .event-card__countdown {
@@ -357,14 +338,14 @@ svg:not([class*="text-"]) {
 
   .event-card__countdown-grid {
     @apply flex w-full max-w-[420px] justify-start gap-0 font-mono text-ds-neutral-100 sm:justify-center;
-    border-radius: 1rem;
+    border-radius: 1.5rem;
     overflow: hidden;
     background: var(--ds-neutral-1000);
     box-shadow: var(--hero-inactive-track-surface-shadow);
   }
 
   .event-card__countdown-segment {
-    @apply relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 overflow-hidden border-0 bg-ds-neutral-950 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:px-4 sm:py-4;
+    @apply relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 overflow-hidden border-0 bg-ds-neutral-1000 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:px-4 sm:py-4;
   }
 
   /* Flush countdown strip: outer corners only (single segment keeps full pill). */
@@ -373,15 +354,15 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid > .event-card__countdown-segment:first-child:not(:only-child) {
-    border-radius: 1rem 0 0 1rem;
+    border-radius: 1.5rem 0 0 1.5rem;
   }
 
   .event-card__countdown-grid > .event-card__countdown-segment:last-child:not(:only-child) {
-    border-radius: 0 1rem 1rem 0;
+    border-radius: 0 1.5rem 1.5rem 0;
   }
 
   .event-card__countdown-grid > .event-card__countdown-segment:only-child {
-    border-radius: 1rem;
+    border-radius: 1.5rem;
   }
 
   .event-card__countdown-value {
@@ -725,7 +706,9 @@ svg:not([class*="text-"]) {
   border-radius: 12px;
   background: linear-gradient(90deg, #f0cbae 0%, #fd7811 100%);
   transform: translateY(-50%);
-  transition: width 260ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    width 260ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 200ms ease;
 }
 
 .hero-event-slider-thumb-visual {

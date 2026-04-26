@@ -23,15 +23,22 @@ import {
   getEventCalendarYear,
   isEventOnOrAfterNow,
 } from "@/utils/eventDate";
-import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
+import EventTagGroup, {
+  EventCategoryTag,
+  type EventExtraTag,
+} from "./EventTagGroup";
 import OpenArrowGlyph from "./OpenArrowGlyph";
 
 export type CountdownPrecision = "full" | "day" | "year";
+
+export type EventRarity = 1 | 2 | 3 | 4 | 5;
 
 export type HeroEventData = {
   id: string;
   title: string;
   date: string;
+  /** Observational / “once in a lifetime” scale, 1 = more common, 5 = extremely rare. */
+  rarity: EventRarity;
   countdownPrecision?: CountdownPrecision;
   timeCategory?: "Next 100 Years" | "Next 10,000 Years" | "Millions of Years" | "Billions of Years";
   shortDescription: string;
@@ -240,6 +247,9 @@ export default function HeroEvent({
   const normalizedYears = countdown.years;
   const normalizedDays = countdown.days;
   const precision = liveEvent.countdownPrecision ?? "full";
+  const displayPrecision = displayEvent.countdownPrecision ?? "full";
+  /** Extra vertical room when the hero shows a single YEARS segment (long titles can overlap the countdown). */
+  const heroYearOnlyExtraHeight = displayPrecision === "year";
   /** Same countdown + no calendar row as EventCard for long-horizon categories. */
   const useMegaYearsCountdownLayout =
     liveEvent.timeCategory === "Next 10,000 Years" ||
@@ -324,7 +334,7 @@ export default function HeroEvent({
         tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
-        className={`grid h-fit min-w-0 w-full gap-0 border border-ds-neutral-800 rounded-3xl bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[480px_minmax(0,1fr)] ${
+        className={`grid h-fit min-w-0 w-full gap-0 border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[var(--app-surface-elevated)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[480px_minmax(0,1fr)] ${
           onExplore ? "hero-event--interactive group cursor-pointer" : ""
         } ${
           isVisible
@@ -334,8 +344,14 @@ export default function HeroEvent({
       >
         {/* Left: visual */}
         <div
-          className={`hero-event__image-wrap relative h-[200px] min-h-[200px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-3xl ${
-            heroPanelCompact ? "md:h-[288px] md:min-h-[288px]" : "md:h-[364px] md:min-h-[364px]"
+          className={`hero-event__image-wrap relative mx-auto h-[200px] min-h-[200px] w-full max-w-[240px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:mx-0 md:max-w-none md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-3xl ${
+            heroPanelCompact
+              ? heroYearOnlyExtraHeight
+                ? "md:h-[312px] md:min-h-[312px]"
+                : "md:h-[288px] md:min-h-[288px]"
+              : heroYearOnlyExtraHeight
+                ? "md:h-[388px] md:min-h-[388px]"
+                : "md:h-[364px] md:min-h-[364px]"
           }`}
         >
           <Image
@@ -343,7 +359,7 @@ export default function HeroEvent({
             alt={displayEvent.title}
             fill
             priority
-            sizes="(min-width: 768px) 40vw, 100vw"
+            sizes="(min-width: 1024px) 480px, 240px"
             className="hero-event__image object-cover"
           />
 
@@ -356,14 +372,21 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:px-10 md:pb-10 md:pt-10 md:text-left xl:pr-20 ${
+          className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-10 md:text-left ${
             heroPanelCompact
-              ? "min-h-[224px] md:h-[288px] md:min-h-[288px]"
-              : "min-h-[232px] md:h-[364px] md:min-h-[364px]"
+              ? heroYearOnlyExtraHeight
+                ? "min-h-[248px] md:h-[312px] md:min-h-[312px]"
+                : "min-h-[224px] md:h-[288px] md:min-h-[288px]"
+              : heroYearOnlyExtraHeight
+                ? "min-h-[256px] md:h-[388px] md:min-h-[388px]"
+                : "min-h-[232px] md:h-[364px] md:min-h-[364px]"
           }`}
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-2">
+            <div className="flex w-full justify-center md:justify-start">
+              <EventCategoryTag primaryTag={displayEvent.tags?.[0]} />
+            </div>
             <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[26px] sm:text-[28px] sm:leading-[32px] md:text-[28px] md:leading-[32px] md:line-clamp-3 md:font-normal">
               {displayEvent.title}
             </h3>
@@ -379,11 +402,11 @@ export default function HeroEvent({
 
           {/* Date + countdown: flex-1 spacer fills extra min-height; -mt-4 tightens copy↔date by 16px */}
           <div className="-mt-4 flex w-full min-w-0 shrink-0 flex-col items-center gap-2 pt-0 md:items-stretch">
-            <div className="hero-event__date-countdown flex w-full min-w-0 flex-col items-center gap-3 md:items-stretch">
+            <div className="hero-event__date-countdown flex w-full min-w-0 flex-col items-center gap-0 md:items-stretch">
               {showHeroDateRow ? (
                 <div className="flex h-10 w-full max-w-full justify-center md:mr-5 md:w-fit md:justify-start">
                   <div
-                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-t-[12px] rounded-b-none border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
                     role="group"
                     aria-label={`Event date${eventHasSpecificUtcTime(displayEvent.date) ? " and time" : ""}`}
                   >
@@ -459,7 +482,7 @@ export default function HeroEvent({
                   This event has already occurred.
                 </p>
               ) : useMegaYearsCountdownLayout ? (
-                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-24 md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
+                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[104px] md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
                   <div
                     className="relative flex min-h-0 min-w-0 w-full max-w-full grow basis-full flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border-0 bg-ds-neutral-1000 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-1 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:w-full md:rounded-2xl md:py-2"
                     aria-label={`${megaScale.numberPart}${megaScale.scaleWord ? ` ${megaScale.scaleWord}` : ""} years from now`}
@@ -491,9 +514,9 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-24 md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
+                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[104px] md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
                   <div
-                    className="hero-countdown__segments flex min-h-0 min-w-0 max-w-[520px] flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-2xl border-0 md:h-full md:min-h-0"
+                    className="hero-countdown__segments flex min-h-0 min-w-0 max-w-[520px] flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-tl-none rounded-tr-3xl rounded-br-3xl rounded-bl-3xl border-0 md:h-full md:min-h-0"
                   >
                     {heroCountdownSegments.map((segment, index) => {
                       const n = heroCountdownSegments.length;
@@ -582,7 +605,9 @@ export default function HeroEvent({
               max={sortedEvents.length - 1}
               step={1}
               value={activeIndex}
-              onChange={(e) => setActiveIndex(Number(e.currentTarget.value))}
+              onChange={(e) => {
+                setActiveIndex(Number(e.currentTarget.value));
+              }}
               aria-label="Timeline slider"
             />
           </div>

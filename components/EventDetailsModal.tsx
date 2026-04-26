@@ -6,6 +6,8 @@ import {
   formatEventTimeUtcLabel,
 } from "@/utils/eventDate";
 import type { HeroEventData } from "./HeroEvent";
+import EventRarityScale from "./EventRarityScale";
+import { EventCategoryTag } from "./EventTagGroup";
 import Image from "next/image";
 import {
   useCallback,
@@ -193,6 +195,9 @@ export default function EventDetailsModal({
         <div className="min-h-0 flex-1 overflow-y-auto modal-scroll bg-[var(--app-surface-elevated)]">
           <div className="flex flex-col gap-8 bg-[var(--app-surface-elevated)] px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
             <div className="flex flex-col gap-4">
+              <div className="pl-[3px] pr-[3px]">
+                <EventCategoryTag primaryTag={event.tags?.[0]} />
+              </div>
               <h2
                 id="event-details-title"
                 className="break-words pl-[3px] pr-[3px] font-sans text-h4-600 text-ds-neutral-50"
@@ -201,37 +206,40 @@ export default function EventDetailsModal({
               </h2>
 
               <div className="pl-[3px] pr-[3px]">
-                <div className="flex h-9 w-fit max-w-full justify-start">
-                  <div
-                    className="hero-event__date-badge inline-flex h-9 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-800 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
-                    role="group"
-                    aria-label={`Event date${eventHasSpecificUtcTime(date) ? " and time" : ""}`}
-                  >
-                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
-                      <img
-                        src="/icons/calendar.svg"
-                        width={22}
-                        height={22}
-                        alt=""
-                        aria-hidden
-                        className="h-full w-full object-contain"
-                      />
-                    </span>
-                    <span className="min-w-0 truncate font-sans">
-                      {formatEventDateOnlyLong(date)}
-                    </span>
-                    {eventHasSpecificUtcTime(date) ? (
-                      <>
-                        <span
-                          className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
-                          aria-hidden="true"
+                <div className="flex w-fit flex-nowrap items-center justify-between gap-6">
+                  <div className="flex h-9 w-fit max-w-full min-w-0 justify-start">
+                    <div
+                      className="hero-event__date-badge inline-flex h-9 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-800 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                      role="group"
+                      aria-label={`Event date${eventHasSpecificUtcTime(date) ? " and time" : ""}`}
+                    >
+                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
+                        <img
+                          src="/icons/calendar.svg"
+                          width={22}
+                          height={22}
+                          alt=""
+                          aria-hidden
+                          className="h-full w-full object-contain"
                         />
-                        <span className="shrink-0 whitespace-nowrap font-sans">
-                          {formatEventTimeUtcLabel(date)}
-                        </span>
-                      </>
-                    ) : null}
+                      </span>
+                      <span className="min-w-0 truncate font-sans">
+                        {formatEventDateOnlyLong(date)}
+                      </span>
+                      {eventHasSpecificUtcTime(date) ? (
+                        <>
+                          <span
+                            className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
+                            aria-hidden="true"
+                          />
+                          <span className="shrink-0 whitespace-nowrap font-sans">
+                            {formatEventTimeUtcLabel(date)}
+                          </span>
+                        </>
+                      ) : null}
+                    </div>
                   </div>
+                  <EventRarityScale value={event.rarity} />
                 </div>
               </div>
             </div>

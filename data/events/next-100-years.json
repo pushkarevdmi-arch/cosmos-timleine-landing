@@ -17,17 +17,12 @@
     "tags": [
       "Conjunction"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Rare"
-      }
-    ],
     "image": "/images/events/1-100-venus-jupiter-great-conjunction.jpg",
     "nextOccurrences": [
       "Next bright Venus-Jupiter conjunctions are expected in the early 2030s. Similar spectacular pairings occur roughly every 10–13 years."
     ],
-    "countdownPrecision": "full"
+    "countdownPrecision": "full",
+    "rarity": 3
   },
   {
     "id": "greatest-solar-eclipse-europe-2026",
@@ -49,10 +44,6 @@
     ],
     "specialTags": [
       {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      },
-      {
         "type": "location",
         "label": "Europe",
         "icon": "Europe"
@@ -63,7 +54,8 @@
       "Next major total solar eclipse with good European visibility: September 3, 2081",
       "Other total solar eclipses will occur in different parts of the world in the coming decades."
     ],
-    "countdownPrecision": "full"
+    "countdownPrecision": "full",
+    "rarity": 4
   },
   {
     "id": "apophis-close-flyby-2029",
@@ -83,17 +75,12 @@
     "tags": [
       "Asteroid"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Uncommon"
-      }
-    ],
     "image": "/images/events/1-100-asteroid-apophis-close-flyby.jpg",
     "nextOccurrences": [
       "Apophis will not make another close approach like this for over 100 years. The next significant close pass is expected in 2060, but much farther away."
     ],
-    "countdownPrecision": "full"
+    "countdownPrecision": "full",
+    "rarity": 5
   },
   {
     "id": "taurid-meteor-swarm-2032",
@@ -113,18 +100,13 @@
     "tags": [
       "Meteor Shower"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      }
-    ],
     "image": "/images/events/1-100-taurid-meteor-swarm.jpg",
     "nextOccurrences": [
       "The next strong Taurid fireball years are expected around 2040 and then again in the 2050s.",
       "Normal Taurid activity occurs every year in October and November, but 2032 is predicted to be significantly stronger."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 2
   },
   {
     "id": "blood-moon-tetrad-2032-2033",
@@ -145,18 +127,13 @@
     "tags": [
       "Eclipse"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Uncommon"
-      }
-    ],
     "image": "/images/events/1-100-blood-moon-tetrad.jpg",
     "nextOccurrences": [
       "The next lunar tetrad after 2032–2033 will occur in 2043–2044.",
       "Lunar tetrads happen only a few times every century."
     ],
-    "countdownPrecision": "full"
+    "countdownPrecision": "full",
+    "rarity": 2
   },
   {
     "id": "great-planetary-alignment-2034",
@@ -176,18 +153,13 @@
     "tags": [
       "Planetary Event"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Uncommon"
-      }
-    ],
     "image": "/images/events/1-100-great-planetary-alignment.jpg",
     "nextOccurrences": [
       "The next strong planetary alignment is expected around 2040.",
       "Smaller alignments of 3–4 planets occur more frequently, every few years."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 2
   },
   {
     "id": "great-mars-opposition-2035",
@@ -207,18 +179,13 @@
     "tags": [
       "Planetary Event"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      }
-    ],
     "image": "/images/events/1-100-great-mars-opposition.jpg",
     "nextOccurrences": [
       "The next similarly close Mars opposition will occur in 2041.",
       "Mars reaches opposition roughly every 26 months, but truly great ones happen less frequently."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 2
   },
   {
     "id": "extreme-supermoon-2037",
@@ -238,18 +205,13 @@
     "tags": [
       "Lunar Event"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Rare"
-      }
-    ],
     "image": "/images/events/1-100-extreme-supermoon.jpg",
     "nextOccurrences": [
       "Extreme supermoons occur every few years when the Moon’s perigee is particularly close.",
       "Regular supermoons happen several times each year."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 2
   },
   {
     "id": "saturn-ring-plane-crossing-2038",
@@ -269,18 +231,13 @@
     "tags": [
       "Planetary Event"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      }
-    ],
     "image": "/images/events/1-100-saturn-ring-plane-crossing.jpg",
     "nextOccurrences": [
       "The next ring plane crossing after 2038 will occur around 2053.",
       "This event repeats roughly every 15 years due to Saturn’s orbital tilt."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 3
   },
   {
     "id": "greatest-solar-eclipse-north-america-2045",
@@ -302,10 +259,6 @@
     ],
     "specialTags": [
       {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      },
-      {
         "type": "location",
         "label": "North America",
         "icon": "North-America"
@@ -316,7 +269,8 @@
       "The next total solar eclipse with similar long duration across North America is not expected until the 2070s.",
       "Other total solar eclipses will occur in different parts of the world in the coming decades."
     ],
-    "countdownPrecision": "full"
+    "countdownPrecision": "full",
+    "rarity": 4
   },
   {
     "id": "brightest-jupiter-2056",
@@ -336,18 +290,13 @@
     "tags": [
       "Planetary Event"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      }
-    ],
     "image": "/images/events/1-100-brightest-jupiter-of-the-century.jpg",
     "nextOccurrences": [
       "Jupiter reaches opposition every 13 months, but this is the closest and brightest one of the century.",
       "The next very close opposition will occur much later in the 22nd century."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 2
   },
   {
     "id": "halleys-comet-2061",
@@ -367,18 +316,13 @@
     "tags": [
       "Comet"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      }
-    ],
     "image": "/images/events/1-100-halleys-comet-returns.jpg",
     "nextOccurrences": [
       "Halley’s Comet will return again in 2134.",
       "After 2134, the next return is expected in 2209."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 5
   },
   {
     "id": "greatest-solar-eclipse-europe-2081",
@@ -400,10 +344,6 @@
     ],
     "specialTags": [
       {
-        "type": "rarity",
-        "label": "Uncommon"
-      },
-      {
         "type": "location",
         "label": "Europe",
         "icon": "Europe"
@@ -414,7 +354,8 @@
       "The next total solar eclipse with good visibility across Europe is not expected until the 22nd century.",
       "Other total solar eclipses will continue to occur in different parts of the world."
     ],
-    "countdownPrecision": "full"
+    "countdownPrecision": "full",
+    "rarity": 4
   },
   {
     "id": "uranus-neptune-conjunction-2093",
@@ -434,17 +375,12 @@
     "tags": [
       "Planetary Event"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      }
-    ],
     "image": "/images/events/1-100-uranus-neptune-conjunction.jpg",
     "nextOccurrences": [
       "The next Uranus–Neptune conjunction will occur in 2265 (172 years later)."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 5
   },
   {
     "id": "transit-of-venus-2117",
@@ -464,18 +400,13 @@
     "tags": [
       "Transit"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Rare"
-      }
-    ],
     "image": "/images/events/1-100-transit-of-venus.jpg",
     "nextOccurrences": [
       "The second transit of the pair will occur on December 8, 2125.",
       "After 2125, the next transit of Venus will not occur until 2247."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 5
   },
   {
     "id": "second-transit-of-venus-2125",
@@ -495,17 +426,12 @@
     "tags": [
       "Transit"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Rare"
-      }
-    ],
     "image": "/images/events/1-100-second-transit-of-venus.jpg",
     "nextOccurrences": [
       "After 2125, the next transit of Venus will not occur until December 2247."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 5
   },
   {
     "id": "annular-solar-eclipse-2126",
@@ -525,17 +451,12 @@
     "tags": [
       "Eclipse"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Rare"
-      }
-    ],
     "image": "/images/events/1-100-annular-solar-eclipse.jpg",
     "nextOccurrences": [
       "Annular solar eclipses occur more frequently than total ones, usually every few years somewhere on Earth."
     ],
-    "countdownPrecision": "full"
+    "countdownPrecision": "full",
+    "rarity": 3
   },
   {
     "id": "comet-swift-tuttle-2126",
@@ -555,16 +476,11 @@
     "tags": [
       "Comet"
     ],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Rare"
-      }
-    ],
     "image": "/images/events/1-100-comet-swift-tuttle-returns.jpg",
     "nextOccurrences": [
       "Comet Swift–Tuttle will return again around 2259."
     ],
-    "countdownPrecision": "day"
+    "countdownPrecision": "day",
+    "rarity": 4
   }
 ]

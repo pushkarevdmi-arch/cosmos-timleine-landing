@@ -14,18 +14,15 @@
       "Orbital period: ~76 years",
       "In about 108 years"
     ],
-    "tags": ["Comet"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      }
+    "tags": [
+      "Comet"
     ],
     "image": "/images/events/10000-halleys-comet-2134.jpg",
     "nextOccurrences": [
       "The next return after 2134 will be in 2209–2210, but significantly less impressive."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "longest-total-solar-eclipse-2186",
@@ -42,18 +39,15 @@
       "In about 160 years",
       "Requires proper solar eclipse glasses"
     ],
-    "tags": ["Eclipse"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      }
+    "tags": [
+      "Eclipse"
     ],
     "image": "/images/events/10000-longest-solar-eclipse-2186.jpg",
     "nextOccurrences": [
       "No longer total solar eclipse is expected until after 6000 CE."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "venus-occults-saturn-2518",
@@ -70,18 +64,15 @@
       "Extremely rare planetary occultation",
       "In about 492 years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/10000-venus-occults-saturn.jpg",
     "nextOccurrences": [
       "The next similar Venus-Saturn occultation will occur much later."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "extremely-close-mars-approach-2729",
@@ -97,18 +88,15 @@
       "Extremely high brightness",
       "In about 703 years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/10000-close-mars-approach.jpg",
     "nextOccurrences": [
       "Similar close approaches of Mars are very rare over thousands of years."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 4
   },
   {
     "id": "simultaneous-solar-eclipse-mercury-transit-6757",
@@ -124,18 +112,16 @@
       "First known simultaneous total eclipse + Mercury transit",
       "In about 4731 years"
     ],
-    "tags": ["Eclipse", "Transit"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      }
+    "tags": [
+      "Eclipse",
+      "Transit"
     ],
     "image": "/images/events/10000-eclipse-mercury-transit-6757.jpg",
     "nextOccurrences": [
       "The next similar event occurs in 11268."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "jupiter-occults-saturn-7541",
@@ -151,18 +137,15 @@
       "Last occurrence ~6857 BCE",
       "In about 5515 years"
     ],
-    "tags": ["Planetary Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      }
+    "tags": [
+      "Planetary Event"
     ],
     "image": "/images/events/10000-jupiter-occults-saturn-7541.jpg",
     "nextOccurrences": [
       "Such double events are exceptionally rare over millennia."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   },
   {
     "id": "deneb-new-north-star-9800",
@@ -179,18 +162,15 @@
       "Due to Earth’s axial precession",
       "In about 7774 years"
     ],
-    "tags": ["Stellar Event"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Once in a Lifetime"
-      }
+    "tags": [
+      "Stellar Event"
     ],
     "image": "/images/events/10000-deneb-north-star.jpg",
     "nextOccurrences": [
       "The full precession cycle repeats every ~26,000 years."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 4
   },
   {
     "id": "second-simultaneous-eclipse-mercury-transit-11268",
@@ -206,17 +186,15 @@
       "Second occurrence after 6757",
       "In about 9242 years"
     ],
-    "tags": ["Eclipse", "Transit"],
-    "specialTags": [
-      {
-        "type": "rarity",
-        "label": "Extremely Rare"
-      }
+    "tags": [
+      "Eclipse",
+      "Transit"
     ],
     "image": "/images/events/10000-eclipse-mercury-transit-11268.jpg",
     "nextOccurrences": [
       "No more such events for many thousands of years afterward."
     ],
-    "countdownPrecision": "year"
+    "countdownPrecision": "year",
+    "rarity": 5
   }
 ]

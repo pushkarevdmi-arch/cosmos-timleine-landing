@@ -175,12 +175,12 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
         <div className="event-card__content-spacer" aria-hidden />
 
         <div className="event-card__meta">
-          <div className="flex w-full flex-col gap-2 sm:px-6 md:px-0 xl:px-6">
+          <div className="flex w-full flex-col gap-0 lg:px-8">
             {showCardDateRow ? (
               <div className="event-card__date">
                 <div className="flex h-10 w-fit max-w-full justify-center">
                   <div
-                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-t-[12px] border-0 bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
                     role="group"
                     aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
                   >

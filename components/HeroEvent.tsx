@@ -341,7 +341,7 @@ export default function HeroEvent({
       >
         {/* Left: visual */}
         <div
-          className={`hero-event__image-wrap relative mx-auto h-[200px] min-h-[200px] w-full max-w-[240px] min-w-0 overflow-hidden rounded-t-3xl rounded-b-none md:mx-0 md:max-w-none md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-3xl ${
+          className={`hero-event__image-wrap relative h-[200px] min-h-[200px] w-full min-w-0 max-w-full overflow-hidden rounded-t-3xl rounded-b-none md:mx-0 md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-3xl ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
                 ? "md:h-[312px] md:min-h-[312px]"
@@ -356,7 +356,7 @@ export default function HeroEvent({
             alt={displayEvent.title}
             fill
             priority
-            sizes="(min-width: 1024px) 480px, 240px"
+            sizes="(min-width: 1024px) 480px, (min-width: 768px) 240px, 100vw"
             className="hero-event__image object-cover"
           />
 
@@ -400,7 +400,7 @@ export default function HeroEvent({
               {showHeroDateRow ? (
                 <div className="flex h-10 w-full max-w-full justify-center md:mr-5 md:w-fit md:justify-start">
                   <div
-                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-t-[12px] rounded-b-none border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight md:rounded-b-none md:rounded-t-[12px]"
                     role="group"
                     aria-label={`Event date${eventHasSpecificUtcTime(displayEvent.date) ? " and time" : ""}`}
                   >

@@ -553,11 +553,11 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 rounded-3xl border-t border-[var(--ds-neutral-800)] bg-[var(--app-surface-elevated)] px-5 pb-6 pt-5 md:px-8 md:pb-8 md:pt-6">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-800)] bg-[var(--app-surface-elevated)] px-5 pb-6 pt-5 md:gap-2 md:px-8 md:pb-8 md:pt-6">
           <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-2 md:mb-0">
             <label
               htmlFor="hero-event-time-slider"
-              className="block cursor-pointer font-sans text-[18px] font-medium leading-[22px] tracking-[0.02em] text-ds-neutral-00"
+              className="block cursor-pointer font-sans text-[16px] font-medium leading-[20px] tracking-[0.02em] text-ds-neutral-00 md:text-[18px] md:leading-[22px]"
             >
               Timeline
             </label>
@@ -568,7 +568,7 @@ export default function HeroEvent({
               <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-2 md:py-2">
                 {heroTimelineYearDisplay.kind === "mega" ? (
                   <span className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0">
-                    <span className="whitespace-nowrap font-departure-mono text-[18px] !font-bold leading-[22px] tracking-[1px] text-ds-neutral-00">
+                    <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[1px] text-ds-neutral-00 md:text-[18px] md:leading-[22px]">
                       {heroTimelineYearDisplay.numberPart}
                     </span>
                     <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.scaleWord}</span>
@@ -576,7 +576,7 @@ export default function HeroEvent({
                 ) : showHeroYearVerbalEnd ? (
                   <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.text}</span>
                 ) : (
-                  <span className="whitespace-nowrap font-departure-mono text-[18px] !font-bold leading-[22px] tracking-[0.03em] text-ds-neutral-00">
+                  <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[0.03em] text-ds-neutral-00 md:text-[18px] md:leading-[22px]">
                     {heroTimelineYearDisplay.text}
                   </span>
                 )}

@@ -372,7 +372,7 @@ export default function Home() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-[80px] flex flex-col items-start justify-center sm:mb-[104px] lg:mb-[128px]">
+        <header className="mb-[80px] flex flex-col items-center justify-center text-center sm:mb-[104px] lg:mb-[128px]">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -394,7 +394,7 @@ export default function Home() {
         {/* Hero heading */}
         <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
           <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
-            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] tracking-[-1px] text-ds-neutral-50 w-full text-left">
+            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] tracking-[-1px] text-ds-neutral-50 w-full text-center">
               Journey{" "}
               <span
                 className="font-dynamite leading-[40px] h-[40px] inline-block tracking-[0px]"
@@ -428,9 +428,9 @@ export default function Home() {
         </section>
 
         {/* View toggle */}
-        <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between">
-          <div className="w-full text-left">
-            <h2 className="text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
+        <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:gap-6">
+          <div className="w-full min-w-0 text-left sm:flex-1">
+            <h2 className="w-full max-sm:text-center font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-left sm:text-h2-400">
               Upcoming{" "}
               <span
                 className="font-dynamite"
@@ -442,7 +442,7 @@ export default function Home() {
           </div>
 
           <div
-            className="relative flex w-full flex-row-reverse items-center justify-between gap-4 sm:w-full sm:gap-3 sm:flex-row sm:justify-end"
+            className="relative flex w-full shrink-0 flex-row-reverse items-center justify-between gap-4 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end lg:gap-4"
             ref={filterPopoverRef}
           >
             <button
@@ -675,7 +675,7 @@ export default function Home() {
               </div>
             ) : null}
 
-            <div className="min-w-0 w-fit sm:flex-initial">
+            <div className="min-w-0 w-full sm:w-auto sm:shrink-0">
               <ViewToggle mode={viewMode} onChange={(mode) => setViewMode(mode)} />
             </div>
           </div>

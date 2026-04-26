@@ -11,7 +11,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
   const options = [{ value: "grid" as ViewMode }, { value: "timeline" as ViewMode }];
 
   return (
-    <div className="flex w-[180px] gap-1.5 rounded-2xl bg-ds-neutral-900 p-1 sm:inline-flex sm:w-auto sm:p-1.5">
+    <div className="flex w-full gap-1.5 rounded-2xl bg-ds-neutral-900 p-1 sm:inline-flex sm:w-auto sm:p-1.5">
       {options.map((option) => {
         const isActive = option.value === mode;
         return (

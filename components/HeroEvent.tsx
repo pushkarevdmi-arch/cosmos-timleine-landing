@@ -23,10 +23,7 @@ import {
   getEventCalendarYear,
   isEventOnOrAfterNow,
 } from "@/utils/eventDate";
-import EventTagGroup, {
-  EventCategoryTag,
-  type EventExtraTag,
-} from "./EventTagGroup";
+import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
 import OpenArrowGlyph from "./OpenArrowGlyph";
 
 export type CountdownPrecision = "full" | "day" | "year";
@@ -384,9 +381,6 @@ export default function HeroEvent({
           style={{ backgroundColor: "var(--app-surface-elevated)" }}
         >
           <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-2">
-            <div className="flex w-full justify-center md:justify-start">
-              <EventCategoryTag primaryTag={displayEvent.tags?.[0]} />
-            </div>
             <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[26px] sm:text-[28px] sm:leading-[32px] md:text-[28px] md:leading-[32px] md:line-clamp-3 md:font-normal">
               {displayEvent.title}
             </h3>

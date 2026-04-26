@@ -372,7 +372,7 @@ export default function Home() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* Top nav / brand */}
-        <header className="mb-[112px] flex flex-col items-start justify-center sm:mb-[104px] lg:mb-[128px]">
+        <header className="mb-[80px] flex flex-col items-start justify-center sm:mb-[104px] lg:mb-[128px]">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -411,10 +411,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="mb-32 h-[320px] w-full rounded-[32px] sm:h-[220px] lg:mb-32">
-          <div className="relative h-[320px] w-full overflow-hidden rounded-[32px] border border-ds-neutral-850 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
+        <section className="mb-32 h-[300px] w-full rounded-[32px] sm:h-[220px] lg:mb-32">
+          <div className="relative h-[300px] w-full overflow-hidden rounded-[32px] border border-ds-neutral-850 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
             <video
-              className="block h-[320px] w-full border-0 object-cover sm:h-[220px]"
+              className="block h-[300px] w-full border-0 object-cover sm:h-[220px]"
               src="/videos/hero-video-main_8.mp4"
               autoPlay
               loop
@@ -442,7 +442,7 @@ export default function Home() {
           </div>
 
           <div
-            className="relative flex w-full flex-row-reverse items-center justify-between gap-6 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end"
+            className="relative flex w-full flex-row-reverse items-center justify-between gap-4 sm:w-full sm:gap-3 sm:flex-row sm:justify-end"
             ref={filterPopoverRef}
           >
             <button
@@ -675,7 +675,7 @@ export default function Home() {
               </div>
             ) : null}
 
-            <div className="min-w-0 flex-1 sm:flex-initial">
+            <div className="min-w-0 w-fit sm:flex-initial">
               <ViewToggle mode={viewMode} onChange={(mode) => setViewMode(mode)} />
             </div>
           </div>

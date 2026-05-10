@@ -404,7 +404,7 @@ export default function Home() {
               className={[
                 "flex shrink-0 cursor-pointer items-center justify-center transition-colors",
                 /* Mobile: match ViewToggle outer box — p-1 + h-12 inner → 56px (3.5rem) square */
-                "max-sm:size-14 rounded-xl bg-ds-neutral-900",
+                "max-sm:size-14 rounded-xl bg-ds-neutral-800",
                 "sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:bg-transparent sm:px-3 sm:py-2",
                 "text-base font-bold",
                 isFilterOpen
@@ -429,7 +429,11 @@ export default function Home() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 aria-hidden
-                className="shrink-0 text-inherit"
+                className={
+                  hasActiveFilters
+                    ? "shrink-0 text-inherit"
+                    : "shrink-0 max-sm:text-ds-neutral-00 sm:text-inherit"
+                }
               >
                 <path
                   d="M4.5 7H19.5M7 12H17M10 17H14"

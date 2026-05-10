@@ -195,7 +195,7 @@ export default function EventDetailsModal({
         <div className="min-h-0 flex-1 overflow-y-auto modal-scroll bg-[var(--app-surface-elevated)]">
           <div className="flex flex-col gap-8 bg-[var(--app-surface-elevated)] px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
             <div className="flex flex-col gap-5">
-              <div className="flex flex-col gap-6 pl-[3px] pr-[3px]">
+              <div className="flex flex-col gap-3 pl-[3px] pr-[3px]">
                 <EventCategoryTag primaryTag={event.tags?.[0]} />
                 <h2
                   id="event-details-title"
@@ -249,7 +249,7 @@ export default function EventDetailsModal({
               </div>
             </div>
 
-            <p className="text-[18px] leading-[26px] text-ds-neutral-300">
+            <p className="mt-4 text-[18px] leading-[26px] text-ds-neutral-300">
               {mainDescription}
             </p>
 

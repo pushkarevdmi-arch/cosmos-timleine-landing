@@ -344,8 +344,8 @@ export default function HeroEvent({
           className={`hero-event__image-wrap relative h-[200px] min-h-[200px] w-full min-w-0 max-w-full overflow-hidden rounded-t-3xl rounded-b-none md:mx-0 md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-3xl ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
-                ? "md:h-[296px] md:min-h-[296px]"
-                : "md:h-[272px] md:min-h-[272px]"
+                ? "md:h-[312px] md:min-h-[312px]"
+                : "md:h-[288px] md:min-h-[288px]"
               : heroYearOnlyExtraHeight
                 ? "md:h-[372px] md:min-h-[372px]"
                 : "md:h-[348px] md:min-h-[348px]"
@@ -372,8 +372,8 @@ export default function HeroEvent({
           className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-10 md:text-left ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
-                ? "min-h-[232px] md:h-[296px] md:min-h-[296px]"
-                : "min-h-[208px] md:h-[272px] md:min-h-[272px]"
+                ? "min-h-[232px] md:h-[312px] md:min-h-[312px]"
+                : "min-h-[208px] md:h-[288px] md:min-h-[288px]"
               : heroYearOnlyExtraHeight
                 ? "min-h-[240px] md:h-[372px] md:min-h-[372px]"
                 : "min-h-[216px] md:h-[348px] md:min-h-[348px]"
@@ -558,7 +558,7 @@ export default function HeroEvent({
               <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-3 md:py-2">
                 {heroTimelineYearDisplay.kind === "mega" ? (
                   <span className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0">
-                    <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[1px] text-ds-neutral-00 md:text-[20px] md:leading-[24px]">
+                    <span className="whitespace-nowrap font-departure-mono text-[18px] !font-bold leading-[22px] tracking-[1px] text-ds-neutral-00 md:text-[20px] md:leading-[24px]">
                       {heroTimelineYearDisplay.numberPart}
                     </span>
                     <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.scaleWord}</span>
@@ -566,7 +566,7 @@ export default function HeroEvent({
                 ) : showHeroYearVerbalEnd ? (
                   <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.text}</span>
                 ) : (
-                  <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[0.03em] text-ds-neutral-00 md:text-[20px] md:leading-[24px]">
+                  <span className="whitespace-nowrap font-departure-mono text-[18px] !font-bold leading-[22px] tracking-[0.03em] text-ds-neutral-00 md:text-[20px] md:leading-[24px]">
                     {heroTimelineYearDisplay.text}
                   </span>
                 )}

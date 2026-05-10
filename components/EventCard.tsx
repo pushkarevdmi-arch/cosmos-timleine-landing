@@ -253,10 +253,10 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                       <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>DAYS</span>
                     </div>
                   ) : null}
-                  {precision === "full" ? (
+                  {precision !== "year" ? (
                     <div className="event-card__countdown-segment">
                       <span className="event-card__countdown-value text-[24px] leading-[24px] sm:text-[32px] sm:leading-[32px]">
-                        {countdown.hours.toString().padStart(2, "0")}
+                        {(precision === "day" ? 0 : countdown.hours).toString().padStart(2, "0")}
                       </span>
                       <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>HRS</span>
                     </div>

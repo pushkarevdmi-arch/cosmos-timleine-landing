@@ -180,21 +180,11 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
               <div className="event-card__date">
                 <div className="flex h-10 w-fit max-w-full justify-center">
                   <div
-                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-t-[12px] border-0 bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-t-[12px] border-0 bg-ds-neutral-700 py-1 pl-4 pr-4 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-4 sm:pr-4 sm:py-1 sm:text-[16px] sm:leading-tight"
                     role="group"
                     aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
                   >
-                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
-                      <img
-                        src="/icons/calendar.svg"
-                        width={22}
-                        height={22}
-                        alt=""
-                        aria-hidden
-                        className="h-full w-full object-contain"
-                      />
-                    </span>
-                    <span className="min-w-0 truncate font-sans">
+                    <span className="min-w-0 truncate font-sans font-semibold">
                       {formatEventDateOnlyLong(event.date)}
                     </span>
                     {eventHasSpecificUtcTime(event.date) ? (
@@ -203,7 +193,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                           className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
                           aria-hidden="true"
                         />
-                        <span className="shrink-0 whitespace-nowrap font-sans">
+                        <span className="shrink-0 whitespace-nowrap font-sans font-semibold">
                           {formatEventTimeUtcLabel(event.date)}
                         </span>
                       </>
@@ -250,14 +240,14 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
               ) : (
                 <div className="event-card__countdown-grid h-[88px]">
                   <div className="event-card__countdown-segment">
-                    <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[28px] sm:leading-[28px]">
+                    <span className="event-card__countdown-value text-[24px] leading-[24px] sm:text-[28px] sm:leading-[28px]">
                       {countdown.years.toString().padStart(2, "0")}
                     </span>
                     <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>YEARS</span>
                   </div>
                   {precision !== "year" ? (
                     <div className="event-card__countdown-segment">
-                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[28px] sm:leading-[28px]">
+                      <span className="event-card__countdown-value text-[24px] leading-[24px] sm:text-[28px] sm:leading-[28px]">
                         {formatCountdownDaysDisplay(countdown.days)}
                       </span>
                       <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>DAYS</span>
@@ -265,7 +255,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                   ) : null}
                   {precision === "full" ? (
                     <div className="event-card__countdown-segment">
-                      <span className="event-card__countdown-value text-[20px] leading-[20px] sm:text-[28px] sm:leading-[28px]">
+                      <span className="event-card__countdown-value text-[24px] leading-[24px] sm:text-[28px] sm:leading-[28px]">
                         {countdown.hours.toString().padStart(2, "0")}
                       </span>
                       <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>HRS</span>

@@ -11,7 +11,10 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
   const options = [{ value: "grid" as ViewMode }, { value: "timeline" as ViewMode }];
 
   return (
-    <div className="flex w-full gap-1.5 rounded-2xl bg-ds-neutral-900 p-1 sm:inline-flex sm:w-auto sm:p-1.5">
+    <div
+      className="flex w-full gap-1.5 rounded-2xl bg-ds-neutral-800 p-1 sm:inline-flex sm:w-auto sm:p-1.5"
+      style={{ boxShadow: "inset 0 4px 4px 0 rgba(0, 0, 0, 0.25)" }}
+    >
       {options.map((option) => {
         const isActive = option.value === mode;
         return (
@@ -31,7 +34,7 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
                 : "text-ds-neutral-500 hover:text-ds-neutral-400",
             ].join(" ")}
             style={{
-              backgroundColor: isActive ? "var(--ds-neutral-700)" : "transparent",
+              backgroundColor: isActive ? "var(--ds-neutral-600)" : "transparent",
               boxShadow: isActive
                 ? "inset 0 1px 0 0 rgba(255, 255, 255, 0.3), 0 16px 22px 0 rgba(0, 0, 0, 0.4)"
                 : "none",

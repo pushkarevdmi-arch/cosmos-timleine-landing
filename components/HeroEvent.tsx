@@ -378,7 +378,7 @@ export default function HeroEvent({
                 ? "min-h-[256px] md:h-[388px] md:min-h-[388px]"
                 : "min-h-[232px] md:h-[364px] md:min-h-[364px]"
           }`}
-          style={{ backgroundColor: "var(--app-surface-elevated)" }}
+          style={{ backgroundColor: "rgba(24, 31, 47, 1)" }}
         >
           <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-2">
             <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[26px] sm:text-[28px] sm:leading-[32px] md:text-[28px] md:leading-[32px] md:line-clamp-3 md:font-normal">
@@ -400,21 +400,11 @@ export default function HeroEvent({
               {showHeroDateRow ? (
                 <div className="flex h-10 w-full max-w-full justify-center md:mr-5 md:w-fit md:justify-start">
                   <div
-                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight md:rounded-b-none md:rounded-t-[12px]"
+                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-4 pr-4 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-4 sm:pr-4 sm:py-1 sm:text-[16px] sm:leading-tight md:rounded-b-none md:rounded-t-[12px]"
                     role="group"
                     aria-label={`Event date${eventHasSpecificUtcTime(displayEvent.date) ? " and time" : ""}`}
                   >
-                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
-                      <img
-                        src="/icons/calendar.svg"
-                        width={22}
-                        height={22}
-                        alt=""
-                        aria-hidden
-                        className="h-full w-full object-contain"
-                      />
-                    </span>
-                    <span className="min-w-0 truncate font-sans">
+                    <span className="min-w-0 truncate font-sans font-semibold">
                       {formatEventDateOnlyLong(displayEvent.date)}
                     </span>
                     {eventHasSpecificUtcTime(displayEvent.date) ? (
@@ -423,7 +413,7 @@ export default function HeroEvent({
                           className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
                           aria-hidden="true"
                         />
-                        <span className="shrink-0 whitespace-nowrap font-sans">
+                        <span className="shrink-0 whitespace-nowrap font-sans font-semibold">
                           {formatEventTimeUtcLabel(displayEvent.date)}
                         </span>
                       </>
@@ -435,7 +425,7 @@ export default function HeroEvent({
               {!showHeroDateRow ? (
                 <div className="flex w-full max-w-full justify-center md:hidden">
                   <div
-                    className="hero-event__date-badge hero-event__year-badge--mobile inline-flex min-h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-850 px-3 py-1.5 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50"
+                    className="hero-event__date-badge hero-event__year-badge--mobile inline-flex min-h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] px-3 py-1.5 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50"
                     role="group"
                     aria-label="Event year (approximate)"
                   >
@@ -510,7 +500,7 @@ export default function HeroEvent({
               ) : (
                 <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[104px] md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
                   <div
-                    className="hero-countdown__segments flex min-h-0 min-w-0 max-w-[520px] flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-tl-none rounded-tr-3xl rounded-br-3xl rounded-bl-3xl border-0 md:h-full md:min-h-0"
+                    className="hero-countdown__segments flex min-h-0 min-w-0 max-w-[520px] flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl border-0 md:h-full md:min-h-0"
                   >
                     {heroCountdownSegments.map((segment, index) => {
                       const n = heroCountdownSegments.length;
@@ -540,7 +530,7 @@ export default function HeroEvent({
 
           {onExplore ? (
             <div
-              className="hero-event__open-hint pointer-events-none absolute right-4 top-4 z-[1] hidden size-16 items-center justify-center rounded-full bg-ds-neutral-800 md:flex"
+              className="hero-event__open-hint pointer-events-none absolute right-4 top-4 z-[1] hidden size-16 items-center justify-center rounded-full bg-ds-neutral-700 md:flex"
               aria-hidden
             >
               <OpenArrowGlyph
@@ -553,7 +543,7 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-800)] bg-[var(--app-surface-elevated)] px-5 pb-6 pt-5 md:gap-2 md:px-8 md:pb-8 md:pt-6">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-600)] bg-[rgba(24,31,47,1)] px-5 pb-6 pt-5 md:gap-2 md:px-8 md:pb-8 md:pt-6">
           <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-2 md:mb-0">
             <label
               htmlFor="hero-event-time-slider"
@@ -562,13 +552,13 @@ export default function HeroEvent({
               Timeline
             </label>
             <span className="flex shrink-0 items-center gap-2 text-left align-middle">
-              <span className="hidden font-departure-mono text-[16px] leading-[20px] text-ds-neutral-300 md:block">
+              <span className="hidden font-sans text-[16px] leading-[20px] text-ds-neutral-300 md:block">
                 Year:
               </span>
-              <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-2 md:py-2">
+              <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-3 md:py-2">
                 {heroTimelineYearDisplay.kind === "mega" ? (
                   <span className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0">
-                    <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[1px] text-ds-neutral-00 md:text-[18px] md:leading-[22px]">
+                    <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[1px] text-ds-neutral-00 md:text-[20px] md:leading-[24px]">
                       {heroTimelineYearDisplay.numberPart}
                     </span>
                     <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.scaleWord}</span>
@@ -576,7 +566,7 @@ export default function HeroEvent({
                 ) : showHeroYearVerbalEnd ? (
                   <span className={heroTimelineLabelFont}>{heroTimelineYearDisplay.text}</span>
                 ) : (
-                  <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[0.03em] text-ds-neutral-00 md:text-[18px] md:leading-[22px]">
+                  <span className="whitespace-nowrap font-departure-mono text-[14px] !font-bold leading-[18px] tracking-[0.03em] text-ds-neutral-00 md:text-[20px] md:leading-[24px]">
                     {heroTimelineYearDisplay.text}
                   </span>
                 )}

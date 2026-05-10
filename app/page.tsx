@@ -378,7 +378,7 @@ export default function Home() {
         <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:gap-6">
           <div className="w-full min-w-0 text-left sm:flex-1">
             <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
-              Upcoming{" "}
+              Future{" "}
               <span
                 className="font-dynamite"
                 style={{ fontFamily: "var(--font-sans)" }}

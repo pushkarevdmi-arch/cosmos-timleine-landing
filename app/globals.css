@@ -153,7 +153,7 @@ svg:not([class*="text-"]) {
     margin-top: auto;
   }
 
-  /* Event grid mobile sticky stack: uniform card height; image uses cover (no stretch) */
+  /* Event grid mobile: uniform card height; image uses cover (no stretch) */
   @media (max-width: 639px) {
     .event-grid-mobile-uniform {
       height: min(556px, calc(78dvh - 16px));
@@ -211,18 +211,20 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__badge-row {
-    @apply absolute left-4 top-4 z-10 flex max-w-[calc(100%-2rem)] flex-wrap gap-2;
+    @apply absolute left-4 top-4 z-10 flex max-w-[calc(100%-2rem)] flex-nowrap items-center justify-center gap-2;
+    height: 40px;
   }
 
   .event-tag-group span {
-    font-family: "Departure Mono", ui-monospace, monospace;
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   }
 
   .event-card__category {
-    @apply inline-flex items-center justify-center gap-2 rounded-full pl-4 pr-3 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
-    font-family: "Departure Mono";
-    height: 34px;
-    max-height: 34px;
+    @apply inline-flex items-center justify-center gap-2 rounded-full pl-4 pr-4 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    width: fit-content;
+    height: 40px;
+    max-height: 40px;
     background-color: var(--ds-neutral-800);
     border-width: 0;
     border-style: none;
@@ -239,8 +241,8 @@ svg:not([class*="text-"]) {
 
   .event-card__extra-tag {
     @apply inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-medium;
-    height: 34px;
-    max-height: 34px;
+    height: 40px;
+    max-height: 40px;
     backdrop-filter: none;
     text-align: center;
     vertical-align: middle;
@@ -284,7 +286,7 @@ svg:not([class*="text-"]) {
 
   .event-card__content {
     @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[24px] pb-12 pt-4 sm:pb-12 sm:pt-6 lg:px-12;
-    background-color: var(--app-surface-elevated);
+    background-color: rgba(24, 31, 47, 1);
     background-image: none;
     box-shadow: none;
   }
@@ -302,7 +304,8 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__title {
-    @apply m-0 text-center text-ds-neutral-50 font-semibold text-[20px] leading-[28px];
+    @apply m-0 text-center text-ds-neutral-50 font-semibold leading-[28px];
+    font-size: 20px;
   }
 
   .event-card__description {
@@ -338,7 +341,7 @@ svg:not([class*="text-"]) {
 
   .event-card__countdown-grid {
     @apply flex w-full max-w-[420px] justify-start gap-0 font-mono text-ds-neutral-100 sm:justify-center;
-    border-radius: 1.5rem;
+    border-radius: 1rem;
     overflow: hidden;
     background: var(--ds-neutral-1000);
     box-shadow: var(--hero-inactive-track-surface-shadow);
@@ -354,15 +357,15 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid > .event-card__countdown-segment:first-child:not(:only-child) {
-    border-radius: 1.5rem 0 0 1.5rem;
+    border-radius: 1rem 0 0 1rem;
   }
 
   .event-card__countdown-grid > .event-card__countdown-segment:last-child:not(:only-child) {
-    border-radius: 0 1.5rem 1.5rem 0;
+    border-radius: 0 1rem 1rem 0;
   }
 
   .event-card__countdown-grid > .event-card__countdown-segment:only-child {
-    border-radius: 1.5rem;
+    border-radius: 1rem;
   }
 
   .event-card__countdown-value {
@@ -372,13 +375,15 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-label {
-    @apply mt-0.5 sm:mt-1 uppercase tracking-[0.22em] text-[14px] leading-[16px] font-semibold text-ds-neutral-500;
-    font-family: "Departure Mono", ui-monospace, monospace;
+    @apply mt-0.5 sm:mt-1 uppercase tracking-[0.22em] text-[14px] leading-[16px] font-normal text-ds-neutral-400;
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
   }
 
   /* Hero countdown segments: flex gap alone defines value↔label spacing (8px default in component). */
   .hero-flip-segment .event-card__countdown-label {
     margin-top: 0;
+    font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+    color: var(--ds-neutral-400);
   }
 
   .event-card__countdown-value--mega {
@@ -962,14 +967,14 @@ nextjs-portal {
  */
 .type-era-label {
   font-family: var(--font-sans);
-  font-weight: 400;
-  font-size: var(--ds-typography-size-body-l);
-  line-height: var(--ds-typography-line-height-l);
-  letter-spacing: 2px;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 28px;
+  letter-spacing: 0;
 }
 @media (min-width: 640px) {
   .type-era-label {
-    font-size: var(--ds-typography-size-h5);
-    line-height: var(--ds-typography-line-height-l);
+    font-size: 24px;
+    line-height: 28px;
   }
 }

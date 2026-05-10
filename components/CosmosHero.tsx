@@ -12,7 +12,7 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
       className="relative w-full overflow-hidden bg-ds-neutral-1000"
       aria-label="Hero"
     >
-      <div className="relative isolate flex h-svh max-h-[640px] w-full flex-col items-center justify-between gap-y-8 px-6 py-10 sm:max-h-none sm:gap-y-10 sm:px-8">
+      <div className="relative isolate flex h-svh max-h-[620px] w-full flex-col items-center justify-between gap-y-8 px-6 pt-6 pb-10 sm:max-h-none sm:gap-y-10 sm:px-8 sm:py-10">
         <div className="pointer-events-none absolute inset-0 z-0">
           <video
             className="absolute inset-0 h-full min-h-full w-full object-cover"

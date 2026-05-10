@@ -10,6 +10,7 @@ import {
   useRef,
   useSyncExternalStore,
 } from "react";
+import CosmosHero from "@/components/CosmosHero";
 import HeroEvent, { HeroEventData } from "@/components/HeroEvent";
 import ViewToggle from "@/components/ViewToggle";
 import EventGrid from "@/components/EventGrid";
@@ -370,63 +371,9 @@ export default function Home() {
       <div className="pointer-events-none fixed inset-0 -z-10 bg-ds-neutral-1000" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-60 [background-image:radial-gradient(circle_at_top,_rgba(59,130,246,0.32),_transparent_55%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.3),_transparent_55%),radial-gradient(circle_at_80%_30%,rgba(236,72,153,0.28),_transparent_60%)]" />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-6 sm:px-6 lg:px-8 lg:pt-6 xl:max-w-[min(84rem,calc(100vw-6rem))]">
-        {/* Top nav / brand */}
-        <header className="mb-[80px] flex flex-col items-center justify-center text-center sm:mb-[104px] lg:mb-[128px]">
-          <div className="flex items-center gap-3">
-            <button
-              type="button"
-              onClick={() => window.location.reload()}
-              className="inline-flex cursor-pointer items-center border-0 bg-transparent p-0"
-              aria-label="Reload page"
-            >
-              <Image
-                src="/logo.svg"
-                alt=""
-                width={120}
-                height={16}
-                priority
-              />
-            </button>
-          </div>
-        </header>
+      <CosmosHero onLogoClick={() => window.location.reload()} />
 
-        {/* Hero heading */}
-        <section className="mb-8 flex flex-col items-center justify-center gap-6 lg:mb-6">
-          <div className="w-full max-w-none flex flex-col items-center justify-center space-y-3">
-            <h1 className="font-sans text-h1-400 leading-[40px] sm:leading-[48px] tracking-[-1px] text-ds-neutral-50 w-full text-center">
-              Journey{" "}
-              <span
-                className="font-dynamite leading-[40px] h-[40px] inline-block tracking-[0px]"
-                style={{ fontFamily: "Dynamite" }}
-              >
-                Into
-              </span>
-              <br />
-              the Future of the Universe
-            </h1>
-            <p className="max-w-2xl w-full font-sans text-body-medium-400 text-ds-neutral-400 text-left">
-              From events in our lifetime to cosmic changes billions of years ahead.
-            </p>
-          </div>
-        </section>
-
-        <section className="mb-32 h-[300px] w-full rounded-[32px] sm:h-[220px] lg:mb-32">
-          <div className="relative h-[300px] w-full overflow-hidden rounded-[32px] border border-ds-neutral-850 bg-ds-neutral-950 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-[220px]">
-            <video
-              className="block h-[300px] w-full border-0 object-cover sm:h-[220px]"
-              src="/videos/hero-video-main_8.mp4"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </section>
-
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-8 sm:px-6 sm:pt-10 lg:px-8 lg:pt-12 xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* View toggle */}
         <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:gap-6">
           <div className="w-full min-w-0 text-left sm:flex-1">

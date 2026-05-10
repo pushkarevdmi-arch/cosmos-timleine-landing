@@ -366,14 +366,14 @@ export default function Home() {
     selectedTimeRange !== "all" || selectedTags.length > 0;
 
   return (
-    <div className="min-h-screen bg-ds-neutral-1000 px-0 text-ds-neutral-100">
+    <div className="min-h-screen overflow-x-hidden bg-ds-neutral-1000 px-0 text-ds-neutral-100">
       {/* Cosmic background */}
       <div className="pointer-events-none fixed inset-0 -z-10 bg-ds-neutral-1000" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-60 [background-image:radial-gradient(circle_at_top,_rgba(59,130,246,0.32),_transparent_55%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.3),_transparent_55%),radial-gradient(circle_at_80%_30%,rgba(236,72,153,0.28),_transparent_60%)]" />
 
       <CosmosHero onLogoClick={() => window.location.reload()} />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-8 sm:px-6 sm:pt-10 lg:px-8 lg:pt-12 xl:max-w-[min(84rem,calc(100vw-6rem))]">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-8 sm:px-6 sm:pt-10 lg:px-8 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* View toggle */}
         <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:gap-6">
           <div className="w-full min-w-0 text-left sm:flex-1">

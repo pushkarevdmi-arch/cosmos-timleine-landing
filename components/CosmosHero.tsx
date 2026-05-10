@@ -9,10 +9,10 @@ type CosmosHeroProps = {
 export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
   return (
     <section
-      className="relative left-1/2 w-screen max-w-none -translate-x-1/2 overflow-hidden bg-ds-neutral-1000"
+      className="relative w-full overflow-hidden bg-ds-neutral-1000"
       aria-label="Hero"
     >
-      <div className="relative flex min-h-[min(88svh,56rem)] w-full flex-col items-center justify-between gap-y-8 px-6 py-10 sm:gap-y-10 sm:px-8 sm:py-12">
+      <div className="relative isolate flex h-svh w-full flex-col items-center justify-between gap-y-8 px-6 py-10 sm:gap-y-10 sm:px-8 sm:py-12">
         <div className="pointer-events-none absolute inset-0 z-0">
           <video
             className="absolute inset-0 h-full min-h-full w-full object-cover"
@@ -28,24 +28,6 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
           </video>
         </div>
 
-        {/* Figma: затемнение по верхнему и нижнему краю (читаемость лого и подзаголовка) */}
-        <div
-          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-[min(22%,10rem)] min-h-[4rem] sm:h-[min(18%,11rem)]"
-          style={{
-            background:
-              "linear-gradient(180deg, var(--ds-neutral-1000) 0%, color-mix(in srgb, var(--ds-neutral-1000) 35%, transparent) 52%, transparent 100%)",
-          }}
-          aria-hidden
-        />
-        <div
-          className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-[min(32%,14rem)] min-h-[6.5rem] sm:h-[min(28%,15rem)]"
-          style={{
-            background:
-              "linear-gradient(0deg, var(--ds-neutral-1000) 0%, color-mix(in srgb, var(--ds-neutral-1000) 55%, transparent) 48%, transparent 100%)",
-          }}
-          aria-hidden
-        />
-
         <div className="relative z-10 flex shrink-0 flex-col items-center">
           <button
             type="button"
@@ -54,7 +36,6 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
             aria-label="Reload page"
           >
             <span className="relative flex size-[17px] shrink-0 items-center justify-center">
-              {/* Figma: 90° rotation on the mark */}
               <Image
                 src="/images/figma-hero/logo-mark.svg"
                 alt=""
@@ -69,15 +50,12 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
           </button>
         </div>
 
-        <div className="relative z-10 flex w-full max-w-[72.875rem] flex-col items-center gap-1 px-1 text-center text-ds-neutral-00">
+        <div className="relative z-10 flex w-full max-w-[72.875rem] flex-col items-center gap-1 px-1 text-center text-ds-neutral-00 mix-blend-difference">
           <h1 className="m-0 flex w-full flex-col items-center gap-1 font-sans">
             <span className="block text-[clamp(1.625rem,4.2vw,2.5rem)] font-normal leading-[1] tracking-normal sm:leading-[40px]">
               Journey Into
             </span>
-            <span
-              className="block max-w-[1166px] text-[clamp(2.125rem,8.5vw,5.5rem)] font-medium leading-[1.05] tracking-normal sm:leading-[80px]"
-              style={{ mixBlendMode: "difference" }}
-            >
+            <span className="block max-w-[1166px] text-[clamp(2.125rem,8.5vw,5.5rem)] font-medium leading-[1.05] tracking-normal sm:leading-[80px]">
               the Future of
               <br />
               the Universe
@@ -85,7 +63,7 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
           </h1>
         </div>
 
-        <p className="relative z-10 max-w-[26.875rem] px-2 text-center font-sans text-[18px] font-normal leading-6 text-ds-neutral-100">
+        <p className="relative z-10 max-w-none whitespace-nowrap px-2 text-center font-sans text-[clamp(11px,3.4vw,18px)] font-normal leading-6 text-ds-neutral-100">
           From our lifetime to the final moments of the cosmos.
         </p>
       </div>

@@ -405,7 +405,7 @@ export default function Home() {
                 "flex shrink-0 cursor-pointer items-center justify-center transition-colors",
                 /* Mobile: match ViewToggle outer box — p-1 + h-12 inner → 56px (3.5rem) square */
                 "max-sm:size-14 rounded-xl bg-ds-neutral-800",
-                "sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:bg-transparent sm:px-3 sm:py-2",
+                "sm:h-auto sm:w-auto sm:gap-2 sm:rounded-full sm:!bg-transparent sm:px-3 sm:py-2",
                 "text-base font-bold",
                 isFilterOpen
                   ? [

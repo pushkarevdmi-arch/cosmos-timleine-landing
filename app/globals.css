@@ -155,8 +155,9 @@ svg:not([class*="text-"]) {
 
   /* Event grid mobile: uniform card height; image uses cover (no stretch) */
   @media (max-width: 639px) {
+    /* Slightly shorter card so less flex slack sits between header/description and meta */
     .event-grid-mobile-uniform {
-      height: min(556px, calc(78dvh - 16px));
+      height: min(504px, calc(78dvh - 32px));
     }
 
     .event-grid-mobile-uniform .event-card {
@@ -174,7 +175,7 @@ svg:not([class*="text-"]) {
     }
 
     .event-grid-mobile-uniform .event-card__image-wrap {
-      height: 200px;
+      height: 180px;
       flex-shrink: 0;
     }
 
@@ -285,21 +286,31 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[24px] pb-12 pt-4 sm:pb-12 sm:pt-6 lg:px-12;
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-6 lg:px-12;
+    padding-bottom: var(--ds-spacing-2xs);
     background-color: rgba(21, 27, 41, 1);
     background-image: none;
     box-shadow: none;
   }
 
+  /* Desktop (md+): 32px under countdown; fixed content height; mobile/tablet stays 8px */
+  @media (min-width: 48rem) {
+    .event-card__content {
+      padding-bottom: var(--ds-spacing-2xl);
+      height: 312px;
+      min-height: 312px;
+    }
+  }
+
   /* Fixed band between title/description and meta */
   .event-card__content-spacer {
     flex: 0 0 auto;
-    height: 32px;
+    height: 20px;
     min-width: 0;
   }
 
   .event-card__header {
-    @apply flex w-full shrink-0 flex-col items-center justify-start gap-1 py-1;
+    @apply flex w-full shrink-0 flex-col items-center justify-start gap-1 px-[var(--ds-spacing-s)] py-1;
     max-width: 520px;
   }
 
@@ -334,8 +345,6 @@ svg:not([class*="text-"]) {
   .event-card__countdown {
     @apply mt-0 flex w-full flex-col items-center justify-center text-center;
     width: 100%;
-    padding-left: 40px;
-    padding-right: 40px;
   }
 
   .event-card__past-message {
@@ -343,7 +352,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid {
-    @apply flex w-full justify-start gap-0 px-4 font-mono text-ds-neutral-100 sm:justify-center;
+    @apply flex w-full justify-start gap-0 px-6 font-mono text-ds-neutral-100 sm:justify-center;
     border-radius: 1rem;
     overflow: hidden;
     background: var(--ds-neutral-1000);

@@ -36,7 +36,7 @@ function EventGridSection({
         return (
           <div
             key={event.id}
-            className="event-grid-mobile-uniform relative w-full max-sm:max-w-[min(100%,28rem)] max-sm:justify-self-center sm:h-full"
+            className="event-grid-mobile-uniform relative w-full max-sm:max-w-[min(100%,28rem)] max-sm:justify-self-center sm:h-[500px]"
           >
             <EventCard event={event} onExplore={onExplore} />
           </div>

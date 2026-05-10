@@ -331,7 +331,7 @@ export default function HeroEvent({
         tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
-        className={`grid h-fit min-w-0 w-full gap-0 border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[var(--ds-neutral-800)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[420px_minmax(0,1fr)] ${
+        className={`grid h-fit min-w-0 w-full gap-0 border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[var(--ds-neutral-800)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[400px_minmax(0,1fr)] ${
           onExplore ? "hero-event--interactive group cursor-pointer" : ""
         } ${
           isVisible
@@ -356,7 +356,7 @@ export default function HeroEvent({
             alt={displayEvent.title}
             fill
             priority
-            sizes="(min-width: 1024px) 420px, (min-width: 768px) 240px, 100vw"
+            sizes="(min-width: 1024px) 400px, (min-width: 768px) 240px, 100vw"
             className="hero-event__image object-cover"
           />
 
@@ -381,7 +381,7 @@ export default function HeroEvent({
           style={{ backgroundColor: "rgba(21, 27, 41, 1)" }}
         >
           <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-1">
-            <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[24px] leading-[30px] sm:leading-[32px] md:leading-[32px] md:line-clamp-3 md:font-medium">
+            <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[25px] sm:text-[24px] sm:leading-[32px] md:leading-[32px] md:line-clamp-3 md:font-medium">
               {displayEvent.title}
             </h3>
             <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-2 md:min-h-[48px]">

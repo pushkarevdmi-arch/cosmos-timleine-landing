@@ -28,6 +28,11 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
           </video>
         </div>
 
+        <div
+          className="pointer-events-none absolute inset-x-0 top-0 z-[1] h-32 bg-gradient-to-b from-ds-neutral-1000/50 to-transparent sm:h-36"
+          aria-hidden
+        />
+
         <div className="relative z-10 flex shrink-0 flex-col items-center">
           <button
             type="button"
@@ -55,7 +60,7 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
             <span className="block text-[clamp(1.625rem,4.2vw,2.5rem)] font-normal leading-[1] tracking-normal sm:leading-[40px]">
               Journey Into
             </span>
-            <span className="block max-w-[1166px] text-[clamp(2.125rem,8.5vw,5.5rem)] font-medium leading-[1.05] tracking-normal sm:leading-[80px]">
+            <span className="block max-w-[1166px] text-[48px] font-medium leading-[1.05] tracking-normal sm:text-[clamp(2.125rem,8.5vw,5.5rem)] sm:leading-[80px]">
               the Future of
               <br />
               the Universe

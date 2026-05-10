@@ -246,9 +246,9 @@ svg:not([class*="text-"]) {
     backdrop-filter: none;
     text-align: center;
     vertical-align: middle;
-    border-width: 0.7px;
-    border-style: solid;
-    border-color: rgba(55, 65, 81, 1);
+    border-width: 0;
+    border-style: none;
+    border-color: transparent;
     border-image: none;
   }
 
@@ -286,7 +286,7 @@ svg:not([class*="text-"]) {
 
   .event-card__content {
     @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[24px] pb-12 pt-4 sm:pb-12 sm:pt-6 lg:px-12;
-    background-color: rgba(24, 31, 47, 1);
+    background-color: rgba(21, 27, 41, 1);
     background-image: none;
     box-shadow: none;
   }
@@ -333,6 +333,9 @@ svg:not([class*="text-"]) {
 
   .event-card__countdown {
     @apply mt-0 flex w-full flex-col items-center justify-center text-center;
+    width: 100%;
+    padding-left: 40px;
+    padding-right: 40px;
   }
 
   .event-card__past-message {
@@ -340,7 +343,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid {
-    @apply flex w-full max-w-[420px] justify-start gap-0 font-mono text-ds-neutral-100 sm:justify-center;
+    @apply flex w-full justify-start gap-0 px-4 font-mono text-ds-neutral-100 sm:justify-center;
     border-radius: 1rem;
     overflow: hidden;
     background: var(--ds-neutral-1000);

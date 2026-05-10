@@ -175,7 +175,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
         <div className="event-card__content-spacer" aria-hidden />
 
         <div className="event-card__meta">
-          <div className="flex w-full flex-col gap-0 lg:px-8">
+          <div className="flex w-full flex-col gap-0 lg:px-10">
             {showCardDateRow ? (
               <div className="event-card__date">
                 <div className="flex h-10 w-fit max-w-full justify-center">

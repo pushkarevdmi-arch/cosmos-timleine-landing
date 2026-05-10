@@ -331,7 +331,7 @@ export default function HeroEvent({
         tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
-        className={`grid h-fit min-w-0 w-full gap-0 border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[var(--ds-neutral-800)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[480px_minmax(0,1fr)] ${
+        className={`grid h-fit min-w-0 w-full gap-0 border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[var(--ds-neutral-800)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] lg:grid-cols-[420px_minmax(0,1fr)] ${
           onExplore ? "hero-event--interactive group cursor-pointer" : ""
         } ${
           isVisible
@@ -344,11 +344,11 @@ export default function HeroEvent({
           className={`hero-event__image-wrap relative h-[200px] min-h-[200px] w-full min-w-0 max-w-full overflow-hidden rounded-t-3xl rounded-b-none md:mx-0 md:rounded-r-none md:rounded-tl-3xl md:rounded-bl-3xl ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
-                ? "md:h-[312px] md:min-h-[312px]"
-                : "md:h-[288px] md:min-h-[288px]"
+                ? "md:h-[296px] md:min-h-[296px]"
+                : "md:h-[272px] md:min-h-[272px]"
               : heroYearOnlyExtraHeight
-                ? "md:h-[388px] md:min-h-[388px]"
-                : "md:h-[364px] md:min-h-[364px]"
+                ? "md:h-[372px] md:min-h-[372px]"
+                : "md:h-[348px] md:min-h-[348px]"
           }`}
         >
           <Image
@@ -356,7 +356,7 @@ export default function HeroEvent({
             alt={displayEvent.title}
             fill
             priority
-            sizes="(min-width: 1024px) 480px, (min-width: 768px) 240px, 100vw"
+            sizes="(min-width: 1024px) 420px, (min-width: 768px) 240px, 100vw"
             className="hero-event__image object-cover"
           />
 
@@ -372,16 +372,16 @@ export default function HeroEvent({
           className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-10 md:text-left ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
-                ? "min-h-[248px] md:h-[312px] md:min-h-[312px]"
-                : "min-h-[224px] md:h-[288px] md:min-h-[288px]"
+                ? "min-h-[232px] md:h-[296px] md:min-h-[296px]"
+                : "min-h-[208px] md:h-[272px] md:min-h-[272px]"
               : heroYearOnlyExtraHeight
-                ? "min-h-[256px] md:h-[388px] md:min-h-[388px]"
-                : "min-h-[232px] md:h-[364px] md:min-h-[364px]"
+                ? "min-h-[240px] md:h-[372px] md:min-h-[372px]"
+                : "min-h-[216px] md:h-[348px] md:min-h-[348px]"
           }`}
-          style={{ backgroundColor: "rgba(24, 31, 47, 1)" }}
+          style={{ backgroundColor: "rgba(21, 27, 41, 1)" }}
         >
-          <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-2">
-            <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[26px] sm:text-[28px] sm:leading-[32px] md:text-[28px] md:leading-[32px] md:line-clamp-3 md:font-normal">
+          <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-1">
+            <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[24px] leading-[30px] sm:leading-[32px] md:leading-[32px] md:line-clamp-3 md:font-medium">
               {displayEvent.title}
             </h3>
             <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-2 md:min-h-[48px]">
@@ -498,9 +498,9 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[104px] md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
+                <div className="hero-countdown hidden h-fit w-full min-w-0 self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[96px] md:w-full md:gap-0 md:justify-start xl:pr-[120px]">
                   <div
-                    className="hero-countdown__segments flex min-h-0 min-w-0 max-w-[520px] flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl border-0 md:h-full md:min-h-0"
+                    className="hero-countdown__segments flex min-h-0 min-w-0 max-w-[520px] flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-tl-none rounded-tr-2xl rounded-br-2xl rounded-bl-2xl border-0 md:h-[96px] md:min-h-0"
                   >
                     {heroCountdownSegments.map((segment, index) => {
                       const n = heroCountdownSegments.length;
@@ -543,7 +543,7 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-600)] bg-[rgba(24,31,47,1)] px-5 pb-6 pt-5 md:gap-2 md:px-8 md:pb-8 md:pt-6">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-700)] bg-[rgba(21,27,41,1)] px-5 pb-6 pt-5 md:gap-2 md:px-8 md:pb-8 md:pt-6">
           <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-2 md:mb-0">
             <label
               htmlFor="hero-event-time-slider"

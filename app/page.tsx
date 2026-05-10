@@ -373,11 +373,11 @@ export default function Home() {
 
       <CosmosHero onLogoClick={() => window.location.reload()} />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 pt-8 sm:px-6 sm:pt-10 lg:px-8 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-8 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* View toggle */}
         <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:gap-6">
           <div className="w-full min-w-0 text-left sm:flex-1">
-            <h2 className="w-full max-sm:text-center font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-left sm:text-h2-400">
+            <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
               Upcoming{" "}
               <span
                 className="font-dynamite"

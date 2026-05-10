@@ -369,7 +369,7 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-10 md:text-left ${
+          className={`relative flex h-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-10 md:text-left ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
                 ? "min-h-[248px] md:h-[312px] md:min-h-[312px]"

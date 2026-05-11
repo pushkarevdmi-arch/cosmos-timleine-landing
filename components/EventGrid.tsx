@@ -65,7 +65,7 @@ export default function EventGrid({ events, onExplore }: EventGridProps) {
   const groups = groupEventsByTimeSection(events);
 
   return (
-    <div className="grid items-stretch gap-6 md:grid-cols-2">
+    <div className="grid items-stretch gap-8 md:grid-cols-2">
       {groups.map(({ section, events: sectionEvents }, groupIndex) => (
         <EventGridSection
           key={`${section}-${sectionEvents[0]?.id ?? groupIndex}`}

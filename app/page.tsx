@@ -397,7 +397,7 @@ export default function Home() {
 
       <CosmosHero onLogoClick={() => window.location.reload()} />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-8 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-16 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* View toggle */}
         {/* Mobile: h2 is a direct child of main (scrolls). Toolbar row is the next sibling with sticky — nested sticky inside flex-col was unreliable in browsers. */}
         <div className="max-sm:-mx-6 max-sm:px-6 sm:hidden">

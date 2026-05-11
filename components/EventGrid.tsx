@@ -23,12 +23,18 @@ function EventGridSection({
       <div
         className="col-span-full mx-0 mb-1 bg-transparent px-0 pb-0 pt-0 shadow-none"
       >
-        <div className="flex items-center gap-3 pt-6">
+        <div className="flex items-center gap-6 px-6 pb-6 pt-16">
           <span
-            className="shrink-0 rounded-none bg-ds-bg-brand-solid h-1 w-7"
+            className="h-px min-w-0 flex-1 bg-ds-neutral-800"
             aria-hidden
           />
-          <span className="type-era-label text-ds-neutral-00">{section}</span>
+          <span className="type-era-label shrink-0 text-center text-ds-neutral-00">
+            {section}
+          </span>
+          <span
+            className="h-px min-w-0 flex-1 bg-ds-neutral-800"
+            aria-hidden
+          />
         </div>
       </div>
 

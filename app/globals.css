@@ -112,8 +112,7 @@ svg:not([class*="text-"]) {
     border-style: solid;
     border-color: var(--ds-neutral-800);
     border-image: none;
-    background: unset;
-    background-color: unset;
+    background-color: rgba(21, 27, 41, 1);
     background-image: none;
     box-shadow: none;
   }
@@ -130,7 +129,13 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__image-wrap {
-    @apply relative h-[180px] w-full overflow-hidden rounded-t-3xl bg-ds-neutral-900;
+    @apply relative h-[180px] min-w-0 shrink-0 overflow-hidden rounded-3xl bg-ds-neutral-900;
+    margin-top: var(--ds-spacing-3xs);
+    margin-right: var(--ds-spacing-3xs);
+    margin-left: var(--ds-spacing-3xs);
+    margin-bottom: var(--ds-spacing-2xs);
+    width: calc(100% - 2 * var(--ds-spacing-3xs));
+    max-width: calc(100% - 2 * var(--ds-spacing-3xs));
   }
 
   .event-card__image {
@@ -170,8 +175,10 @@ svg:not([class*="text-"]) {
     .event-grid-mobile-uniform .event-card__content {
       flex: 1 1 auto;
       min-height: 0;
-      overflow-x: hidden;
-      overflow-y: visible;
+      min-width: 0;
+      /* No nested scroll on mobile — clip overflow inside the fixed-height card shell */
+      overflow: hidden;
+      overscroll-behavior: none;
     }
 
     .event-grid-mobile-uniform .event-card__image-wrap {
@@ -212,7 +219,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__badge-row {
-    @apply absolute left-4 top-4 z-10 flex max-w-[calc(100%-2rem)] flex-nowrap items-center justify-center gap-2;
+    @apply absolute left-2 top-2 z-10 flex max-w-[calc(100%-1rem)] flex-nowrap items-center justify-center gap-2;
     height: 40px;
   }
 
@@ -221,7 +228,8 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__category {
-    @apply inline-flex items-center justify-center gap-2 rounded-full pl-4 pr-4 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
+    @apply inline-flex items-center justify-center gap-2 pl-4 pr-4 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
+    border-radius: var(--ds-radius-xs);
     font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
     width: fit-content;
     height: 40px;
@@ -241,7 +249,8 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__extra-tag {
-    @apply inline-flex items-center gap-1.5 rounded-full px-4 py-2 font-medium;
+    @apply inline-flex items-center gap-1.5 px-4 py-2 font-medium;
+    border-radius: var(--ds-radius-xs);
     height: 40px;
     max-height: 40px;
     backdrop-filter: none;
@@ -286,17 +295,17 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-6 lg:px-12;
-    padding-bottom: var(--ds-spacing-2xs);
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-6;
+    padding-bottom: var(--ds-spacing-s);
     background-color: rgba(21, 27, 41, 1);
     background-image: none;
     box-shadow: none;
   }
 
-  /* Desktop (md+): 32px under countdown; fixed content height; mobile/tablet stays 8px */
+  /* Desktop (md+): 16px under countdown; fixed content height; same as mobile */
   @media (min-width: 48rem) {
     .event-card__content {
-      padding-bottom: var(--ds-spacing-2xl);
+      padding-bottom: var(--ds-spacing-s);
       height: 312px;
       min-height: 312px;
     }
@@ -310,8 +319,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__header {
-    @apply flex w-full shrink-0 flex-col items-center justify-start gap-1 px-[var(--ds-spacing-s)] py-1;
-    max-width: 520px;
+    @apply flex w-full shrink-0 flex-col items-center justify-center gap-1 px-[var(--ds-spacing-3xl)] py-1;
   }
 
   .event-card__title {
@@ -321,6 +329,7 @@ svg:not([class*="text-"]) {
 
   .event-card__description {
     @apply m-0 text-center text-ds-neutral-400 text-[16px] leading-[24px];
+    max-width: 480px;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* show at most two lines */
     -webkit-box-orient: vertical;
@@ -343,8 +352,9 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown {
-    @apply mt-0 flex w-full flex-col items-center justify-center text-center;
+    @apply mt-0 flex w-full min-w-0 flex-col items-center justify-center text-center;
     width: 100%;
+    max-width: 100%;
   }
 
   .event-card__past-message {
@@ -352,7 +362,9 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-grid {
-    @apply flex w-full justify-start gap-0 px-6 font-mono text-ds-neutral-100 sm:justify-center;
+    @apply flex w-full min-w-0 justify-start gap-0 px-6 font-mono text-ds-neutral-100 sm:justify-center;
+    width: 100%;
+    max-width: 100%;
     border-radius: 1rem;
     overflow: hidden;
     background: var(--ds-neutral-1000);
@@ -361,6 +373,8 @@ svg:not([class*="text-"]) {
 
   .event-card__countdown-segment {
     @apply relative flex min-w-0 flex-1 flex-col items-center justify-center gap-1 overflow-hidden border-0 bg-ds-neutral-1000 px-2.5 py-3.5 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:min-w-[4rem] sm:px-4 sm:py-4;
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Flush countdown strip: outer corners only (single segment keeps full pill). */

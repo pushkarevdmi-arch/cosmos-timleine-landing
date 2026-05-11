@@ -158,7 +158,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
 
         {isInteractive ? (
           <div
-            className="event-card__open-hint event-card__open-hint--on-image pointer-events-none absolute right-4 top-4 z-[11] hidden size-12 items-center justify-center rounded-full bg-ds-neutral-800 md:flex"
+            className="event-card__open-hint event-card__open-hint--on-image pointer-events-none absolute right-2 top-2 z-[11] hidden size-12 items-center justify-center rounded-[16px] bg-ds-neutral-800 md:flex"
             aria-hidden
           >
             <OpenArrowGlyph clipId={openArrowClipId} className={openArrowGlyphClass} />
@@ -167,6 +167,42 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
       </div>
 
       <div className="event-card__content">
+        {showCardDateRow ? (
+          <div className="event-card__date mb-3">
+            <div className="flex h-10 w-full max-w-full justify-center">
+              <div
+                className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                role="group"
+                aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
+              >
+                <span
+                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] bg-ds-neutral-950"
+                  aria-hidden
+                >
+                  <span
+                    className="inline-block h-4 w-4 shrink-0 bg-ds-warning-500 [mask-image:url('/icons/calendar1.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] [-webkit-mask-image:url('/icons/calendar1.svg')] [-webkit-mask-size:contain] [-webkit-mask-repeat:no-repeat] [-webkit-mask-position:center]"
+                    aria-hidden
+                  />
+                </span>
+                <span className="min-w-0 truncate font-sans text-[14px] font-medium">
+                  {formatEventDateOnlyLong(event.date)}
+                </span>
+                {eventHasSpecificUtcTime(event.date) ? (
+                  <>
+                    <span
+                      className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
+                      aria-hidden="true"
+                    />
+                    <span className="shrink-0 whitespace-nowrap font-sans text-[14px] font-medium">
+                      {formatEventTimeUtcLabel(event.date)}
+                    </span>
+                  </>
+                ) : null}
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         <div className="event-card__header">
           <h3 className="event-card__title">{event.title}</h3>
           <p className="event-card__description">{event.shortDescription}</p>
@@ -175,35 +211,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
         <div className="event-card__content-spacer" aria-hidden />
 
         <div className="event-card__meta">
-          <div className="flex w-full flex-col gap-0 lg:px-10">
-            {showCardDateRow ? (
-              <div className="event-card__date">
-                <div className="flex h-10 w-fit max-w-full justify-center">
-                  <div
-                    className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-t-[12px] border-0 bg-ds-neutral-700 py-1 pl-4 pr-4 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-4 sm:pr-4 sm:py-1 sm:text-[16px] sm:leading-tight"
-                    role="group"
-                    aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
-                  >
-                    <span className="min-w-0 truncate font-sans font-semibold">
-                      {formatEventDateOnlyLong(event.date)}
-                    </span>
-                    {eventHasSpecificUtcTime(event.date) ? (
-                      <>
-                        <span
-                          className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
-                          aria-hidden="true"
-                        />
-                        <span className="shrink-0 whitespace-nowrap font-sans font-semibold">
-                          {formatEventTimeUtcLabel(event.date)}
-                        </span>
-                      </>
-                    ) : null}
-                  </div>
-                </div>
-              </div>
-            ) : null}
-
-            <div className="event-card__countdown w-full">
+          <div className="event-card__countdown w-full">
               {countdown.isPast ? (
                 <p className="event-card__past-message">Event in the past</p>
               ) : useMegaYearsCountdownLayout ? (
@@ -266,7 +274,6 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
             </div>
           </div>
         </div>
-      </div>
     </article>
   );
 }

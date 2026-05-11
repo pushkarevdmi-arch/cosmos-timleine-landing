@@ -107,7 +107,7 @@ export default function EventTimeline({
                             >
                               <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
                                 <img
-                                  src="/icons/calendar.svg"
+                                  src="/icons/calendar3.svg"
                                   width={22}
                                   height={22}
                                   alt=""

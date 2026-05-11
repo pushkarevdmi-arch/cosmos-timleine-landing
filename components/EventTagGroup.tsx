@@ -14,10 +14,13 @@ type EventTagGroupProps = {
 /** `public/icons/galactic-deep-time.svg` — galactic / deep-time scale events. */
 const GALACTIC_DEEP_TIME_ICON = "/icons/galactic-deep-time.svg";
 
+/** Conjunction + planetary categories use `public/icons/Conjunction 1.svg` (space → %20 in URL). */
+const CONJUNCTION_PLANETARY_ICON = "/icons/Conjunction%201.svg";
+
 /** Display tag (unchanged names in data) → `/public/icons/…`. */
 const CATEGORY_ICON_SRC: Record<string, string> = {
-  Conjunction: "/icons/Conjunction.svg",
-  "Planetary Event": "/icons/Conjunction.svg",
+  Conjunction: CONJUNCTION_PLANETARY_ICON,
+  "Planetary Event": CONJUNCTION_PLANETARY_ICON,
   Eclipse: "/icons/eclipse-shadow.svg",
   Transit: "/icons/transit-silhouette.svg",
   Comet: "/icons/small-body-trail.svg",

@@ -341,7 +341,7 @@ export default function HeroEvent({
       >
         {/* Left: visual */}
         <div
-          className={`hero-event__image-wrap relative m-1 h-[192px] min-h-[192px] w-full min-w-0 max-w-full overflow-hidden rounded-3xl md:mr-0 ${
+          className={`hero-event__image-wrap relative max-md:m-1 max-md:w-[calc(100%-0.5rem)] md:mt-1 md:mb-1 md:ml-1 md:mr-0 md:w-full h-[192px] min-h-[192px] min-w-0 max-w-full overflow-hidden rounded-3xl ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
                 ? "md:h-[304px] md:min-h-[304px]"

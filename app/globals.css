@@ -83,7 +83,9 @@ body {
 
   to {
     opacity: 1;
-    transform: translateY(0) scale(1);
+    /* `none` — не identity-matrix: иначе `forwards` оставляет transform на предке
+       и ломает `position: sticky` у потомков (новый containing block). */
+    transform: none;
   }
 }
 
@@ -250,7 +252,6 @@ svg:not([class*="text-"]) {
 
   .event-card__extra-tag {
     @apply inline-flex items-center gap-1.5 px-4 py-2 font-medium;
-    border-radius: var(--ds-radius-xs);
     height: 40px;
     max-height: 40px;
     backdrop-filter: none;
@@ -260,6 +261,11 @@ svg:not([class*="text-"]) {
     border-style: none;
     border-color: transparent;
     border-image: none;
+  }
+
+  /* Tailwind v4 @apply on .event-card__extra-tag emits full pill radius; override with design token (12px). */
+  .event-card__badge-row .event-card__extra-tag {
+    border-radius: var(--ds-radius-xs);
   }
 
   .event-card__extra-tag--with-icon {

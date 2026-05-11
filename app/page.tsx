@@ -157,6 +157,8 @@ export default function Home() {
   const isFetchingRef = useRef(false);
   const rafRef = useRef<number | null>(null);
   const filterPopoverRef = useRef<HTMLDivElement | null>(null);
+  const stickyToolbarSentinelRef = useRef<HTMLDivElement | null>(null);
+  const [isStickyFilterBarPinned, setIsStickyFilterBarPinned] = useState(false);
   const mobileGridSentinelRef = useRef<HTMLDivElement | null>(null);
   const mobileGridSectionsVisibleRef = useRef(1);
   const maxTimeSectionsRef = useRef(0);
@@ -310,6 +312,28 @@ export default function Home() {
   }, [isFilterOpen]);
 
   useEffect(() => {
+    if (!isNarrowMobile) {
+      setIsStickyFilterBarPinned(false);
+      return;
+    }
+    const sentinel = stickyToolbarSentinelRef.current;
+    if (!sentinel) return;
+
+    const updatePinned = () => {
+      const { top } = sentinel.getBoundingClientRect();
+      setIsStickyFilterBarPinned(top < 0);
+    };
+
+    window.addEventListener("scroll", updatePinned, { passive: true });
+    window.addEventListener("resize", updatePinned);
+    updatePinned();
+    return () => {
+      window.removeEventListener("scroll", updatePinned);
+      window.removeEventListener("resize", updatePinned);
+    };
+  }, [isNarrowMobile]);
+
+  useEffect(() => {
     const checkShouldLoad = () => {
       if (isNarrowMobile && viewMode === "grid") return;
       if (isFetchingRef.current || !hasMoreEvents) return;
@@ -366,7 +390,7 @@ export default function Home() {
     selectedTimeRange !== "all" || selectedTags.length > 0;
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-ds-neutral-1000 px-0 text-ds-neutral-100">
+    <div className="min-h-screen overflow-x-clip bg-ds-neutral-1000 px-0 text-ds-neutral-100">
       {/* Cosmic background */}
       <div className="pointer-events-none fixed inset-0 -z-10 bg-ds-neutral-1000" />
       <div className="pointer-events-none fixed inset-0 -z-10 opacity-60 [background-image:radial-gradient(circle_at_top,_rgba(59,130,246,0.32),_transparent_55%),radial-gradient(circle_at_20%_80%,rgba(14,165,233,0.3),_transparent_55%),radial-gradient(circle_at_80%_30%,rgba(236,72,153,0.28),_transparent_60%)]" />
@@ -375,8 +399,38 @@ export default function Home() {
 
       <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-8 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* View toggle */}
-        <section className="mb-9 flex flex-col gap-4 sm:mb-5 sm:flex-row sm:items-center sm:justify-between sm:gap-4 lg:gap-6">
-          <div className="w-full min-w-0 text-left sm:flex-1">
+        {/* Mobile: h2 is a direct child of main (scrolls). Toolbar row is the next sibling with sticky — nested sticky inside flex-col was unreliable in browsers. */}
+        <div className="max-sm:-mx-6 max-sm:px-6 sm:hidden">
+          <div className="w-full min-w-0 text-left">
+            <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00">
+              Future{" "}
+              <span
+                className="font-dynamite"
+                style={{ fontFamily: "var(--font-sans)" }}
+              >
+                Events
+              </span>
+            </h2>
+          </div>
+        </div>
+
+        <div
+          ref={stickyToolbarSentinelRef}
+          aria-hidden
+          className="pointer-events-none max-sm:block max-sm:h-0 max-sm:w-full max-sm:shrink-0 sm:hidden"
+        />
+
+        <div
+          ref={filterPopoverRef}
+          className={[
+            "relative mb-9 flex flex-col gap-0 max-sm:-mx-6 max-sm:border-b max-sm:bg-ds-neutral-1000 max-sm:px-6 max-sm:pb-4 max-sm:pt-4 max-sm:sticky max-sm:top-0 max-sm:z-30",
+            isStickyFilterBarPinned
+              ? "max-sm:border-ds-neutral-800"
+              : "max-sm:border-transparent",
+            "sm:mx-0 sm:mb-5 sm:flex sm:w-full sm:flex-row sm:items-center sm:justify-between sm:border-b-0 sm:bg-transparent sm:px-0 sm:pb-0 sm:pt-0 sm:static sm:top-auto sm:gap-4 lg:gap-6",
+          ].join(" ")}
+        >
+          <div className="hidden min-w-0 flex-1 text-left sm:block">
             <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
               Future{" "}
               <span
@@ -388,10 +442,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div
-            className="relative flex w-full shrink-0 flex-row-reverse items-center justify-between gap-4 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end lg:gap-4"
-            ref={filterPopoverRef}
-          >
+          <div className="relative flex w-full shrink-0 flex-row-reverse items-center justify-between gap-4 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end lg:gap-4">
             <button
               type="button"
               onClick={() =>
@@ -630,7 +681,7 @@ export default function Home() {
               <ViewToggle mode={viewMode} onChange={(mode) => setViewMode(mode)} />
             </div>
           </div>
-        </section>
+        </div>
 
         {/* Events area (hero event + list) */}
         <section className="min-w-0 flex-1 space-y-16">

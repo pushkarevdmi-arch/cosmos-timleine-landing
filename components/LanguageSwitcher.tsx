@@ -56,7 +56,7 @@ export default function LanguageSwitcher() {
         aria-expanded={open}
         aria-controls={open ? listboxId : undefined}
         onClick={() => setOpen((current) => !current)}
-        className="inline-flex min-w-0 cursor-pointer items-center justify-center gap-0.5 rounded-lg bg-ds-neutral-800 py-2 pl-3 pr-1.5 font-sans text-[14px] font-normal leading-5 text-ds-neutral-00 transition-colors sm:h-10 sm:min-w-[5rem] sm:gap-1 sm:rounded-[12px] sm:py-2 sm:pl-4 sm:pr-2 sm:text-[16px] sm:leading-6"
+        className="inline-flex min-w-0 cursor-pointer items-center justify-center gap-0.5 rounded-lg bg-[var(--app-card-surface)] py-2 pl-3 pr-1.5 font-sans text-[14px] font-normal leading-5 text-ds-neutral-00 transition-colors sm:h-10 sm:min-w-[5rem] sm:gap-1 sm:rounded-[12px] sm:py-2 sm:pl-4 sm:pr-2 sm:text-[16px] sm:leading-6"
       >
         <span className="whitespace-nowrap">{t(`language.${locale}`)}</span>
         <span

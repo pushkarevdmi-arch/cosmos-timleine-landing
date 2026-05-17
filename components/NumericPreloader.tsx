@@ -146,7 +146,7 @@ export default function NumericPreloader({
       }}
     >
       <div
-        className="inline-flex items-baseline gap-x-2 font-departure-mono tabular-nums text-[80px] leading-none tracking-wide [font-variant-numeric:slashed-zero]"
+        className="inline-flex items-baseline gap-x-1 font-departure-mono tabular-nums text-[40px] leading-none tracking-wide [font-variant-numeric:slashed-zero] sm:gap-x-2 sm:text-[80px]"
         aria-hidden="true"
       >
         <span className="text-white">{pad2(h)}</span>

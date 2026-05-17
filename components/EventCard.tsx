@@ -1,26 +1,19 @@
 "use client";
 
 import Image from "next/image";
-import { useEffect, useId, useState } from "react";
+import { useId } from "react";
 import {
   eventHasSpecificUtcTime,
   formatCountdownDaysDisplay,
   formatEventDateOnlyLong,
   formatEventTimeUtcLabel,
   formatMegaYearScaleParts,
-  getCountdownBreakdown,
   getEventCalendarYear,
 } from "@/utils/eventDate";
+import { useCountdown } from "@/hooks/useCountdown";
 import EventTagGroup from "./EventTagGroup";
 import type { HeroEventData } from "./HeroEvent";
 import OpenArrowGlyph from "./OpenArrowGlyph";
-
-type Countdown = {
-  years: number;
-  days: number;
-  hours: number;
-  isPast: boolean;
-};
 
 const LONG_TERM_SECTIONS = new Set([
   "Next 10,000 Years",
@@ -37,30 +30,6 @@ const HIDE_CARD_DATE_SECTIONS = new Set([
 /** Mobile-first: 12px; sm+ 14/16. Letter-spacing stays normal (0) at all breakpoints. */
 const EVENT_CARD_COUNTDOWN_LABEL_CLASS =
   "event-card__countdown-label text-[12px] leading-[14px] tracking-normal sm:text-[14px] sm:leading-[16px]";
-
-function useCountdown(targetDate: string): Countdown {
-  const getDiff = (): Countdown => {
-    const b = getCountdownBreakdown(targetDate);
-    return {
-      years: b.years,
-      days: b.days,
-      hours: b.hours,
-      isPast: b.isPast,
-    };
-  };
-
-  const [countdown, setCountdown] = useState<Countdown>(getDiff);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCountdown(getDiff());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  return countdown;
-}
 
 function isLongTermEvent(event: HeroEventData) {
   if (event.timeCategory && LONG_TERM_SECTIONS.has(event.timeCategory)) {

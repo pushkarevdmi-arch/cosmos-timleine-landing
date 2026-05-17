@@ -19,10 +19,10 @@ import {
   getHeroTimelineYearDisplay,
   HERO_TIMELINE_END_OF_TIME_LABEL,
   getApproxYearsRemaining,
-  getCountdownBreakdown,
   getEventCalendarYear,
   isEventOnOrAfterNow,
 } from "@/utils/eventDate";
+import { useCountdown } from "@/hooks/useCountdown";
 import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
 import OpenArrowGlyph from "./OpenArrowGlyph";
 
@@ -69,41 +69,6 @@ const HIDE_HERO_DATE_SECTIONS = new Set([
 
 const heroTimelineLabelFont =
   "font-sans text-[18px] font-semibold leading-[22px] text-ds-neutral-00";
-
-type Countdown = {
-  years: number;
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
-  isPast: boolean;
-};
-
-function useCountdown(targetDate: string): Countdown {
-  const getDiff = (): Countdown => {
-    const b = getCountdownBreakdown(targetDate);
-    return {
-      years: b.years,
-      days: b.days,
-      hours: b.hours,
-      minutes: b.minutes,
-      seconds: b.seconds,
-      isPast: b.isPast,
-    };
-  };
-
-  const [countdown, setCountdown] = useState<Countdown>(getDiff);
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCountdown(getDiff());
-    }, 1000);
-
-    return () => clearInterval(interval);
-  }, [targetDate]);
-
-  return countdown;
-}
 
 function isLongTermEvent(event: HeroEventData) {
   if (event.timeCategory && LONG_TERM_SECTIONS.has(event.timeCategory)) {
@@ -267,6 +232,7 @@ export default function HeroEvent({
         ? [
             { label: "YEARS" as const, value: normalizedYears },
             { label: "DAYS" as const, value: normalizedDays },
+            { label: "HRS" as const, value: 0 },
           ]
         : [
             { label: "YEARS" as const, value: normalizedYears },
@@ -277,9 +243,9 @@ export default function HeroEvent({
     sortedEvents.length > 1 ? (activeIndex / (sortedEvents.length - 1)) * 100 : 0;
 
   useEffect(() => {
-    if (!displayEvent) return;
-    onActiveEventChange?.(displayEvent);
-  }, [displayEvent, onActiveEventChange]);
+    if (!liveEvent) return;
+    onActiveEventChange?.(liveEvent);
+  }, [liveEvent, onActiveEventChange]);
 
   if (!displayEvent || !liveEvent) return null;
 

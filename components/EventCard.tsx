@@ -105,7 +105,7 @@ export type EventCardProps = {
 };
 
 const openArrowGlyphClass =
-  "size-4 shrink-0 text-ds-neutral-400 transition-colors duration-200 ease-out group-hover:text-ds-text-brand group-focus-within:text-ds-text-brand md:size-6";
+  "size-4 shrink-0 text-ds-neutral-400 transition-colors duration-200 ease-out group-hover:text-ds-neutral-00 group-focus-within:text-ds-neutral-00 md:size-6";
 
 export default function EventCard({ event, onExplore }: EventCardProps) {
   const openArrowClipId = useId().replace(/:/g, "");
@@ -171,7 +171,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
           <div className="event-card__date mb-3">
             <div className="flex h-10 w-full max-w-full justify-center">
               <div
-                className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                className="hero-event__date-badge inline-flex h-fit max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
                 role="group"
                 aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
               >
@@ -184,7 +184,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                     aria-hidden
                   />
                 </span>
-                <span className="min-w-0 truncate font-sans text-[14px] font-medium">
+                <span className="min-w-0 truncate font-sans text-[16px] font-medium">
                   {formatEventDateOnlyLong(event.date)}
                 </span>
                 {eventHasSpecificUtcTime(event.date) ? (
@@ -193,7 +193,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                       className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
                       aria-hidden="true"
                     />
-                    <span className="shrink-0 whitespace-nowrap font-sans text-[14px] font-medium">
+                    <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
                       {formatEventTimeUtcLabel(event.date)}
                     </span>
                   </>

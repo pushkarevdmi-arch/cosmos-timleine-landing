@@ -4,6 +4,8 @@
 
 :root {
   --app-surface-elevated: rgba(17, 22, 34, 1);
+  /* Card surfaces: slightly lighter on mobile for text contrast */
+  --app-card-surface: rgba(26, 33, 51, 1);
   /* Hero timeline inactive rail + countdown frame (matches .hero-event-slider-visual) */
   --hero-inactive-track-surface-shadow: 0 1.5px 0 0 rgba(255, 255, 255, 0.1),
     inset 0 0 2px 0 rgba(0, 0, 0, 0.08);
@@ -55,6 +57,12 @@
 @media (min-width: 40rem) {
   :root {
     --h1-400-lh: var(--ds-typography-line-height-5xl);
+  }
+}
+
+@media (min-width: 48rem) {
+  :root {
+    --app-card-surface: rgba(21, 27, 41, 1);
   }
 }
 
@@ -114,7 +122,7 @@ svg:not([class*="text-"]) {
     border-style: solid;
     border-color: var(--ds-neutral-800);
     border-image: none;
-    background-color: rgba(21, 27, 41, 1);
+    background-color: var(--app-card-surface);
     background-image: none;
     box-shadow: none;
   }
@@ -303,7 +311,7 @@ svg:not([class*="text-"]) {
   .event-card__content {
     @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-6;
     padding-bottom: var(--ds-spacing-s);
-    background-color: rgba(21, 27, 41, 1);
+    background-color: var(--app-card-surface);
     background-image: none;
     box-shadow: none;
   }
@@ -755,7 +763,7 @@ svg:not([class*="text-"]) {
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  border: 1px solid #fd7811;
+  border: none;
   box-sizing: border-box;
   background-color: #f1f1f1;
   background-image: url("/icons/arrow-pixel.svg");

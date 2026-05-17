@@ -1,4 +1,4 @@
-/** Pixel arrow from `public/icons/arrow-open.svg`; `currentColor` for token-driven hover (e.g. `text-ds-text-brand`). */
+/** Pixel arrow from `public/icons/arrow-open.svg`; `currentColor` for token-driven hover (e.g. `text-ds-neutral-00`). */
 export default function OpenArrowGlyph({
   clipId,
   className,

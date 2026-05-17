@@ -24,7 +24,8 @@ import {
 } from "@/utils/eventSections";
 
 const BUY_ME_A_COFFEE_URL =
-  process.env.NEXT_PUBLIC_BUY_ME_A_COFFEE_URL ?? "https://www.buymeacoffee.com";
+  process.env.NEXT_PUBLIC_BUY_ME_A_COFFEE_URL ??
+  "https://buymeacoffee.com/dmitri.pushkarev";
 
 function splitSentences(text: string) {
   return text
@@ -397,7 +398,7 @@ export default function Home() {
 
       <CosmosHero onLogoClick={() => window.location.reload()} />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-16 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-20 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* View toggle */}
         {/* Mobile: h2 is a direct child of main (scrolls). Toolbar row is the next sibling with sticky — nested sticky inside flex-col was unreliable in browsers. */}
         <div className="max-sm:-mx-6 max-sm:px-6 sm:hidden">
@@ -737,38 +738,39 @@ export default function Home() {
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-ds-primary-400/40 to-transparent"
               aria-hidden
             />
-            <div className="relative flex flex-col gap-8">
-              <div className="flex w-full flex-col gap-8 px-6 sm:px-8 lg:flex-row lg:items-end lg:justify-end lg:gap-10">
-                <div className="flex min-w-0 w-full flex-col gap-2 text-body-medium-400 text-ds-neutral-400">
+            <div className="relative flex flex-col gap-12">
+              <div className="flex w-full flex-col gap-8 px-6 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
+                <div className="flex min-w-0 w-full flex-col items-center justify-center gap-2 text-body-medium-400 text-ds-neutral-400 lg:items-start lg:justify-start">
                   <Image
                     src="/logo.svg"
                     alt="Cosmic Timeline logo"
                     width={240}
                     height={32}
-                    className="h-8 w-fit shrink-0"
+                    className="h-8 w-fit shrink-0 lg:h-6"
                   />
-                  <p className="max-w-md">
-                    This project is a non-commercial labor of love.
+                  <p className="max-w-md text-center lg:text-left">
+                    This is a non-commercial project. If you enjoyed it,
+                    please support the project by clicking the button below.
                   </p>
                 </div>
-                <div className="flex min-w-0 w-full flex-col gap-3 lg:max-w-sm lg:items-end lg:text-right">
+                <div className="flex min-w-0 w-full flex-col items-center gap-3 lg:max-w-sm lg:items-end lg:text-right">
                   <a
                     href={BUY_ME_A_COFFEE_URL}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex w-full items-center justify-center rounded-full border border-ds-primary-400/40 bg-ds-primary-400/10 px-10 py-3.5 text-base font-semibold text-ds-primary-300 transition hover:border-ds-primary-400/70 hover:bg-ds-primary-400/15 hover:text-ds-primary-200 sm:w-auto sm:self-start lg:self-end"
+                    className="inline-flex w-full items-center justify-center rounded-full border border-ds-primary-400/40 bg-ds-primary-400/10 px-10 py-3.5 text-base font-semibold text-ds-primary-300 transition hover:border-ds-primary-400/70 hover:bg-ds-primary-400/15 hover:text-ds-primary-200 sm:w-auto sm:self-center lg:self-end"
                   >
                     Buy me a coffee
                   </a>
                 </div>
               </div>
 
-              <div className="flex w-full flex-col gap-3 rounded-none bg-ds-neutral-900 px-6 py-3.5 text-[13px] leading-relaxed text-white sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:px-8">
-                <p className="min-w-0 text-left">
+              <div className="flex w-full flex-col gap-4 rounded-none bg-ds-neutral-900 px-6 py-6 text-[13px] leading-relaxed text-white sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
+                <p className="min-w-0 text-center lg:flex-1 lg:text-left">
                   All times and distances are approximate and simplified for an
                   immersive experience.
                 </p>
-                <p className="shrink-0 self-start text-left text-ds-neutral-400 sm:self-auto sm:text-right">
+                <p className="w-full shrink-0 text-center text-base leading-[22px] text-ds-neutral-400 lg:w-auto lg:text-right">
                   Created by Dmitri Pushkarev
                 </p>
               </div>

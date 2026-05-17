@@ -5,6 +5,7 @@ import {
   formatEventDateOnlyLong,
   formatEventTimeUtcLabel,
 } from "@/utils/eventDate";
+import EventDateBadge from "./EventDateBadge";
 import type { HeroEventData } from "./HeroEvent";
 import EventRarityScale from "./EventRarityScale";
 import { EventCategoryTag } from "./EventTagGroup";
@@ -21,6 +22,7 @@ type EventDetailsModalProps = {
   event: HeroEventData;
   onClose: () => void;
 };
+
 
 export default function EventDetailsModal({
   event,
@@ -196,7 +198,12 @@ export default function EventDetailsModal({
           <div className="flex flex-col gap-8 bg-[var(--app-surface-elevated)] px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-3 pl-[3px] pr-[3px]">
-                <EventCategoryTag primaryTag={event.tags?.[0]} />
+                <div className="md:hidden">
+                  <EventDateBadge date={date} />
+                </div>
+                <div className="hidden md:block">
+                  <EventCategoryTag primaryTag={event.tags?.[0]} />
+                </div>
                 <h2
                   id="event-details-title"
                   className="break-words font-sans text-h4-600 text-ds-neutral-50"
@@ -210,43 +217,20 @@ export default function EventDetailsModal({
                 aria-hidden
               />
 
-              <div className="pl-[3px] pr-[3px]">
-                <div className="flex w-fit flex-nowrap items-center justify-between gap-6">
-                  <div className="flex h-9 w-fit max-w-full min-w-0 justify-start">
-                    <div
-                      className="hero-event__date-badge inline-flex h-9 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-ds-neutral-800 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-3 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
-                      role="group"
-                      aria-label={`Event date${eventHasSpecificUtcTime(date) ? " and time" : ""}`}
-                    >
-                      <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center sm:h-[22px] sm:w-[22px]">
-                        <img
-                          src="/icons/calendar3.svg"
-                          width={22}
-                          height={22}
-                          alt=""
-                          aria-hidden
-                          className="h-full w-full object-contain"
-                        />
-                      </span>
-                      <span className="min-w-0 truncate font-sans">
-                        {formatEventDateOnlyLong(date)}
-                      </span>
-                      {eventHasSpecificUtcTime(date) ? (
-                        <>
-                          <span
-                            className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
-                            aria-hidden="true"
-                          />
-                          <span className="shrink-0 whitespace-nowrap font-sans">
-                            {formatEventTimeUtcLabel(date)}
-                          </span>
-                        </>
-                      ) : null}
-                    </div>
-                  </div>
+              <div className="hidden pl-[3px] pr-[3px] md:block">
+                <div className="flex w-fit max-w-full flex-nowrap items-center justify-between gap-x-6 gap-y-6">
+                  <EventDateBadge date={date} />
                   <EventRarityScale value={event.rarity} />
                 </div>
               </div>
+
+              <div className="pl-[3px] pr-[3px] md:hidden">
+                <div className="flex w-fit max-w-full flex-nowrap items-center justify-between gap-x-6 gap-y-6">
+                  <EventCategoryTag primaryTag={event.tags?.[0]} />
+                  <EventRarityScale value={event.rarity} />
+                </div>
+              </div>
+
             </div>
 
             <p className="mt-4 text-[18px] leading-[26px] text-ds-neutral-300">

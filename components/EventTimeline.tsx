@@ -7,6 +7,7 @@ import {
   formatEventTimeUtcLabel,
   getEventCalendarYear,
 } from "@/utils/eventDate";
+import EventDateBadge from "./EventDateBadge";
 import type { HeroEventData } from "./HeroEvent";
 
 type EventTimelineProps = {
@@ -71,10 +72,6 @@ export default function EventTimeline({
                 className="group mt-12 mr-4 flex w-full cursor-pointer items-center gap-3 py-2 text-left"
                 aria-expanded={!isCollapsed}
               >
-                <span
-                  className="shrink-0 rounded-none bg-ds-bg-brand-solid h-1 w-7"
-                  aria-hidden
-                />
                 <span className="type-era-label text-ds-neutral-00">
                   {section.title}
                 </span>
@@ -96,40 +93,11 @@ export default function EventTimeline({
                       <button
                         type="button"
                         onClick={() => onOpen(event)}
-                        className="group flex w-full cursor-pointer flex-col gap-3 rounded-2xl border border-ds-neutral-800 bg-[var(--app-surface-elevated)] px-8 py-8 text-left transition hover:border-ds-primary-400/70 sm:flex-row sm:items-start sm:gap-2"
+                        className="group flex w-full cursor-pointer flex-col gap-3 rounded-2xl border border-ds-neutral-800 bg-[var(--app-surface-elevated)] px-6 py-6 text-left transition hover:border-ds-primary-400/70 sm:flex-row sm:items-start sm:gap-2"
                       >
                         <div className="flex w-full shrink-0 justify-start sm:w-[120px] sm:flex-none sm:self-start">
-                          <div className="flex h-10 w-fit max-w-full min-w-0 justify-start sm:hidden">
-                            <div
-                              className="hero-event__date-badge inline-flex h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border-0 bg-ds-neutral-850 py-1 pl-3 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50"
-                              role="group"
-                              aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
-                            >
-                              <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
-                                <img
-                                  src="/icons/calendar3.svg"
-                                  width={22}
-                                  height={22}
-                                  alt=""
-                                  aria-hidden
-                                  className="h-full w-full object-contain"
-                                />
-                              </span>
-                              <span className="min-w-0 truncate font-sans">
-                                {formatEventDateOnlyLong(event.date)}
-                              </span>
-                              {eventHasSpecificUtcTime(event.date) ? (
-                                <>
-                                  <span
-                                    className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500"
-                                    aria-hidden="true"
-                                  />
-                                  <span className="shrink-0 whitespace-nowrap font-sans">
-                                    {formatEventTimeUtcLabel(event.date)}
-                                  </span>
-                                </>
-                              ) : null}
-                            </div>
+                          <div className="sm:hidden">
+                            <EventDateBadge date={event.date} />
                           </div>
 
                           <div

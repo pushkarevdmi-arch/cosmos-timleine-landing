@@ -19,7 +19,7 @@ export default function EventRarityScale({ value }: EventRarityScaleProps) {
       role="group"
       aria-label={`Rarity ${r} out of 5`}
     >
-      <p className="whitespace-nowrap font-departure-mono text-[16px] leading-6 text-ds-neutral-00">
+      <p className="whitespace-nowrap font-sans text-[16px] leading-6 text-ds-neutral-00">
         Rarity:
       </p>
       <div className="flex items-center gap-1" aria-hidden>

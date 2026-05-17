@@ -331,7 +331,7 @@ export default function HeroEvent({
         tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
-        className={`grid h-fit min-w-0 w-full gap-x-0 gap-y-[8px] border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[rgba(21,27,41,1)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] md:gap-x-2 lg:grid-cols-[400px_minmax(0,1fr)] ${
+        className={`grid h-fit min-w-0 w-full gap-x-0 gap-y-[8px] border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[var(--app-card-surface)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] md:gap-x-2 lg:grid-cols-[400px_minmax(0,1fr)] ${
           onExplore ? "hero-event--interactive group cursor-pointer" : ""
         } ${
           isVisible
@@ -369,7 +369,7 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className={`relative flex h-full w-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl bg-[rgba(21,27,41,1)] px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-8 md:text-left ${
+          className={`relative flex h-full w-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl bg-[var(--app-card-surface)] px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-8 md:text-left ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
                 ? "max-md:min-h-[232px]"
@@ -398,7 +398,7 @@ export default function HeroEvent({
                       aria-hidden
                     />
                   </span>
-                  <span className="min-w-0 truncate font-sans text-[14px] font-medium">
+                  <span className="min-w-0 truncate font-sans text-[16px] font-medium">
                     {formatEventDateOnlyLong(displayEvent.date)}
                   </span>
                   {eventHasSpecificUtcTime(displayEvent.date) ? (
@@ -407,7 +407,7 @@ export default function HeroEvent({
                         className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
                         aria-hidden="true"
                       />
-                      <span className="shrink-0 whitespace-nowrap font-sans text-[14px] font-medium">
+                      <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
                         {formatEventTimeUtcLabel(displayEvent.date)}
                       </span>
                     </>
@@ -510,7 +510,7 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown hidden h-fit w-full min-w-0 max-w-full self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[96px] md:w-full md:gap-0 md:justify-start md:pr-[120px]">
+                <div className="hero-countdown hidden h-fit w-full min-w-0 max-w-full self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[96px] md:w-full md:gap-0 md:justify-start min-[1400px]:pr-20">
                   <div
                     className="hero-countdown__segments flex w-full min-h-0 min-w-0 max-w-full flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-2xl border-0 md:h-[96px] md:min-h-0"
                   >
@@ -547,15 +547,16 @@ export default function HeroEvent({
             >
               <OpenArrowGlyph
                 clipId={openArrowClipIdDesktop}
-                className="size-[22px] shrink-0 text-ds-neutral-400 transition-colors duration-200 ease-out group-hover:text-ds-text-brand group-focus-within:text-ds-text-brand md:size-6"
+                className="size-[22px] shrink-0 text-ds-neutral-400 transition-colors duration-200 ease-out group-hover:text-ds-neutral-00 group-focus-within:text-ds-neutral-00 md:size-6"
               />
             </div>
           ) : null}
+
         </div>
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-700)] bg-[rgba(21,27,41,1)] px-5 pb-6 pt-5 md:gap-1 md:px-6 md:pb-6 md:pt-4">
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-700)] bg-[var(--app-card-surface)] px-5 pb-6 pt-5 md:gap-1 md:px-6 md:pb-6 md:pt-4">
           <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-0 md:mb-0">
             <label
               htmlFor="hero-event-time-slider"

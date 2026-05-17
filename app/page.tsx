@@ -10,6 +10,7 @@ import {
   useRef,
   useSyncExternalStore,
 } from "react";
+import BrandLogo from "@/components/BrandLogo";
 import CosmosHero from "@/components/CosmosHero";
 import HeroEvent, { HeroEventData } from "@/components/HeroEvent";
 import ViewToggle from "@/components/ViewToggle";
@@ -77,10 +78,8 @@ function deriveKeyFacts(mainDescription: string) {
   return result;
 }
 
-/** Cards appended per “load more” / infinite scroll. */
-const EVENTS_BATCH_SIZE = 11;
-/** Initial slice: covers all current eras in one view when filters are “all” (see sorted `eventsSeed`). */
-const INITIAL_VISIBLE_COUNT = 60;
+/** Cards shown initially and appended per scroll batch. */
+const EVENTS_BATCH_SIZE = 10;
 const TIME_RANGE_OPTIONS = [
   "Next 100 Years",
   "Next 10,000 Years",
@@ -154,7 +153,7 @@ export default function Home() {
   >("all");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [openDropdown, setOpenDropdown] = useState<FilterDropdown>(null);
-  const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT);
+  const [visibleCount, setVisibleCount] = useState(EVENTS_BATCH_SIZE);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<HeroEventData | null>(
     null
@@ -163,7 +162,6 @@ export default function Home() {
   const [mobileGridSectionsVisible, setMobileGridSectionsVisible] = useState(1);
   const isNarrowMobile = useIsNarrowMobile();
   const isFetchingRef = useRef(false);
-  const rafRef = useRef<number | null>(null);
   const filterPopoverRef = useRef<HTMLDivElement | null>(null);
   const stickyToolbarSentinelRef = useRef<HTMLDivElement | null>(null);
   const [isStickyFilterBarPinned, setIsStickyFilterBarPinned] = useState(false);
@@ -180,12 +178,13 @@ export default function Home() {
   );
 
   useEffect(() => {
-    setVisibleCount(INITIAL_VISIBLE_COUNT);
+    setVisibleCount(EVENTS_BATCH_SIZE);
     setIsLoadingMore(false);
     isFetchingRef.current = false;
     setHeroActiveEventId(null);
     setSelectedTags([]);
     setSelectedTimeRange("all");
+    setMobileGridSectionsVisible(1);
   }, [locale]);
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
@@ -268,20 +267,29 @@ export default function Home() {
   }, [hasMoreEvents]);
 
   useEffect(() => {
+    setVisibleCount(EVENTS_BATCH_SIZE);
+    setIsLoadingMore(false);
+    isFetchingRef.current = false;
     setMobileGridSectionsVisible(1);
   }, [selectedTags, selectedTimeRange]);
 
-  const mobileGridSentinelActive =
-    isNarrowMobile &&
-    viewMode === "grid" &&
-    (mobileGridSectionsVisible < timeSectionGroups.length || hasMoreEvents);
+  const loadMoreSentinelActive =
+    hasMoreEvents ||
+    (isNarrowMobile &&
+      viewMode === "grid" &&
+      mobileGridSectionsVisible < timeSectionGroups.length);
 
   useEffect(() => {
-    if (!isNarrowMobile || viewMode !== "grid") return;
+    if (!loadMoreSentinelActive) return;
     const el = mobileGridSentinelRef.current;
     if (!el) return;
 
-    let canTrigger = true;
+    let canTrigger = false;
+
+    const enableTrigger = () => {
+      canTrigger = true;
+    };
+    window.addEventListener("scroll", enableTrigger, { passive: true, once: true });
 
     const obs = new IntersectionObserver(
       (entries) => {
@@ -296,19 +304,27 @@ export default function Home() {
         if (!canTrigger) return;
         canTrigger = false;
 
-        const maxS = maxTimeSectionsRef.current;
-        const v = mobileGridSectionsVisibleRef.current;
-        if (v < maxS) {
-          setMobileGridSectionsVisible(Math.min(v + 1, maxS));
-        } else if (hasMoreEventsRef.current) {
+        if (isNarrowMobile && viewMode === "grid") {
+          const maxS = maxTimeSectionsRef.current;
+          const v = mobileGridSectionsVisibleRef.current;
+          if (v < maxS) {
+            setMobileGridSectionsVisible(Math.min(v + 1, maxS));
+            return;
+          }
+        }
+
+        if (hasMoreEventsRef.current) {
           loadMoreEventsRef.current();
         }
       },
       { root: null, rootMargin: "240px 0px", threshold: 0 }
     );
     obs.observe(el);
-    return () => obs.disconnect();
-  }, [isNarrowMobile, viewMode, timeSectionGroups, hasMoreEvents, loadMoreEvents]);
+    return () => {
+      window.removeEventListener("scroll", enableTrigger);
+      obs.disconnect();
+    };
+  }, [isNarrowMobile, loadMoreSentinelActive, viewMode]);
 
   useEffect(() => {
     const handleOutsideClick = (event: globalThis.MouseEvent) => {
@@ -349,36 +365,6 @@ export default function Home() {
       window.removeEventListener("resize", updatePinned);
     };
   }, [isNarrowMobile]);
-
-  useEffect(() => {
-    const checkShouldLoad = () => {
-      if (isNarrowMobile && viewMode === "grid") return;
-      if (isFetchingRef.current || !hasMoreEvents) return;
-      const thresholdPx = 320;
-      const scrollBottom = window.innerHeight + window.scrollY;
-      const pageBottom = document.documentElement.scrollHeight;
-      if (pageBottom - scrollBottom <= thresholdPx) {
-        loadMoreEvents();
-      }
-    };
-
-    const onScroll = () => {
-      if (rafRef.current !== null) return;
-      rafRef.current = window.requestAnimationFrame(() => {
-        rafRef.current = null;
-        checkShouldLoad();
-      });
-    };
-
-    checkShouldLoad();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-      if (rafRef.current !== null) {
-        window.cancelAnimationFrame(rafRef.current);
-      }
-    };
-  }, [hasMoreEvents, isNarrowMobile, loadMoreEvents, viewMode]);
 
   const handleDropdownKeyboard = (
     event: ReactKeyboardEvent<HTMLButtonElement>,
@@ -517,7 +503,7 @@ export default function Home() {
             </button>
 
             {isFilterOpen ? (
-              <div className="absolute right-0 top-[calc(100%+0.5rem)] z-20 w-64 rounded-2xl bg-ds-neutral-800 p-3 shadow-lg backdrop-blur">
+              <div className="absolute right-0 top-[calc(100%+0.5rem)] z-20 flex w-64 flex-col gap-0 rounded-2xl bg-ds-neutral-800 p-3 shadow-lg backdrop-blur">
                 <div className="flex flex-col gap-2">
                   <div className="relative">
                     <button
@@ -533,7 +519,7 @@ export default function Home() {
                       onKeyDown={(event) =>
                         handleDropdownKeyboard(event, "time")
                       }
-                      className="flex h-[48px] w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 px-3 type-body-medium-tight text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
+                      className="flex h-[48px] w-full items-center justify-between rounded-xl bg-ds-neutral-900 px-3 type-body-medium-tight text-ds-neutral-200 outline-none"
                     >
                       <span className="truncate">{selectedTimeRangeLabel}</span>
                       <svg
@@ -563,7 +549,7 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => {
-                              setVisibleCount(INITIAL_VISIBLE_COUNT);
+                              setVisibleCount(EVENTS_BATCH_SIZE);
                               setIsLoadingMore(false);
                               isFetchingRef.current = false;
                               setSelectedTimeRange("all");
@@ -579,7 +565,7 @@ export default function Home() {
                             <button
                               type="button"
                               onClick={() => {
-                                setVisibleCount(INITIAL_VISIBLE_COUNT);
+                                setVisibleCount(EVENTS_BATCH_SIZE);
                                 setIsLoadingMore(false);
                                 isFetchingRef.current = false;
                                 setSelectedTimeRange(range);
@@ -637,7 +623,7 @@ export default function Home() {
                           <button
                             type="button"
                             onClick={() => {
-                              setVisibleCount(INITIAL_VISIBLE_COUNT);
+                              setVisibleCount(EVENTS_BATCH_SIZE);
                               setIsLoadingMore(false);
                               isFetchingRef.current = false;
                               setSelectedTags([]);
@@ -655,7 +641,7 @@ export default function Home() {
                             <button
                               type="button"
                               onClick={() => {
-                                setVisibleCount(INITIAL_VISIBLE_COUNT);
+                                setVisibleCount(EVENTS_BATCH_SIZE);
                                 setIsLoadingMore(false);
                                 isFetchingRef.current = false;
                                 setSelectedTags((current) => {
@@ -677,22 +663,22 @@ export default function Home() {
                       </ul>
                     ) : null}
                   </div>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setVisibleCount(INITIAL_VISIBLE_COUNT);
-                      setIsLoadingMore(false);
-                      isFetchingRef.current = false;
-                      setSelectedTimeRange("all");
-                      setSelectedTags([]);
-                      setOpenDropdown(null);
-                    }}
-                    className="flex h-10 items-center justify-center rounded-xl border border-ds-neutral-700 px-3 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
-                  >
-                    {t("events.resetFilters")}
-                  </button>
                 </div>
+
+                <button
+                  type="button"
+                  onClick={() => {
+                    setVisibleCount(EVENTS_BATCH_SIZE);
+                    setIsLoadingMore(false);
+                    isFetchingRef.current = false;
+                    setSelectedTimeRange("all");
+                    setSelectedTags([]);
+                    setOpenDropdown(null);
+                  }}
+                  className="mt-4 flex h-10 cursor-pointer items-center justify-center rounded-xl border border-ds-neutral-700 bg-ds-neutral-600 px-3 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00"
+                >
+                  {t("events.resetFilters")}
+                </button>
               </div>
             ) : null}
 
@@ -719,13 +705,6 @@ export default function Home() {
                   onExplore={(event) => setSelectedEvent(event)}
                 />
               </div>
-              {mobileGridSentinelActive ? (
-                <div
-                  ref={mobileGridSentinelRef}
-                  className="h-px w-full shrink-0"
-                  aria-hidden
-                />
-              ) : null}
             </>
           ) : (
             <EventTimeline
@@ -733,6 +712,14 @@ export default function Home() {
               onOpen={(event) => setSelectedEvent(event)}
             />
           )}
+
+          {loadMoreSentinelActive ? (
+            <div
+              ref={mobileGridSentinelRef}
+              className="h-px w-full shrink-0"
+              aria-hidden
+            />
+          ) : null}
 
           {(isLoadingMore ||
             (hasMoreEvents && (!isNarrowMobile || viewMode !== "grid"))) && (
@@ -759,12 +746,10 @@ export default function Home() {
             <div className="relative flex flex-col gap-12">
               <div className="flex w-full flex-col gap-8 px-6 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
                 <div className="flex min-w-0 w-full flex-col items-center justify-center gap-6 text-body-medium-400 text-ds-neutral-400 lg:items-start lg:justify-start">
-                  <Image
-                    src="/logo.svg"
-                    alt={t("footer.logoAlt")}
-                    width={240}
-                    height={32}
-                    className="h-8 w-fit shrink-0 lg:h-6"
+                  <BrandLogo
+                    size="md"
+                    className="shrink-0"
+                    aria-label={t("footer.logoAlt")}
                   />
                   <p className="max-w-[600px] whitespace-pre-line text-center text-ds-neutral-400 lg:text-left">
                     {t("footer.supportText")}

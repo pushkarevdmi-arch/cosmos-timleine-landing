@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useLocale } from "@/context/LocaleContext";
+import BrandLogo from "./BrandLogo";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 type CosmosHeroProps = {
@@ -37,30 +37,18 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
           aria-hidden
         />
 
-        <div className="absolute right-[var(--ds-spacing-s)] top-6 z-20 sm:right-8 sm:top-10">
-          <LanguageSwitcher />
-        </div>
-
-        <div className="relative z-10 flex w-full self-stretch items-start justify-start text-left sm:items-center sm:justify-center sm:text-center">
+        <div className="relative z-20 flex w-full items-center justify-between gap-4 self-stretch sm:grid sm:grid-cols-[1fr_auto_1fr] sm:items-center">
           <button
             type="button"
             onClick={onLogoClick}
-            className="flex cursor-pointer items-center gap-[7px] border-0 bg-transparent p-0"
+            className="flex cursor-pointer items-center gap-[7px] border-0 bg-transparent p-0 sm:col-start-2 sm:justify-self-center"
             aria-label={t("hero.reloadPage")}
           >
-            <span className="relative flex size-[17px] shrink-0 items-center justify-center">
-              <Image
-                src="/images/figma-hero/logo-mark.svg"
-                alt=""
-                width={17}
-                height={17}
-                className="block rotate-90"
-              />
-            </span>
-            <span className="whitespace-nowrap font-sans text-[15px] font-medium leading-[23px] tracking-[-0.15px] text-ds-neutral-00">
-              COSMORROW
-            </span>
+            <BrandLogo />
           </button>
+          <div className="sm:col-start-3 sm:justify-self-end">
+            <LanguageSwitcher />
+          </div>
         </div>
 
         <div className="relative z-10 flex w-full max-w-[72.875rem] flex-col items-center gap-1 px-1 text-center text-ds-neutral-00 mix-blend-difference">

@@ -17,7 +17,7 @@ const GALACTIC_DEEP_TIME_ICON = "/icons/galactic-deep-time.svg";
 /** Conjunction + planetary categories use `public/icons/Conjunction 1.svg` (space → %20 in URL). */
 const CONJUNCTION_PLANETARY_ICON = "/icons/Conjunction%201.svg";
 
-/** Display tag (unchanged names in data) → `/public/icons/…`. */
+/** Display tag (EN in `data/events/*.json`, RU in `*-ru.json`) → `/public/icons/…`. */
 const CATEGORY_ICON_SRC: Record<string, string> = {
   Conjunction: CONJUNCTION_PLANETARY_ICON,
   "Planetary Event": CONJUNCTION_PLANETARY_ICON,
@@ -33,6 +33,21 @@ const CATEGORY_ICON_SRC: Record<string, string> = {
   "Galactic Event": GALACTIC_DEEP_TIME_ICON,
   "Cosmic Event": GALACTIC_DEEP_TIME_ICON,
   "Solar system": "/icons/observation-default.svg",
+  // Russian (`data/events/*-ru.json`)
+  Соединение: CONJUNCTION_PLANETARY_ICON,
+  "Планетное событие": CONJUNCTION_PLANETARY_ICON,
+  "Планетарное событие": CONJUNCTION_PLANETARY_ICON,
+  Затмение: "/icons/eclipse-shadow.svg",
+  Прохождение: "/icons/transit-silhouette.svg",
+  Комета: "/icons/small-body-trail.svg",
+  Астероид: "/icons/small-body-trail.svg",
+  "Метеорный дождь": "/icons/small-body-trail.svg",
+  "Лунное событие": "/icons/lunar-cycle.svg",
+  "Звёздное событие": "/icons/stellar-burst.svg",
+  "Звёздное сближение": "/icons/stellar-burst.svg",
+  Сверхновая: "/icons/stellar-burst.svg",
+  "Галактическое событие": GALACTIC_DEEP_TIME_ICON,
+  "Космическое событие": GALACTIC_DEEP_TIME_ICON,
 };
 
 const DEFAULT_CATEGORY_ICON = "/icons/observation-default.svg";

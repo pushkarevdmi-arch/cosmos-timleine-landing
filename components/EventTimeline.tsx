@@ -79,11 +79,21 @@ export default function EventTimeline({
                 </span>
                 <span className="h-px flex-1 bg-ds-neutral-800/80" />
                 <span className="ml-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ds-neutral-900 transition-colors duration-200">
-                  <img
-                    src={isCollapsed ? "/icons/arrow-down.svg" : "/icons/arrow-up.svg"}
-                    alt=""
-                    aria-hidden="true"
-                    className="h-6 w-6 shrink-0 transition-transform duration-200 group-hover:scale-110"
+                  <span
+                    aria-hidden
+                    className={[
+                      "size-6 shrink-0 bg-ds-neutral-400 transition-transform duration-200 group-hover:scale-110",
+                      "[-webkit-mask-size:24px_24px] [mask-size:24px_24px]",
+                      !isCollapsed ? "rotate-180" : "",
+                    ].join(" ")}
+                    style={{
+                      WebkitMaskImage: "url('/icons/weui_arrow-outlined.svg')",
+                      maskImage: "url('/icons/weui_arrow-outlined.svg')",
+                      WebkitMaskRepeat: "no-repeat",
+                      maskRepeat: "no-repeat",
+                      WebkitMaskPosition: "center",
+                      maskPosition: "center",
+                    }}
                   />
                 </span>
               </button>
@@ -126,7 +136,7 @@ export default function EventTimeline({
 
                         <span
                           aria-hidden
-                          className="hidden h-11 w-0 shrink-0 self-center border-l border-ds-neutral-600 sm:inline-block"
+                          className="hidden h-11 w-0 shrink-0 self-center border-l border-ds-neutral-700 sm:inline-block"
                         />
 
                         <div className="flex min-w-0 flex-1 flex-col gap-1.5 sm:pl-4">

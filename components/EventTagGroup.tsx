@@ -73,11 +73,11 @@ export function EventCategoryTag({
   );
 }
 
-function getLocationAbbreviation(label: string, icon?: string) {
+function getLocationAbbreviation(label: string) {
   const normalized = label.trim().toLowerCase();
-  if (normalized === "europe") return "EU";
-  if (normalized === "asia") return "AS";
-  if (normalized === "north america") return "NA";
+  if (normalized === "europe" || normalized === "европа") return "EU";
+  if (normalized === "asia" || normalized === "азия") return "AS";
+  if (normalized === "north america" || normalized === "северная америка") return "NA";
 
   return label
     .split(/\s+/)
@@ -122,7 +122,9 @@ export default function EventTagGroup({
                 getLocationAbbreviation(tag.label)
               )}
             </span>
-            <span>{tag.label}</span>
+            <span className="event-card__extra-tag-label" title={tag.label}>
+              {tag.label}
+            </span>
           </div>
         );
       })}

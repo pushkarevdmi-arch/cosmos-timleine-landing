@@ -3,6 +3,7 @@ import localFont from "next/font/local";
 import "./globals.css";
 import ContentReveal from "@/components/ContentReveal";
 import NumericPreloader from "@/components/NumericPreloader";
+import { LocaleProvider } from "@/context/LocaleContext";
 import { getSiteUrl, site } from "@/lib/site";
 
 const geist = localFont({
@@ -88,8 +89,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geist.className} ${geist.variable} antialiased`}>
-        <NumericPreloader />
-        <ContentReveal>{children}</ContentReveal>
+        <LocaleProvider>
+          <NumericPreloader />
+          <ContentReveal>{children}</ContentReveal>
+        </LocaleProvider>
       </body>
     </html>
   );

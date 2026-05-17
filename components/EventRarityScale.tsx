@@ -1,3 +1,6 @@
+"use client";
+
+import { useLocale } from "@/context/LocaleContext";
 import type { EventRarity } from "./HeroEvent";
 
 function clampRarity(value: number | undefined): EventRarity {
@@ -11,16 +14,17 @@ type EventRarityScaleProps = {
 };
 
 export default function EventRarityScale({ value }: EventRarityScaleProps) {
+  const { t } = useLocale();
   const r = clampRarity(value);
 
   return (
     <div
       className="flex shrink-0 items-center gap-1.5"
       role="group"
-      aria-label={`Rarity ${r} out of 5`}
+      aria-label={t("modal.rarityAria", { value: r })}
     >
       <p className="whitespace-nowrap font-sans text-[16px] leading-6 text-ds-neutral-00">
-        Rarity:
+        {t("modal.rarity")}
       </p>
       <div className="flex items-center gap-1" aria-hidden>
         {Array.from({ length: 5 }, (_, i) => (

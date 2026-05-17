@@ -9,6 +9,7 @@ import {
 } from "@/utils/eventDate";
 import EventDateBadge from "./EventDateBadge";
 import type { HeroEventData } from "./HeroEvent";
+import { useLocale } from "@/context/LocaleContext";
 
 type EventTimelineProps = {
   events: HeroEventData[];
@@ -19,6 +20,8 @@ export default function EventTimeline({
   events,
   onOpen,
 }: EventTimelineProps) {
+  const { locale, t, timeRangeLabel } = useLocale();
+
   const sections = useMemo(() => {
     const groupedSections: Array<{
       title: string;
@@ -47,8 +50,7 @@ export default function EventTimeline({
   if (!events.length) {
     return (
       <p className="type-body-tight text-ds-neutral-500">
-        No events yet. Add future cosmic milestones to see them unfold along a
-        timeline.
+        {t("events.timelineEmpty")}
       </p>
     );
   }
@@ -73,7 +75,7 @@ export default function EventTimeline({
                 aria-expanded={!isCollapsed}
               >
                 <span className="type-era-label text-ds-neutral-00">
-                  {section.title}
+                  {timeRangeLabel(section.title)}
                 </span>
                 <span className="h-px flex-1 bg-ds-neutral-800/80" />
                 <span className="ml-4 flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-ds-neutral-900 transition-colors duration-200">
@@ -93,9 +95,9 @@ export default function EventTimeline({
                       <button
                         type="button"
                         onClick={() => onOpen(event)}
-                        className="group flex w-full cursor-pointer flex-col gap-3 rounded-2xl border border-ds-neutral-800 bg-[var(--app-surface-elevated)] px-6 py-6 text-left transition hover:border-ds-primary-400/70 sm:flex-row sm:items-start sm:gap-2"
+                        className="group flex w-full cursor-pointer flex-col gap-3 rounded-2xl border border-ds-neutral-800 bg-[var(--app-surface-elevated)] px-6 py-8 text-left transition hover:border-ds-primary-400/70 sm:flex-row sm:items-start sm:gap-2"
                       >
-                        <div className="flex w-full shrink-0 justify-start sm:w-[120px] sm:flex-none sm:self-start">
+                        <div className="flex w-full shrink-0 justify-start sm:w-[140px] sm:flex-none sm:self-start">
                           <div className="sm:hidden">
                             <EventDateBadge date={event.date} />
                           </div>
@@ -103,15 +105,19 @@ export default function EventTimeline({
                           <div
                             className="hidden min-w-0 w-full text-left sm:block"
                             role="group"
-                            aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
+                            aria-label={
+                              eventHasSpecificUtcTime(event.date)
+                                ? t("heroEvent.eventDateAndTimeAria")
+                                : t("heroEvent.eventDateAria")
+                            }
                           >
                             <div className="flex flex-col items-start gap-1 font-sans text-[14px] font-normal leading-tight text-ds-neutral-50 sm:text-[16px] sm:leading-snug">
                               <span className="break-words">
-                                {formatEventDateOnlyLong(event.date)}
+                                {formatEventDateOnlyLong(event.date, locale)}
                               </span>
                               {eventHasSpecificUtcTime(event.date) ? (
                                 <span className="break-words text-ds-neutral-400">
-                                  {formatEventTimeUtcLabel(event.date)}
+                                  {formatEventTimeUtcLabel(event.date, locale)}
                                 </span>
                               ) : null}
                             </div>
@@ -124,7 +130,7 @@ export default function EventTimeline({
                         />
 
                         <div className="flex min-w-0 flex-1 flex-col gap-1.5 sm:pl-4">
-                          <h3 className="font-sans text-[20px] leading-[24px] font-semibold text-ds-neutral-50">
+                          <h3 className="font-sans text-[18px] leading-[24px] font-semibold text-ds-neutral-50">
                             {event.title}
                           </h3>
                           <p className="line-clamp-2 font-sans text-body-medium-400 text-ds-neutral-400">

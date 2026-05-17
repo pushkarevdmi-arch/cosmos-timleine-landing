@@ -1,3 +1,5 @@
+import { intlLocaleFor, translate, type Locale } from "@/lib/i18n";
+
 /**
  * Event `date` strings:
  * - Full calendar: `YYYY-MM-DD` or `YYYY-MM-DDTHH:mm:ss.sssZ` (year may exceed 9999).
@@ -33,8 +35,15 @@ function compareDecimalYearStrings(a: string, b: string): number {
   return na < nb ? -1 : na > nb ? 1 : 0;
 }
 
-function formatYearDigitsWithGrouping(yStr: string): string {
+function formatYearDigitsWithGrouping(yStr: string, locale: Locale = "en"): string {
   const n = yStr.replace(/^0+/, "") || "0";
+  if (locale === "ru") {
+    try {
+      return BigInt(n).toLocaleString("ru-RU");
+    } catch {
+      return n.replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
+    }
+  }
   return n.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
@@ -44,14 +53,17 @@ function formatYearDigitsPlain(yStr: string): string {
 }
 
 /** Year label for hero slider / headings (supports years beyond `Number.MAX_SAFE_INTEGER`). */
-export function formatEventCalendarYearLabel(dateStr: string): string {
+export function formatEventCalendarYearLabel(
+  dateStr: string,
+  locale: Locale = "en"
+): string {
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
-    return new Date(instant).getUTCFullYear().toLocaleString("en-US");
+    return new Date(instant).getUTCFullYear().toLocaleString(intlLocaleFor(locale));
   }
   const parts = parseEventYmd(dateStr);
-  if (!parts) return "Unknown";
-  return formatYearDigitsWithGrouping(parts.yStr);
+  if (!parts) return translate(locale, "dates.unknown");
+  return formatYearDigitsWithGrouping(parts.yStr, locale);
 }
 
 const HERO_YEAR_PLAIN_MAX_CHARS = 20;
@@ -59,10 +71,17 @@ const HERO_YEAR_PLAIN_MAX_CHARS = 20;
 /** Hero “Year:” + related UI: at this mega scale (9,007 Trillion CE and up) show verbal end label instead of digits. */
 export const HERO_TIMELINE_END_OF_TIME_LABEL = "End of Time";
 
+export function heroEndOfTimeLabel(locale: Locale): string {
+  return translate(locale, "heroEvent.endOfTime");
+}
+
 const HERO_TIMELINE_TRILLIONS_THRESHOLD = BigInt(9007);
 
 /** Calendar year (not “years until”): same Million / Billion / Trillion thresholds as {@link formatMegaYearScaleParts}. */
-function formatMegaCalendarYearScaleFromBigInt(y: bigint): {
+function formatMegaCalendarYearScaleFromBigInt(
+  y: bigint,
+  locale: Locale
+): {
   numberPart: string;
   scaleWord: string | null;
 } {
@@ -70,12 +89,16 @@ function formatMegaCalendarYearScaleFromBigInt(y: bigint): {
   const trillion = BigInt("1000000000000");
   const billion = BigInt("1000000000");
   const million = BigInt("1000000");
+  const loc = intlLocaleFor(locale);
 
   const roundDiv = (n: bigint, d: bigint) => (n + d / BigInt(2)) / d;
 
   const formatPart = (n: bigint) => {
     if (n <= BigInt(Number.MAX_SAFE_INTEGER)) {
-      return Number(n).toLocaleString("en-US");
+      return Number(n).toLocaleString(loc);
+    }
+    if (locale === "ru") {
+      return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "\u00a0");
     }
     return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   };
@@ -83,19 +106,19 @@ function formatMegaCalendarYearScaleFromBigInt(y: bigint): {
   if (yNorm >= trillion) {
     return {
       numberPart: formatPart(roundDiv(yNorm, trillion)),
-      scaleWord: "Trillion",
+      scaleWord: translate(locale, "countdown.scaleTrillion"),
     };
   }
   if (yNorm >= billion) {
     return {
       numberPart: formatPart(roundDiv(yNorm, billion)),
-      scaleWord: "Billion",
+      scaleWord: translate(locale, "countdown.scaleBillion"),
     };
   }
   if (yNorm >= million) {
     return {
       numberPart: formatPart(roundDiv(yNorm, million)),
-      scaleWord: "Million",
+      scaleWord: translate(locale, "countdown.scaleMillion"),
     };
   }
   return { numberPart: formatPart(yNorm), scaleWord: null };
@@ -108,7 +131,10 @@ export type HeroTimelineYearDisplay =
 /**
  * Hero timeline “Year:” value: plain CE year, or the same mega scale as event cards (e.g. 2 + Billion).
  */
-export function getHeroTimelineYearDisplay(dateStr: string): HeroTimelineYearDisplay {
+export function getHeroTimelineYearDisplay(
+  dateStr: string,
+  locale: Locale = "en"
+): HeroTimelineYearDisplay {
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
     return { kind: "plain", text: String(new Date(instant).getUTCFullYear()) };
@@ -132,9 +158,9 @@ export function getHeroTimelineYearDisplay(dateStr: string): HeroTimelineYearDis
   const trillion = BigInt("1000000000000");
   const roundToTrillions = (n: bigint) => (n + trillion / BigInt(2)) / trillion;
   if (roundToTrillions(y) >= HERO_TIMELINE_TRILLIONS_THRESHOLD) {
-    return { kind: "plain", text: HERO_TIMELINE_END_OF_TIME_LABEL };
+    return { kind: "plain", text: heroEndOfTimeLabel(locale) };
   }
-  const mega = formatMegaCalendarYearScaleFromBigInt(y);
+  const mega = formatMegaCalendarYearScaleFromBigInt(y, locale);
   if (!mega.scaleWord) {
     return { kind: "plain", text: mega.numberPart };
   }
@@ -325,68 +351,101 @@ export function getApproxYearsRemaining(dateStr: string, nowMs = Date.now()): nu
 }
 
 /** Millions / Billions cards & hero: number + Million | Billion | Trillion (title case). */
-export function formatMegaYearScaleParts(years: number): {
+export function formatMegaYearScaleParts(
+  years: number,
+  locale: Locale = "en"
+): {
   numberPart: string;
   scaleWord: string | null;
 } {
   const y = Math.max(0, Math.floor(years));
-  const n = (v: number) => v.toLocaleString("en-US", { useGrouping: false });
+  const loc = intlLocaleFor(locale);
+  const n = (v: number) => v.toLocaleString(loc, { useGrouping: false });
   if (y >= 1_000_000_000_000) {
     return {
       numberPart: n(Math.round(y / 1_000_000_000_000)),
-      scaleWord: "Trillion",
+      scaleWord: translate(locale, "countdown.scaleTrillion"),
     };
   }
   if (y >= 1_000_000_000) {
     return {
       numberPart: n(Math.round(y / 1_000_000_000)),
-      scaleWord: "Billion",
+      scaleWord: translate(locale, "countdown.scaleBillion"),
     };
   }
   if (y >= 1_000_000) {
     return {
       numberPart: n(Math.round(y / 1_000_000)),
-      scaleWord: "Million",
+      scaleWord: translate(locale, "countdown.scaleMillion"),
     };
   }
   return { numberPart: n(y), scaleWord: null };
+}
+
+/** Long-range countdown pill (tril / bil / mil / years units). */
+export function formatLongTermCountdownParts(
+  years: number,
+  locale: Locale = "en"
+): { value: string; unit: string } {
+  const loc = intlLocaleFor(locale);
+  const y = Math.max(0, Math.floor(years));
+  if (y >= 1_000_000_000_000) {
+    return {
+      value: Math.round(y / 1_000_000_000_000).toLocaleString(loc),
+      unit: translate(locale, "countdown.unitTrilYears"),
+    };
+  }
+  if (y >= 1_000_000_000) {
+    return {
+      value: Math.round(y / 1_000_000_000).toLocaleString(loc),
+      unit: translate(locale, "countdown.unitBilYears"),
+    };
+  }
+  if (y >= 1_000_000) {
+    return {
+      value: Math.round(y / 1_000_000).toLocaleString(loc),
+      unit: translate(locale, "countdown.unitMilYears"),
+    };
+  }
+  return {
+    value: y.toLocaleString(loc),
+    unit: translate(locale, "countdown.unitYears"),
+  };
 }
 
 /**
  * When the event is at least ~1M years in the future, prefer this over a fake calendar day.
  * Uses short "mil" / "bil" labels (million / billion years ahead).
  */
-export function formatYearsAheadColloquial(wholeYears: number): string {
+export function formatYearsAheadColloquial(
+  wholeYears: number,
+  locale: Locale = "en"
+): string {
   const y = Math.max(0, Math.floor(Number(wholeYears)));
+  const loc = intlLocaleFor(locale);
   if (y >= 1_000_000_000_000) {
-    const v = Math.round(y / 1_000_000_000_000);
-    return `~${v.toLocaleString("en-US")} tril years ahead`;
+    const v = Math.round(y / 1_000_000_000_000).toLocaleString(loc);
+    return translate(locale, "dates.trilYearsAhead", { value: v });
   }
   if (y >= 1_000_000_000) {
-    const v = Math.round(y / 1_000_000_000);
-    return `~${v.toLocaleString("en-US")} bil years ahead`;
+    const v = Math.round(y / 1_000_000_000).toLocaleString(loc);
+    return translate(locale, "dates.bilYearsAhead", { value: v });
   }
   if (y >= 1_000_000) {
-    const v = Math.round(y / 1_000_000);
-    return `~${v.toLocaleString("en-US")} mil years ahead`;
+    const v = Math.round(y / 1_000_000).toLocaleString(loc);
+    return translate(locale, "dates.milYearsAhead", { value: v });
   }
-  return `~${y.toLocaleString("en-US")} years ahead`;
+  return translate(locale, "dates.yearsAhead", {
+    value: y.toLocaleString(loc),
+  });
 }
 
-const MONTH_LONG_EN = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
+function utcMonthName(month1to12: number, locale: Locale, style: "long" | "short"): string {
+  return new Intl.DateTimeFormat(intlLocaleFor(locale), {
+    month: style,
+    timeZone: "UTC",
+  }).format(new Date(Date.UTC(2000, month1to12 - 1, 1)));
+}
 
 const longDateUtc: Intl.DateTimeFormatOptions = {
   year: "numeric",
@@ -425,14 +484,18 @@ export function eventHasSpecificUtcTime(dateStr: string): boolean {
   return timeMatch[1] !== "00" || timeMatch[2] !== "00" || timeMatch[3] !== "00";
 }
 
-export function formatEventDateOnlyLong(dateStr: string, nowMs = Date.now()): string {
+export function formatEventDateOnlyLong(
+  dateStr: string,
+  locale: Locale = "en",
+  nowMs = Date.now()
+): string {
   const parts = parseEventYmd(dateStr);
-  if (!parts) return "Unknown date";
+  if (!parts) return translate(locale, "dates.unknownDate");
 
   const approx = getApproxYearsRemaining(dateStr, nowMs);
   const breakdown = getCountdownBreakdown(dateStr, nowMs);
   if (!breakdown.isPast && approx >= 1_000_000) {
-    return formatYearsAheadColloquial(approx);
+    return formatYearsAheadColloquial(approx, locale);
   }
 
   // Year-only in source (`"2134"`): never show a fake Jan 1 from internal Date.UTC anchoring.
@@ -442,22 +505,36 @@ export function formatEventDateOnlyLong(dateStr: string, nowMs = Date.now()): st
 
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
-    return new Intl.DateTimeFormat("en", longDateUtc).format(new Date(instant));
+    if (locale === "ru") {
+      const monthName = utcMonthName(parts.m!, locale, "long");
+      const yearLabel = formatYearDigitsPlain(parts.yStr);
+      return `${String(parts.d).padStart(2, "0")} ${monthName} ${yearLabel}`;
+    }
+    return new Intl.DateTimeFormat(intlLocaleFor(locale), longDateUtc).format(
+      new Date(instant)
+    );
   }
 
-  const monthName = MONTH_LONG_EN[parts.m - 1] ?? "Month";
+  const monthName = utcMonthName(parts.m, locale, "long");
   const yearLabel = formatYearDigitsPlain(parts.yStr);
+  if (locale === "ru") {
+    return `${String(parts.d).padStart(2, "0")} ${monthName} ${yearLabel}`;
+  }
   return `${monthName} ${String(parts.d).padStart(2, "0")}, ${yearLabel}`;
 }
 
-export function formatEventDateOnlyShort(dateStr: string, nowMs = Date.now()): string {
+export function formatEventDateOnlyShort(
+  dateStr: string,
+  locale: Locale = "en",
+  nowMs = Date.now()
+): string {
   const parts = parseEventYmd(dateStr);
-  if (!parts) return "Unknown";
+  if (!parts) return translate(locale, "dates.unknown");
 
   const approx = getApproxYearsRemaining(dateStr, nowMs);
   const breakdown = getCountdownBreakdown(dateStr, nowMs);
   if (!breakdown.isPast && approx >= 1_000_000) {
-    return formatYearsAheadColloquial(approx);
+    return formatYearsAheadColloquial(approx, locale);
   }
 
   if (parts.m === null) {
@@ -466,18 +543,26 @@ export function formatEventDateOnlyShort(dateStr: string, nowMs = Date.now()): s
 
   const instant = getEventInstantMs(dateStr);
   if (instant !== null) {
-    return new Intl.DateTimeFormat("en", shortDateUtc).format(new Date(instant));
+    return new Intl.DateTimeFormat(intlLocaleFor(locale), shortDateUtc).format(
+      new Date(instant)
+    );
   }
 
-  const monthShort = MONTH_LONG_EN[parts.m - 1]?.slice(0, 3) ?? "?";
+  const monthShort = utcMonthName(parts.m, locale, "short");
   const yearLabel = formatYearDigitsPlain(parts.yStr);
+  if (locale === "ru") {
+    return `${parts.d} ${monthShort} ${yearLabel}`;
+  }
   return `${monthShort} ${parts.d}, ${yearLabel}`;
 }
 
-export function formatEventTimeUtcLabel(dateStr: string): string {
+export function formatEventTimeUtcLabel(
+  dateStr: string,
+  locale: Locale = "en"
+): string {
   const date = new Date(dateStr);
   if (Number.isNaN(date.getTime())) return "";
-  return new Intl.DateTimeFormat("en", timeUtc).format(date);
+  return new Intl.DateTimeFormat(intlLocaleFor(locale), timeUtc).format(date);
 }
 
 /** Single-digit days get one leading zero (e.g. 07); two or more digits as-is (47, 365). */

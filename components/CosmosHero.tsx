@@ -1,12 +1,16 @@
 "use client";
 
 import Image from "next/image";
+import { useLocale } from "@/context/LocaleContext";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 type CosmosHeroProps = {
   onLogoClick?: () => void;
 };
 
 export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
+  const { t } = useLocale();
+
   return (
     <section
       className="relative w-full overflow-hidden bg-ds-neutral-1000"
@@ -24,7 +28,7 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
             preload="auto"
             aria-hidden
           >
-            Your browser does not support the video tag.
+            {t("hero.videoUnsupported")}
           </video>
         </div>
 
@@ -33,12 +37,16 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
           aria-hidden
         />
 
-        <div className="relative z-10 flex shrink-0 flex-col items-center">
+        <div className="absolute right-[var(--ds-spacing-s)] top-6 z-20 sm:right-8 sm:top-10">
+          <LanguageSwitcher />
+        </div>
+
+        <div className="relative z-10 flex w-full self-stretch items-start justify-start text-left sm:items-center sm:justify-center sm:text-center">
           <button
             type="button"
             onClick={onLogoClick}
             className="flex cursor-pointer items-center gap-[7px] border-0 bg-transparent p-0"
-            aria-label="Reload page"
+            aria-label={t("hero.reloadPage")}
           >
             <span className="relative flex size-[17px] shrink-0 items-center justify-center">
               <Image
@@ -58,18 +66,18 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
         <div className="relative z-10 flex w-full max-w-[72.875rem] flex-col items-center gap-1 px-1 text-center text-ds-neutral-00 mix-blend-difference">
           <h1 className="m-0 flex w-full flex-col items-center gap-1 font-sans">
             <span className="block text-[clamp(1.625rem,4.2vw,2.5rem)] font-normal leading-[1] tracking-normal sm:leading-[40px]">
-              Journey Into
+              {t("hero.titleLine1")}
             </span>
             <span className="block max-w-[1166px] text-[48px] font-medium leading-[1.05] tracking-normal sm:text-[clamp(2.125rem,8.5vw,5.5rem)] sm:leading-[80px]">
-              the Future of
+              {t("hero.titleLine2")}
               <br />
-              the Universe
+              {t("hero.titleLine3")}
             </span>
           </h1>
         </div>
 
         <p className="relative z-10 w-full min-w-0 max-w-full self-stretch px-[40px] text-center font-sans text-[16px] font-normal leading-6 text-ds-neutral-100 sm:text-[clamp(11px,3.4vw,18px)]">
-          From our lifetime to the final moments of the cosmos.
+          {t("hero.subtitle")}
         </p>
       </div>
     </section>

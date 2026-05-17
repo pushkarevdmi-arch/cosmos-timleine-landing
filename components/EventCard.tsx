@@ -7,12 +7,14 @@ import {
   formatCountdownDaysDisplay,
   formatEventDateOnlyLong,
   formatEventTimeUtcLabel,
+  formatLongTermCountdownParts,
   formatMegaYearScaleParts,
   getEventCalendarYear,
 } from "@/utils/eventDate";
 import { useCountdown } from "@/hooks/useCountdown";
 import EventTagGroup from "./EventTagGroup";
 import type { HeroEventData } from "./HeroEvent";
+import { useLocale } from "@/context/LocaleContext";
 import OpenArrowGlyph from "./OpenArrowGlyph";
 
 const LONG_TERM_SECTIONS = new Set([
@@ -43,31 +45,6 @@ function isLongTermEvent(event: HeroEventData) {
   return yearsAhead > 100;
 }
 
-function formatLongTermYears(years: number) {
-  if (years >= 1_000_000_000_000) {
-    return {
-      value: Math.round(years / 1_000_000_000_000).toLocaleString("en-US"),
-      unit: "tril years",
-    };
-  }
-  if (years >= 1_000_000_000) {
-    return {
-      value: Math.round(years / 1_000_000_000).toLocaleString("en-US"),
-      unit: "bil years",
-    };
-  }
-  if (years >= 1_000_000) {
-    return {
-      value: Math.round(years / 1_000_000).toLocaleString("en-US"),
-      unit: "mil years",
-    };
-  }
-  return {
-    value: years.toLocaleString("en-US"),
-    unit: "years",
-  };
-}
-
 export type EventCardProps = {
   event: HeroEventData;
   onExplore?: (event: HeroEventData) => void;
@@ -77,10 +54,11 @@ const openArrowGlyphClass =
   "size-4 shrink-0 text-ds-neutral-400 transition-colors duration-200 ease-out group-hover:text-ds-neutral-00 group-focus-within:text-ds-neutral-00 md:size-6";
 
 export default function EventCard({ event, onExplore }: EventCardProps) {
+  const { locale, t } = useLocale();
   const openArrowClipId = useId().replace(/:/g, "");
   const countdown = useCountdown(event.date);
   const showLongTermYearsOnly = isLongTermEvent(event);
-  const longTermCountdown = formatLongTermYears(countdown.years);
+  const longTermCountdown = formatLongTermCountdownParts(countdown.years, locale);
   const isInteractive = Boolean(onExplore);
   const precision = event.countdownPrecision ?? "full";
   /** Same countdown chrome as Millions/Billions: big number + “years from now”. */
@@ -93,7 +71,10 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
   const useBigLongTermCountdown =
     showLongTermYearsOnly && !useMegaYearsCountdownLayout;
 
-  const megaScale = formatMegaYearScaleParts(countdown.years);
+  const megaScale = formatMegaYearScaleParts(countdown.years, locale);
+  const dateAria = eventHasSpecificUtcTime(event.date)
+    ? t("heroEvent.eventDateAndTimeAria")
+    : t("heroEvent.eventDateAria");
 
   const showCardDateRow =
     !event.timeCategory || !HIDE_CARD_DATE_SECTIONS.has(event.timeCategory);
@@ -136,44 +117,45 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
       </div>
 
       <div className="event-card__content">
-        {showCardDateRow ? (
-          <div className="event-card__date mb-3">
-            <div className="flex h-10 w-full max-w-full justify-center">
-              <div
-                className="hero-event__date-badge inline-flex h-fit max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
-                role="group"
-                aria-label={`Event date${eventHasSpecificUtcTime(event.date) ? " and time" : ""}`}
-              >
-                <span
-                  className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] bg-ds-neutral-950"
-                  aria-hidden
-                >
-                  <span
-                    className="inline-block h-4 w-4 shrink-0 bg-ds-warning-500 [mask-image:url('/icons/calendar1.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] [-webkit-mask-image:url('/icons/calendar1.svg')] [-webkit-mask-size:contain] [-webkit-mask-repeat:no-repeat] [-webkit-mask-position:center]"
-                    aria-hidden
-                  />
-                </span>
-                <span className="min-w-0 truncate font-sans text-[16px] font-medium">
-                  {formatEventDateOnlyLong(event.date)}
-                </span>
-                {eventHasSpecificUtcTime(event.date) ? (
-                  <>
-                    <span
-                      className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
-                      aria-hidden="true"
-                    />
-                    <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
-                      {formatEventTimeUtcLabel(event.date)}
-                    </span>
-                  </>
-                ) : null}
-              </div>
-            </div>
-          </div>
-        ) : null}
-
         <div className="event-card__header">
-          <h3 className="event-card__title">{event.title}</h3>
+          <div className="event-card__head">
+            {showCardDateRow ? (
+              <div className="event-card__date">
+                <div className="flex h-10 w-full max-w-full justify-center">
+                  <div
+                    className="hero-event__date-badge inline-flex h-fit max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
+                    role="group"
+                    aria-label={dateAria}
+                  >
+                    <span
+                      className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] bg-ds-neutral-950"
+                      aria-hidden
+                    >
+                      <span
+                        className="inline-block h-4 w-4 shrink-0 bg-ds-warning-500 [mask-image:url('/icons/calendar1.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] [-webkit-mask-image:url('/icons/calendar1.svg')] [-webkit-mask-size:contain] [-webkit-mask-repeat:no-repeat] [-webkit-mask-position:center]"
+                        aria-hidden
+                      />
+                    </span>
+                    <span className="min-w-0 truncate font-sans text-[16px] font-medium">
+                      {formatEventDateOnlyLong(event.date, locale)}
+                    </span>
+                    {eventHasSpecificUtcTime(event.date) ? (
+                      <>
+                        <span
+                          className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
+                          aria-hidden="true"
+                        />
+                        <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
+                          {formatEventTimeUtcLabel(event.date, locale)}
+                        </span>
+                      </>
+                    ) : null}
+                  </div>
+                </div>
+              </div>
+            ) : null}
+            <h3 className="event-card__title">{event.title}</h3>
+          </div>
           <p className="event-card__description">{event.shortDescription}</p>
         </div>
 
@@ -182,7 +164,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
         <div className="event-card__meta">
           <div className="event-card__countdown w-full">
               {countdown.isPast ? (
-                <p className="event-card__past-message">Event in the past</p>
+                <p className="event-card__past-message">{t("events.eventInPast")}</p>
               ) : useMegaYearsCountdownLayout ? (
                 <div className="event-card__countdown-grid">
                   <div className="event-card__countdown-segment">
@@ -199,7 +181,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                     <span
                       className={`${EVENT_CARD_COUNTDOWN_LABEL_CLASS} event-card__countdown-label--from-now`}
                     >
-                      years from now
+                      {t("countdown.yearsFromNow")}
                     </span>
                   </div>
                 </div>
@@ -220,14 +202,18 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                     <span className="event-card__countdown-value text-[24px] leading-[24px] sm:text-[32px] sm:leading-[32px]">
                       {countdown.years.toString().padStart(2, "0")}
                     </span>
-                    <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>YEARS</span>
+                    <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>
+                      {t("countdown.years")}
+                    </span>
                   </div>
                   {precision !== "year" ? (
                     <div className="event-card__countdown-segment">
                       <span className="event-card__countdown-value text-[24px] leading-[24px] sm:text-[32px] sm:leading-[32px]">
                         {formatCountdownDaysDisplay(countdown.days)}
                       </span>
-                      <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>DAYS</span>
+                      <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>
+                        {t("countdown.days")}
+                      </span>
                     </div>
                   ) : null}
                   {precision !== "year" ? (
@@ -235,7 +221,9 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                       <span className="event-card__countdown-value text-[24px] leading-[24px] sm:text-[32px] sm:leading-[32px]">
                         {(precision === "day" ? 0 : countdown.hours).toString().padStart(2, "0")}
                       </span>
-                      <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>HRS</span>
+                      <span className={EVENT_CARD_COUNTDOWN_LABEL_CLASS}>
+                        {t("countdown.hours")}
+                      </span>
                     </div>
                   ) : null}
                 </div>

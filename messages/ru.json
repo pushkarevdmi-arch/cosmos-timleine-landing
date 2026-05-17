@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "titleLine1": "Путешествие в",
+    "titleLine2": "Будущее",
+    "titleLine3": "Вселенной",
+    "subtitle": "От нашего времени до последних мгновений жизни космоса.",
+    "reloadPage": "Перезагрузить страницу",
+    "videoUnsupported": "Ваш браузер не поддерживает тег video."
+  },
+  "language": {
+    "switcherLabel": "Язык",
+    "en": "ENG",
+    "ru": "RUS"
+  },
+  "events": {
+    "headingPart1": "События",
+    "headingPart2": "будущего",
+    "filters": "Фильтры",
+    "filtersAria": "Фильтры",
+    "allRanges": "Все периоды",
+    "allTags": "Все теги",
+    "tagsSelected": "Выбрано тегов: {count}",
+    "resetFilters": "Сбросить фильтры",
+    "filterByTimeRange": "Фильтр по периоду",
+    "filterByTimeRangeOptions": "Варианты периода",
+    "filterByTag": "Фильтр по тегу",
+    "filterByTagOptions": "Варианты тегов",
+    "loadingMore": "Загрузка событий…",
+    "gridEmpty": "Других событий в этой выборке нет. Загрузите ещё, чтобы продолжить путешествие.",
+    "timelineEmpty": "Пока нет событий. Добавьте вехи будущего космоса, чтобы увидеть их на шкале времени.",
+    "eventInPast": "Событие в прошлом"
+  },
+  "view": {
+    "grid": "Сетка",
+    "timeline": "Шкала времени"
+  },
+  "heroEvent": {
+    "timeline": "Шкала времени",
+    "year": "Год:",
+    "timelineSlider": "Ползунок шкалы времени",
+    "endOfTime": "Конец времени",
+    "eventAlreadyOccurred": "Это событие уже произошло.",
+    "eventYearApproximate": "Год события (приблизительно)",
+    "eventDateAria": "Дата события",
+    "eventDateAndTimeAria": "Дата и время события"
+  },
+  "dates": {
+    "unknown": "Неизвестно",
+    "unknownDate": "Неизвестная дата",
+    "yearsAhead": "через ~{value} лет",
+    "milYearsAhead": "через ~{value} млн лет",
+    "bilYearsAhead": "через ~{value} млрд лет",
+    "trilYearsAhead": "через ~{value} трлн лет"
+  },
+  "countdown": {
+    "years": "ЛЕТ",
+    "days": "ДНЕЙ",
+    "hours": "ЧАСОВ",
+    "yearsFromNow": "лет до события",
+    "yearsFromNowAria": "через {value} лет",
+    "scaleMillion": "Миллион",
+    "scaleBillion": "Миллиард",
+    "scaleTrillion": "Триллион",
+    "unitTrilYears": "трлн лет",
+    "unitBilYears": "млрд лет",
+    "unitMilYears": "млн лет",
+    "unitYears": "лет"
+  },
+  "modal": {
+    "closeDetails": "Закрыть подробности",
+    "close": "Закрыть",
+    "whyItMatters": "Почему это важно",
+    "whatYoullSee": "Что вы увидите",
+    "keyFacts": "Ключевые факты",
+    "nextTime": "Следующий раз",
+    "approximateDate": "Приблизительная дата: {date}",
+    "rarity": "Редкость:",
+    "rarityAria": "Редкость {value} из 5"
+  },
+  "footer": {
+    "logoAlt": "Логотип Cosmic Timeline",
+    "supportText": "Это некоммерческий проект, созданный с любовью.\nЕсли вам понравилось это путешествие, я буду искренне благодарен за вашу поддержку! 💜",
+    "buyCoffee": "Угостить кофе",
+    "disclaimer": "Все даты и расстояния приблизительны и упрощены для наглядности.",
+    "createdBy": "Создал Dmitri Pushkarev"
+  },
+  "timeRange": {
+    "Next 100 Years": "100 лет",
+    "Next 10,000 Years": "10 000 лет",
+    "Millions of Years": "Миллионы лет",
+    "Billions of Years": "Миллиарды лет"
+  }
+}

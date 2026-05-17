@@ -117,7 +117,7 @@ svg:not([class*="text-"]) {
 
 @layer components {
   .event-card {
-    @apply flex h-full w-full max-w-full min-h-0 flex-col items-stretch justify-start gap-0 overflow-hidden rounded-3xl max-sm:justify-center;
+    @apply flex h-fit w-full max-w-full min-h-0 flex-col items-stretch justify-start gap-0 overflow-hidden rounded-3xl max-sm:justify-center;
     border-width: 1px;
     border-style: solid;
     border-color: var(--ds-neutral-800);
@@ -229,7 +229,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__badge-row {
-    @apply absolute left-2 top-2 z-10 flex max-w-[calc(100%-1rem)] flex-nowrap items-center justify-center gap-2;
+    @apply absolute left-2 top-2 z-10 flex min-w-0 max-w-[calc(100%-1rem)] flex-nowrap items-center justify-start gap-2 overflow-hidden;
     height: 40px;
   }
 
@@ -238,7 +238,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__category {
-    @apply inline-flex items-center justify-center gap-2 pl-4 pr-4 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
+    @apply inline-flex shrink-0 items-center justify-center gap-2 pl-4 pr-4 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
     border-radius: var(--ds-radius-xs);
     font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
     width: fit-content;
@@ -284,7 +284,12 @@ svg:not([class*="text-"]) {
     @apply text-[14px] leading-[20px];
   }
 
+  .event-card__extra-tag-label {
+    @apply block min-w-0 flex-1 overflow-hidden text-ellipsis whitespace-nowrap;
+  }
+
   .event-card__extra-tag--location {
+    @apply min-w-0 max-w-full flex-1 overflow-hidden;
     color: var(--ds-neutral-100);
     background-color: var(--ds-neutral-850);
   }
@@ -309,17 +314,17 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-6;
-    padding-bottom: var(--ds-spacing-s);
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-3;
+    padding-bottom: var(--ds-spacing-xs);
     background-color: var(--app-card-surface);
     background-image: none;
     box-shadow: none;
   }
 
-  /* Desktop (md+): 16px under countdown; fixed content height; same as mobile */
+  /* Desktop (md+): 12px under countdown; fixed content height; same as mobile */
   @media (min-width: 48rem) {
     .event-card__content {
-      padding-bottom: var(--ds-spacing-s);
+      padding-bottom: var(--ds-spacing-xs);
       height: 312px;
       min-height: 312px;
     }
@@ -333,7 +338,19 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__header {
-    @apply flex w-full shrink-0 flex-col items-center justify-center gap-1 px-[var(--ds-spacing-3xl)] py-1;
+    @apply flex h-[200px] w-full shrink-0 flex-col items-center justify-start gap-1 px-[var(--ds-spacing-l)] py-1;
+  }
+
+  /* Date + title share one column; tighter gap on mobile */
+  .event-card__head {
+    @apply flex w-full shrink-0 flex-col items-center;
+    gap: var(--ds-spacing-3xs);
+  }
+
+  @media (min-width: 640px) {
+    .event-card__head {
+      gap: var(--ds-spacing-s);
+    }
   }
 
   .event-card__title {

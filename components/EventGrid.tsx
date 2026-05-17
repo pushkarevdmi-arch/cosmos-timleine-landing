@@ -3,6 +3,7 @@
 import type { HeroEventData } from "./HeroEvent";
 import EventCard from "./EventCard";
 import { groupEventsByTimeSection } from "@/utils/eventSections";
+import { useLocale } from "@/context/LocaleContext";
 
 type EventGridProps = {
   events: HeroEventData[];
@@ -18,18 +19,20 @@ function EventGridSection({
   sectionEvents: HeroEventData[];
   onExplore?: (event: HeroEventData) => void;
 }) {
+  const { timeRangeLabel } = useLocale();
+
   return (
     <div className="contents">
       <div
         className="col-span-full mx-0 mb-1 bg-transparent px-0 pb-0 pt-0 shadow-none"
       >
-        <div className="flex items-center gap-6 bg-ds-neutral-1000 px-0 pb-6 pt-16 sm:px-6">
+        <div className="flex items-center gap-4 bg-ds-neutral-1000 px-0 pb-6 pt-16 sm:px-6">
           <span
             className="h-px min-w-0 flex-1 bg-ds-neutral-800"
             aria-hidden
           />
           <span className="type-era-label shrink-0 text-center text-ds-neutral-00">
-            {section}
+            {timeRangeLabel(section)}
           </span>
           <span
             className="h-px min-w-0 flex-1 bg-ds-neutral-800"
@@ -42,7 +45,7 @@ function EventGridSection({
         return (
           <div
             key={event.id}
-            className="event-grid-mobile-uniform relative w-full max-sm:max-w-[min(100%,28rem)] max-sm:justify-self-center sm:h-[500px]"
+            className="event-grid-mobile-uniform relative h-fit w-full max-sm:max-w-[min(100%,28rem)] max-sm:justify-self-center self-start"
           >
             <EventCard event={event} onExplore={onExplore} />
           </div>
@@ -53,11 +56,12 @@ function EventGridSection({
 }
 
 export default function EventGrid({ events, onExplore }: EventGridProps) {
+  const { t } = useLocale();
+
   if (!events.length) {
     return (
       <p className="type-body-tight text-ds-neutral-500">
-        No other events are currently in view. Add more to extend your cosmic
-        journey.
+        {t("events.gridEmpty")}
       </p>
     );
   }

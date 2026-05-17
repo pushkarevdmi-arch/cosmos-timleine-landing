@@ -16,12 +16,13 @@ import ViewToggle from "@/components/ViewToggle";
 import EventGrid from "@/components/EventGrid";
 import EventTimeline from "@/components/EventTimeline";
 import EventDetailsModal from "@/components/EventDetailsModal";
-import eventsData from "@/data/events";
+import { getEventsForLocale } from "@/data/events";
 import { compareEventDateStrings } from "@/utils/eventDate";
 import {
   getTimeRangeSection,
   groupEventsByTimeSection,
 } from "@/utils/eventSections";
+import { useLocale } from "@/context/LocaleContext";
 
 const BUY_ME_A_COFFEE_URL =
   process.env.NEXT_PUBLIC_BUY_ME_A_COFFEE_URL ??
@@ -76,7 +77,6 @@ function deriveKeyFacts(mainDescription: string) {
   return result;
 }
 
-const eventsSeedBase = eventsData as unknown as HeroEventData[];
 /** Cards appended per “load more” / infinite scroll. */
 const EVENTS_BATCH_SIZE = 11;
 /** Initial slice: covers all current eras in one view when filters are “all” (see sorted `eventsSeed`). */
@@ -122,8 +122,8 @@ const EVENT_TAGS: Record<string, string> = {
   "comet-swift-tuttle-2126": "Comet",
 };
 
-const eventsSeed: HeroEventData[] = [...eventsSeedBase].map(
-  (event) => ({
+function buildEventsSeed(base: HeroEventData[]): HeroEventData[] {
+  return base.map((event) => ({
     ...event,
     timeCategory:
       event.timeCategory ??
@@ -136,10 +136,17 @@ const eventsSeed: HeroEventData[] = [...eventsSeedBase].map(
     whatYoullSee:
       event.whatYoullSee ?? deriveWhatYoullSee(event.mainDescription),
     keyFacts: event.keyFacts ?? deriveKeyFacts(event.mainDescription),
-  })
-);
+  }));
+}
 
 export default function Home() {
+  const { locale, t, timeRangeLabel } = useLocale();
+
+  const eventsSeed = useMemo(
+    () =>
+      buildEventsSeed(getEventsForLocale(locale) as unknown as HeroEventData[]),
+    [locale]
+  );
   const [viewMode, setViewMode] = useState<"grid" | "timeline">("grid");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [selectedTimeRange, setSelectedTimeRange] = useState<
@@ -169,8 +176,17 @@ export default function Home() {
   const sortedEvents = useMemo(
     () =>
       [...eventsSeed].sort((a, b) => compareEventDateStrings(a.date, b.date)),
-    []
+    [eventsSeed]
   );
+
+  useEffect(() => {
+    setVisibleCount(INITIAL_VISIBLE_COUNT);
+    setIsLoadingMore(false);
+    isFetchingRef.current = false;
+    setHeroActiveEventId(null);
+    setSelectedTags([]);
+    setSelectedTimeRange("all");
+  }, [locale]);
   const availableTags = useMemo(() => {
     const tags = new Set<string>();
     for (const event of sortedEvents) {
@@ -380,13 +396,15 @@ export default function Home() {
   };
 
   const selectedTimeRangeLabel =
-    selectedTimeRange === "all" ? "All ranges" : selectedTimeRange;
+    selectedTimeRange === "all"
+      ? t("events.allRanges")
+      : timeRangeLabel(selectedTimeRange);
   const selectedTagLabel =
     selectedTags.length === 0
-      ? "All tags"
+      ? t("events.allTags")
       : selectedTags.length === 1
-      ? selectedTags[0]
-      : `${selectedTags.length} tags selected`;
+        ? selectedTags[0]
+        : t("events.tagsSelected", { count: selectedTags.length });
   const hasActiveFilters =
     selectedTimeRange !== "all" || selectedTags.length > 0;
 
@@ -404,12 +422,12 @@ export default function Home() {
         <div className="max-sm:-mx-6 max-sm:px-6 sm:hidden">
           <div className="w-full min-w-0 text-left">
             <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00">
-              Future{" "}
+              {t("events.headingPart1")}{" "}
               <span
                 className="font-dynamite"
                 style={{ fontFamily: "var(--font-sans)" }}
               >
-                Events
+                {t("events.headingPart2")}
               </span>
             </h2>
           </div>
@@ -433,12 +451,12 @@ export default function Home() {
         >
           <div className="hidden min-w-0 flex-1 text-left sm:block">
             <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
-              Future{" "}
+              {t("events.headingPart1")}{" "}
               <span
                 className="font-dynamite"
                 style={{ fontFamily: "var(--font-sans)" }}
               >
-                Events
+                {t("events.headingPart2")}
               </span>
             </h2>
           </div>
@@ -470,7 +488,7 @@ export default function Home() {
                     ? "text-ds-primary-400 hover:text-ds-primary-300 sm:text-ds-primary-400"
                     : "text-ds-neutral-500 hover:text-ds-neutral-400 sm:text-ds-neutral-200 sm:hover:text-ds-neutral-00",
               ].join(" ")}
-              aria-label="Filters"
+              aria-label={t("events.filtersAria")}
               aria-haspopup="dialog"
               aria-expanded={isFilterOpen}
             >
@@ -495,7 +513,7 @@ export default function Home() {
                   strokeLinejoin="round"
                 />
               </svg>
-              <span className="hidden sm:inline">Filters</span>
+              <span className="hidden sm:inline">{t("events.filters")}</span>
             </button>
 
             {isFilterOpen ? (
@@ -504,7 +522,7 @@ export default function Home() {
                   <div className="relative">
                     <button
                       type="button"
-                      aria-label="Filter by time range"
+                      aria-label={t("events.filterByTimeRange")}
                       aria-haspopup="listbox"
                       aria-expanded={openDropdown === "time"}
                       onClick={() =>
@@ -538,7 +556,7 @@ export default function Home() {
                     {openDropdown === "time" ? (
                       <ul
                         role="listbox"
-                        aria-label="Filter by time range options"
+                        aria-label={t("events.filterByTimeRangeOptions")}
                         className="filter-popover-list absolute left-0 top-[calc(100%+0.35rem)] z-30 w-full overflow-hidden rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
                       >
                         <li>
@@ -553,7 +571,7 @@ export default function Home() {
                             }}
                             className="flex h-12 w-full items-center rounded-lg px-2 text-left text-ds-neutral-200 hover:bg-ds-neutral-800"
                           >
-                            All ranges
+                            {t("events.allRanges")}
                           </button>
                         </li>
                         {TIME_RANGE_OPTIONS.map((range) => (
@@ -569,7 +587,7 @@ export default function Home() {
                               }}
                               className="flex h-12 w-full items-center rounded-lg px-2 text-left text-ds-neutral-200 hover:bg-ds-neutral-800"
                             >
-                              {range}
+                              {timeRangeLabel(range)}
                             </button>
                           </li>
                         ))}
@@ -580,7 +598,7 @@ export default function Home() {
                   <div className="relative">
                     <button
                       type="button"
-                      aria-label="Filter by tag"
+                      aria-label={t("events.filterByTag")}
                       aria-haspopup="listbox"
                       aria-expanded={openDropdown === "tag"}
                       onClick={() =>
@@ -589,7 +607,7 @@ export default function Home() {
                         )
                       }
                       onKeyDown={(event) => handleDropdownKeyboard(event, "tag")}
-                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-3 type-caption-medium text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
+                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-3 type-body-tight text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
                     >
                       <span className="truncate">{selectedTagLabel}</span>
                       <svg
@@ -612,7 +630,7 @@ export default function Home() {
                     {openDropdown === "tag" ? (
                       <ul
                         role="listbox"
-                        aria-label="Filter by tag options"
+                        aria-label={t("events.filterByTagOptions")}
                         className="filter-popover-list modal-scroll absolute left-0 top-[calc(100%+0.35rem)] z-30 max-h-56 w-full overflow-y-auto rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 p-1 shadow-lg"
                       >
                         <li>
@@ -626,7 +644,7 @@ export default function Home() {
                             }}
                             className="flex h-10 w-full items-center justify-between rounded-lg px-2 text-left text-ds-neutral-200 hover:bg-ds-neutral-800"
                           >
-                            All tags
+                            {t("events.allTags")}
                             {selectedTags.length === 0 ? (
                               <span className="text-ds-success-400">✓</span>
                             ) : null}
@@ -672,7 +690,7 @@ export default function Home() {
                     }}
                     className="flex h-10 items-center justify-center rounded-xl border border-ds-neutral-700 px-3 type-caption-medium text-ds-neutral-200 hover:border-ds-neutral-500 hover:text-ds-neutral-00 cursor-pointer"
                   >
-                    Reset filters
+                    {t("events.resetFilters")}
                   </button>
                 </div>
               </div>
@@ -725,7 +743,7 @@ export default function Home() {
                   role="status"
                   aria-live="polite"
                 >
-                  Loading more events...
+                  {t("events.loadingMore")}
                 </div>
               ) : null}
             </div>
@@ -740,17 +758,16 @@ export default function Home() {
             />
             <div className="relative flex flex-col gap-12">
               <div className="flex w-full flex-col gap-8 px-6 sm:px-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10">
-                <div className="flex min-w-0 w-full flex-col items-center justify-center gap-2 text-body-medium-400 text-ds-neutral-400 lg:items-start lg:justify-start">
+                <div className="flex min-w-0 w-full flex-col items-center justify-center gap-6 text-body-medium-400 text-ds-neutral-400 lg:items-start lg:justify-start">
                   <Image
                     src="/logo.svg"
-                    alt="Cosmic Timeline logo"
+                    alt={t("footer.logoAlt")}
                     width={240}
                     height={32}
                     className="h-8 w-fit shrink-0 lg:h-6"
                   />
-                  <p className="max-w-md text-center lg:text-left">
-                    This is a non-commercial project. If you enjoyed it,
-                    please support the project by clicking the button below.
+                  <p className="max-w-[600px] whitespace-pre-line text-center text-ds-neutral-400 lg:text-left">
+                    {t("footer.supportText")}
                   </p>
                 </div>
                 <div className="flex min-w-0 w-full flex-col items-center gap-3 lg:max-w-sm lg:items-end lg:text-right">
@@ -760,18 +777,17 @@ export default function Home() {
                     rel="noopener noreferrer"
                     className="inline-flex w-full items-center justify-center rounded-full border border-ds-primary-400/40 bg-ds-primary-400/10 px-10 py-3.5 text-base font-semibold text-ds-primary-300 transition hover:border-ds-primary-400/70 hover:bg-ds-primary-400/15 hover:text-ds-primary-200 sm:w-auto sm:self-center lg:self-end"
                   >
-                    Buy me a coffee
+                    {t("footer.buyCoffee")}
                   </a>
                 </div>
               </div>
 
               <div className="flex w-full flex-col gap-4 rounded-none bg-ds-neutral-900 px-6 py-6 text-[13px] leading-relaxed text-white sm:px-8 lg:flex-row lg:items-center lg:justify-between lg:gap-6">
-                <p className="min-w-0 text-center lg:flex-1 lg:text-left">
-                  All times and distances are approximate and simplified for an
-                  immersive experience.
+                <p className="min-w-0 text-center text-sm text-ds-neutral-400 lg:flex-1 lg:text-left">
+                  {t("footer.disclaimer")}
                 </p>
-                <p className="w-full shrink-0 text-center text-base leading-[22px] text-ds-neutral-400 lg:w-auto lg:text-right">
-                  Created by Dmitri Pushkarev
+                <p className="w-full shrink-0 text-center text-sm leading-[22px] text-ds-neutral-400 lg:w-auto lg:text-right">
+                  {t("footer.createdBy")}
                 </p>
               </div>
             </div>

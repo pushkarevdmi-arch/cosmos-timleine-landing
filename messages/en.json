@@ -1,0 +1,93 @@
+{
+  "hero": {
+    "titleLine1": "Journey Into",
+    "titleLine2": "the Future of",
+    "titleLine3": "the Universe",
+    "subtitle": "From our lifetime to the final moments of the cosmos.",
+    "reloadPage": "Reload page",
+    "videoUnsupported": "Your browser does not support the video tag."
+  },
+  "language": {
+    "switcherLabel": "Language",
+    "en": "ENG",
+    "ru": "RUS"
+  },
+  "events": {
+    "headingPart1": "Future",
+    "headingPart2": "Events",
+    "filters": "Filters",
+    "filtersAria": "Filters",
+    "allRanges": "All ranges",
+    "allTags": "All tags",
+    "tagsSelected": "{count} tags selected",
+    "resetFilters": "Reset filters",
+    "filterByTimeRange": "Filter by time range",
+    "filterByTimeRangeOptions": "Filter by time range options",
+    "filterByTag": "Filter by tag",
+    "filterByTagOptions": "Filter by tag options",
+    "loadingMore": "Loading more events...",
+    "gridEmpty": "No other events are currently in view. Add more to extend your cosmic journey.",
+    "timelineEmpty": "No events yet. Add future cosmic milestones to see them unfold along a timeline.",
+    "eventInPast": "Event in the past"
+  },
+  "view": {
+    "grid": "Grid view",
+    "timeline": "Timeline view"
+  },
+  "heroEvent": {
+    "timeline": "Timeline",
+    "year": "Year:",
+    "timelineSlider": "Timeline slider",
+    "endOfTime": "End of Time",
+    "eventAlreadyOccurred": "This event has already occurred.",
+    "eventYearApproximate": "Event year (approximate)",
+    "eventDateAria": "Event date",
+    "eventDateAndTimeAria": "Event date and time"
+  },
+  "dates": {
+    "unknown": "Unknown",
+    "unknownDate": "Unknown date",
+    "yearsAhead": "~{value} years ahead",
+    "milYearsAhead": "~{value} mil years ahead",
+    "bilYearsAhead": "~{value} bil years ahead",
+    "trilYearsAhead": "~{value} tril years ahead"
+  },
+  "countdown": {
+    "years": "YEARS",
+    "days": "DAYS",
+    "hours": "HOURS",
+    "yearsFromNow": "years from now",
+    "yearsFromNowAria": "{value} years from now",
+    "scaleMillion": "Million",
+    "scaleBillion": "Billion",
+    "scaleTrillion": "Trillion",
+    "unitTrilYears": "tril years",
+    "unitBilYears": "bil years",
+    "unitMilYears": "mil years",
+    "unitYears": "years"
+  },
+  "modal": {
+    "closeDetails": "Close details",
+    "close": "Close",
+    "whyItMatters": "Why it matters",
+    "whatYoullSee": "What you'll see",
+    "keyFacts": "Key facts",
+    "nextTime": "Next time",
+    "approximateDate": "Approximate date: {date}",
+    "rarity": "Rarity:",
+    "rarityAria": "Rarity {value} out of 5"
+  },
+  "footer": {
+    "logoAlt": "Cosmic Timeline logo",
+    "supportText": "This is a non-commercial project made with love.\nIf you enjoyed the journey, I'd be truly grateful for your support! 💜",
+    "buyCoffee": "Buy me a coffee",
+    "disclaimer": "All times and distances are approximate and simplified for an immersive experience.",
+    "createdBy": "Created by Dmitri Pushkarev"
+  },
+  "timeRange": {
+    "Next 100 Years": "Next 100 Years",
+    "Next 10,000 Years": "Next 10,000 Years",
+    "Millions of Years": "Millions of Years",
+    "Billions of Years": "Billions of Years"
+  }
+}

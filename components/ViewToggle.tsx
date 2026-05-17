@@ -1,5 +1,7 @@
 "use client";
 
+import { useLocale } from "@/context/LocaleContext";
+
 type ViewMode = "grid" | "timeline";
 
 type ViewToggleProps = {
@@ -8,6 +10,7 @@ type ViewToggleProps = {
 };
 
 export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
+  const { t } = useLocale();
   const options = [{ value: "grid" as ViewMode }, { value: "timeline" as ViewMode }];
 
   return (
@@ -25,7 +28,9 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
               if (!isActive) onChange(option.value);
             }}
             aria-pressed={isActive}
-            aria-label={option.value === "grid" ? "Grid view" : "Timeline view"}
+            aria-label={
+              option.value === "grid" ? t("view.grid") : t("view.timeline")
+            }
             className={[
               "relative flex h-12 min-w-0 flex-1 appearance-none items-center justify-center rounded-xl border-0 cursor-pointer sm:flex-none sm:w-12",
               "transition-[background-color,box-shadow,color] duration-300 ease-out motion-reduce:transition-none motion-reduce:duration-0",

@@ -15,9 +15,10 @@ import {
   formatCountdownDaysDisplay,
   formatEventDateOnlyLong,
   formatEventTimeUtcLabel,
+  formatLongTermCountdownParts,
   formatMegaYearScaleParts,
   getHeroTimelineYearDisplay,
-  HERO_TIMELINE_END_OF_TIME_LABEL,
+  heroEndOfTimeLabel,
   getApproxYearsRemaining,
   getEventCalendarYear,
   isEventOnOrAfterNow,
@@ -25,6 +26,8 @@ import {
 import { useCountdown } from "@/hooks/useCountdown";
 import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
 import OpenArrowGlyph from "./OpenArrowGlyph";
+import { useLocale } from "@/context/LocaleContext";
+import { intlLocaleFor } from "@/lib/i18n";
 
 export type CountdownPrecision = "full" | "day" | "year";
 
@@ -82,30 +85,7 @@ function isLongTermEvent(event: HeroEventData) {
   return yearsAhead > 100;
 }
 
-function formatLongTermYears(years: number) {
-  if (years >= 1_000_000_000_000) {
-    return {
-      value: Math.round(years / 1_000_000_000_000).toLocaleString("en-US"),
-      unit: "tril years",
-    };
-  }
-  if (years >= 1_000_000_000) {
-    return {
-      value: Math.round(years / 1_000_000_000).toLocaleString("en-US"),
-      unit: "bil years",
-    };
-  }
-  if (years >= 1_000_000) {
-    return {
-      value: Math.round(years / 1_000_000).toLocaleString("en-US"),
-      unit: "mil years",
-    };
-  }
-  return {
-    value: years.toLocaleString("en-US"),
-    unit: "years",
-  };
-}
+type CountdownSegmentId = "years" | "days" | "hours";
 
 function HeroFlipSegment({
   label,
@@ -157,6 +137,8 @@ export default function HeroEvent({
   onActiveEventChange,
   onExplore,
 }: HeroEventProps) {
+  const { locale, t } = useLocale();
+  const endOfTimeLabel = heroEndOfTimeLabel(locale);
   const sortedEvents = useMemo(
     () => [...events].sort((a, b) => compareEventDateStrings(a.date, b.date)),
     [events]
@@ -205,7 +187,7 @@ export default function HeroEvent({
   const countdown = useCountdown(liveEvent.date);
   const showLongTermYearsOnly = isLongTermEvent(liveEvent);
   const yearsRemaining = getApproxYearsRemaining(liveEvent.date);
-  const longTermCountdown = formatLongTermYears(yearsRemaining);
+  const longTermCountdown = formatLongTermCountdownParts(yearsRemaining, locale);
   const normalizedYears = countdown.years;
   const normalizedDays = countdown.days;
   const precision = liveEvent.countdownPrecision ?? "full";
@@ -224,20 +206,20 @@ export default function HeroEvent({
   const heroPanelCompact = !showHeroDateRow;
   const useBigLongTermCountdown =
     showLongTermYearsOnly && !useMegaYearsCountdownLayout;
-  const megaScale = formatMegaYearScaleParts(countdown.years);
-  const heroCountdownSegments =
+  const megaScale = formatMegaYearScaleParts(countdown.years, locale);
+  const heroCountdownSegments: { id: CountdownSegmentId; value: number }[] =
     precision === "year"
-      ? [{ label: "YEARS" as const, value: normalizedYears }]
+      ? [{ id: "years", value: normalizedYears }]
       : precision === "day"
         ? [
-            { label: "YEARS" as const, value: normalizedYears },
-            { label: "DAYS" as const, value: normalizedDays },
-            { label: "HRS" as const, value: 0 },
+            { id: "years", value: normalizedYears },
+            { id: "days", value: normalizedDays },
+            { id: "hours", value: 0 },
           ]
         : [
-            { label: "YEARS" as const, value: normalizedYears },
-            { label: "DAYS" as const, value: normalizedDays },
-            { label: "HRS" as const, value: countdown.hours },
+            { id: "years", value: normalizedYears },
+            { id: "days", value: normalizedDays },
+            { id: "hours", value: countdown.hours },
           ];
   const sliderProgress =
     sortedEvents.length > 1 ? (activeIndex / (sortedEvents.length - 1)) * 100 : 0;
@@ -252,23 +234,23 @@ export default function HeroEvent({
   const atTimelineEnd =
     sortedEvents.length > 0 && activeIndex === sortedEvents.length - 1;
   const heroTimelineYearDisplay = atTimelineEnd
-    ? ({ kind: "plain" as const, text: HERO_TIMELINE_END_OF_TIME_LABEL })
-    : getHeroTimelineYearDisplay(liveEvent.date);
+    ? ({ kind: "plain" as const, text: endOfTimeLabel })
+    : getHeroTimelineYearDisplay(liveEvent.date, locale);
   const showHeroYearVerbalEnd =
     atTimelineEnd ||
     (heroTimelineYearDisplay.kind === "plain" &&
-      heroTimelineYearDisplay.text === HERO_TIMELINE_END_OF_TIME_LABEL);
+      heroTimelineYearDisplay.text === endOfTimeLabel);
 
   /** Calendar year in hero when the date badge is hidden (long-horizon); matches visible title (`displayEvent`). */
   const displayAtTimelineEnd =
     sortedEvents.length > 0 && displayIndex === sortedEvents.length - 1;
   const displayHeroTimelineYearDisplay = displayAtTimelineEnd
-    ? { kind: "plain" as const, text: HERO_TIMELINE_END_OF_TIME_LABEL }
-    : getHeroTimelineYearDisplay(displayEvent.date);
+    ? { kind: "plain" as const, text: endOfTimeLabel }
+    : getHeroTimelineYearDisplay(displayEvent.date, locale);
   const showDisplayHeroYearVerbalEnd =
     displayAtTimelineEnd ||
     (displayHeroTimelineYearDisplay.kind === "plain" &&
-      displayHeroTimelineYearDisplay.text === HERO_TIMELINE_END_OF_TIME_LABEL);
+      displayHeroTimelineYearDisplay.text === endOfTimeLabel);
 
   const handleHeroMainAreaClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!onExplore) return;
@@ -342,7 +324,7 @@ export default function HeroEvent({
                 : "max-md:min-h-[208px]"
               : heroYearOnlyExtraHeight
                 ? "max-md:min-h-[240px]"
-                : "max-md:min-h-[216px]"
+                : "max-md:min-h-[264px]"
           }`}
         >
           <div
@@ -353,7 +335,11 @@ export default function HeroEvent({
                 <div
                   className="hero-event__date-badge inline-flex h-fit max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
                   role="group"
-                  aria-label={`Event date${eventHasSpecificUtcTime(displayEvent.date) ? " and time" : ""}`}
+                  aria-label={
+                    eventHasSpecificUtcTime(displayEvent.date)
+                      ? t("heroEvent.eventDateAndTimeAria")
+                      : t("heroEvent.eventDateAria")
+                  }
                 >
                   <span
                     className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] bg-ds-neutral-950"
@@ -365,7 +351,7 @@ export default function HeroEvent({
                     />
                   </span>
                   <span className="min-w-0 truncate font-sans text-[16px] font-medium">
-                    {formatEventDateOnlyLong(displayEvent.date)}
+                    {formatEventDateOnlyLong(displayEvent.date, locale)}
                   </span>
                   {eventHasSpecificUtcTime(displayEvent.date) ? (
                     <>
@@ -374,7 +360,7 @@ export default function HeroEvent({
                         aria-hidden="true"
                       />
                       <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
-                        {formatEventTimeUtcLabel(displayEvent.date)}
+                        {formatEventTimeUtcLabel(displayEvent.date, locale)}
                       </span>
                     </>
                   ) : null}
@@ -387,7 +373,7 @@ export default function HeroEvent({
                 <div
                   className="hero-event__date-badge hero-event__year-badge--mobile inline-flex min-h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-600)] px-3 py-1.5 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50"
                   role="group"
-                  aria-label="Event year (approximate)"
+                  aria-label={t("heroEvent.eventYearApproximate")}
                 >
                   <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
                     <img
@@ -441,13 +427,15 @@ export default function HeroEvent({
             <div className="hero-event__date-countdown flex w-full min-w-0 flex-col items-center gap-2 md:items-stretch">
               {countdown.isPast ? (
                 <p className="type-body-medium-tight text-ds-success-300">
-                  This event has already occurred.
+                  {t("heroEvent.eventAlreadyOccurred")}
                 </p>
               ) : useMegaYearsCountdownLayout ? (
                 <div className="hero-countdown hidden h-fit w-full min-w-0 max-w-full self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[104px] md:w-full md:gap-0 md:justify-start md:pr-20">
                   <div
                     className="relative flex min-h-0 min-w-0 w-full max-w-full grow basis-full flex-col items-center justify-center gap-1 overflow-hidden rounded-2xl border-0 bg-ds-neutral-1000 px-2 py-3 shadow-[inset_0_-12px_24px_-12px_rgba(0,0,0,0.35)] sm:h-full sm:min-h-[92px] sm:gap-1 sm:px-2.5 sm:py-3.5 md:h-full md:min-h-0 md:w-full md:rounded-2xl md:py-2"
-                    aria-label={`${megaScale.numberPart}${megaScale.scaleWord ? ` ${megaScale.scaleWord}` : ""} years from now`}
+                    aria-label={t("countdown.yearsFromNowAria", {
+                      value: `${megaScale.numberPart}${megaScale.scaleWord ? ` ${megaScale.scaleWord}` : ""}`,
+                    })}
                   >
                     <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
                       <span className="event-card__countdown-value event-card__countdown-value--mega tabular-nums sm:text-[24px] sm:font-semibold sm:leading-[24px] sm:tracking-[3px] md:text-[38px] md:leading-[38px]">
@@ -460,7 +448,7 @@ export default function HeroEvent({
                       ) : null}
                     </div>
                     <span className="event-card__countdown-label event-card__countdown-label--from-now w-full text-center sm:text-[10px] sm:leading-none sm:tracking-[0.2em] md:text-[12px]">
-                      years from now
+                      {t("countdown.yearsFromNow")}
                     </span>
                   </div>
                 </div>
@@ -486,15 +474,15 @@ export default function HeroEvent({
                         n <= 1 ? "single" : index === 0 ? "first" : index === n - 1 ? "last" : "middle";
                       return (
                         <HeroFlipSegment
-                          key={segment.label}
+                          key={segment.id}
                           grouped
-                          label={segment.label}
+                          label={t(`countdown.${segment.id}`)}
                           radiusRole={radiusRole}
                           valueText={
-                            segment.label === "DAYS"
+                            segment.id === "days"
                               ? formatCountdownDaysDisplay(segment.value)
-                              : segment.label === "YEARS" && segment.value > 99
-                                ? segment.value.toLocaleString("en-US")
+                              : segment.id === "years" && segment.value > 99
+                                ? segment.value.toLocaleString(intlLocaleFor(locale))
                                 : segment.value.toString().padStart(2, "0")
                           }
                         />
@@ -528,11 +516,11 @@ export default function HeroEvent({
               htmlFor="hero-event-time-slider"
               className="block cursor-pointer font-sans text-[16px] font-medium leading-[20px] tracking-[0.02em] text-ds-neutral-00 md:text-[18px] md:leading-[22px]"
             >
-              Timeline
+              {t("heroEvent.timeline")}
             </label>
             <span className="flex shrink-0 items-center gap-2 text-left align-middle">
               <span className="hidden font-sans text-[16px] leading-[20px] text-ds-neutral-300 md:block">
-                Year:
+                {t("heroEvent.year")}
               </span>
               <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-3 md:py-2">
                 {heroTimelineYearDisplay.kind === "mega" ? (
@@ -571,7 +559,7 @@ export default function HeroEvent({
               onChange={(e) => {
                 setActiveIndex(Number(e.currentTarget.value));
               }}
-              aria-label="Timeline slider"
+              aria-label={t("heroEvent.timelineSlider")}
             />
           </div>
         </div>

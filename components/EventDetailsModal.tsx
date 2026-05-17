@@ -17,17 +17,22 @@ import {
   type TransitionEvent,
 } from "react";
 import { createPortal } from "react-dom";
+import { useLocale } from "@/context/LocaleContext";
 
 type EventDetailsModalProps = {
   event: HeroEventData;
   onClose: () => void;
 };
 
+const sectionHeadingClassName =
+  "font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500";
+const sectionHeadingStyle = { fontSize: "14px", lineHeight: "18px" } as const;
 
 export default function EventDetailsModal({
   event,
   onClose,
 }: EventDetailsModalProps) {
+  const { locale, t } = useLocale();
   const [portalReady, setPortalReady] = useState(false);
   const [entered, setEntered] = useState(false);
   const [exiting, setExiting] = useState(false);
@@ -126,11 +131,13 @@ export default function EventDetailsModal({
     keyFacts && keyFacts.length
       ? keyFacts
       : [
-          `Approximate date: ${formatEventDateOnlyLong(date)}${
-            eventHasSpecificUtcTime(date)
-              ? ` · ${formatEventTimeUtcLabel(date)}`
-              : ""
-          }`,
+          t("modal.approximateDate", {
+            date: `${formatEventDateOnlyLong(date, locale)}${
+              eventHasSpecificUtcTime(date)
+                ? ` · ${formatEventTimeUtcLabel(date, locale)}`
+                : ""
+            }`,
+          }),
           "Timing, visibility, and exact appearance can vary based on your location and observing conditions.",
         ];
 
@@ -157,7 +164,7 @@ export default function EventDetailsModal({
     <div className="fixed inset-0 z-[20000]">
       <button
         type="button"
-        aria-label="Close details"
+        aria-label={t("modal.closeDetails")}
         className="absolute inset-0 hidden cursor-default bg-ds-neutral-1000/80 backdrop-blur-sm md:block"
         onClick={requestClose}
       />
@@ -189,7 +196,7 @@ export default function EventDetailsModal({
             onClick={requestClose}
             className="pointer-events-auto absolute right-4 top-4 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-ds-neutral-700/80 bg-ds-neutral-900/90 text-[24px] leading-none text-ds-neutral-100 shadow-lg backdrop-blur-sm hover:border-ds-neutral-500 hover:bg-ds-neutral-900"
           >
-            <span className="sr-only">Close</span>
+            <span className="sr-only">{t("modal.close")}</span>
             ×
           </button>
         </div>
@@ -197,40 +204,23 @@ export default function EventDetailsModal({
         <div className="min-h-0 flex-1 overflow-y-auto modal-scroll bg-[var(--app-surface-elevated)]">
           <div className="flex flex-col gap-8 bg-[var(--app-surface-elevated)] px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
             <div className="flex flex-col gap-5">
-              <div className="flex flex-col gap-3 pl-[3px] pr-[3px]">
-                <div className="md:hidden">
-                  <EventDateBadge date={date} />
-                </div>
-                <div className="hidden md:block">
-                  <EventCategoryTag primaryTag={event.tags?.[0]} />
-                </div>
+              <div className="flex flex-col gap-6 pl-[3px] pr-[3px]">
+                <EventDateBadge date={date} />
                 <h2
                   id="event-details-title"
                   className="break-words font-sans text-h4-600 text-ds-neutral-50"
                 >
                   {title}
                 </h2>
-              </div>
-
-              <div
-                className="mx-[3px] h-px shrink-0 bg-[var(--ds-neutral-800)]"
-                aria-hidden
-              />
-
-              <div className="hidden pl-[3px] pr-[3px] md:block">
-                <div className="flex w-fit max-w-full flex-nowrap items-center justify-between gap-x-6 gap-y-6">
-                  <EventDateBadge date={date} />
-                  <EventRarityScale value={event.rarity} />
-                </div>
-              </div>
-
-              <div className="pl-[3px] pr-[3px] md:hidden">
+                <div
+                  className="mx-[3px] h-px shrink-0 bg-[var(--ds-neutral-800)]"
+                  aria-hidden
+                />
                 <div className="flex w-fit max-w-full flex-nowrap items-center justify-between gap-x-6 gap-y-6">
                   <EventCategoryTag primaryTag={event.tags?.[0]} />
                   <EventRarityScale value={event.rarity} />
                 </div>
               </div>
-
             </div>
 
             <p className="mt-4 text-[18px] leading-[26px] text-ds-neutral-300">
@@ -238,11 +228,8 @@ export default function EventDetailsModal({
             </p>
 
             <section className="flex flex-col gap-2">
-              <h3
-                className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500"
-                style={{ fontSize: "14px", lineHeight: "18px" }}
-              >
-                Why it matters
+              <h3 className={sectionHeadingClassName} style={sectionHeadingStyle}>
+                {t("modal.whyItMatters")}
               </h3>
               <p className="font-sans text-body-large-400 leading-6 text-ds-neutral-300">
                 {safeWhyItMatters}
@@ -250,11 +237,8 @@ export default function EventDetailsModal({
             </section>
 
             <section className="flex flex-col gap-2">
-              <h3
-                className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500"
-                style={{ fontSize: "14px", lineHeight: "18px" }}
-              >
-                What you&apos;ll see
+              <h3 className={sectionHeadingClassName} style={sectionHeadingStyle}>
+                {t("modal.whatYoullSee")}
               </h3>
               <p className="font-sans text-body-large-400 leading-6 text-ds-neutral-300">
                 {safeWhatYoullSee}
@@ -262,8 +246,8 @@ export default function EventDetailsModal({
             </section>
 
             <section className="flex flex-col gap-2">
-              <h3 className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500">
-                Key facts
+              <h3 className={sectionHeadingClassName} style={sectionHeadingStyle}>
+                {t("modal.keyFacts")}
               </h3>
               <ul className="list-disc flex flex-col gap-2 pl-5 font-sans text-body-large-400 leading-6 text-ds-neutral-300">
                 {safeKeyFacts.map((fact) => (
@@ -276,8 +260,8 @@ export default function EventDetailsModal({
 
             {nextOccurrences && nextOccurrences.length > 0 ? (
               <section className="flex flex-col gap-2">
-                <h3 className="font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500">
-                  Next time
+                <h3 className={sectionHeadingClassName} style={sectionHeadingStyle}>
+                  {t("modal.nextTime")}
                 </h3>
                 <ul className="list-disc flex flex-col gap-2 pl-5 font-sans text-body-large-400 leading-6 text-ds-neutral-300">
                   {nextOccurrences.map((line) => (

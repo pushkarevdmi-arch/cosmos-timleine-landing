@@ -136,7 +136,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                         aria-hidden
                       />
                     </span>
-                    <span className="min-w-0 truncate font-sans text-[16px] font-medium">
+                    <span className="min-w-0 truncate font-sans text-[14px] font-medium sm:text-[16px]">
                       {formatEventDateOnlyLong(event.date, locale)}
                     </span>
                     {eventHasSpecificUtcTime(event.date) ? (
@@ -145,7 +145,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                           className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
                           aria-hidden="true"
                         />
-                        <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
+                        <span className="shrink-0 whitespace-nowrap font-sans text-[14px] font-medium sm:text-[16px]">
                           {formatEventTimeUtcLabel(event.date, locale)}
                         </span>
                       </>
@@ -169,7 +169,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
                 <div className="event-card__countdown-grid">
                   <div className="event-card__countdown-segment">
                     <div className="flex flex-wrap items-baseline justify-center gap-x-2 gap-y-1 text-center">
-                      <span className="event-card__countdown-value event-card__countdown-value--mega text-[20px] leading-[1.15] sm:text-[32px] sm:leading-[1.1]">
+                      <span className="event-card__countdown-value event-card__countdown-value--mega text-[24px] leading-[24px] sm:text-[32px] sm:leading-[1.1]">
                         {megaScale.numberPart}
                       </span>
                       {megaScale.scaleWord ? (

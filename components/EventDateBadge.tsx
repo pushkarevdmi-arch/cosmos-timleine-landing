@@ -33,7 +33,7 @@ export default function EventDateBadge({ date }: EventDateBadgeProps) {
             aria-hidden
           />
         </span>
-        <span className="min-w-0 truncate font-sans text-[16px] font-medium">
+        <span className="min-w-0 truncate font-sans text-[14px] font-medium sm:text-[16px]">
           {formatEventDateOnlyLong(date, locale)}
         </span>
         {eventHasSpecificUtcTime(date) ? (
@@ -42,7 +42,7 @@ export default function EventDateBadge({ date }: EventDateBadgeProps) {
               className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
               aria-hidden="true"
             />
-            <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
+            <span className="shrink-0 whitespace-nowrap font-sans text-[14px] font-medium sm:text-[16px]">
               {formatEventTimeUtcLabel(date, locale)}
             </span>
           </>

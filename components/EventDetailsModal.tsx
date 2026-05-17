@@ -28,6 +28,9 @@ const sectionHeadingClassName =
   "font-sans text-body-small-600 uppercase tracking-caps text-ds-neutral-500";
 const sectionHeadingStyle = { fontSize: "14px", lineHeight: "18px" } as const;
 
+/** Fallback unmount if `transitionend` is skipped (Mobile Safari). Slightly longer than panel CSS. */
+const MODAL_EXIT_FALLBACK_MS = 580;
+
 export default function EventDetailsModal({
   event,
   onClose,
@@ -53,8 +56,14 @@ export default function EventDetailsModal({
   }, [onClose]);
 
   useEffect(() => {
-    const id = requestAnimationFrame(() => setEntered(true));
-    return () => cancelAnimationFrame(id);
+    let enterFrame2 = 0;
+    const enterFrame1 = requestAnimationFrame(() => {
+      enterFrame2 = requestAnimationFrame(() => setEntered(true));
+    });
+    return () => {
+      cancelAnimationFrame(enterFrame1);
+      if (enterFrame2) cancelAnimationFrame(enterFrame2);
+    };
   }, []);
 
   // Mobile Safari sometimes skips `transitionend` on transform; without this the portal
@@ -63,7 +72,7 @@ export default function EventDetailsModal({
     if (!exiting) return;
     const id = window.setTimeout(() => {
       onClose();
-    }, 360);
+    }, MODAL_EXIT_FALLBACK_MS);
     return () => window.clearTimeout(id);
   }, [exiting, onClose]);
 
@@ -165,7 +174,9 @@ export default function EventDetailsModal({
       <button
         type="button"
         aria-label={t("modal.closeDetails")}
-        className="absolute inset-0 hidden cursor-default bg-ds-neutral-1000/80 backdrop-blur-sm md:block"
+        className={`event-details-modal-backdrop absolute inset-0 cursor-default bg-ds-neutral-1000/65 md:bg-ds-neutral-1000/80 md:backdrop-blur-sm ${
+          panelOpen ? "event-details-modal-backdrop--open" : ""
+        }`}
         onClick={requestClose}
       />
 
@@ -173,36 +184,41 @@ export default function EventDetailsModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="event-details-title"
-        className={`absolute right-0 top-0 z-10 flex h-full w-full max-w-[680px] flex-col overflow-hidden border-l border-ds-neutral-800 bg-ds-neutral-950/95 shadow-xl backdrop-blur transition-transform duration-300 ease-out motion-reduce:transition-none ${
-          panelOpen ? "translate-x-0" : "translate-x-full"
+        className={`event-details-modal-panel absolute right-0 top-0 z-10 flex h-full w-full max-w-[680px] flex-col overflow-hidden border-l border-ds-neutral-800 bg-ds-neutral-950/95 shadow-xl backdrop-blur ${
+          panelOpen ? "event-details-modal-panel--open" : ""
         }`}
         onTransitionEnd={handlePanelTransitionEnd}
       >
-        <div className="relative h-[200px] w-full shrink-0 overflow-hidden bg-ds-neutral-950 sm:h-[220px]">
-          <Image
-            src={image}
-            alt=""
-            fill
-            sizes="(max-width: 680px) 100vw, 680px"
-            className="object-cover"
-            priority
-          />
-          <div
-            className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-neutral-1000/40 to-transparent"
-            aria-hidden
-          />
-          <button
-            type="button"
-            onClick={requestClose}
-            className="pointer-events-auto absolute right-4 top-4 z-20 inline-flex h-12 w-12 items-center justify-center rounded-full border border-ds-neutral-700/80 bg-ds-neutral-900/90 text-[24px] leading-none text-ds-neutral-100 shadow-lg backdrop-blur-sm hover:border-ds-neutral-500 hover:bg-ds-neutral-900"
-          >
-            <span className="sr-only">{t("modal.close")}</span>
-            ×
-          </button>
-        </div>
+        <button
+          type="button"
+          onClick={requestClose}
+          className={`fixed right-4 top-4 z-30 inline-flex h-12 w-12 items-center justify-center rounded-full border border-ds-neutral-700/80 bg-ds-neutral-900/90 text-[24px] leading-none text-ds-neutral-100 shadow-lg backdrop-blur-sm transition-opacity duration-300 ease-out hover:border-ds-neutral-500 hover:bg-ds-neutral-900 md:absolute ${
+            panelOpen
+              ? "pointer-events-auto opacity-100"
+              : "pointer-events-none opacity-0"
+          }`}
+        >
+          <span className="sr-only">{t("modal.close")}</span>
+          ×
+        </button>
 
-        <div className="min-h-0 flex-1 overflow-y-auto modal-scroll bg-[var(--app-surface-elevated)]">
-          <div className="flex flex-col gap-8 bg-[var(--app-surface-elevated)] px-8 pb-12 pt-8 type-body-tight text-ds-neutral-200">
+        <div className="min-h-0 flex-1 overflow-y-auto modal-scroll bg-[var(--app-surface-elevated)] md:flex md:flex-col md:overflow-hidden">
+          <div className="relative h-[200px] w-full shrink-0 overflow-hidden bg-ds-neutral-950 sm:h-[220px]">
+            <Image
+              src={image}
+              alt=""
+              fill
+              sizes="(max-width: 680px) 100vw, 680px"
+              className="object-cover"
+              priority
+            />
+            <div
+              className="pointer-events-none absolute inset-0 bg-gradient-to-b from-ds-neutral-1000/40 to-transparent"
+              aria-hidden
+            />
+          </div>
+
+          <div className="flex flex-col gap-8 bg-[var(--app-surface-elevated)] px-6 pb-12 pt-8 type-body-tight text-ds-neutral-200 sm:px-8 md:min-h-0 md:flex-1 md:overflow-y-auto md:modal-scroll">
             <div className="flex flex-col gap-5">
               <div className="flex flex-col gap-4 pl-[3px] pr-[3px]">
                 <EventDateBadge date={date} />

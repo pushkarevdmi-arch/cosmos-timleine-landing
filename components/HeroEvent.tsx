@@ -11,10 +11,7 @@ import {
 } from "react";
 import {
   compareEventDateStrings,
-  eventHasSpecificUtcTime,
   formatCountdownDaysDisplay,
-  formatEventDateOnlyLong,
-  formatEventTimeUtcLabel,
   formatLongTermCountdownParts,
   formatMegaYearScaleParts,
   getHeroTimelineYearDisplay,
@@ -24,6 +21,7 @@ import {
   isEventOnOrAfterNow,
 } from "@/utils/eventDate";
 import { useCountdown } from "@/hooks/useCountdown";
+import EventDateBadge from "./EventDateBadge";
 import EventTagGroup, { type EventExtraTag } from "./EventTagGroup";
 import OpenArrowGlyph from "./OpenArrowGlyph";
 import { useLocale } from "@/context/LocaleContext";
@@ -241,17 +239,6 @@ export default function HeroEvent({
     (heroTimelineYearDisplay.kind === "plain" &&
       heroTimelineYearDisplay.text === endOfTimeLabel);
 
-  /** Calendar year in hero when the date badge is hidden (long-horizon); matches visible title (`displayEvent`). */
-  const displayAtTimelineEnd =
-    sortedEvents.length > 0 && displayIndex === sortedEvents.length - 1;
-  const displayHeroTimelineYearDisplay = displayAtTimelineEnd
-    ? { kind: "plain" as const, text: endOfTimeLabel }
-    : getHeroTimelineYearDisplay(displayEvent.date, locale);
-  const showDisplayHeroYearVerbalEnd =
-    displayAtTimelineEnd ||
-    (displayHeroTimelineYearDisplay.kind === "plain" &&
-      displayHeroTimelineYearDisplay.text === endOfTimeLabel);
-
   const handleHeroMainAreaClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!onExplore) return;
     const t = e.target as HTMLElement;
@@ -332,78 +319,13 @@ export default function HeroEvent({
           >
             {showHeroDateRow ? (
               <div className="flex h-fit w-full max-w-full items-center justify-center md:mr-5 md:w-fit md:justify-start">
-                <div
-                  className="hero-event__date-badge inline-flex h-fit max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
-                  role="group"
-                  aria-label={
-                    eventHasSpecificUtcTime(displayEvent.date)
-                      ? t("heroEvent.eventDateAndTimeAria")
-                      : t("heroEvent.eventDateAria")
-                  }
-                >
-                  <span
-                    className="flex h-7 w-7 shrink-0 items-center justify-center rounded-[8px] bg-ds-neutral-950"
-                    aria-hidden
-                  >
-                    <span
-                      className="inline-block h-4 w-4 shrink-0 bg-ds-warning-500 [mask-image:url('/icons/calendar1.svg')] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center] [-webkit-mask-image:url('/icons/calendar1.svg')] [-webkit-mask-size:contain] [-webkit-mask-repeat:no-repeat] [-webkit-mask-position:center]"
-                      aria-hidden
-                    />
-                  </span>
-                  <span className="min-w-0 truncate font-sans text-[16px] font-medium">
-                    {formatEventDateOnlyLong(displayEvent.date, locale)}
-                  </span>
-                  {eventHasSpecificUtcTime(displayEvent.date) ? (
-                    <>
-                      <span
-                        className="h-3.5 w-px shrink-0 self-center bg-ds-neutral-500 sm:h-4"
-                        aria-hidden="true"
-                      />
-                      <span className="shrink-0 whitespace-nowrap font-sans text-[16px] font-medium">
-                        {formatEventTimeUtcLabel(displayEvent.date, locale)}
-                      </span>
-                    </>
-                  ) : null}
-                </div>
+                <EventDateBadge date={displayEvent.date} />
               </div>
             ) : null}
 
             {!showHeroDateRow ? (
               <div className="flex w-full max-w-full justify-center md:hidden">
-                <div
-                  className="hero-event__date-badge hero-event__year-badge--mobile inline-flex min-h-10 max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-lg border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-600)] px-3 py-1.5 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50"
-                  role="group"
-                  aria-label={t("heroEvent.eventYearApproximate")}
-                >
-                  <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center">
-                    <img
-                      src="/icons/calendar1.svg"
-                      width={20}
-                      height={20}
-                      alt=""
-                      aria-hidden
-                      className="h-full w-full object-contain"
-                    />
-                  </span>
-                  {displayHeroTimelineYearDisplay.kind === "mega" ? (
-                    <span className="flex min-w-0 flex-wrap items-baseline justify-center gap-x-1.5 gap-y-0 text-left">
-                      <span className="whitespace-nowrap font-sans text-[15px] !font-bold leading-tight tracking-[0.03em] tabular-nums">
-                        {displayHeroTimelineYearDisplay.numberPart}
-                      </span>
-                      <span className="font-sans text-[13px] font-semibold leading-tight text-ds-neutral-00">
-                        {displayHeroTimelineYearDisplay.scaleWord}
-                      </span>
-                    </span>
-                  ) : showDisplayHeroYearVerbalEnd ? (
-                    <span className="max-w-full text-left font-sans text-[15px] font-semibold leading-tight text-ds-neutral-00">
-                      {displayHeroTimelineYearDisplay.text}
-                    </span>
-                  ) : (
-                    <span className="whitespace-nowrap font-sans text-[15px] !font-bold leading-tight tracking-[0.03em] tabular-nums">
-                      {displayHeroTimelineYearDisplay.text}
-                    </span>
-                  )}
-                </div>
+                <EventDateBadge date={displayEvent.date} />
               </div>
             ) : null}
           </div>

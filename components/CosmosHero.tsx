@@ -1,10 +1,24 @@
 "use client";
 
 import { useLocale } from "@/context/LocaleContext";
+import { useSyncExternalStore } from "react";
 import BrandLogo from "./BrandLogo";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const HERO_VIDEO = "/videos/hero-video.mp4";
+const HERO_VIDEO_DESKTOP = "/videos/hero-video.mp4";
+const HERO_VIDEO_MOBILE = "/videos/hero-video-mobile.mp4";
+
+function useIsNarrowMobile() {
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mq = window.matchMedia("(max-width: 639px)");
+      mq.addEventListener("change", onStoreChange);
+      return () => mq.removeEventListener("change", onStoreChange);
+    },
+    () => window.matchMedia("(max-width: 639px)").matches,
+    () => false
+  );
+}
 
 type CosmosHeroProps = {
   onLogoClick?: () => void;
@@ -12,6 +26,8 @@ type CosmosHeroProps = {
 
 export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
   const { t } = useLocale();
+  const isNarrowMobile = useIsNarrowMobile();
+  const videoSrc = isNarrowMobile ? HERO_VIDEO_MOBILE : HERO_VIDEO_DESKTOP;
 
   return (
     <section
@@ -21,8 +37,9 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
       <div className="relative isolate flex h-svh max-h-[800px] w-full flex-col items-center justify-between gap-y-8 px-6 pt-6 pb-10 sm:max-h-none sm:gap-y-10 sm:px-8 sm:py-10">
         <div className="pointer-events-none absolute inset-0 z-0">
           <video
+            key={videoSrc}
             className="absolute inset-0 h-full min-h-full w-full object-cover"
-            src={HERO_VIDEO}
+            src={videoSrc}
             autoPlay
             loop
             muted

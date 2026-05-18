@@ -546,7 +546,7 @@ export default function Home() {
             </h2>
           </div>
 
-          <div className="relative flex w-full shrink-0 flex-row-reverse items-center justify-between gap-4 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end lg:gap-4">
+          <div className="relative flex w-full shrink-0 flex-row-reverse items-center justify-between gap-8 sm:w-auto sm:gap-3 sm:flex-row sm:justify-end lg:gap-4">
             <button
               type="button"
               onClick={() =>

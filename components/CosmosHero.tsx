@@ -5,7 +5,7 @@ import { useSyncExternalStore } from "react";
 import BrandLogo from "./BrandLogo";
 import LanguageSwitcher from "./LanguageSwitcher";
 
-const HERO_VIDEO_DESKTOP = "/videos/hero-video2.mp4";
+const HERO_VIDEO_DESKTOP = "/videos/hero-video.mp4";
 const HERO_VIDEO_MOBILE = "/videos/hero-video-mobile.mp4";
 
 function useIsNarrowMobile() {
@@ -75,7 +75,7 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
             <span className="block text-[clamp(1.625rem,4.2vw,2.5rem)] font-normal leading-[1] tracking-normal sm:leading-[40px]">
               {t("hero.titleLine1")}
             </span>
-            <span className="block max-w-[1166px] text-[48px] font-normal leading-[1.05] tracking-normal sm:text-[clamp(2.125rem,8.5vw,5.5rem)] sm:leading-[80px]">
+            <span className="block max-w-[1166px] text-[48px] font-medium leading-[1.05] tracking-normal sm:text-[clamp(2.125rem,8.5vw,5.5rem)] sm:leading-[80px]">
               {t("hero.titleLine2")}
               <br />
               {t("hero.titleLine3")}

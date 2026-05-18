@@ -18,6 +18,7 @@ import {
   translate,
   type Locale,
 } from "@/lib/i18n";
+import { site } from "@/lib/site";
 
 type LocaleContextValue = {
   locale: Locale;
@@ -42,6 +43,16 @@ export function LocaleProvider({ children }: { children: ReactNode }) {
     if (!hydrated) return;
     document.documentElement.lang = locale;
     window.localStorage.setItem(LOCALE_STORAGE_KEY, locale);
+
+    const description =
+      locale === "ru" ? site.descriptionRu : site.description;
+    for (const selector of [
+      'meta[name="description"]',
+      'meta[property="og:description"]',
+      'meta[name="twitter:description"]',
+    ]) {
+      document.querySelector(selector)?.setAttribute("content", description);
+    }
   }, [hydrated, locale]);
 
   const setLocale = useCallback((next: Locale) => {

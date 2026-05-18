@@ -1,8 +1,7 @@
 ## Description
-Cosmorrow is a Next.js site that presents “Upcoming Events” as a grid or timeline view. Event content is sourced from local JSON files under `data/events/` (merged by `data/events/index.ts`) and rendered by the client-side home page (`app/page.tsx`).
+Cosmorrow is an interactive timeline of the universe — from our lifetime to the final moments of the cosmos. It presents upcoming astronomical events as a grid or timeline view. Event content is sourced from local JSON files under `data/events/` (merged by `data/events/index.ts`) and rendered by the client-side home page (`app/page.tsx`).
 
 ## Tech Stack
-- Next.js (`package.json`)
 - React (`package.json`)
 - TypeScript (`package.json`)
 - Tailwind CSS v4 (`package.json`)
@@ -38,7 +37,7 @@ Cosmorrow is a Next.js site that presents “Upcoming Events” as a grid or tim
 - Deployment is not explicitly documented in the repo.
 
 ## Summary
-- Next.js App Router frontend in `app/`, with the main UI in `app/page.tsx`
+- App Router frontend in `app/`, with the main UI in `app/page.tsx`
 - Events come from `data/events/*.json` (no API routes detected)
 - Views are composed from `components/` (grid/timeline + modal)
 - Design tokens live in `design-system/tokens.json` and are generated via `npm run build:tokens`

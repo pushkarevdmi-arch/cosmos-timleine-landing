@@ -502,8 +502,8 @@ export default function Home() {
         {/* View toggle */}
         {/* Mobile: h2 is a direct child of main (scrolls). Toolbar row is the next sibling with sticky — nested sticky inside flex-col was unreliable in browsers. */}
         <div className="max-sm:-mx-6 max-sm:px-6 sm:hidden">
-          <div className="w-full min-w-0 text-center">
-            <h2 className="w-full text-center font-sans text-[28px] leading-tight text-ds-neutral-00">
+          <div className="w-full min-w-0 text-left">
+            <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00">
               {t("events.headingPart1")}{" "}
               <span
                 className="font-dynamite"

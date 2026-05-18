@@ -314,14 +314,14 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__content {
-    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-3;
+    @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-4;
     padding-bottom: var(--ds-spacing-xs);
     background-color: var(--ds-neutral-900);
     background-image: none;
     box-shadow: none;
   }
 
-  /* Desktop (md+): 12px under countdown; fixed content height; same as mobile */
+  /* Desktop (md+): 16px under countdown; fixed content height; same as mobile */
   @media (min-width: 48rem) {
     .event-card__content {
       padding-bottom: var(--ds-spacing-xs);

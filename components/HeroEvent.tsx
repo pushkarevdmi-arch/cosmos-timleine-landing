@@ -266,7 +266,7 @@ export default function HeroEvent({
         tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
-        className={`grid h-fit min-w-0 w-full gap-x-0 gap-y-[8px] border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-ds-neutral-900 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[240px_minmax(0,1fr)] md:gap-x-2 lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[400px_minmax(0,1fr)] ${
+        className={`grid h-fit min-w-0 w-full gap-x-0 gap-y-[8px] border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-ds-neutral-900 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] max-md:h-[448px] max-md:min-h-[448px] max-md:grid-rows-[auto_1fr] max-md:overflow-hidden md:grid-cols-[240px_minmax(0,1fr)] md:gap-x-2 lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[400px_minmax(0,1fr)] ${
           heroPanelCompact
             ? "md:h-[320px] md:min-h-[320px] md:items-stretch"
             : "md:h-fit"
@@ -306,15 +306,7 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className={`relative flex h-full w-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl bg-ds-neutral-900 px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-8 md:text-left ${
-            heroPanelCompact
-              ? heroYearOnlyExtraHeight
-                ? "max-md:min-h-[232px]"
-                : "max-md:min-h-[208px]"
-              : heroYearOnlyExtraHeight
-                ? "max-md:min-h-[240px]"
-                : "max-md:min-h-[264px]"
-          }`}
+          className="relative flex h-full min-h-0 w-full min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl bg-ds-neutral-900 px-6 pb-6 pt-4 text-center max-md:overflow-hidden md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-8 md:text-left"
         >
           <div
             className={`flex w-full min-w-0 shrink-0 flex-col items-center gap-2 md:items-stretch ${showHeroDateRow ? "mb-3" : "mb-3 md:mb-0"}`}
@@ -436,7 +428,7 @@ export default function HeroEvent({
       {sortedEvents.length > 1 ? (
         <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 rounded-3xl border-t border-[var(--ds-neutral-700)] bg-ds-neutral-900 px-5 pb-6 pt-5 md:px-6 md:pb-6 md:pt-4">
           <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-2 md:mb-0 md:justify-start md:gap-2">
-            <span className="font-sans text-[20px] leading-[20px] text-ds-neutral-00">
+            <span className="font-sans text-[18px] leading-[18px] text-ds-neutral-00 md:text-[20px] md:leading-[20px]">
               {t("heroEvent.year")}
             </span>
             <span className="inline-flex min-h-[32px] min-w-[64px] shrink-0 items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-3 md:py-2">

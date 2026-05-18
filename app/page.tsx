@@ -18,6 +18,7 @@ import EventGrid from "@/components/EventGrid";
 import EventTimeline from "@/components/EventTimeline";
 import EventDetailsModal from "@/components/EventDetailsModal";
 import { getEventsForLocale } from "@/data/events";
+import { captureScrollPositionForModal } from "@/lib/bodyScrollLock";
 import { compareEventDateStrings } from "@/utils/eventDate";
 import {
   getTimeRangeSection,
@@ -466,6 +467,11 @@ export default function Home() {
   const hasActiveFilters =
     selectedTimeRange !== "all" || selectedTags.length > 0;
 
+  const openEventDetails = useCallback((event: HeroEventData) => {
+    captureScrollPositionForModal();
+    setSelectedEvent(event);
+  }, []);
+
   return (
     <div className="min-h-screen overflow-x-clip bg-ds-neutral-1000 px-0 text-ds-neutral-100">
       {/* Cosmic background */}
@@ -478,8 +484,8 @@ export default function Home() {
         {/* View toggle */}
         {/* Mobile: h2 is a direct child of main (scrolls). Toolbar row is the next sibling with sticky — nested sticky inside flex-col was unreliable in browsers. */}
         <div className="max-sm:-mx-6 max-sm:px-6 sm:hidden">
-          <div className="w-full min-w-0 text-left">
-            <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00">
+          <div className="w-full min-w-0 text-center">
+            <h2 className="w-full text-center font-sans text-[28px] leading-tight text-ds-neutral-00">
               {t("events.headingPart1")}{" "}
               <span
                 className="font-dynamite"
@@ -771,20 +777,20 @@ export default function Home() {
                 <HeroEvent
                   events={heroEvents}
                   onActiveEventChange={(event) => setHeroActiveEventId(event.id)}
-                  onExplore={(event) => setSelectedEvent(event)}
+                  onExplore={openEventDetails}
                 />
               )}
               <div className={nextEvent ? "pt-6" : undefined}>
                 <EventGrid
                   events={eventsForEventGrid}
-                  onExplore={(event) => setSelectedEvent(event)}
+                  onExplore={openEventDetails}
                 />
               </div>
             </>
           ) : (
             <EventTimeline
               events={visibleEvents}
-              onOpen={(event) => setSelectedEvent(event)}
+              onOpen={openEventDetails}
             />
           )}
 

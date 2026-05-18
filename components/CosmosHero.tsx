@@ -6,7 +6,7 @@ import BrandLogo from "./BrandLogo";
 import LanguageSwitcher from "./LanguageSwitcher";
 
 const HERO_VIDEO_DESKTOP = "/videos/hero-video.mp4";
-const HERO_VIDEO_MOBILE = "/videos/hero-video2-mobile.mp4";
+const HERO_VIDEO_MOBILE = "/videos/hero-video-mobile.mp4";
 
 function useIsNarrowMobile() {
   return useSyncExternalStore(

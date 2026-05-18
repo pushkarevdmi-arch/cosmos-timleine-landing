@@ -20,7 +20,7 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
         <div className="pointer-events-none absolute inset-0 z-0">
           <video
             className="absolute inset-0 h-full min-h-full w-full object-cover"
-            src="/videos/hero-video2.mp4"
+            src="/videos/hero-video.mp4"
             autoPlay
             loop
             muted

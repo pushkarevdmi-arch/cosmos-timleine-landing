@@ -13,13 +13,12 @@ import Image from "next/image";
 import {
   useCallback,
   useEffect,
+  useRef,
   useState,
   type TransitionEvent,
 } from "react";
 import { createPortal } from "react-dom";
 import { useLocale } from "@/context/LocaleContext";
-import { lockBodyScroll } from "@/lib/bodyScrollLock";
-
 type EventDetailsModalProps = {
   event: HeroEventData;
   onClose: () => void;
@@ -40,21 +39,28 @@ export default function EventDetailsModal({
   const [portalReady, setPortalReady] = useState(false);
   const [entered, setEntered] = useState(false);
   const [exiting, setExiting] = useState(false);
+  const closeRequestedRef = useRef(false);
 
   useEffect(() => {
     setPortalReady(true);
   }, []);
+
+  const finishClose = useCallback(() => {
+    if (closeRequestedRef.current) return;
+    closeRequestedRef.current = true;
+    onClose();
+  }, [onClose]);
 
   const requestClose = useCallback(() => {
     if (
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      onClose();
+      finishClose();
       return;
     }
     setExiting(true);
-  }, [onClose]);
+  }, [finishClose]);
 
   useEffect(() => {
     let enterFrame2 = 0;
@@ -71,13 +77,9 @@ export default function EventDetailsModal({
   // (and dim layer on desktop) never unmounts.
   useEffect(() => {
     if (!exiting) return;
-    const id = window.setTimeout(() => {
-      onClose();
-    }, MODAL_EXIT_FALLBACK_MS);
+    const id = window.setTimeout(finishClose, MODAL_EXIT_FALLBACK_MS);
     return () => window.clearTimeout(id);
-  }, [exiting, onClose]);
-
-  useEffect(() => lockBodyScroll(), []);
+  }, [exiting, finishClose]);
 
   const {
     title,
@@ -125,7 +127,7 @@ export default function EventDetailsModal({
   function handlePanelTransitionEnd(e: TransitionEvent<HTMLDivElement>) {
     if (e.target !== e.currentTarget) return;
     if (e.propertyName !== "transform") return;
-    if (exiting) onClose();
+    if (exiting) finishClose();
   }
 
   if (!portalReady) return null;

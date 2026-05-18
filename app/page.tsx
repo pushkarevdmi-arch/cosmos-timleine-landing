@@ -18,6 +18,11 @@ import EventGrid from "@/components/EventGrid";
 import EventTimeline from "@/components/EventTimeline";
 import EventDetailsModal from "@/components/EventDetailsModal";
 import { getEventsForLocale } from "@/data/events";
+import {
+  captureScrollPositionForModal,
+  lockBodyScroll,
+  syncScrollSnapshot,
+} from "@/lib/bodyScrollLock";
 import { compareEventDateStrings } from "@/utils/eventDate";
 import {
   getTimeRangeSection,
@@ -369,7 +374,8 @@ export default function Home() {
     if (!isOpen && wasOpen && mobileToolbarVisibleBeforeModalRef.current !== null) {
       const restoreVisible = mobileToolbarVisibleBeforeModalRef.current;
       mobileToolbarVisibleBeforeModalRef.current = null;
-      suppressToolbarScrollUntilRef.current = performance.now() + 500;
+      suppressToolbarScrollUntilRef.current = performance.now() + 800;
+      syncScrollSnapshot();
 
       let raf2 = 0;
       const raf1 = requestAnimationFrame(() => {
@@ -403,6 +409,10 @@ export default function Home() {
     const topRevealThreshold = 12;
 
     const onScroll = () => {
+      if (!selectedEventRef.current) {
+        syncScrollSnapshot();
+      }
+
       const scrollY = window.scrollY;
       const { top } = sentinel.getBoundingClientRect();
       const pinned = top < 0;
@@ -465,6 +475,20 @@ export default function Home() {
         : t("events.tagsSelected", { count: selectedTags.length });
   const hasActiveFilters =
     selectedTimeRange !== "all" || selectedTags.length > 0;
+
+  const openEventDetails = useCallback((event: HeroEventData) => {
+    captureScrollPositionForModal();
+    setSelectedEvent(event);
+  }, []);
+
+  const isEventModalOpen = selectedEvent !== null;
+
+  // One lock for the whole modal session (including exit animation). Avoids unlock/
+  // restore when swapping events (different modal keys) or double lock from the modal.
+  useEffect(() => {
+    if (!isEventModalOpen) return;
+    return lockBodyScroll();
+  }, [isEventModalOpen]);
 
   return (
     <div className="min-h-screen overflow-x-clip bg-ds-neutral-1000 px-0 text-ds-neutral-100">
@@ -771,20 +795,20 @@ export default function Home() {
                 <HeroEvent
                   events={heroEvents}
                   onActiveEventChange={(event) => setHeroActiveEventId(event.id)}
-                  onExplore={(event) => setSelectedEvent(event)}
+                  onExplore={openEventDetails}
                 />
               )}
               <div className={nextEvent ? "pt-6" : undefined}>
                 <EventGrid
                   events={eventsForEventGrid}
-                  onExplore={(event) => setSelectedEvent(event)}
+                  onExplore={openEventDetails}
                 />
               </div>
             </>
           ) : (
             <EventTimeline
               events={visibleEvents}
-              onOpen={(event) => setSelectedEvent(event)}
+              onOpen={openEventDetails}
             />
           )}
 

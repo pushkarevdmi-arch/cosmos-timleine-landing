@@ -1,13 +1,37 @@
 /**
  * Reference-counted body scroll lock for modals/overlays.
- * Mobile Safari reports window.scrollY as 0 while body is position:fixed — we persist
- * the locked offset and reuse it across rapid open/close or modal-to-modal swaps.
+ * Mobile Safari reports window.scrollY as 0 while body is position:fixed — we keep a
+ * last-known snapshot from page scroll and restore aggressively on unlock.
  */
 
 let lockCount = 0;
+/** Scroll offset when the current lock stack started. */
 let savedScrollY = 0;
-/** Set during unlock until scroll restoration finishes (covers A→B modal swap in one frame). */
+/** Last reliable scroll position while the page was scrollable. */
+let lastKnownScrollY = 0;
+/** Set during unlock until scroll restoration finishes. */
 let pendingRestoreY: number | null = null;
+
+function getWindowScrollY(): number {
+  if (typeof window === "undefined") return 0;
+  return (
+    window.scrollY ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop ||
+    0
+  );
+}
+
+/** Keep in sync from the page scroll listener while no modal is open. */
+export function syncScrollSnapshot(): void {
+  if (typeof window === "undefined") return;
+  if (lockCount > 0) return;
+
+  const y = getWindowScrollY();
+  if (y > 0 || lastKnownScrollY === 0) {
+    lastKnownScrollY = y;
+  }
+}
 
 function readScrollPosition(): number {
   if (typeof window === "undefined") return 0;
@@ -24,7 +48,17 @@ function readScrollPosition(): number {
     return pendingRestoreY;
   }
 
-  return window.scrollY;
+  const y = getWindowScrollY();
+  if (y > 0) {
+    lastKnownScrollY = y;
+    return y;
+  }
+
+  if (lastKnownScrollY > 0) {
+    return lastKnownScrollY;
+  }
+
+  return 0;
 }
 
 function applyLock(scrollY: number) {
@@ -44,9 +78,18 @@ function applyLock(scrollY: number) {
   }
 }
 
-function releaseLock(scrollY: number) {
+function restoreScrollPosition(scrollY: number) {
   const html = document.documentElement;
   const body = document.body;
+
+  let y = scrollY;
+  if (body.style.position === "fixed" && body.style.top) {
+    const fromTop = Math.abs(parseInt(body.style.top, 10));
+    if (!Number.isNaN(fromTop) && fromTop > y) {
+      y = fromTop;
+    }
+  }
+  savedScrollY = y;
 
   html.style.overflow = "";
   body.style.overflow = "";
@@ -57,30 +100,45 @@ function releaseLock(scrollY: number) {
   body.style.width = "";
   body.style.paddingRight = "";
 
-  pendingRestoreY = scrollY;
+  pendingRestoreY = y;
+  lastKnownScrollY = y;
 
-  const restore = () => {
-    window.scrollTo(0, scrollY);
-    requestAnimationFrame(() => {
-      if (Math.abs(window.scrollY - scrollY) > 2) {
-        window.scrollTo(0, scrollY);
-      }
-      pendingRestoreY = null;
-    });
+  const apply = () => {
+    html.scrollTop = y;
+    body.scrollTop = y;
+    window.scrollTo(0, y);
   };
 
-  requestAnimationFrame(restore);
+  apply();
+  requestAnimationFrame(() => {
+    apply();
+    requestAnimationFrame(() => {
+      if (Math.abs(getWindowScrollY() - y) > 2) {
+        apply();
+      }
+      lastKnownScrollY = y;
+      pendingRestoreY = null;
+    });
+  });
 }
 
-/** Call when opening a modal so scroll is captured at tap time (before mount). */
+/** Call immediately before opening a modal (before React state updates). */
 export function captureScrollPositionForModal(): void {
-  savedScrollY = readScrollPosition();
+  syncScrollSnapshot();
+  const y = readScrollPosition();
+  savedScrollY = y;
+  lastKnownScrollY = y;
+  if (lockCount > 0) {
+    applyLock(y);
+  }
 }
 
 /** Lock document body scroll; call returned function to release. */
 export function lockBodyScroll(): () => void {
   if (lockCount === 0) {
-    savedScrollY = readScrollPosition();
+    const y = readScrollPosition();
+    savedScrollY = y;
+    lastKnownScrollY = y;
     applyLock(savedScrollY);
   }
   lockCount += 1;
@@ -89,7 +147,7 @@ export function lockBodyScroll(): () => void {
     if (lockCount <= 0) return;
     lockCount -= 1;
     if (lockCount === 0) {
-      releaseLock(savedScrollY);
+      restoreScrollPosition(savedScrollY);
     }
   };
 }

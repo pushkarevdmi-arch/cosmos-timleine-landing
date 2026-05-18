@@ -13,7 +13,6 @@ import Image from "next/image";
 import {
   useCallback,
   useEffect,
-  useRef,
   useState,
   type TransitionEvent,
 } from "react";
@@ -41,28 +40,21 @@ export default function EventDetailsModal({
   const [portalReady, setPortalReady] = useState(false);
   const [entered, setEntered] = useState(false);
   const [exiting, setExiting] = useState(false);
-  const closeRequestedRef = useRef(false);
 
   useEffect(() => {
     setPortalReady(true);
   }, []);
-
-  const finishClose = useCallback(() => {
-    if (closeRequestedRef.current) return;
-    closeRequestedRef.current = true;
-    onClose();
-  }, [onClose]);
 
   const requestClose = useCallback(() => {
     if (
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches
     ) {
-      finishClose();
+      onClose();
       return;
     }
     setExiting(true);
-  }, [finishClose]);
+  }, [onClose]);
 
   useEffect(() => {
     let enterFrame2 = 0;
@@ -79,11 +71,51 @@ export default function EventDetailsModal({
   // (and dim layer on desktop) never unmounts.
   useEffect(() => {
     if (!exiting) return;
-    const id = window.setTimeout(finishClose, MODAL_EXIT_FALLBACK_MS);
+    const id = window.setTimeout(() => {
+      onClose();
+    }, MODAL_EXIT_FALLBACK_MS);
     return () => window.clearTimeout(id);
-  }, [exiting, finishClose]);
+  }, [exiting, onClose]);
 
-  useEffect(() => lockBodyScroll(), []);
+  useEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const scrollY = window.scrollY;
+
+    const prevHtmlOverflow = html.style.overflow;
+    const prevBodyOverflow = body.style.overflow;
+    const prevBodyPosition = body.style.position;
+    const prevBodyTop = body.style.top;
+    const prevBodyLeft = body.style.left;
+    const prevBodyRight = body.style.right;
+    const prevBodyWidth = body.style.width;
+    const prevBodyPaddingRight = body.style.paddingRight;
+
+    const scrollbarW = window.innerWidth - html.clientWidth;
+
+    html.style.overflow = "hidden";
+    body.style.overflow = "hidden";
+    body.style.position = "fixed";
+    body.style.top = `-${scrollY}px`;
+    body.style.left = "0";
+    body.style.right = "0";
+    body.style.width = "100%";
+    if (scrollbarW > 0) {
+      body.style.paddingRight = `${scrollbarW}px`;
+    }
+
+    return () => {
+      html.style.overflow = prevHtmlOverflow;
+      body.style.overflow = prevBodyOverflow;
+      body.style.position = prevBodyPosition;
+      body.style.top = prevBodyTop;
+      body.style.left = prevBodyLeft;
+      body.style.right = prevBodyRight;
+      body.style.width = prevBodyWidth;
+      body.style.paddingRight = prevBodyPaddingRight;
+      window.scrollTo(0, scrollY);
+    };
+  }, []);
 
   const {
     title,
@@ -131,7 +163,7 @@ export default function EventDetailsModal({
   function handlePanelTransitionEnd(e: TransitionEvent<HTMLDivElement>) {
     if (e.target !== e.currentTarget) return;
     if (e.propertyName !== "transform") return;
-    if (exiting) finishClose();
+    if (exiting) onClose();
   }
 
   if (!portalReady) return null;

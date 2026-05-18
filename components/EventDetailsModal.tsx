@@ -232,7 +232,7 @@ export default function EventDetailsModal({
                   className="mx-[3px] h-px shrink-0 bg-[var(--ds-neutral-800)]"
                   aria-hidden
                 />
-                <div className="flex w-fit max-w-full flex-nowrap items-center justify-between gap-x-6 gap-y-6">
+                <div className="flex w-full max-w-full flex-wrap items-center gap-x-6 gap-y-3 sm:w-fit sm:flex-nowrap sm:justify-between sm:gap-y-6">
                   <EventCategoryTag primaryTag={event.tags?.[0]} />
                   <EventRarityScale value={event.rarity} />
                 </div>

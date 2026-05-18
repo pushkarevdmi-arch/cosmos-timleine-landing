@@ -52,11 +52,11 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
         </div>
 
         <div className="relative z-10 flex w-full max-w-[72.875rem] flex-col items-center gap-1 px-1 text-center text-ds-neutral-00 mix-blend-difference">
-          <h1 className="m-0 flex w-full flex-col items-center gap-1 font-sans">
+          <h1 className="m-0 flex w-full flex-col items-center gap-1 pb-6 font-sans">
             <span className="block text-[clamp(1.625rem,4.2vw,2.5rem)] font-normal leading-[1] tracking-normal sm:leading-[40px]">
               {t("hero.titleLine1")}
             </span>
-            <span className="block max-w-[1166px] text-[48px] font-medium leading-[1.05] tracking-normal sm:text-[clamp(2.125rem,8.5vw,5.5rem)] sm:leading-[80px]">
+            <span className="block max-w-[1166px] text-[48px] font-normal leading-[1.05] tracking-normal sm:text-[clamp(2.125rem,8.5vw,5.5rem)] sm:leading-[80px]">
               {t("hero.titleLine2")}
               <br />
               {t("hero.titleLine3")}

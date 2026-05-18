@@ -122,7 +122,7 @@ svg:not([class*="text-"]) {
     border-style: solid;
     border-color: var(--ds-neutral-800);
     border-image: none;
-    background-color: var(--app-card-surface);
+    background-color: var(--ds-neutral-900);
     background-image: none;
     box-shadow: none;
   }
@@ -316,7 +316,7 @@ svg:not([class*="text-"]) {
   .event-card__content {
     @apply flex min-h-0 w-full max-w-full flex-1 flex-col gap-0 px-[var(--ds-spacing-2xs)] pt-3;
     padding-bottom: var(--ds-spacing-xs);
-    background-color: var(--app-card-surface);
+    background-color: var(--ds-neutral-900);
     background-image: none;
     box-shadow: none;
   }
@@ -333,7 +333,7 @@ svg:not([class*="text-"]) {
   /* Fixed band between title/description and meta */
   .event-card__content-spacer {
     flex: 0 0 auto;
-    height: 20px;
+    height: 24px;
     min-width: 0;
   }
 
@@ -359,7 +359,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__description {
-    @apply m-0 text-center text-ds-neutral-400 text-[16px] leading-[24px];
+    @apply m-0 text-center text-ds-neutral-400 text-[18px] leading-[24px];
     max-width: 480px;
     display: -webkit-box;
     -webkit-line-clamp: 2; /* show at most two lines */
@@ -426,7 +426,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-value {
-    @apply text-[24px] leading-[24px] font-bold tabular-nums text-ds-neutral-50;
+    @apply text-[28px] leading-[28px] sm:text-[32px] sm:leading-[32px] font-bold tabular-nums text-ds-neutral-50;
     font-family: "Departure Mono", ui-monospace, monospace;
     letter-spacing: 0;
   }
@@ -444,7 +444,7 @@ svg:not([class*="text-"]) {
   }
 
   .event-card__countdown-value--mega {
-    @apply text-[24px] leading-[24px] sm:text-[32px] sm:leading-[1.1];
+    @apply text-[28px] leading-[28px] sm:text-[32px] sm:leading-[1.1];
   }
 
   .event-card__countdown-label--from-now {

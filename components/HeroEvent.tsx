@@ -266,7 +266,11 @@ export default function HeroEvent({
         tabIndex={onExplore ? 0 : undefined}
         onClick={onExplore ? handleHeroMainAreaClick : undefined}
         onKeyDown={onExplore ? handleHeroMainAreaKeyDown : undefined}
-        className={`grid h-fit min-w-0 w-full gap-x-0 gap-y-[8px] border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-[var(--app-card-surface)] transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:h-fit md:grid-cols-[240px_minmax(0,1fr)] md:gap-x-2 lg:grid-cols-[400px_minmax(0,1fr)] ${
+        className={`grid h-fit min-w-0 w-full gap-x-0 gap-y-[8px] border-[1px] border-solid border-[rgba(31,41,55,0.8)] [border-image:none] rounded-3xl bg-ds-neutral-900 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] will-change-[opacity,transform,filter] md:grid-cols-[240px_minmax(0,1fr)] md:gap-x-2 lg:grid-cols-[320px_minmax(0,1fr)] xl:grid-cols-[400px_minmax(0,1fr)] ${
+          heroPanelCompact
+            ? "md:h-[320px] md:min-h-[320px] md:items-stretch"
+            : "md:h-fit"
+        } ${
           onExplore ? "hero-event--interactive group cursor-pointer" : ""
         } ${
           isVisible
@@ -278,12 +282,10 @@ export default function HeroEvent({
         <div
           className={`hero-event__image-wrap relative max-md:m-1 max-md:w-[calc(100%-0.5rem)] md:mt-1 md:mb-1 md:ml-1 md:mr-0 md:w-full h-[192px] min-h-[192px] min-w-0 max-w-full overflow-hidden rounded-3xl ${
             heroPanelCompact
-              ? heroYearOnlyExtraHeight
-                ? "md:h-[304px] md:min-h-[304px]"
-                : "md:h-[280px] md:min-h-[280px]"
+              ? "md:h-[312px] md:min-h-[312px]"
               : heroYearOnlyExtraHeight
                 ? "md:h-[364px] md:min-h-[364px]"
-                : "md:h-[340px] md:min-h-[340px]"
+                : "md:h-[356px] md:min-h-[356px]"
           }`}
         >
           <Image
@@ -291,7 +293,7 @@ export default function HeroEvent({
             alt={displayEvent.title}
             fill
             priority
-            sizes="(min-width: 1024px) 400px, (min-width: 768px) 240px, 100vw"
+            sizes="(min-width: 1280px) 400px, (min-width: 1024px) 320px, (min-width: 768px) 240px, 100vw"
             className="hero-event__image object-cover"
           />
 
@@ -304,7 +306,7 @@ export default function HeroEvent({
 
         {/* Right: information */}
         <div
-          className={`relative flex h-full w-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl bg-[var(--app-card-surface)] px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-8 md:text-left ${
+          className={`relative flex h-full w-full min-h-0 min-w-0 max-w-full flex-col rounded-t-none rounded-b-3xl bg-ds-neutral-900 px-6 pb-6 pt-6 text-center md:rounded-l-none md:rounded-tr-3xl md:rounded-br-3xl md:pl-10 md:pr-20 md:pb-10 md:pt-8 md:text-left ${
             heroPanelCompact
               ? heroYearOnlyExtraHeight
                 ? "max-md:min-h-[232px]"
@@ -330,11 +332,11 @@ export default function HeroEvent({
             ) : null}
           </div>
 
-          <div className="-mb-8 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-1">
+          <div className="-mb-7 flex w-full min-w-0 shrink-0 flex-col items-center gap-1 md:items-start md:gap-1">
             <h3 className="m-0 max-w-full break-words font-sans font-semibold text-ds-neutral-50 text-[20px] leading-[25px] sm:text-[24px] sm:leading-[32px] md:leading-[32px] md:line-clamp-3 md:font-medium">
               {displayEvent.title}
             </h3>
-            <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[16px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-2 md:min-h-[48px]">
+            <p className="m-0 min-w-0 w-full max-w-[640px] font-sans text-[18px] leading-[24px] text-ds-neutral-400 line-clamp-2 md:line-clamp-2 md:min-h-[48px]">
               {displayEvent.shortDescription}
             </p>
           </div>
@@ -386,7 +388,7 @@ export default function HeroEvent({
                   </div>
                 </div>
               ) : (
-                <div className="hero-countdown hidden h-fit w-full min-w-0 max-w-full self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[96px] md:w-full md:gap-0 md:justify-start min-[1400px]:pr-20">
+                <div className="hero-countdown hidden h-fit w-full min-w-0 max-w-full self-stretch flex-nowrap items-stretch justify-stretch gap-0 md:flex md:h-[96px] md:w-full md:gap-0 md:justify-start min-[1440px]:pr-[120px]">
                   <div
                     className="hero-countdown__segments flex w-full min-h-0 min-w-0 max-w-full flex-1 flex-nowrap divide-x divide-[var(--ds-neutral-800)] overflow-hidden rounded-2xl border-0 md:h-[96px] md:min-h-0"
                   >
@@ -432,21 +434,15 @@ export default function HeroEvent({
       </div>
 
       {sortedEvents.length > 1 ? (
-        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-1.5 rounded-3xl border-t border-[var(--ds-neutral-700)] bg-[var(--app-card-surface)] px-5 pb-6 pt-5 md:gap-1 md:px-6 md:pb-6 md:pt-4">
-          <div className="mb-0 flex min-w-0 items-center justify-between gap-3 px-0 md:mb-0">
-            <label
-              htmlFor="hero-event-time-slider"
-              className="block cursor-pointer font-sans text-[16px] font-medium leading-[20px] tracking-[0.02em] text-ds-neutral-00 md:text-[18px] md:leading-[22px]"
-            >
-              {t("heroEvent.timeline")}
-            </label>
+        <div className="flex h-fit min-w-0 w-full max-w-full flex-col gap-2 rounded-3xl border-t border-[var(--ds-neutral-700)] bg-ds-neutral-900 px-5 pb-6 pt-5 md:px-6 md:pb-6 md:pt-4">
+          <div className="mb-0 flex min-w-0 items-center justify-start gap-3 px-2 md:mb-0">
             <span className="flex shrink-0 items-center gap-2 text-left align-middle">
-              <span className="hidden font-sans text-[16px] leading-[20px] text-ds-neutral-300 md:block">
+              <span className="font-sans text-[20px] leading-[20px] text-ds-neutral-00">
                 {t("heroEvent.year")}
               </span>
               <span className="inline-flex min-h-[32px] min-w-[64px] items-center justify-center rounded-xl bg-ds-neutral-1000 px-2.5 py-2 md:min-h-[36px] md:min-w-[72px] md:px-3 md:py-2">
                 {heroTimelineYearDisplay.kind === "mega" ? (
-                  <span className="flex flex-wrap items-baseline justify-end gap-x-2 gap-y-0">
+                  <span className="flex flex-wrap items-baseline justify-start gap-x-2 gap-y-0">
                     <span className="whitespace-nowrap font-departure-mono text-[18px] !font-bold leading-[22px] tracking-[1px] text-ds-neutral-00 md:text-[20px] md:leading-[24px]">
                       {heroTimelineYearDisplay.numberPart}
                     </span>

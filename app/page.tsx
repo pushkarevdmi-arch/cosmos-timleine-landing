@@ -165,6 +165,11 @@ export default function Home() {
   const filterPopoverRef = useRef<HTMLDivElement | null>(null);
   const stickyToolbarSentinelRef = useRef<HTMLDivElement | null>(null);
   const [isStickyFilterBarPinned, setIsStickyFilterBarPinned] = useState(false);
+  const [isMobileToolbarVisible, setIsMobileToolbarVisible] = useState(true);
+  const selectedEventRef = useRef<HeroEventData | null>(null);
+  const prevSelectedEventRef = useRef<HeroEventData | null>(null);
+  const mobileToolbarVisibleBeforeModalRef = useRef<boolean | null>(null);
+  const suppressToolbarScrollUntilRef = useRef(0);
   const mobileGridSentinelRef = useRef<HTMLDivElement | null>(null);
   const mobileGridSectionsVisibleRef = useRef(1);
   const maxTimeSectionsRef = useRef(0);
@@ -344,25 +349,92 @@ export default function Home() {
     };
   }, [isFilterOpen]);
 
+  selectedEventRef.current = selectedEvent;
+
+  useEffect(() => {
+    if (!isNarrowMobile) return;
+
+    const wasOpen = prevSelectedEventRef.current !== null;
+    const isOpen = selectedEvent !== null;
+    prevSelectedEventRef.current = selectedEvent;
+
+    if (isOpen && !wasOpen) {
+      mobileToolbarVisibleBeforeModalRef.current = isMobileToolbarVisible;
+      setIsMobileToolbarVisible(false);
+      setIsFilterOpen(false);
+      setOpenDropdown(null);
+      return;
+    }
+
+    if (!isOpen && wasOpen && mobileToolbarVisibleBeforeModalRef.current !== null) {
+      const restoreVisible = mobileToolbarVisibleBeforeModalRef.current;
+      mobileToolbarVisibleBeforeModalRef.current = null;
+      suppressToolbarScrollUntilRef.current = performance.now() + 500;
+
+      let raf2 = 0;
+      const raf1 = requestAnimationFrame(() => {
+        raf2 = requestAnimationFrame(() => {
+          const sentinel = stickyToolbarSentinelRef.current;
+          if (sentinel) {
+            setIsStickyFilterBarPinned(sentinel.getBoundingClientRect().top < 0);
+          }
+          setIsMobileToolbarVisible(restoreVisible);
+        });
+      });
+
+      return () => {
+        cancelAnimationFrame(raf1);
+        if (raf2) cancelAnimationFrame(raf2);
+      };
+    }
+  }, [selectedEvent, isNarrowMobile, isMobileToolbarVisible]);
+
   useEffect(() => {
     if (!isNarrowMobile) {
       setIsStickyFilterBarPinned(false);
+      setIsMobileToolbarVisible(true);
       return;
     }
     const sentinel = stickyToolbarSentinelRef.current;
     if (!sentinel) return;
 
-    const updatePinned = () => {
+    let lastScrollY = window.scrollY;
+    const scrollDeltaThreshold = 6;
+    const topRevealThreshold = 12;
+
+    const onScroll = () => {
+      const scrollY = window.scrollY;
       const { top } = sentinel.getBoundingClientRect();
-      setIsStickyFilterBarPinned(top < 0);
+      const pinned = top < 0;
+      setIsStickyFilterBarPinned(pinned);
+
+      if (selectedEventRef.current) return;
+
+      if (performance.now() < suppressToolbarScrollUntilRef.current) {
+        return;
+      }
+
+      // Keep filters visible until the user scrolls past the filter block (sentinel
+      // leaves the viewport). Only then apply hide-on-scroll-down / show-on-scroll-up.
+      if (scrollY <= topRevealThreshold || !pinned) {
+        setIsMobileToolbarVisible(true);
+      } else if (scrollY - lastScrollY > scrollDeltaThreshold) {
+        setIsMobileToolbarVisible(false);
+        setIsFilterOpen(false);
+        setOpenDropdown(null);
+      } else if (lastScrollY - scrollY > scrollDeltaThreshold) {
+        setIsMobileToolbarVisible(true);
+      }
+
+      lastScrollY = scrollY;
     };
 
-    window.addEventListener("scroll", updatePinned, { passive: true });
-    window.addEventListener("resize", updatePinned);
-    updatePinned();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    onScroll();
     return () => {
-      window.removeEventListener("scroll", updatePinned);
-      window.removeEventListener("resize", updatePinned);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
     };
   }, [isNarrowMobile]);
 
@@ -402,7 +474,7 @@ export default function Home() {
 
       <CosmosHero onLogoClick={() => window.location.reload()} />
 
-      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-6 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-20 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
+      <main className="mx-auto flex min-h-screen w-full max-w-6xl flex-col px-4 pb-14 max-sm:pt-16 sm:px-6 sm:pt-10 lg:px-16 lg:pt-[102px] xl:max-w-[min(84rem,calc(100vw-6rem))]">
         {/* View toggle */}
         {/* Mobile: h2 is a direct child of main (scrolls). Toolbar row is the next sibling with sticky — nested sticky inside flex-col was unreliable in browsers. */}
         <div className="max-sm:-mx-6 max-sm:px-6 sm:hidden">
@@ -428,7 +500,10 @@ export default function Home() {
         <div
           ref={filterPopoverRef}
           className={[
-            "relative mb-9 flex flex-col gap-0 max-sm:-mx-6 max-sm:border-b max-sm:bg-ds-neutral-1000 max-sm:px-6 max-sm:pb-4 max-sm:pt-4 max-sm:sticky max-sm:top-0 max-sm:z-30",
+            "relative mb-9 flex flex-col gap-0 max-sm:-mx-6 max-sm:border-b max-sm:bg-ds-neutral-1000 max-sm:px-6 max-sm:pb-4 max-sm:pt-4 max-sm:sticky max-sm:top-0 max-sm:z-30 max-sm:transition-[transform,opacity] max-sm:duration-300 max-sm:ease-out",
+            selectedEvent || !isMobileToolbarVisible
+              ? "max-sm:pointer-events-none max-sm:-translate-y-full max-sm:opacity-0"
+              : "max-sm:translate-y-0 max-sm:opacity-100",
             isStickyFilterBarPinned
               ? "max-sm:border-ds-neutral-800"
               : "max-sm:border-transparent",
@@ -436,7 +511,7 @@ export default function Home() {
           ].join(" ")}
         >
           <div className="hidden min-w-0 flex-1 text-left sm:block">
-            <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-h2-400">
+            <h2 className="w-full text-left font-sans text-[28px] leading-tight text-ds-neutral-00 sm:text-[40px] sm:leading-[48px]">
               {t("events.headingPart1")}{" "}
               <span
                 className="font-dynamite"
@@ -593,7 +668,7 @@ export default function Home() {
                         )
                       }
                       onKeyDown={(event) => handleDropdownKeyboard(event, "tag")}
-                      className="flex w-full items-center justify-between rounded-xl border border-ds-neutral-700 bg-ds-neutral-900 pl-3 pr-3 py-3 type-body-tight text-ds-neutral-200 outline-none hover:border-ds-neutral-500"
+                      className="flex w-full items-center justify-between rounded-xl bg-ds-neutral-900 pl-3 pr-3 py-3 type-body-tight text-ds-neutral-200 outline-none"
                     >
                       <span className="truncate">{selectedTagLabel}</span>
                       <svg

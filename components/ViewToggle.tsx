@@ -16,7 +16,6 @@ export default function ViewToggle({ mode, onChange }: ViewToggleProps) {
   return (
     <div
       className="flex w-full gap-1.5 rounded-2xl bg-ds-neutral-800 p-1 sm:inline-flex sm:w-auto sm:p-1.5"
-      style={{ boxShadow: "inset 0 4px 4px 0 rgba(0, 0, 0, 0.25)" }}
     >
       {options.map((option) => {
         const isActive = option.value === mode;

@@ -1,16 +1,22 @@
 /**
  * Reference-counted body scroll lock for modals/overlays.
- * Mobile Safari reports window.scrollY as 0 while body is position:fixed — we keep a
- * last-known snapshot from page scroll and restore before paint on unlock.
+ * Mobile: overflow-only lock (scroll position stays natural — no restore flash).
+ * Desktop: position:fixed lock with snapshot restore.
  */
 
+const MOBILE_SCROLL_LOCK_MQ = "(max-width: 639px)";
+
 let lockCount = 0;
-/** Scroll offset when the current lock stack started. */
+let lockMode: "overflow" | "fixed" | null = null;
+/** Scroll offset when the current fixed lock started. */
 let savedScrollY = 0;
 /** Last reliable scroll position while the page was scrollable. */
 let lastKnownScrollY = 0;
-/** Set during unlock until scroll restoration finishes. */
-let pendingRestoreY: number | null = null;
+
+function isOverflowOnlyLock(): boolean {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia(MOBILE_SCROLL_LOCK_MQ).matches;
+}
 
 function getWindowScrollY(): number {
   if (typeof window === "undefined") return 0;
@@ -37,15 +43,11 @@ function readScrollPosition(): number {
   if (typeof window === "undefined") return 0;
 
   const body = document.body;
-  if (body.style.position === "fixed" && body.style.top) {
+  if (lockMode === "fixed" && body.style.position === "fixed" && body.style.top) {
     const parsed = parseInt(body.style.top, 10);
     if (!Number.isNaN(parsed)) {
       return Math.abs(parsed);
     }
-  }
-
-  if (pendingRestoreY !== null) {
-    return pendingRestoreY;
   }
 
   const y = getWindowScrollY();
@@ -61,7 +63,29 @@ function readScrollPosition(): number {
   return 0;
 }
 
-function applyLock(scrollY: number) {
+function applyOverflowLock() {
+  const html = document.documentElement;
+  const body = document.body;
+
+  html.style.overflow = "hidden";
+  html.style.overscrollBehavior = "none";
+  body.style.overflow = "hidden";
+  body.style.overscrollBehavior = "none";
+  body.style.touchAction = "none";
+}
+
+function releaseOverflowLock() {
+  const html = document.documentElement;
+  const body = document.body;
+
+  html.style.overflow = "";
+  html.style.overscrollBehavior = "";
+  body.style.overflow = "";
+  body.style.overscrollBehavior = "";
+  body.style.touchAction = "";
+}
+
+function applyFixedLock(scrollY: number) {
   const html = document.documentElement;
   const body = document.body;
   const scrollbarW = window.innerWidth - html.clientWidth;
@@ -86,7 +110,7 @@ function scrollToY(y: number) {
   window.scrollTo({ top: y, left: 0, behavior: "instant" });
 }
 
-function restoreScrollPosition(scrollY: number) {
+function restoreFixedScrollPosition(scrollY: number) {
   const html = document.documentElement;
   const body = document.body;
 
@@ -98,10 +122,8 @@ function restoreScrollPosition(scrollY: number) {
     }
   }
   savedScrollY = y;
-  pendingRestoreY = y;
   lastKnownScrollY = y;
 
-  // Keep overflow clipped until scroll is applied so Safari does not paint at y=0.
   html.style.overflow = "hidden";
 
   body.style.overflow = "";
@@ -113,15 +135,16 @@ function restoreScrollPosition(scrollY: number) {
   body.style.paddingRight = "";
 
   scrollToY(y);
+  html.style.overflow = "";
+}
 
-  requestAnimationFrame(() => {
-    if (Math.abs(getWindowScrollY() - y) > 2) {
-      scrollToY(y);
-    }
-    html.style.overflow = "";
-    lastKnownScrollY = y;
-    pendingRestoreY = null;
-  });
+function releaseLock() {
+  if (lockMode === "overflow") {
+    releaseOverflowLock();
+  } else if (lockMode === "fixed") {
+    restoreFixedScrollPosition(savedScrollY);
+  }
+  lockMode = null;
 }
 
 /** Call immediately before opening a modal (before React state updates). */
@@ -130,8 +153,8 @@ export function captureScrollPositionForModal(): void {
   const y = readScrollPosition();
   savedScrollY = y;
   lastKnownScrollY = y;
-  if (lockCount > 0) {
-    applyLock(y);
+  if (lockCount > 0 && lockMode === "fixed") {
+    applyFixedLock(y);
   }
 }
 
@@ -141,7 +164,14 @@ export function lockBodyScroll(): () => void {
     const y = readScrollPosition();
     savedScrollY = y;
     lastKnownScrollY = y;
-    applyLock(savedScrollY);
+
+    if (isOverflowOnlyLock()) {
+      lockMode = "overflow";
+      applyOverflowLock();
+    } else {
+      lockMode = "fixed";
+      applyFixedLock(savedScrollY);
+    }
   }
   lockCount += 1;
 
@@ -149,7 +179,23 @@ export function lockBodyScroll(): () => void {
     if (lockCount <= 0) return;
     lockCount -= 1;
     if (lockCount === 0) {
-      restoreScrollPosition(savedScrollY);
+      releaseLock();
     }
   };
+}
+
+/**
+ * Release fixed-position lock at the start of the close animation (backdrop still visible).
+ */
+export function releaseBodyScrollLockIfFixed(): void {
+  if (lockCount <= 0 || lockMode !== "fixed") return;
+  lockCount = 0;
+  releaseLock();
+}
+
+/** Release any remaining lock when the modal unmounts (overflow lock on mobile). */
+export function releaseBodyScrollLock(): void {
+  if (lockCount <= 0) return;
+  lockCount = 0;
+  releaseLock();
 }

@@ -22,6 +22,8 @@ import { useLocale } from "@/context/LocaleContext";
 type EventDetailsModalProps = {
   event: HeroEventData;
   onClose: () => void;
+  /** Called when the exit animation starts — restore scroll while the backdrop is still visible. */
+  onExitStart?: () => void;
 };
 
 const sectionHeadingClassName =
@@ -34,6 +36,7 @@ const MODAL_EXIT_FALLBACK_MS = 580;
 export default function EventDetailsModal({
   event,
   onClose,
+  onExitStart,
 }: EventDetailsModalProps) {
   const { locale, t } = useLocale();
   const [portalReady, setPortalReady] = useState(false);
@@ -59,8 +62,9 @@ export default function EventDetailsModal({
       finishClose();
       return;
     }
+    onExitStart?.();
     setExiting(true);
-  }, [finishClose]);
+  }, [finishClose, onExitStart]);
 
   useEffect(() => {
     let enterFrame2 = 0;

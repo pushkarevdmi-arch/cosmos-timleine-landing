@@ -22,6 +22,8 @@ import { getEventsForLocale } from "@/data/events";
 import {
   captureScrollPositionForModal,
   lockBodyScroll,
+  releaseBodyScrollLock,
+  releaseBodyScrollLockIfFixed,
   syncScrollSnapshot,
 } from "@/lib/bodyScrollLock";
 import { compareEventDateStrings } from "@/utils/eventDate";
@@ -172,9 +174,10 @@ export default function Home() {
   const stickyToolbarSentinelRef = useRef<HTMLDivElement | null>(null);
   const [isStickyFilterBarPinned, setIsStickyFilterBarPinned] = useState(false);
   const [isMobileToolbarVisible, setIsMobileToolbarVisible] = useState(true);
+  const [skipMobileToolbarTransition, setSkipMobileToolbarTransition] =
+    useState(false);
   const selectedEventRef = useRef<HeroEventData | null>(null);
   const prevSelectedEventRef = useRef<HeroEventData | null>(null);
-  const prevSelectedEventForLayoutRef = useRef<HeroEventData | null>(null);
   const mobileToolbarVisibleBeforeModalRef = useRef<boolean | null>(null);
   const suppressToolbarScrollUntilRef = useRef(0);
   const mobileGridSentinelRef = useRef<HTMLDivElement | null>(null);
@@ -373,28 +376,6 @@ export default function Home() {
     }
   }, [selectedEvent, isNarrowMobile, isMobileToolbarVisible]);
 
-  // Restore toolbar in the same pre-paint pass as scroll unlock to avoid a visible flash.
-  useLayoutEffect(() => {
-    if (!isNarrowMobile) return;
-
-    const wasOpen = prevSelectedEventForLayoutRef.current !== null;
-    const isOpen = selectedEvent !== null;
-    prevSelectedEventForLayoutRef.current = selectedEvent;
-
-    if (!isOpen && wasOpen && mobileToolbarVisibleBeforeModalRef.current !== null) {
-      const restoreVisible = mobileToolbarVisibleBeforeModalRef.current;
-      mobileToolbarVisibleBeforeModalRef.current = null;
-      suppressToolbarScrollUntilRef.current = performance.now() + 800;
-      syncScrollSnapshot();
-
-      const sentinel = stickyToolbarSentinelRef.current;
-      if (sentinel) {
-        setIsStickyFilterBarPinned(sentinel.getBoundingClientRect().top < 0);
-      }
-      setIsMobileToolbarVisible(restoreVisible);
-    }
-  }, [selectedEvent, isNarrowMobile]);
-
   useEffect(() => {
     if (!isNarrowMobile) {
       setIsStickyFilterBarPinned(false);
@@ -481,9 +462,29 @@ export default function Home() {
     setSelectedEvent(event);
   }, []);
 
+  const closeEventDetails = useCallback(() => {
+    releaseBodyScrollLock();
+
+    if (isNarrowMobile && mobileToolbarVisibleBeforeModalRef.current !== null) {
+      const restoreVisible = mobileToolbarVisibleBeforeModalRef.current;
+      mobileToolbarVisibleBeforeModalRef.current = null;
+      suppressToolbarScrollUntilRef.current = performance.now() + 800;
+      syncScrollSnapshot();
+
+      setSkipMobileToolbarTransition(true);
+      const sentinel = stickyToolbarSentinelRef.current;
+      if (sentinel) {
+        setIsStickyFilterBarPinned(sentinel.getBoundingClientRect().top < 0);
+      }
+      setIsMobileToolbarVisible(restoreVisible);
+      requestAnimationFrame(() => setSkipMobileToolbarTransition(false));
+    }
+
+    setSelectedEvent(null);
+  }, [isNarrowMobile]);
+
   const isEventModalOpen = selectedEvent !== null;
 
-  // Unlock in useLayoutEffect so scroll is restored before the browser paints without the modal.
   useLayoutEffect(() => {
     if (!isEventModalOpen) return;
     return lockBodyScroll();
@@ -523,7 +524,10 @@ export default function Home() {
         <div
           ref={filterPopoverRef}
           className={[
-            "relative mb-9 flex flex-col gap-0 max-sm:-mx-6 max-sm:border-b max-sm:bg-ds-neutral-1000 max-sm:px-6 max-sm:pb-4 max-sm:pt-4 max-sm:sticky max-sm:top-0 max-sm:z-30 max-sm:transition-[transform,opacity] max-sm:duration-300 max-sm:ease-out",
+            "relative mb-9 flex flex-col gap-0 max-sm:-mx-6 max-sm:border-b max-sm:bg-ds-neutral-1000 max-sm:px-6 max-sm:pb-4 max-sm:pt-4 max-sm:sticky max-sm:top-0 max-sm:z-30",
+            skipMobileToolbarTransition
+              ? "max-sm:transition-none"
+              : "max-sm:transition-[transform,opacity] max-sm:duration-300 max-sm:ease-out",
             selectedEvent || !isMobileToolbarVisible
               ? "max-sm:pointer-events-none max-sm:-translate-y-full max-sm:opacity-0"
               : "max-sm:translate-y-0 max-sm:opacity-100",
@@ -882,7 +886,8 @@ export default function Home() {
         <EventDetailsModal
           key={selectedEvent.id}
           event={selectedEvent}
-          onClose={() => setSelectedEvent(null)}
+          onExitStart={releaseBodyScrollLockIfFixed}
+          onClose={closeEventDetails}
         />
       )}
     </div>

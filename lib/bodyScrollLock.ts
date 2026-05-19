@@ -1,7 +1,7 @@
 /**
  * Reference-counted body scroll lock for modals/overlays.
  * Mobile Safari reports window.scrollY as 0 while body is position:fixed — we keep a
- * last-known snapshot from page scroll and restore aggressively on unlock.
+ * last-known snapshot from page scroll and restore before paint on unlock.
  */
 
 let lockCount = 0;
@@ -78,6 +78,14 @@ function applyLock(scrollY: number) {
   }
 }
 
+function scrollToY(y: number) {
+  const html = document.documentElement;
+  const body = document.body;
+  html.scrollTop = y;
+  body.scrollTop = y;
+  window.scrollTo({ top: y, left: 0, behavior: "instant" });
+}
+
 function restoreScrollPosition(scrollY: number) {
   const html = document.documentElement;
   const body = document.body;
@@ -85,13 +93,17 @@ function restoreScrollPosition(scrollY: number) {
   let y = scrollY;
   if (body.style.position === "fixed" && body.style.top) {
     const fromTop = Math.abs(parseInt(body.style.top, 10));
-    if (!Number.isNaN(fromTop) && fromTop > y) {
+    if (!Number.isNaN(fromTop)) {
       y = fromTop;
     }
   }
   savedScrollY = y;
+  pendingRestoreY = y;
+  lastKnownScrollY = y;
 
-  html.style.overflow = "";
+  // Keep overflow clipped until scroll is applied so Safari does not paint at y=0.
+  html.style.overflow = "hidden";
+
   body.style.overflow = "";
   body.style.position = "";
   body.style.top = "";
@@ -100,25 +112,15 @@ function restoreScrollPosition(scrollY: number) {
   body.style.width = "";
   body.style.paddingRight = "";
 
-  pendingRestoreY = y;
-  lastKnownScrollY = y;
+  scrollToY(y);
 
-  const apply = () => {
-    html.scrollTop = y;
-    body.scrollTop = y;
-    window.scrollTo(0, y);
-  };
-
-  apply();
   requestAnimationFrame(() => {
-    apply();
-    requestAnimationFrame(() => {
-      if (Math.abs(getWindowScrollY() - y) > 2) {
-        apply();
-      }
-      lastKnownScrollY = y;
-      pendingRestoreY = null;
-    });
+    if (Math.abs(getWindowScrollY() - y) > 2) {
+      scrollToY(y);
+    }
+    html.style.overflow = "";
+    lastKnownScrollY = y;
+    pendingRestoreY = null;
   });
 }
 

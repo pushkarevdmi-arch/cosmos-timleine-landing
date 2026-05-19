@@ -7,6 +7,7 @@ import {
   KeyboardEvent as ReactKeyboardEvent,
   useCallback,
   useEffect,
+  useLayoutEffect,
   useRef,
   useSyncExternalStore,
 } from "react";
@@ -173,6 +174,7 @@ export default function Home() {
   const [isMobileToolbarVisible, setIsMobileToolbarVisible] = useState(true);
   const selectedEventRef = useRef<HeroEventData | null>(null);
   const prevSelectedEventRef = useRef<HeroEventData | null>(null);
+  const prevSelectedEventForLayoutRef = useRef<HeroEventData | null>(null);
   const mobileToolbarVisibleBeforeModalRef = useRef<boolean | null>(null);
   const suppressToolbarScrollUntilRef = useRef(0);
   const mobileGridSentinelRef = useRef<HTMLDivElement | null>(null);
@@ -368,8 +370,16 @@ export default function Home() {
       setIsMobileToolbarVisible(false);
       setIsFilterOpen(false);
       setOpenDropdown(null);
-      return;
     }
+  }, [selectedEvent, isNarrowMobile, isMobileToolbarVisible]);
+
+  // Restore toolbar in the same pre-paint pass as scroll unlock to avoid a visible flash.
+  useLayoutEffect(() => {
+    if (!isNarrowMobile) return;
+
+    const wasOpen = prevSelectedEventForLayoutRef.current !== null;
+    const isOpen = selectedEvent !== null;
+    prevSelectedEventForLayoutRef.current = selectedEvent;
 
     if (!isOpen && wasOpen && mobileToolbarVisibleBeforeModalRef.current !== null) {
       const restoreVisible = mobileToolbarVisibleBeforeModalRef.current;
@@ -377,23 +387,13 @@ export default function Home() {
       suppressToolbarScrollUntilRef.current = performance.now() + 800;
       syncScrollSnapshot();
 
-      let raf2 = 0;
-      const raf1 = requestAnimationFrame(() => {
-        raf2 = requestAnimationFrame(() => {
-          const sentinel = stickyToolbarSentinelRef.current;
-          if (sentinel) {
-            setIsStickyFilterBarPinned(sentinel.getBoundingClientRect().top < 0);
-          }
-          setIsMobileToolbarVisible(restoreVisible);
-        });
-      });
-
-      return () => {
-        cancelAnimationFrame(raf1);
-        if (raf2) cancelAnimationFrame(raf2);
-      };
+      const sentinel = stickyToolbarSentinelRef.current;
+      if (sentinel) {
+        setIsStickyFilterBarPinned(sentinel.getBoundingClientRect().top < 0);
+      }
+      setIsMobileToolbarVisible(restoreVisible);
     }
-  }, [selectedEvent, isNarrowMobile, isMobileToolbarVisible]);
+  }, [selectedEvent, isNarrowMobile]);
 
   useEffect(() => {
     if (!isNarrowMobile) {
@@ -483,9 +483,8 @@ export default function Home() {
 
   const isEventModalOpen = selectedEvent !== null;
 
-  // One lock for the whole modal session (including exit animation). Avoids unlock/
-  // restore when swapping events (different modal keys) or double lock from the modal.
-  useEffect(() => {
+  // Unlock in useLayoutEffect so scroll is restored before the browser paints without the modal.
+  useLayoutEffect(() => {
     if (!isEventModalOpen) return;
     return lockBodyScroll();
   }, [isEventModalOpen]);

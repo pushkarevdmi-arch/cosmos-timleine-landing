@@ -70,7 +70,7 @@ export default function CosmosHero({ onLogoClick }: CosmosHeroProps) {
           </div>
         </div>
 
-        <div className="relative z-10 flex w-full max-w-[72.875rem] flex-col items-center gap-1 px-1 text-center text-ds-neutral-00 mix-blend-normal sm:mix-blend-difference">
+        <div className="relative z-10 flex w-full max-w-[72.875rem] flex-col items-center gap-1 px-1 text-center text-ds-neutral-00 mix-blend-difference">
           <h1 className="m-0 flex w-full flex-col items-center gap-1 pb-6 font-sans">
             <span className="block text-[clamp(1.625rem,4.2vw,2.5rem)] font-normal leading-[1] tracking-normal sm:leading-[40px]">
               {t("hero.titleLine1")}

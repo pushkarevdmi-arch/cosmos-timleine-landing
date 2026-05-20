@@ -1,7 +1,7 @@
 [
   {
     "id": "earth-oxygen-depletion",
-    "title": "Earth’s Atmosphere Loses Free Oxygen",
+    "title": "Earth’s atmosphere loses free oxygen",
     "date": "1000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "Earth’s atmosphere will lose almost all free oxygen, making complex life impossible — in about 1 billion years.",
@@ -25,7 +25,7 @@
   },
   {
     "id": "earth-runaway-greenhouse",
-    "title": "The Death of Earth – Runaway Greenhouse",
+    "title": "The death of Earth – runaway greenhouse",
     "date": "2000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "Earth becomes a lifeless Venus-like planet as oceans boil away — in about 2 billion years.",
@@ -50,7 +50,7 @@
   },
   {
     "id": "milky-way-andromeda-early-interaction",
-    "title": "First Signs of Milky Way and Andromeda Interaction",
+    "title": "First signs of Milky Way and Andromeda interaction",
     "date": "3000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "The first gravitational distortions between the Milky Way and Andromeda become noticeable — in about 3 billion years.",
@@ -74,7 +74,7 @@
   },
   {
     "id": "milky-way-andromeda-collision",
-    "title": "Milky Way Collides with Andromeda",
+    "title": "Milky Way collides with Andromeda",
     "date": "4500000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "Our galaxy merges with Andromeda forming a giant elliptical galaxy — in about 4.5 billion years.",
@@ -98,7 +98,7 @@
   },
   {
     "id": "sun-red-giant-earth-destruction",
-    "title": "The Sun Engulfs Earth – Red Giant Phase",
+    "title": "The Sun engulfs Earth – red giant phase",
     "date": "7600000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "The Sun expands into a red giant and destroys Earth — in about 7.6 billion years.",
@@ -122,7 +122,7 @@
   },
   {
     "id": "sun-becomes-white-dwarf",
-    "title": "The Sun Becomes a White Dwarf",
+    "title": "The Sun becomes a white dwarf",
     "date": "10000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "The Sun dies and shrinks into a cold white dwarf — in about 10 billion years.",
@@ -146,7 +146,7 @@
   },
   {
     "id": "end-of-star-formation",
-    "title": "End of All Star Formation",
+    "title": "End of all star formation",
     "date": "1000000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "No new stars will ever form again — in about 1 trillion years.",
@@ -169,7 +169,7 @@
   },
   {
     "id": "last-star-dies",
-    "title": "The Last Star in the Universe Dies",
+    "title": "The last star in the universe dies",
     "date": "100000000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "The final star burns out, plunging the universe into eternal darkness — in about 100 trillion years.",
@@ -192,7 +192,7 @@
   },
   {
     "id": "proton-decay",
-    "title": "Proton Decay – The Dissolution of Matter",
+    "title": "Proton decay – the dissolution of matter",
     "date": "10000000000000000000000000000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "All ordinary matter begins to decay — in ~10³⁴ years.",
@@ -216,7 +216,7 @@
   },
   {
     "id": "black-hole-era",
-    "title": "The Black Hole Era",
+    "title": "The black hole era",
     "date": "1000000000000000000000000000000000000000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "Black holes become the only significant objects left in the universe.",
@@ -239,7 +239,7 @@
   },
   {
     "id": "black-holes-evaporate",
-    "title": "All Black Holes Evaporate",
+    "title": "All black holes evaporate",
     "date": "10000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "Even the last black holes disappear — in ~10¹⁰⁰ years.",
@@ -262,7 +262,7 @@
   },
   {
     "id": "heat-death-of-the-universe",
-    "title": "Heat Death of the Universe – The Final End",
+    "title": "Heat death of the universe – the final end",
     "date": "100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
     "timeCategory": "Billions of Years",
     "shortDescription": "The universe reaches maximum entropy and dies in eternal cold and darkness.",

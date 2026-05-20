@@ -1,7 +1,7 @@
 /** Shared site copy and URLs for metadata, Open Graph, and sitemap. */
 export const site = {
   name: "Cosmorrow",
-  title: "Cosmorrow — Journey Into the Future of the Universe",
+  title: "Cosmorrow — Journey into the Future of the Universe",
   /** Matches hero subtitle + value proposition (EN). */
   description:
     "From our lifetime to the final moments of the cosmos. Explore upcoming astronomical events on an interactive timeline of the universe.",

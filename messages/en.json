@@ -1,6 +1,6 @@
 {
   "hero": {
-    "titleLine1": "Journey Into",
+    "titleLine1": "Journey into",
     "titleLine2": "the Future of",
     "titleLine3": "the Universe",
     "subtitle": "From our lifetime to the final moments of the cosmos.",
@@ -14,7 +14,7 @@
   },
   "events": {
     "headingPart1": "Future",
-    "headingPart2": "Events",
+    "headingPart2": "events",
     "filters": "Filters",
     "filtersAria": "Filters",
     "allRanges": "All ranges",

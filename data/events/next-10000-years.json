@@ -1,7 +1,7 @@
 [
   {
     "id": "halleys-comet-spectacular-return-2134",
-    "title": "Halley’s Comet Spectacular Return",
+    "title": "Spectacular return of Halley’s Comet",
     "date": "2134",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "One of the brightest returns of Halley’s Comet in thousands of years — in about 108 years.",
@@ -26,7 +26,7 @@
   },
   {
     "id": "longest-total-solar-eclipse-2186",
-    "title": "Longest Total Solar Eclipse in 10,000+ Years",
+    "title": "Longest total solar eclipse in 10,000+ years",
     "date": "2186",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "The longest total solar eclipse between 4000 BCE and 6000 CE — up to 7 minutes 29 seconds of totality, in about 160 years.",
@@ -51,7 +51,7 @@
   },
   {
     "id": "venus-occults-saturn-2518",
-    "title": "Venus Occults Saturn",
+    "title": "Venus occults Saturn",
     "date": "2518",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "Venus will completely hide Saturn and its rings — an extremely rare planetary occultation in about 492 years.",
@@ -76,7 +76,7 @@
   },
   {
     "id": "extremely-close-mars-approach-2729",
-    "title": "Extremely Close Mars Approach",
+    "title": "Extremely close Mars approach",
     "date": "2729",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "One of the closest approaches of Mars to Earth in thousands of years — in about 703 years.",
@@ -100,7 +100,7 @@
   },
   {
     "id": "simultaneous-solar-eclipse-mercury-transit-6757",
-    "title": "Simultaneous Total Solar Eclipse & Mercury Transit",
+    "title": "Simultaneous total solar eclipse & Mercury transit",
     "date": "6757",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "A total solar eclipse and Mercury transit occurring on the same day — in about 4731 years.",
@@ -125,7 +125,7 @@
   },
   {
     "id": "jupiter-occults-saturn-7541",
-    "title": "Jupiter Occults Saturn (Double Event)",
+    "title": "Jupiter occults Saturn (double event)",
     "date": "7541",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "Jupiter will occult Saturn twice in the same year — an incredibly rare double event in about 5515 years.",
@@ -149,7 +149,7 @@
   },
   {
     "id": "deneb-new-north-star-9800",
-    "title": "Deneb Becomes the New North Star",
+    "title": "Deneb becomes the new north star",
     "date": "9800",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "Due to precession, bright Deneb will become the new Pole Star — in about 7774 years.",
@@ -174,7 +174,7 @@
   },
   {
     "id": "second-simultaneous-eclipse-mercury-transit-11268",
-    "title": "Second Simultaneous Total Solar Eclipse & Mercury Transit",
+    "title": "Second simultaneous total solar eclipse & Mercury transit",
     "date": "11268",
     "timeCategory": "Next 10,000 Years",
     "shortDescription": "Another extremely rare simultaneous total solar eclipse and Mercury transit — in about 9242 years.",

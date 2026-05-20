@@ -121,7 +121,7 @@ export default function EventCard({ event, onExplore }: EventCardProps) {
           <div className="event-card__head">
             {showCardDateRow ? (
               <div className="event-card__date">
-                <div className="flex h-10 w-full max-w-full justify-center">
+                <div className="flex h-fit w-full max-w-full justify-center">
                   <div
                     className="hero-event__date-badge inline-flex h-fit max-w-full min-w-0 flex-nowrap items-center gap-2 rounded-[12px] border border-[var(--ds-neutral-800)] bg-[var(--ds-neutral-700)] py-1 pl-1 pr-3 font-sans text-[14px] font-normal leading-tight tracking-normal text-ds-neutral-50 sm:gap-2.5 sm:pl-1 sm:pr-3 sm:py-1 sm:text-[16px] sm:leading-tight"
                     role="group"

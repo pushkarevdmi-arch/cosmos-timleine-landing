@@ -239,7 +239,7 @@ svg:not([class*="text-"]) {
 
   .event-card__category {
     @apply inline-flex shrink-0 items-center justify-center gap-2 pl-4 pr-4 py-2 font-medium text-ds-neutral-300 text-[14px] leading-[18px];
-    border-radius: var(--ds-radius-xs);
+    border-radius: 15px;
     font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
     width: fit-content;
     height: 40px;
@@ -271,9 +271,9 @@ svg:not([class*="text-"]) {
     border-image: none;
   }
 
-  /* Tailwind v4 @apply on .event-card__extra-tag emits full pill radius; override with design token (12px). */
+  /* Tailwind v4 @apply on .event-card__extra-tag emits full pill radius; override for badge row (14px). */
   .event-card__badge-row .event-card__extra-tag {
-    border-radius: var(--ds-radius-xs);
+    border-radius: 14px;
   }
 
   .event-card__extra-tag--with-icon {

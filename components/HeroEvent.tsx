@@ -412,7 +412,7 @@ export default function HeroEvent({
 
           {onExplore ? (
             <div
-              className="hero-event__open-hint pointer-events-none absolute right-[var(--ds-spacing-2xs)] top-[var(--ds-spacing-2xs)] z-[1] hidden size-16 items-center justify-center rounded-[24px] bg-ds-neutral-700 md:flex"
+              className="hero-event__open-hint pointer-events-none absolute right-[var(--ds-spacing-2xs)] top-[var(--ds-spacing-2xs)] z-[1] hidden size-16 items-center justify-center rounded-[22px] bg-ds-neutral-700 md:flex"
               aria-hidden
             >
               <OpenArrowGlyph
